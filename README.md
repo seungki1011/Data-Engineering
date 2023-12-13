@@ -23,10 +23,10 @@
 ### MongoDB
 --
 
-## Observability(가시성)
+## Observability
 --
 
-## 분산 시스템(Distribute System)
+## Distribute System
 --
 
 ## Hadoop, HBase, Hive

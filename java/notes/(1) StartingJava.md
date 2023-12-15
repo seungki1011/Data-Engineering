@@ -1,6 +1,6 @@
 
 
-## Java Introduction
+## 1) Java Introduction
 
 ### High Level Language
 
@@ -50,7 +50,7 @@
 * 실행 : ```java Main```
 * IDE를 사용하는 경우 보통 위의 과정을 한번에 처리해줌
 
-## Further Reading
+## 2) Further Reading
 
 * JIT 컴파일러
 * 클래스 로더

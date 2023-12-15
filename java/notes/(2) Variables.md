@@ -1,4 +1,4 @@
-## Variables
+## 1) Variables
 
 ### 변수
 
@@ -44,9 +44,60 @@
   * 참조형 변수는 객체의 주소를 저장하는 것을 숙지하자
 * 대표적으로 ```String```
 
+```java
+public class VarType {
+    public static void main(String[] args) {
+        // Integer(정수형)
+        int a = 99;
+        // Long(정수형), Long은 뒤에 대문자 L 이용 권장
+        long b = 888L;
+        // Double(실수형)
+        double c = 999.9d;
+        // Boolean(논리형), true or false
+        boolean d = true;
+        // Character(문자 하나)
+        char e = 'A';
+        // String(문자열), 쌍따옴표
+        String f = "This is a String";
 
+        // 각 변수 출력
+        System.out.println("int a : "+a);
+        System.out.println("long b : "+c);
+        System.out.println("double c : "+b);
+        System.out.println("boolean d : "+d);
+        System.out.println("char e : "+e);
+        System.out.println("String f : "+false);
 
-## Java Convention
+        // 숫자 자료형의 MinMax 출력
+        System.out.println("Min of int : "+Integer.MIN_VALUE);
+        System.out.println("Max of int : "+Integer.MAX_VALUE);
+
+        System.out.println("Min of long : "+Long.MIN_VALUE);
+        System.out.println("Max of long : "+Long.MAX_VALUE);
+
+        System.out.println("Min of double : "+Double.MIN_VALUE);
+        System.out.println("Max of double : "+Double.MAX_VALUE);
+    }
+}
+```
+
+```
+> Task :VarType.main()
+int a : 99
+long b : 999.9
+double c : 888
+boolean d : true
+char e : A
+String f : false
+Min of int : -2147483648
+Max of int : 2147483647
+Min of long : -9223372036854775808
+Max of long : 9223372036854775807
+Min of double : 4.9E-324
+Max of double : 1.7976931348623157E308
+```
+
+## 2) Java Convention
 
 Java의 경우 CamelCase를 이용하는 것이 사실상 표준
 
@@ -72,7 +123,7 @@ Java의 경우 CamelCase를 이용하는 것이 사실상 표준
 
 
 
-## P.S.
+## 3) P.S.
 
 * 정수는 ```int```, ```long```
   * 20억이 넘어가는 경우 ```long``` 사용

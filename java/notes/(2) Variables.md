@@ -44,6 +44,8 @@
   * 참조형 변수는 객체의 주소를 저장하는 것을 숙지하자
 * 대표적으로 ```String```
 
+[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/variable/VarType.java)
+
 ```java
 public class VarType {
     public static void main(String[] args) {

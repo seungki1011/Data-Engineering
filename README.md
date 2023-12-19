@@ -1,47 +1,22 @@
-# Data-Engineering
+## Data-Engineering
 
-## Linux
---
+1. Java
+2. JVM
+3. Scala
+4. AWS
+5. SQL(RDBMS)
+   * MySQL
 
-## Java
---
+6. NoSQL
+   * MongoDB
 
-## JVM
---
+7. Observability
+8. Distribute System
+9. Hadoop, HBase, Hive
+   * Haddop
+   * HBASE
+   * Hive
 
-## Scala
---
-
-## AWS
---
-
-## SQL(RDBMS)
-### MySQL
---
-
-## NoSQL
-### MongoDB
---
-
-## Observability
---
-
-## Distribute System
---
-
-## Hadoop, HBase, Hive
-### Haddop
-
-### HBASE
-
-### Hive
---
-
-## Airflow
---
-
-## Kafka
---
-
-## Spark
---
+10. Airflow
+11. Kafka
+12. Spark

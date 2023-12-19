@@ -1,22 +1,18 @@
 ## Data-Engineering
 
-1. Java
-2. JVM
-3. Scala
-4. AWS
-5. SQL(RDBMS)
+1. [Java](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/JavaIndex.md)
+2. Scala
+3. AWS
+4. SQL(RDBMS)
    * MySQL
-
-6. NoSQL
+5. NoSQL
    * MongoDB
-
-7. Observability
-8. Distribute System
-9. Hadoop, HBase, Hive
+6. Observability
+7. Distribute System
+8. Hadoop, HBase, Hive
    * Haddop
    * HBASE
    * Hive
-
-10. Airflow
-11. Kafka
-12. Spark
+9. Airflow
+10. Kafka
+11. Spark

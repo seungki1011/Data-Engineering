@@ -7,12 +7,10 @@
    * MySQL
 5. NoSQL
    * MongoDB
-6. Observability
-7. Distribute System
-8. Hadoop, HBase, Hive
+6. Hadoop, HBase, Hive
    * Haddop
    * HBASE
    * Hive
-9. Airflow
-10. Kafka
-11. Spark
+7. Airflow
+8. Kafka
+9. Spark

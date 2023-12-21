@@ -16,7 +16,7 @@
      * String Compare
    * Logical Operator
    * Assignment Operator
-4. [조건문(Conditional)](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/conditional/con1.java)
+4. [조건문(Conditional)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(4)%20Conditional.md)
    * ```if```, ```else if```
    * ```switch```
    * Ternary Operator

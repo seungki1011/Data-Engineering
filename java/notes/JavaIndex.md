@@ -19,7 +19,7 @@
 4. [조건문(Conditional)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(4)%20Conditional.md)
    * ```if```, ```else if```
    * ```switch```
-   * Ternary Operator
+   * 삼항연산자(Ternary Operator)
 5. [반복문(Loop)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(5)%20Loop.md)
    * ```while```
    * ```do-while```
@@ -28,8 +28,11 @@
 6. [형변환(Type Casting)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(6)%20Typecasting.md)
    * 자동 형변환(Widening Type Casting)
    * 명시적 형변환(Narrow Type Casting)
-7. 배열(Array)
-8. 메서드(Method)
+7. [배열(Array)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(7)%20Array.md)
+   * 배열이란(Array)
+   * Using Arrays
+   * 2D Array
+8. [메서드(Method)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(8)%20Method.md)
 9. 클래스(Class)
 10. 기본형과 참조형(Primitive Type & Reference Type)
 11. OOP
@@ -57,4 +60,6 @@
 7. [https://www.baeldung.com/java-foreach-counter](https://www.baeldung.com/java-foreach-counter)
 8. [https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
 9. [https://www.geeksforgeeks.org/typecasting-in-java/](https://www.geeksforgeeks.org/typecasting-in-java/)
+10. [https://tcpschool.com/c/c_array_twoDimensional](https://tcpschool.com/c/c_array_twoDimensional)
+11. [https://www.geeksforgeeks.org/multidimensional-arrays-in-java/](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
 

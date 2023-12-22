@@ -104,8 +104,11 @@ current i is 5
 ## 5) for-each
 
 * 인덱스를 접근하기는 ```for```문이 더 쉬움
+  * ```for-each```는 인덱스를 사용하기 어려움
+
 * 배열이나 collection 등에 사용 가능
-* 파이써닉 코딩과 비슷해보임
+* intellij에서 ```iter```으로 간단히 생성 가능
+* 파이써닉 코딩과 비슷하다고 느낌
 
 [아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/loop/loop4.java)
 

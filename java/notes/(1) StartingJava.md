@@ -8,7 +8,7 @@
 
 <p align="center">   <img src="img/computer-languages.png" alt="Computer Languages"> </p>
 
-<p align="center">출처 - https://www.cs.mtsu.edu/~xyang/2170/computerLanguages.html</p>
+<p align="center">https://www.cs.mtsu.edu/~xyang/2170/computerLanguages.html</p>
 
 ### Translator
 
@@ -18,7 +18,7 @@
 
 <p align="center">   <img src="img/translator.png" alt="translator"> </p>
 
-<p align="center">출처 - https://www.helpteaching.com/lessons/1285/high-level-low-level-languages</p>
+<p align="center">https://www.helpteaching.com/lessons/1285/high-level-low-level-languages</p>
 
 #### 컴파일러(compiler)
 
@@ -44,7 +44,7 @@
 
 <p align="center">   <img src="img/java_exec.jpeg" alt="java jvm" style="width: 70%;"> </p>
 
-<p align="center">출처 - https://www.geeksforgeeks.org/compilation-execution-java-program/</p>
+<p align="center">https://www.geeksforgeeks.org/compilation-execution-java-program/</p>
 
 * 컴파일 : ```javac Main.java``` (```Main.class```파일 생성)
 * 실행 : ```java Main```

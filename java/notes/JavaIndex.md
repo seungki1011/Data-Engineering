@@ -33,7 +33,10 @@
    * Using Arrays
    * 2D Array
 8. [메서드(Method)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(8)%20Method.md)
-9. 클래스(Class)
+   * Method
+   * Static Method
+   * Overloading
+9. [클래스(Class)]()
 10. 기본형과 참조형(Primitive Type & Reference Type)
 11. OOP
 12. 생성자(Constructor)

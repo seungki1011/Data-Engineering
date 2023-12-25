@@ -36,7 +36,9 @@
    * Method
    * Static Method
    * Overloading
-9. [클래스(Class)]()
+9. [클래스(Class)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(9)%20Class.md)
+   * Class & Instance
+   * 객체 배열(Array of Instances)
 10. 기본형과 참조형(Primitive Type & Reference Type)
 11. OOP
 12. 생성자(Constructor)
@@ -55,14 +57,16 @@
 ---
 
 1. [김영한의 자바 입문](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%9E%90%EB%B0%94-%EC%9E%85%EB%AC%B8)
-2. [자바의 정석-기초편](https://www.youtube.com/user/MasterNKS)
-3. [https://www.geeksforgeeks.org/strings-in-java/](https://www.geeksforgeeks.org/strings-in-java/)
-4. [https://www.geeksforgeeks.org/compilation-execution-java-program/](https://www.geeksforgeeks.org/compilation-execution-java-program/)
-5. [https://www.helpteaching.com/lessons/1285/high-level-low-level-languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
-6. [위키피디아 Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
-7. [https://www.baeldung.com/java-foreach-counter](https://www.baeldung.com/java-foreach-counter)
-8. [https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
-9. [https://www.geeksforgeeks.org/typecasting-in-java/](https://www.geeksforgeeks.org/typecasting-in-java/)
-10. [https://tcpschool.com/c/c_array_twoDimensional](https://tcpschool.com/c/c_array_twoDimensional)
-11. [https://www.geeksforgeeks.org/multidimensional-arrays-in-java/](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
+2. [김영한의 자바 기본](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%8B%A4%EC%A0%84-%EC%9E%90%EB%B0%94-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard)
+3. [자바의 정석-기초편](https://www.youtube.com/user/MasterNKS)
+4. [https://www.geeksforgeeks.org/strings-in-java/](https://www.geeksforgeeks.org/strings-in-java/)
+5. [https://www.geeksforgeeks.org/compilation-execution-java-program/](https://www.geeksforgeeks.org/compilation-execution-java-program/)
+6. [https://www.helpteaching.com/lessons/1285/high-level-low-level-languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
+7. [위키피디아 Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
+8. [https://www.baeldung.com/java-foreach-counter](https://www.baeldung.com/java-foreach-counter)
+9. [https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
+10. [https://www.geeksforgeeks.org/typecasting-in-java/](https://www.geeksforgeeks.org/typecasting-in-java/)
+11. [https://tcpschool.com/c/c_array_twoDimensional](https://tcpschool.com/c/c_array_twoDimensional)
+12. [https://www.geeksforgeeks.org/multidimensional-arrays-in-java/](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
+13. [https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html](https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html)
 

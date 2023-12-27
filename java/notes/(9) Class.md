@@ -26,6 +26,8 @@ public class Customer {
 
 * 클래스에 정의한 변수들은 멤버 변수, 필드라고 함
 
+[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/classpractice/cp1.java)
+
 ```java
 public class cp1 {
     public static void main(String[] args) {
@@ -70,6 +72,8 @@ Name: Jane, Age: 22, Points: 80000
 * 객체를 보관하는 배열
   * 참조 변수들의 배열 (인스턴스의 참조값들)
 * 참조 변수의 디폴트값은 ```null```
+
+[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/classpractice/cp2.java)
 
 ```java
 public class cp2 {

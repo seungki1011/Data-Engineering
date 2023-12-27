@@ -1,4 +1,4 @@
-## Method
+## 1) Method
 
 * 메소드
 * 특정 작업을 수행하는 코드의 집합
@@ -47,19 +47,19 @@ This is a start message!
 
 * **변수의 값이 복사되어서 대입된다**
 
-## Static Method
+## 2) Static Method
 
 * 정적 메소드
 * 객체(instance) 생성 없이 호출 가능
 * 인스턴스 멤버와 관련 없는 작 함
 * 메소드 내에 인스턴스 변수 사용 불가
 
-## Instance Method
+## 3) Instance Method
 
 * 객체(instance) 생성 후 ```참조변수.methodName()``` 으로 호출
 * 클래스(class)에서 추가 설명
 
-## Overloading
+## 4) Overloading
 
 * 오버로딩
 * 한 클래스 안에서 같은 이름의 메서드를 여러개 정의하는 것
@@ -88,7 +88,7 @@ long add(int a, int b) {return (long)(a+b);}
 
 * 반환 타입은 오버로딩의 성립에 영향이 없음
 
-## Overriding
+## 5) Overriding
 
 * 오버라이딩
 * 조상 클래스로 부터 상속 받 메서드의 내용 상속받는 클래스에 맞게 변경하는 것(덮어쓰는 것)

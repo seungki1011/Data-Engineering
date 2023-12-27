@@ -1,4 +1,4 @@
-## Array
+## 1) Array
 
 * 배열
 * 배열은 [참조 자료형](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#reference-type)
@@ -10,7 +10,7 @@
 
 <p align='center'>https://tcpschool.com/c/c_array_twoDimensional</p>
 
-## Using Arrays
+## 2) Using Arrays
 
 * 배열 선언 : ```datatype[] variableName;```
   * 배열 변수에는 배열을 담을 수 있음
@@ -60,7 +60,7 @@ public class arr1 {
 [Andy, Caillou, Alex, Shelby]
 ```
 
-## 2D Array
+## 3) 2D Array
 
 * 2차원 배열
 * 행과 열로 구성
@@ -106,7 +106,7 @@ twodArray[0][0] = 30 twodArray[0][1] = 0 twodArray[0][2] = 0 twodArray[0][3] = 0
 twodArray[1][0] = 0 twodArray[1][1] = 0 twodArray[1][2] = 22 twodArray[1][3] = 60 
 ```
 
-## Further Reading
+## 4) Further Reading
 
 * [for-each 문(향상된 for 문)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(5)%20Loop.md#5-for-each)
   * intellij에서 ```iter```으로 간단히 생성 가능

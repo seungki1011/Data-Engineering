@@ -1,4 +1,4 @@
-## Class & Instance
+## 1) Class & Instance
 
 * 클래스
 * [클래스는 첫글자 대문자, Camel Case](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#2-java-convention)
@@ -66,7 +66,7 @@ Name: Jane, Age: 22, Points: 80000
 
 <p align='center'>https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html</p>
 
-## Array of Instances
+## 2) Array of Instances
 
 * 객체 배열
 * 객체를 보관하는 배열

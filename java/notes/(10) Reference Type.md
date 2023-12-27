@@ -1,4 +1,4 @@
-## Primitive vs Reference
+## 1) Primitive vs Reference
 
 * [기본형(Primitive Type) vs 참조형(Reference Type)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#primitive-type)
 * 기본형은 실제 사용하는 값을 담는다
@@ -6,7 +6,7 @@
 * 참조형은 객체의 메모리 주소를 담는다(참조값)
   * ```.```을 통해 멤버 변수에 접근해서 연산에 사용
 
-## 참조형 대입
+## 2) 참조형 대입
 
 * 참조형에 대입하는 경우 변수에 들어가 있는 참조값을 복사해서 대입하는 것
 * 주소만 복사되는 것
@@ -45,7 +45,7 @@ Unit name: Marine| Attack: 30| Defense: 150
 Unit name: Firebat| Attack: 50| Defense: 250
 ```
 
-## null
+## 3) null
 
 * 참조 변수가 참조가 없는 경우(어떠한 객체도 가리키지 않는 경우)
 * 참조할 대상을 나중에 입력하기 위해서 비어있는 참조형 변수에 ```null```을 넣어둔다
@@ -53,7 +53,7 @@ Unit name: Firebat| Attack: 50| Defense: 250
   * ```c```언어 같은 경우에는 ```malloc```으로 메모리를 allocate하고 ```free```로 메모리를 놔줌
   * ```java```에서는 JVM의 GC(Garbage Collector)가 사용하지 않는 인스턴스를 자동으로 메모리에서 제거
 
-## NullPointerException
+## 4) NullPointerException
 
 * ```null```값을 가지는 객체/변수를 호출하는 경우 발생
   * ```.```을 통해 ```null```값에 접근하는 경우

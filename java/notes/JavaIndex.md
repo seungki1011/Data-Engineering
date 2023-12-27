@@ -41,7 +41,11 @@
 9. [클래스(Class)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(9)%20Class.md)
    * Class & Instance
    * 객체 배열(Array of Instances)
-10. 기본형과 참조형(Primitive Type & Reference Type)
+10. [기본형과 참조형(Primitive Type & Reference Type)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(10)%20Reference%20Type.md)
+    * Primitive vs Reference
+    * 참조형 변수 대입
+    * ```null```
+    * NullPointerException(NPE)
 11. OOP
 12. 생성자(Constructor)
 13. 패키지(Package)

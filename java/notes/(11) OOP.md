@@ -22,7 +22,7 @@
 
 * 인스턴스 메소드는 ```static``` 접근 제어자 사용 불가
 
-[아래 코드]()
+[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/ControllerData.java)
 
 ```java
 public class ControllerData {
@@ -34,6 +34,8 @@ public class ControllerData {
     }
 }
 ```
+
+[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/oop1.java)
 
 ```java
 public class oop1 {
@@ -62,13 +64,13 @@ Current value = 3
 * 객체(instance) 생성 없이 호출 가능
 * 인스턴스 멤버와 관련 없는 작업 함
 * 메소드 내에 인스턴스 변수 사용 불가
-* [Static]()에서 추가 설명
+* [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)에서 추가 설명
 
 ## 4) OOP Example
 
 * 객체 지향 프로그래밍은 객체의 설계에 집중 해야함
 
-[아래 코드]()
+[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/Account.java)
 
 ```java
 public class Account {
@@ -92,6 +94,8 @@ public class Account {
     }
 }
 ```
+
+[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/oop2.java)
 
 ```java
 public class oop2 {
@@ -124,7 +128,7 @@ Current Balance: 3000, Withdraw Amount: 4000
 * 변수에 대한 직접적인 접근을 막고 인스턴스가 제공하 필드와 메서드를 통해서 접근이 가능하도록 한다
 * 캡슐화는 접근 제어자를 ```private```으로 설정해서 외 접근을 제한함
 * 메소드는 ```public```으로 설정해서 메소드를 통한 간접 접근만 허용
-* [접근제어자(Access Modifier)]()에서 더 알아보기
+* [접근제어자(Access Modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)에서 더 알아보기
 
 <p align="center">   <img src="img/encapsulation.png" alt="encapsulation" style="width: 75%;"> </p>
 

@@ -46,18 +46,18 @@
     * 참조형 변수 대입
     * ```null```
     * NullPointerException(NPE)
-11. [OOP]()
+11. [OOP](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md)
     * OOP vs POP
     * Instance Method
     * OOP Example
-12. 생성자(Constructor)
-13. 패키지(Package)
-14. 접근 제어자(Access Modifier)
-15. 자바 메모리 구조(Java Memory)
-16. Static
-17. 상수(Constant, ```final```)
-18. 상속(Inheritance)
-19. 다형성(Polymorphism)
+    * 캡슐화(Encapsulation)
+12. [생성자(Constructor)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(12)%20Constructor.md)
+13. [패키지(Package)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(13)%20Package.md)
+14. [접근 제어자(Access Modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)
+16. [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)
+17. [상수(Constant, ```final```)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
+18. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)
+19. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
 
 
 

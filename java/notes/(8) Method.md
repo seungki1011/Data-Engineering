@@ -5,7 +5,7 @@
 * 메소드명은 동사로
 * 코드의 용이한 모듈화, 재사용성 증가 등으로 유지보수가 쉬워짐
 * 메소드는 보통 멤버변수와 더불어서 클래스(class)의 속성 중 하나
-* [캡슐화(encapsulation)]()에 대한 내용 공부 할 것
+* [캡슐화(encapsulation)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md#5-encapsulation)에 대한 내용 공부 할 것
 * 메소드 호출을 하면 파라미터에 인수(argument) 대입
 * 값을 반환 하지 않는 경우 반환 타입 ```void```
 * 메소드는 ```return```을 만나면 종료
@@ -53,12 +53,12 @@ This is a start message!
 * 객체(instance) 생성 없이 호출 가능
 * 인스턴스 멤버와 관련 없는 작업 함
 * 메소드 내에 인스턴스 변수 사용 불가
-* [OOP]()와 [Static]()에서 추가 설명
+* [OOP](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md)와 [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)에서 추가 설명
 
 ## 3) Instance Method
 
 * 객체(instance) 생성 후 ```참조변수.methodName()``` 으로 호출
-* [OOP]()에서 추가 설명
+* [OOP](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md)에서 추가 설명
 
 ## 4) Overloading
 
@@ -93,7 +93,7 @@ long add(int a, int b) {return (long)(a+b);}
 
 * 오버라이딩
 * 조상 클래스로 부터 상속 받 메서드의 내용 상속받는 클래스에 맞게 변경하는 것(덮어쓰는 것)
-* [상속(inheritance)]()에서 추가 설명
+* [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)에서 추가 설명
 
 
 

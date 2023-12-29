@@ -46,18 +46,24 @@
     * 참조형 변수 대입
     * ```null```
     * NullPointerException(NPE)
-11. [OOP](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md)
+11. [객체지향 프로그래밍(OOP)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md)
     * OOP vs POP
     * Instance Method
     * OOP Example
     * 캡슐화(Encapsulation)
 12. [생성자(Constructor)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(12)%20Constructor.md)
+    * Constructor
+    * this
+    * 생성자 사용 조건
+    * 기본 생성자(Default Constructor)
+    * 생성자 오버로딩(Constructor Overloading)
+    * this()
 13. [패키지(Package)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(13)%20Package.md)
 14. [접근 제어자(Access Modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)
-16. [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)
-17. [상수(Constant, ```final```)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
-18. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)
-19. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
+15. [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)
+16. [상수(Constant, ```final```)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
+17. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)
+18. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
 
 
 

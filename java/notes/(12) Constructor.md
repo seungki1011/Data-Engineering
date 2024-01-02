@@ -9,7 +9,7 @@
   * 인스턴스 변수의 초기화를 편리하게 하기 위해서 사용
   * 무조건 설정한 파라미터를 넘기도록 해서 제약을 건다(더 안전)
 * 참조변수를 넘겨서 변수의 초기화를 담당하는 메소드를 이용하는 것보다 객체 지향을 위해 속성(데이터)와 기능(메소드)을 한 곳(클래스 안)에 두는 것이 더 좋음
-* [접근 제어자(access modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)를 명시하지 않으면 생성자는 기본적으로 package-private이 됨(같은 패키지 내에서만 접근 가능)
+* [접근 제어자(access modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)를 명시하지 않으면 생성자는 기본적으로 ```package-private```이 됨(같은 패키지 내에서만 접근 가능)
   * [접근 제어자](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)에서 추가 설명
 
 

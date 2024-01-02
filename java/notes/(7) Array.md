@@ -109,7 +109,7 @@ twodArray[1][0] = 0 twodArray[1][1] = 0 twodArray[1][2] = 22 twodArray[1][3] = 6
 ## 4) Further Reading
 
 * [for-each 문(향상된 for 문)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(5)%20Loop.md#5-for-each)
-  * intellij에서 ```iter```으로 간단히 생성 가능
+  * 인텔리제이에서 ```iter```로 간단히 생성 가능
 * 고정된 크기의 배열을 사용하는 어려움을 해결하기 위해 ```ArrayList``` 사용
   * [참고](https://inpa.tistory.com/entry/JAVA-%E2%98%95-ArrayList-%EA%B5%AC%EC%A1%B0-%EC%82%AC%EC%9A%A9%EB%B2%95)
 

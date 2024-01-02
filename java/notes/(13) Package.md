@@ -1,4 +1,4 @@
-## Package
+## 1) Package
 
 * 패키지
 * 서로 관련된 클래스들의 묶음(Package)
@@ -20,7 +20,7 @@ public class NewPackage1 {
 
 * ```de```안의 ```java```안의 ```newpackage``` : ```de.java.newpackage```
 
-## import
+## 2) import
 
 * ```import```는 사용할 클래스가 속한 패키지를 지정하는데 사용함
 * ```import```문 사용시 클래스를 사용할 때 패키지명(풀네임)을 생략할 수 있음
@@ -58,7 +58,7 @@ class ImportTest {
 
 * ```static```메소드 사용시 클래스명 없이 바로 사용 가능
 
-## Package Convention
+## 3) Package Convention
 
 * [자바 관례 참고](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#2-java-convention)
 * 관례라는 것은 무조건 지켜야 하는 것은 아님

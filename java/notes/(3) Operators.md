@@ -143,7 +143,7 @@ compare str1 with str3 : false
 
 
 
-## Logical Operators
+## 3) Logical Operators
 
 * 논리 연산자
 * ```&&```, ```||```, ```!```
@@ -154,7 +154,7 @@ compare str1 with str3 : false
   * ```!``` : 피연산자의 논리값에 대한 부정을 반환한다
     * 예시 ```true```를 ```false```로
 
-## Further Reading
+## 4) Further Reading
 
 * c 언어랑 기본적인 문법은 비슷한 것이 많은 것 같음
 * 굳이 기초 문법에 대한 예시 코드를 작성할 필요는 없을 것 같다..

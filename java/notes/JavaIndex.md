@@ -6,6 +6,10 @@
    * High Level Language
    * Translator
    * Execution and Compiling in Java
+   * Java Memory Structure
+     * Method Area
+     * Stack Area
+     * Heap Area
 2. [변수(Variables)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md)
    * Variables
      * Primitive Type
@@ -70,6 +74,10 @@
       * Class
     * 캡슐화(Encapsulation)
 15. [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)
+    * Static
+    * Static Variable
+    * Static Method
+    * Static Import
 16. [상수(Constant, ```final```)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
 17. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)
 18. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
@@ -95,4 +103,5 @@
 13. [https://www.geeksforgeeks.org/multidimensional-arrays-in-java/](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
 14. [https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html](https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html)
 15. [https://www.geeksforgeeks.org/difference-between-oop-and-pop/](https://www.geeksforgeeks.org/difference-between-oop-and-pop/)
-
+16. https://www.geeksforgeeks.org/java-memory-management/
+17. https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV

@@ -33,7 +33,7 @@
 
 
 
-### 자바의 동작
+## 2) How Java Works
 
 * Java의 경우 compiling과 interpretation 둘다 사용한다
 * [참고](https://www.geeksforgeeks.org/compilation-execution-java-program/)
@@ -50,11 +50,54 @@
 * 실행 : ```java Main```
 * IDE를 사용하는 경우 보통 위의 과정을 한번에 처리해줌
 
-## 2) Further Reading
+## 3) Java Memory Structure
+
+<p align="center">   <img src="img/javamemory1.png" alt="java memory area" style="width: 70%;"> </p>
+
+<p align="center">https://www.geeksforgeeks.org/java-memory-management/</p>
+
+<p align="center">   <img src="img/javamemory2.png" alt="java memory area" style="width: 70%;"> </p>
+
+<p align="center">https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV</p>
+
+### 메서드 영역(Method Area)
+
+* 프로그램을 실행하는데 필요한 공통 데이터 관리 (모든 영역에서 공유)
+  * 예를 들어 메서드는 메서드 영역에서 공통으로 관리되고 실행된다
+
+* 클래스 정보
+  * 클래스의 실행 코드(바이트 코드)
+  * 클래스의  필드, 메서드, 생성자 코드등의 모든 실행 코드가 존재
+* ```static```영역: ```static```변수 보관
+* Runtime Constant Pool
+
+### 스택 영역(Stack Area)
+
+* 자바 실행 시, 하나의 실행 스택 생성
+* 각 스택 프레임은 지역 변수, 중간 연산 결과, 메서드 호출 등의 정보 포함
+* 메서드 호출 시 스택 프레임이 하나 쌓이고, 메서드 종료시 해당 스택 프레임 제거
+  * 스택 프레임 종료시 지역 변수도 함께 제거됨
+
+* 스택 영역은 각 쓰레드(thread)별로 하나의 실행 스택이 생성됨
+* Stack Overflow라는 것은 가능한 스택 영역을 초과하는 경우 발생
+  * 보통 지나치게 깊은 재귀나 콜체인 때문에 발생
+
+### 힙 영역(Heap Area)
+
+* 인스턴스와 배열이 생성되는 영역
+  * 인스턴스 변수 등이 여기에 포함
+
+* 대부분 GC가 이루어지는 영역
+  * 참조되지 않는 인스턴스는 GC에 의해 제거
+* String Constant Pool
+
+## 4) Further Reading
 
 * JIT 컴파일러
 * 클래스 로더
 * JVM의 구조
+* 메모리 구조
+* Java Permgen vs Metaspace
 
 
 
@@ -65,3 +108,6 @@
 1. [김영한의 자바 입문](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%9E%90%EB%B0%94-%EC%9E%85%EB%AC%B8)
 2. [https://www.geeksforgeeks.org/compilation-execution-java-program/](https://www.geeksforgeeks.org/compilation-execution-java-program/)
 3. [https://www.helpteaching.com/lessons/1285/high-level-low-level-languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
+4. [https://www.geeksforgeeks.org/java-memory-management/](https://www.geeksforgeeks.org/java-memory-management/)
+5. [https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV](https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV)
+

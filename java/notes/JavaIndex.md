@@ -79,6 +79,10 @@
     * Static Method
     * Static Import
 16. [상수(Constant, ```final```)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
+    * ```final```
+    * ```final``` for local variable
+    * ```final``` for field
+    * constant
 17. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)
 18. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
 
@@ -105,3 +109,4 @@
 15. [https://www.geeksforgeeks.org/difference-between-oop-and-pop/](https://www.geeksforgeeks.org/difference-between-oop-and-pop/)
 16. https://www.geeksforgeeks.org/java-memory-management/
 17. https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV
+18. [https://www.w3schools.com/java/java_inheritance.asp](https://www.w3schools.com/java/java_inheritance.asp)

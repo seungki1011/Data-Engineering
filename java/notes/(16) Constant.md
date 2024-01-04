@@ -1,4 +1,4 @@
-## ```final```
+## 1) ```final```
 
 * ```final``` 제어자
 * ```final```이 붙을 경우 값 변경이 불가
@@ -8,7 +8,7 @@
   * 예시 : ```인스턴스명.멤버변수명```을 통해 접근하는 경우
 * 바뀌면 안되는 값에 ```final```붙여 주면 됨
 
-## final local variable
+## 2) final local variable
 
 * ```final```이 붙은 변수는 재할당 불가
 * 파라미터에 ```final```이 붙을 경우 메서드 내부에서 변경 불가
@@ -44,7 +44,7 @@ This is the parameter passed to the method: 500
 
 
 
-## final member variable(field)
+## 3) final member variable(field)
 
 * ```static final```이 붙는 경우 전부 대문자를 사용하자(관례)
   * 상수는 전부 대문자
@@ -116,7 +116,7 @@ FINAL_CONST = 40
 
 
 
-## Constant
+## 4) Constant
 
 * 상수
 * 상수는 ```static final```을 사용

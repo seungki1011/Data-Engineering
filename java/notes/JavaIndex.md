@@ -57,14 +57,14 @@
     * 캡슐화(Encapsulation)
 12. [생성자(Constructor)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(12)%20Constructor.md)
     * Constructor
-    * this
+    * ```this```
     * 생성자 사용 조건
     * 기본 생성자(Default Constructor)
     * 생성자 오버로딩(Constructor Overloading)
-    * this()
+    * ```this()```
 13. [패키지(Package)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(13)%20Package.md)
     * Package
-    * import
+    * ```import```
     * Package Convention
 14. [접근 제어자(Access Modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)
     * Access Modifier
@@ -77,13 +77,20 @@
     * Static
     * Static Variable
     * Static Method
-    * Static Import
+    * ```static import```
 16. [상수(Constant, ```final```)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
     * ```final```
     * ```final``` for local variable
     * ```final``` for field
     * constant
 17. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)
+    * Inheritance
+    * Single Inheritance
+    * Java Inheritance Memory Allocation
+    * Method Overriding
+    * ```protected```
+    * ```super```
+    * ```super()```
 18. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
 
 
@@ -110,3 +117,4 @@
 16. https://www.geeksforgeeks.org/java-memory-management/
 17. https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV
 18. [https://www.w3schools.com/java/java_inheritance.asp](https://www.w3schools.com/java/java_inheritance.asp)
+19. [https://www.javatpoint.com/super-keyword](https://www.javatpoint.com/super-keyword)

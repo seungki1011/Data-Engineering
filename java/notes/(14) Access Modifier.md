@@ -283,6 +283,10 @@ Name: MakGukSu, Price: 11000, Quantity: 1
 Total Price: 206000
 ```
 
+## 4) Further Reading
+
+* Getter and Setter
+
 
 
 ## 참고

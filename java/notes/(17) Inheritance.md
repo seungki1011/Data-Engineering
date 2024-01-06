@@ -321,7 +321,7 @@ This vehicle used the brake!
 * ```protected``` : 같은 패키지안에서의 호출은 허용
   * 또한 패키지가 달라도 상속 관계의 호출은 허용
 
-<p align="center">   <img src="img/protected1.png" alt="Inheritance" style="width: 50%;"> </p>
+<p align="center">   <img src="img/protected1.png" alt="Inheritance" style="width: 30%;"> </p>
 
 [```Parent.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/protected1/parent/Parent.java)
 

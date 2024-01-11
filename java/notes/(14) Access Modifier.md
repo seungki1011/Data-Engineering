@@ -12,7 +12,7 @@
 
 * 접근 제어자는 속성과 기능을 어느 범위로 외부로부터 숨길 것인지 설정하기 위해서 사용
 
-* ```protected```는 [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)에서 추가 설명
+* ```protected```는 [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md#5-protected)에서 추가 설명
 
 <p align="center">   <img src="img/accessmod1.png" alt="access modifier" style="width: 50%;"> </p>
 

@@ -78,7 +78,7 @@
     * Static Variable
     * Static Method
     * ```static import```
-16. [상수(Constant, ```final```)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
+16. [```final```](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
     * ```final```
     * ```final``` for local variable
     * ```final``` for field
@@ -92,6 +92,21 @@
     * ```super```
     * ```super()```
 18. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
+    * Polymorphism
+    * Casting
+    * ```instanceof```
+    * Method Overriding
+    * Usage of Polymorphism
+    * Abstract Class (```abstract```)
+    * Interface (```interface```)
+
+
+
+## 작성자 말
+
+---
+
+* 모든 다이어그램은 UML 표준을 준수하지 않았습니다
 
 
 
@@ -118,3 +133,4 @@
 17. https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV
 18. [https://www.w3schools.com/java/java_inheritance.asp](https://www.w3schools.com/java/java_inheritance.asp)
 19. [https://www.javatpoint.com/super-keyword](https://www.javatpoint.com/super-keyword)
+20. [점프 투 자바 - 인터페이스](https://wikidocs.net/217)

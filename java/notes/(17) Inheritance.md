@@ -242,6 +242,7 @@ ElectricCar e1 = new ElectricCar();
   * 생성자는 오버라이딩 불가능
 * 오버라이딩하는 경우 ```@Override``` 어노테이션을 꼭 붙여주자
 * 오버로딩(Overloading)은 메서드 이름이 같고 파라미터들이 다른 메서드를 여러개 정의하는 것 (유의하자)
+* 인텔리제이 단축키 ```ctrl+o```
 
 [```Aircraft.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/Aircraft.java)
 

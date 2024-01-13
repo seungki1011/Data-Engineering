@@ -99,13 +99,13 @@
     * Usage of Polymorphism
     * Abstract Class (```abstract```)
     * Interface (```interface```)
-19. [SOLID]()
+19. [SOLID](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(19)%20SOLID.md)
     * Single Responsibility Principle
     * Open Close Principle
     * Liskov Substitution Principle
     * Interface Segragation Principle
     * Dependency Inversion Principle
-20. [예외 처리(Exception Handling)]()
+20. [예외 처리(Exception Handling)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(20)%20Exception.md)
     * Exception, Error
     * Exception Handling
     * Exception Variable
@@ -142,6 +142,7 @@
 
 ---
 
+* SOLID 원칙
 * 익명 클래스(anonymous class)
 * 내부 클래스(inner class)
 * 연결된 예외(chained exception)

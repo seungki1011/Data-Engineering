@@ -99,14 +99,52 @@
     * Usage of Polymorphism
     * Abstract Class (```abstract```)
     * Interface (```interface```)
+19. [SOLID]()
+    * Single Responsibility Principle
+    * Open Close Principle
+    * Liskov Substitution Principle
+    * Interface Segragation Principle
+    * Dependency Inversion Principle
+20. [예외 처리(Exception Handling)]()
+    * Exception, Error
+    * Exception Handling
+    * Exception Variable
+    * Multi Catch
+    * ```throw```
+    * Checked, Unchecked Exception
+    * ```throws```
+    * ```try-catch-finally```
+    * ```try with resource```
+    * User Defined Exception
 
 
+
+
+
+
+
+
+
+---
 
 ## 작성자 말
 
 ---
 
 * 모든 다이어그램은 UML 표준을 준수하지 않았습니다
+* 전부 작성 후 교차 검증 예정
+
+
+
+
+
+## 추가 예정
+
+---
+
+* 익명 클래스(anonymous class)
+* 내부 클래스(inner class)
+* 연결된 예외(chained exception)
 
 
 
@@ -115,22 +153,55 @@
 ---
 
 1. [김영한의 자바 입문](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%9E%90%EB%B0%94-%EC%9E%85%EB%AC%B8)
+
 2. [김영한의 자바 기본](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%8B%A4%EC%A0%84-%EC%9E%90%EB%B0%94-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard)
-3. [자바의 정석-기초편](https://www.youtube.com/user/MasterNKS)
-4. [Wikipedia Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
-5. [Tistory Inpa Dev-Java NULL](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EA%B4%B4%EB%A1%AD%ED%9E%88%EB%8A%94-NULL-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
-6. [https://www.geeksforgeeks.org/strings-in-java/](https://www.geeksforgeeks.org/strings-in-java/)
-7. [https://www.geeksforgeeks.org/compilation-execution-java-program/](https://www.geeksforgeeks.org/compilation-execution-java-program/)
-8. [https://www.helpteaching.com/lessons/1285/high-level-low-level-languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
-9. [https://www.baeldung.com/java-foreach-counter](https://www.baeldung.com/java-foreach-counter)
-10. [https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
-11. [https://www.geeksforgeeks.org/typecasting-in-java/](https://www.geeksforgeeks.org/typecasting-in-java/)
-12. [https://tcpschool.com/c/c_array_twoDimensional](https://tcpschool.com/c/c_array_twoDimensional)
+
+3. [자바의 정석 기초편](https://www.youtube.com/user/MasterNKS)
+
+4. [Java docs - ``FileWriter``](https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html)
+
+5. [Java docs - ```AutoClosable```](https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html)
+
+6. [Wikipedia Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
+
+7. [Wikipedia Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)
+
+8. [점프 투 자바 - 인터페이스](https://wikidocs.net/217)
+
+9. [Tistory Inpa Dev - Java NULL](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EA%B4%B4%EB%A1%AD%ED%9E%88%EB%8A%94-NULL-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
+
+10. [https://www.geeksforgeeks.org/strings-in-java/](https://www.geeksforgeeks.org/strings-in-java/)
+
+11. [https://www.geeksforgeeks.org/compilation-execution-java-program/](https://www.geeksforgeeks.org/compilation-execution-java-program/)
+
+12. [https://www.geeksforgeeks.org/typecasting-in-java/](https://www.geeksforgeeks.org/typecasting-in-java/)
+
 13. [https://www.geeksforgeeks.org/multidimensional-arrays-in-java/](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
-14. [https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html](https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html)
-15. [https://www.geeksforgeeks.org/difference-between-oop-and-pop/](https://www.geeksforgeeks.org/difference-between-oop-and-pop/)
-16. https://www.geeksforgeeks.org/java-memory-management/
-17. https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV
-18. [https://www.w3schools.com/java/java_inheritance.asp](https://www.w3schools.com/java/java_inheritance.asp)
-19. [https://www.javatpoint.com/super-keyword](https://www.javatpoint.com/super-keyword)
-20. [점프 투 자바 - 인터페이스](https://wikidocs.net/217)
+
+14. [https://www.geeksforgeeks.org/difference-between-oop-and-pop/](https://www.geeksforgeeks.org/difference-between-oop-and-pop/)
+
+15. https://www.geeksforgeeks.org/java-memory-management/
+
+16. https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV
+
+17. [https://www.w3schools.com/java/java_inheritance.asp](https://www.w3schools.com/java/java_inheritance.asp)
+
+18. [https://www.javatpoint.com/super-keyword](https://www.javatpoint.com/super-keyword)
+
+19. [https://www.helpteaching.com/lessons/1285/high-level-low-level-languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
+
+20. [https://www.baeldung.com/java-foreach-counter](https://www.baeldung.com/java-foreach-counter)
+
+21. [https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
+
+22. [https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html](https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html)
+
+23. [https://tcpschool.com/c/c_array_twoDimensional](https://tcpschool.com/c/c_array_twoDimensional)
+
+24. [https://www.javacodemonk.com/java-exception-class-hierarchy-92e8224e](https://www.javacodemonk.com/java-exception-class-hierarchy-92e8224e)
+
+25. [https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html](https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html)
+
+26. https://www.nextree.co.kr/p6960/
+
+    

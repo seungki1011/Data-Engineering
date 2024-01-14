@@ -116,7 +116,7 @@
     * ```try-catch-finally```
     * ```try with resource```
     * User Defined Exception
-21. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(21)%21Date&Time.md)
+21. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(21)%20Date%26Time.md)
     * ```Date```
     * ```Calendar```
     * ```java.time```

@@ -254,7 +254,7 @@ java.lang.ArithmeticException: / by zero
   * 공통된 조상의 멤버만 사용가능
 * ```ExceptionA```, ```ExceptionB```, ```ExceptionC``` 가 있다고 가정할때 ```ExceptionA```에만 존재하는 ```methodA```를 사용하는 것은 안됨
   * 멀티 캐치 블럭 내에서 ```methodA```를 사용해야하는 겨우면 ```instanceof```로 인스턴스를 판별해서 사용
-  * 보통 예외 별로 다른 처리가 필요한 경우 그냥 보통 사용하던 ```catch```문을 사용하는 것을 권장
+  * 보통 예외 별로 다른 처리가 필요한 경우 그냥 보통 사용하던 ```catch```문 여러개를 사용하는 것을 권장
 
 ```java
 try{

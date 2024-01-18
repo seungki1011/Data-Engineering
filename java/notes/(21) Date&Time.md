@@ -206,7 +206,7 @@ LocalDate.parse("2024-01-04").isAfter(LocalDate.parse("2005-01-04")) = true
 
 
 
-### 3-2) LocalTime
+### 3-2) ```LocalTime```
 
 * 시간만 다루고 싶을 때 사용
 * [Java docs - ```LocalTime```](https://docs.oracle.com/javase/8/docs/api/java/time/LocalTime.html)

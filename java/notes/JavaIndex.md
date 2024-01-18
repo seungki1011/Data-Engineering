@@ -127,7 +127,26 @@
     * ```Period```, ```Duration```
     * ```Instant```
     * Formatter
-22. [```Collections``` Framework]()
+22. [```Collection``` Framework]()
+    * ```Collection``` Framework
+    * ```Collection```
+    * ```Iterator```
+    * ```List```
+      * ```ArrayList```
+      * ```LinkedList```
+    * ```Set```
+      * ```HashSet```
+      * ```TreeSet```
+    * ```Map```
+      * ```HashMap```
+    * ```Stack```, ```Queue```, ```ArrayDeque```
+      * ```ArrayDeque```
+    * Anonymous Class
+    * ```Comparable``` & ```Comparator```
+      * ```Comparable```
+      * ```Comparator```
+23. [제네릭스(Generics)]()
+24. [스트림(Stream)]()
 
 
 
@@ -159,11 +178,12 @@
 ---
 
 * SOLID 원칙
-* 익명 클래스(anonymous class)
+* [~~익명 클래스(anonymous class)~~]() (Updated on 2024/01/16 - ```Collection```)
 * 내부 클래스(inner class)
 * 연결된 예외(chained exception)
 * ```DecimalFormat```
 * ```SimpleDateFormat```
+* ```Collections```
 
 
 
@@ -177,48 +197,52 @@
 
 3. [자바의 정석 기초편](https://www.youtube.com/user/MasterNKS)
 
-5. [Java docs](https://docs.oracle.com/javase/8/docs/api/overview-summary.html)
+4. [Java docs](https://docs.oracle.com/javase/8/docs/api/overview-summary.html)
 
-10. [Wikipedia Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
+5. [Wikipedia Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
 
-11. [Wikipedia Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)
+6. [Wikipedia Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)
 
-12. [점프 투 자바 - 인터페이스](https://wikidocs.net/217)
+7. [점프 투 자바 - 인터페이스](https://wikidocs.net/217)
 
-13. [Tistory Inpa Dev - Java NULL](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EA%B4%B4%EB%A1%AD%ED%9E%88%EB%8A%94-NULL-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
+8. [Tistory Inpa Dev - Java NULL](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EA%B4%B4%EB%A1%AD%ED%9E%88%EB%8A%94-NULL-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
 
-14. [https://www.geeksforgeeks.org/strings-in-java/](https://www.geeksforgeeks.org/strings-in-java/)
+9. [geeksforgeeks - strings in java](https://www.geeksforgeeks.org/strings-in-java/)
 
-15. [https://www.geeksforgeeks.org/compilation-execution-java-program/](https://www.geeksforgeeks.org/compilation-execution-java-program/)
+10. [geeksforgeeks - compilation execution in java](https://www.geeksforgeeks.org/compilation-execution-java-program/)
 
-16. [https://www.geeksforgeeks.org/typecasting-in-java/](https://www.geeksforgeeks.org/typecasting-in-java/)
+11. [geeksforgeeks - typecasting in java](https://www.geeksforgeeks.org/typecasting-in-java/)
 
-17. [https://www.geeksforgeeks.org/multidimensional-arrays-in-java/](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
+12. [geeksforgeeks - multidimensional arrays in java](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
 
-18. [https://www.geeksforgeeks.org/difference-between-oop-and-pop/](https://www.geeksforgeeks.org/difference-between-oop-and-pop/)
+13. [geeksforgeeks - difference between oop and pop](https://www.geeksforgeeks.org/difference-between-oop-and-pop/)
 
-19. https://www.geeksforgeeks.org/java-memory-management/
+14. [geeksforgeeks - java memory management](https://www.geeksforgeeks.org/java-memory-management/)
 
-20. https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV
+15. [geeksforgeeks - java collections guide](https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/)
 
-21. [https://www.w3schools.com/java/java_inheritance.asp](https://www.w3schools.com/java/java_inheritance.asp)
+16. [codelatte - java programming basic](https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV)
 
-22. [https://www.javatpoint.com/super-keyword](https://www.javatpoint.com/super-keyword)
+17. [w3schools - java inheritance](https://www.w3schools.com/java/java_inheritance.asp)
 
-23. [https://www.helpteaching.com/lessons/1285/high-level-low-level-languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
+18. [javatpoint - super](https://www.javatpoint.com/super-keyword)
 
-24. [https://www.baeldung.com/java-foreach-counter](https://www.baeldung.com/java-foreach-counter)
+19. [helpteaching - high level and low level languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
 
-25. [https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
+20. [baeldung - java foreach and counter](https://www.baeldung.com/java-foreach-counter)
 
-26. [https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html](https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html)
+21. [simplilearn - type casting in java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
 
-27. [https://tcpschool.com/c/c_array_twoDimensional](https://tcpschool.com/c/c_array_twoDimensional)
+22. [tcpschool - c array 2dimensional](https://tcpschool.com/c/c_array_twoDimensional)
 
-28. [https://www.javacodemonk.com/java-exception-class-hierarchy-92e8224e](https://www.javacodemonk.com/java-exception-class-hierarchy-92e8224e)
+23. [javacodemonk - java exception class hierarchy](https://www.javacodemonk.com/java-exception-class-hierarchy-92e8224e)
 
-29. [https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html](https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html)
+24. [https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html](https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html)
 
-30. https://www.nextree.co.kr/p6960/
+25. [https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html](https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html)
+
+26. https://www.nextree.co.kr/p6960/
+
+27. https://st-lab.tistory.com/243
 
     

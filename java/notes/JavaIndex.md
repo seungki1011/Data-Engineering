@@ -178,7 +178,7 @@
 ---
 
 * SOLID 원칙
-* [~~익명 클래스(anonymous class)~~]() (Updated on 2024/01/16 - ```Collection```)
+* [~~익명 클래스(anonymous class)~~](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(22)%20Collection.md#8-anonymous-class) (Updated on 2024/01/16 - ```Collection```)
 * 내부 클래스(inner class)
 * 연결된 예외(chained exception)
 * ```DecimalFormat```

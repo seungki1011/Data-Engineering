@@ -19,5 +19,5 @@
 8. Airflow
 9. Kafka
 10. Spark
-11. Anti Patterns
+11. Design Patterns
 

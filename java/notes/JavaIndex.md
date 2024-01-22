@@ -147,6 +147,8 @@
       * ```Comparator```
 23. [제네릭스(Generics)]()
 24. [스트림(Stream)]()
+    * Lambda
+25. [쓰레드(Thread)]()
 
 
 

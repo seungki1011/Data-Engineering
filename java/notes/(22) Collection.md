@@ -30,7 +30,7 @@
 
 > 해당 포스트는 자료구조의 원리에 대한 설명은 다루지 않습니다. (Ex - Hashing의 원리, 이진 탐색 트리의 원리, 등..)
 
-
+---
 
 ## 1) ```Collection``` Framework
 
@@ -770,6 +770,8 @@ interface Greeting {
 public class AnonymousClassMain {
     public static void main(String[] args) {
         // 익명 클래스 정의와 생성 (Greeting 인터페이스 구현)
+        // 클래스의 인스턴스를 참조할 수 있는 참조 변수를 사용
+        // 클래스 그 자체는 이름이 없음
         Greeting anonymousGreeting = new Greeting() {
             @Override
             public void greet() {

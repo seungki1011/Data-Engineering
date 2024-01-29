@@ -18,7 +18,6 @@
 16. [```final```](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(16)%20Constant.md)
 17. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)
 18. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md)
-19. [SOLID](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(19)%20SOLID.md)
 20. [예외 처리(Exception Handling)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(20)%20Exception.md)
 21. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(21)%20Date%26Time.md)
 22. [```Collection``` Framework](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(22)%20Collection.md)
@@ -28,7 +27,7 @@
 
 ---
 
-> 해당 포스트는 자료구조의 원리에 대한 설명은 다루지 않습니다. (Ex - Hashing의 원리, 이진 탐색 트리의 원리, 등..)
+> 해당 포스트는 자료구조의 원리에 대한 설명은 다루지 않습니다. (Hashing의 원리, 이진 탐색 트리의 원리, 등..)
 
 ---
 

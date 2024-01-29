@@ -4,20 +4,23 @@
 
 ## Data-Engineering
 
-1. [Java](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/JavaIndex.md)
-2. [Algorithm and Data Structure]()
-3. Web and Network
-4. [AWS]()
-5. SQL(RDBMS)
+1. Computer Structure
+2. Operating System(OS)
+3. [Algorithm and Data Structure]()
+4. [Java](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/JavaIndex.md)
+5. Spring
+6. Web and Network
+7. [AWS]()
+8. SQL(RDBMS)
    * MySQL
-6. NoSQL
+9. NoSQL
    * MongoDB
-7. Hadoop, HBase, Hive
+10. Hadoop, HBase, Hive
    * Hadoop
    * HBASE
    * Hive
-8. Airflow
-9. Kafka
-10. Spark
-11. Design Patterns
+11. Airflow
+12. Kafka
+13. Spark
+14. Design Patterns
 

@@ -6,24 +6,29 @@
 
 ## Index
 
-1. Introduction
+1. [Introduction](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#1-introduction)
    * ```Spring```, ```SpringBoot``` 소개
    * ```Gradle```
    * MVC Pattern
-2. Spring Boot Project Configuration
+2. [Spring Boot Project Configuration](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#2-spring-boot-project-configuration)
    * Spring Boot 프로젝트 생성하기
    * 실행 확인하기
    * View 설정하기
    * 빌드 후 실행
-3. Spring 웹 개발
+3. [Spring 웹 개발](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#3-spring-%EC%9B%B9-%EA%B0%9C%EB%B0%9C)
    * Static Contents
    * MVC & Template Engine
    * API
-4. 회원 관리 기능 개발 I
-5. Spring Bean & Dependency
-6. 회원 관리 기능 개발 II
-7. Spring DB Access
-8. AOP
+4. [회원 관리 기능 개발 I](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#4-%ED%9A%8C%EC%9B%90-%EA%B4%80%EB%A6%AC-%EA%B8%B0%EB%8A%A5-%EA%B0%9C%EB%B0%9C-i)
+   * 비즈니스 요구 사항
+   * 애플리케이션 계층 구조
+   * 클래스 의존 관계
+   * 회원 저장소 코드, 테스트 코드
+   * 회원 서비스 코드, 테스트 코드
+5. [Spring Bean & Dependency](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#5-spring-bean--dependency)
+6. [회원 관리 기능 개발 II](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#6-%ED%9A%8C%EC%9B%90-%EA%B4%80%EB%A6%AC-%EA%B8%B0%EB%8A%A5-%EA%B0%9C%EB%B0%9C-ii)
+7. [Spring DB Access](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#7-spring-db-access)
+8. [AOP](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#8-aop)
 
 
 
@@ -346,8 +351,7 @@ public class ApiController {
 
 ```domain/Member``` : 회원 객체
 
-<details>
-<summary>코드 보기</summary>
+
 
 ```java
 
@@ -376,12 +380,8 @@ public class Member {
 }   
 ```
 
-</details>
 
 ```repository/MemberRepository``` : 회원 저장소 인터페이스
-
-<details>
-  <summary>코드 보기</summary>
 
 ```java
 public interface MemberRepository {
@@ -391,12 +391,8 @@ public interface MemberRepository {
     List<Member> findAll(); // 지금까지 저장한 모든 회원 리스트 반환  
 }
 ```
-</details>
 
 ```repository/MemoryMemberRepository``` : 회원 저장소 메모리 구현체
-
-<details>
-<summary>코드 보기</summary>
 
 ```java
 /*
@@ -435,8 +431,6 @@ public class MemoryMemberRepository implements MemberRepository{
     }
 }  
 ```
-</details>
-
 
 
 ### 4-5. 회원 저장소 테스트 코드
@@ -521,8 +515,6 @@ class MemoryMemberRepositoryTest {
 
 ```service/MemberService``` : 회원 서비스
 
-<details>
-  <summary>코드 보기</summary>
 
 ```java
 /**
@@ -587,8 +579,6 @@ public class MemberService {
 
 }  
 ```
-</details>
-
 
 
 ### 4-7. 회원 서비스 테스트 코드

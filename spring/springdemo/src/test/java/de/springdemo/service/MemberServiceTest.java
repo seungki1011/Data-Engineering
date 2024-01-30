@@ -80,12 +80,4 @@ class MemberServiceTest {
         */
 
     }
-
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
-    }
 }

@@ -342,7 +342,7 @@ public class ApiController {
 * 초기 개발 단계에서는 구현체로 메모리 기반의 대이터 저장소를 이용
 * ```MemberRepository```를 인터페이스로 만들고, ```MemoryMemberRepository```로 구현
 
-### 4-4. 코드
+### 4-4. 회원 저장소 코드
 
 ```domain/Member``` : 회원 객체
 
@@ -378,11 +378,307 @@ public class Member {
 
 </details>
 
+```repository/MemberRepository``` : 회원 저장소 인터페이스
+
+<details>
+  <summary>코드 보기</summary>
+
+```java
+public interface MemberRepository {
+    Member save(Member member); // 회원을 저장소에 저장
+    Optional<Member> findById(Long id);
+    Optional<Member> findByName(String name);
+    List<Member> findAll(); // 지금까지 저장한 모든 회원 리스트 반환  
+}
+```
+</details>
+
+```repository/MemoryMemberRepository``` : 회원 저장소 메모리 구현체
+
+<details>
+<summary>코드 보기</summary>
+
+```java
+/*
+ * 간단한 예시이기 때문에 동시성 문제를 고려하지 않음
+ */
+
+public class MemoryMemberRepository implements MemberRepository{
+    private static Map<Long, Member> store = new HashMap<>();
+    private static long sequence = 0L;
+    @Override
+    public Member save(Member member) {
+        member.setId(++sequence);
+        store.put(member.getId(), member);
+        return member;
+    }
+
+    @Override
+    public Optional<Member> findById(Long id) {
+        return Optional.ofNullable(store.get(id)); // null일 가능성을 위해 ofNullable로 감싸기
+    }
+
+    @Override
+    public Optional<Member> findByName(String name) {
+        return store.values().stream()
+                .filter(member -> member.getName().equals(name))
+                .findAny();
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return new ArrayList<>(store.values());
+    }
+
+    public void clearStore() {
+        store.clear();
+    }
+}  
+```
+</details>
 
 
 
+### 4-5. 회원 저장소 테스트 코드
+
+* 테스트 코드의 경우, 테스트가 각각 독립적으로 실행되도록 설계해야한다
+* 테스트 순서에 의존 관계가 있는 것은 좋지 않다
+
+```test/java/de/springdemo/repository/MemoryMemberRepositoryTest``` : 회원 저장소 테스트 코드
+
+<details>
+  <summary>코드 보기</summary>
+
+```java
+class MemoryMemberRepositoryTest {
+
+    MemoryMemberRepository repository = new MemoryMemberRepository();
+
+    /**
+     * 각 테스트에서 저장소에 저장하는 작업이 있기 때문에 테스트 후 비워주는 작업이 필요함
+     * 테스트는 순서에 의존 관계가 없도록 설계해야 함
+    */
+    @AfterEach // 메서드가 끝날때 마다 특정 동작(콜백 함수라고 생각하면 됨
+    public void afterEach() {
+        repository.clearStore();
+    }
+
+    @Test
+    public void save() {
+        Member member = new Member();
+        member.setName("spring"); // 이름을 "spring"으로
+
+        repository.save(member); // 저장소에 멤버 저장
+        Member result = repository.findById(member.getId()).get();
+
+        // 1. 일치하면 true 반환
+        System.out.println("Result = "+(result == member));
+        // 2. 기대한 값과 일치하는지 확인, 다를 경우 AssertionFailedError
+        Assertions.assertEquals(result, member);
+        // 3. org.assertj.core.api.Assertions.assertThat 사용
+        assertThat(member).isEqualTo(result); // static import로 처리하면 편함
+    }
+
+    @Test
+    public void findByName() {
+        Member member1 = new Member();
+        member1.setName("spring1");
+        repository.save(member1);
+
+        Member member2 = new Member();
+        member2.setName("spring1");
+        repository.save(member2);
+
+        Member result1 = repository.findByName("spring1").get();
+        assertThat(result1).isEqualTo(member1);
+        // 일치하지 않기 때문에 오류 발생
+        /*
+        Member result1 = repository.findByName("spring2").get();
+        assertThat(result1).isEqualTo(member1);
+        */
+    }
+
+    @Test
+    public void findAll() {
+        Member member1 = new Member();
+        member1.setName("spring1");
+        repository.save(member1);
+
+        Member member2 = new Member();
+        member2.setName("spring1");
+        repository.save(member2);
+
+        List<Member> result = repository.findAll();
+        assertThat(result.size()).isEqualTo(2); // 입력한 멤버가 2개
+    }
+}  
+```
+</details>
 
 
+
+### 4-6. 회원 서비스 코드
+
+```service/MemberService``` : 회원 서비스
+
+<details>
+  <summary>코드 보기</summary>
+
+```java
+/**
+ * 서비스 레이어쪽은 비즈니스에 의존적으로 네이밍하고 설계한다
+ * cmd+shift+t : Create New Test
+ */
+
+public class MemberService {
+    private final MemberRepository memberRepository;
+		
+    /**
+		 * 기존에는 회원 서비스가 메모리 회원 레포지토리를 직업 생성했음
+     private final MemberRepository memberRepository = new MemoryMemberRepository();
+     */
+	  
+  	// 생성자를 이용해서 회원 서비스 코드를 DI가 가능하도록 변경
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    /**
+     * Join as a member (회원가입)
+     */
+    public Long join(Member member) {
+        //  같은 이름의 중봅 회원 금지
+        /*
+        Optional<Member> result = memberRepository.findByName(member.getName());
+        result.ifPresent(m -> {
+            throw new IllegalStateException("This member already exists.");
+        });
+        */
+
+        /* 권장 하는 코드
+         * 이 경우 메서드로 뽑는 것이 좋음 ctrl+t : extract method
+        memberRepository.findByName(member.getName())
+            .ifPresent(m -> {
+            throw new IllegalStateException("This member already exists.");
+            });
+        */
+        validateDuplicateMember(member); // 같은 이름의 중복 회원 검증
+        memberRepository.save(member);
+        return member.getId();
+    }
+
+    private void validateDuplicateMember(Member member) {
+        memberRepository.findByName(member.getName())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("This member already exists.");
+                });
+    }
+
+    /**
+     * Check all members(전체 회원 조회)
+     */
+    public List<Member> findMembers() {
+        return memberRepository.findAll();
+    }
+
+    public Optional<Member> findOne(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
+
+}  
+```
+</details>
+
+
+
+### 4-7. 회원 서비스 테스트 코드
+
+```test/java/de/springdemo/service/MemberServiceTest``` : 회원 서비스 테스트 코드
+
+<details>
+  <summary>코드 보기</summary>
+
+```java
+/**
+ * 테스트 코드는 이름을 한글로 작성 가능
+ * given, when, then으로 로직을 나누는 것이 항상 맞는 것은 아니다
+ * 상황을 잘 보면서 사용
+ * 테스트는 정상 로직 뿐만 아니라 예외 상황도 제대로 캐치하는지 확인하는 것이 중요함
+ */
+
+class MemberServiceTest {
+
+    MemberService memberService;
+    /**
+     * 사실상 다른 MemoryMemberRepository로 테스트 되는 것
+     * MemberService에서 MemberRepository를 새로 생성하지 않고 생성자를 사용
+     */
+    MemoryMemberRepository memberRepository;
+
+    @BeforeEach
+    public void beforeEach() {
+        /**
+         * MemberService의 입장에서 외부에서 memberRepository를 넣어주는 것 (의존성 주입)
+         */
+        memberRepository = new MemoryMemberRepository();
+        memberService = new MemberService(memberRepository);
+    }
+
+    @AfterEach
+    public void afterEach() {
+        memberRepository.clearStore();
+    }
+
+    @Test
+    void join() {
+        // given - 주어진 상황(데이터, 등)
+        Member member = new Member();
+        member.setName("hello");
+
+        // when - 이것을 실행할 때
+        Long saveId = memberService.join(member);
+
+        // then - 이 결과가 나와야 함(검증)
+        Member findMember = memberService.findOne(saveId).get();
+        Assertions.assertThat(member.getName()).isEqualTo(findMember.getName());
+    }
+
+    @Test
+    void duplicateMemberException() {
+        // given
+        Member member1 = new Member();
+        member1.setName("spring");
+
+        Member member2 = new Member();
+        member2.setName("spring");
+
+        // when - 똑같은 name으로 join 하면 예외가 터져야 함
+        memberService.join(member1);
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
+
+        Assertions.assertThat(e.getMessage()).isEqualTo("This member already exists.");
+
+
+        /** try-catch문으로 작성 시
+        memberService.join(member1);
+        try {
+            memberService.join(member2);
+            fail();
+        } catch (IllegalStateException e) { // 예외 메세지가 일치해야 함
+            Assertions.assertThat(e.getMessage()).isEqualTo("This member already exists. xx");
+        }
+        */
+
+    }
+}  
+```
+</details>
+
+* ```@BeforeEach``` : 각 테스트 실행 전에 호출됨. 테스트가 서로 영향이 없도록 새로운 객체를 생성하고, 의존관계도 새로 맺어 줌
+  * 기존의 문제점은  ```MemoryMemberRepository``` 객체를 새로 생성을 해서 사용했기 때문에 사실상 서로 다른 객체로 테스트를 진행했음
+  * ```MemberService```의 입장에서 외부에서 생성한 ```MemoryMemberRepository``` 객체를 주입하는 형식으로 사용 (DI, 의존성 주입)
+
+DI에 관한 내용은 아래에서 그리고 이후의 포스트에서 더 자세히 다룰 예정이다.
 
 ---
 

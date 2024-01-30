@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"> <!--Thymeleaf expression 사용을 가능하게 해줌-->
+<head>
+  <title>Hello</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<!--${data}는 모델에서 추가된 "data" attribute. ${data}는 동적으로 실제값으로 치환 됨-->
+<p th:text="'Hello to ' + ${data}" >Hello to our Customers.</p>
+</body>
+</html>

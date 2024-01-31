@@ -26,11 +26,16 @@
    * 회원 저장소 코드, 테스트 코드
    * 회원 서비스 코드, 테스트 코드
 5. [Spring Bean & Dependency](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#5-spring-bean--dependency)
+   * Component Scan
+   * 자바 코드로 스프링 빈 등록
 6. [회원 관리 기능 개발 II](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#6-%ED%9A%8C%EC%9B%90-%EA%B4%80%EB%A6%AC-%EA%B8%B0%EB%8A%A5-%EA%B0%9C%EB%B0%9C-ii)
+   * 홈 화면 추가
+   * 등록
+   * 조회
 7. [Spring DB Access](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#7-spring-db-access)
 8. [AOP](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#8-aop)
 
-
+<br>
 
 ---
 
@@ -39,6 +44,10 @@
 * Java 17 or 21
 * Spring Boot 3.2.2
 * h2database 1.4.200
+
+[포스트에서 작성한 모든 코드](https://github.com/seungki1011/Data-Engineering/tree/main/spring/springdemo/src)
+
+<br>
 
 ---
 
@@ -61,7 +70,7 @@
 
 스프링 프레임워크가 Java 애플리케이션을 쉽게 빌드해주기 위한 도구를 많이 제공해주는 툴박스라면, 스프링 부트는 스프링 프레임워크를 이용한 프로젝트를 쉽게 시작할 수 있도록 해주는 마법같은 도구로 생각하면 간편하다.
 
-
+<br>
 
 ### 1-2. Gradle
 
@@ -71,7 +80,7 @@
 
 ```Gradle```이 ```Maven```보다 flexible 하고 성능이 좋다. (그냥 ```Gradle```을 사용해서 프로젝트 진행하자) 
 
-
+<br>
 
 ### 1-3. MVC Pattern
 
@@ -109,6 +118,8 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 
 실제로 MVC 패턴으로 개발을 하면서 지켜야하는 규칙 같은 것들이 많다. 이런 MVC의 세부적인 내용은 이후 SpringMVC 포스트에서 다룰 예정이다.
 
+<br>
+
 ---
 
 ## 2) Spring Boot Project Configuration
@@ -124,6 +135,8 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 * Dependencies : ```Spring Web```, ```Thymeleaf```
 * Generate로 프로젝트 생성하고, ```build.gradle``` 파일을 통해서 프로젝트를 오픈
 
+<br>
+
 ### 2-2. 정상적으로 실행되는지 확인
 
 ```SpringdemoApplication```을 실행해보고 정상 동작하는지 확인해보자.
@@ -137,6 +150,8 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 <p align="center">   <img src="img/springboot3.png" alt="springboot" style="width: 55%;"> </p>
 
 * ```Dependencies```에서 의존 관계를 계층적으로 확인 가능하다
+
+<br>
 
 ### 2-3. View 설정하기
 
@@ -171,6 +186,8 @@ This is a Static index.html
 <p align="center">   <img src="img/welcomepage1.png" alt="springboot" style="width: 55%;"> </p>
 
 * [```thymeleaf```](https://www.thymeleaf.org/)같은 템플릿 엔진을 사용해서 동적인 요소가 들어간 페이지를 만들 수 있다
+
+<br>
 
 이제 컨트롤러(controller)를 만들어보자. 템플릿 엔진을 이용한 동적 페이지를 만들기 위해 웹애플리케이션의 첫 번째 진입점인 컨트롤러 부터 만들어 볼 것이다.
 
@@ -212,6 +229,8 @@ public class HelloController {
 * ```viewName``` 매핑은 ```resources:templates/```+``` {viewName}```+```.html``` 처럼 이루어짐
 * 위의 경우 ```hello```가 ```viewName```
 
+<br>
+
 ### 2-4. 빌드하고 실행
 
 1. ```gradlew```가 존재하는 디렉토리로 이동 : ```cd springdemo```
@@ -236,6 +255,8 @@ public class HelloController {
 ### 3-1. Static Contents
 
 정적 컨텐츠의 경우 그냥 정적 html 자체를 건내주는 방식. 동작 방식은 다음과 같다. 웹 브라우저에서 ```/static.html```로 접근을 할 경우 스프링 부트의 내장 웹서버(디폴트 : 톰캣 서버)에서 ```static```과 매핑된 컨트롤러를 찾는다. 존재하지 않을 경우 ```resources: static/static.html```을 찾아서 넘겨준다. 
+
+<br>
 
 ### 3-2. MVC & Template Engine
 
@@ -278,6 +299,8 @@ public class MVCController {
 
 * 참고로 ```?```뒤에 오는 것을 [Query String](https://en.wikipedia.org/wiki/Query_string)이라고 한다.
 
+<br>
+
 ### 3-3. API
 
 HTML 뷰를 랜더링하기 보다는 구조화 된 데이터를 ```json``` 형식으로 반환을 한다. (```xml```형식도 가능하지만 최근에는 거의 쓰이지 않음)
@@ -311,13 +334,15 @@ public class ApiController {
 
 <p align="center">   <img src="img/api1.png" alt="springboot" style="width: 90%;"> </p>
 
+<p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
+
 * ```@ResponseBody``` 애노테이션이 붙어 있을 경우 http 응답에 데이터를 그대로 넘기는 것으로 판단
 * ```HttpMessageConverter```가 동작하게 된다
   * 이 때 반환이 객체인 경우 ```JsonConverter```가 동작해서 ```json```으로 변환하고 응답으로 준다
     * ```MappingJackson2HttpMessageConverter```, ```Gson```
   * 반환이 문자인 경우 ```StringConverter```가 동작
 
-
+<br>
 
 ---
 
@@ -325,15 +350,21 @@ public class ApiController {
 
 > 간단한 회원 관리 기능에 대한 백엔드 개발을 다룬다.
 
+<br>
+
 ### 4-1. 비즈니스 요구 사항
 
 * 데이터: 회원 ID(시스템이 관리), 이름
 * 기능: 회원 등록, 조회
 * DB는 선정되지 않았다고 가정
 
+<br>
+
 ### 4-2. 애플리케이션 계층 구조
 
 <p align="center">   <img src="img/membermanage1.png" alt="springboot" style="width: 75%;"> </p>
+
+<p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
 
 * 컨트롤러: MVC의 컨트롤러 역할
 * 서비스: 비즈니스 로직 구현
@@ -341,11 +372,15 @@ public class ApiController {
 * 도메인: 비즈니스 도메인의 객체 (현재의 경우 회원)
   * 주로 데이터베이스에 저장하고 관리된다
 
+<br>
+
 ### 4-3. 클래스 의존 관계
 
 * DB가 선정되지 않았다고 가정된 상태이기 때문에, 인터페이스로 구현 클래스를 변경할 수 있도록 설계할 것이다
 * 초기 개발 단계에서는 구현체로 메모리 기반의 대이터 저장소를 이용
 * ```MemberRepository```를 인터페이스로 만들고, ```MemoryMemberRepository```로 구현
+
+<br>
 
 ### 4-4. 회원 저장소 코드
 
@@ -432,6 +467,7 @@ public class MemoryMemberRepository implements MemberRepository{
 }  
 ```
 
+<br>
 
 ### 4-5. 회원 저장소 테스트 코드
 
@@ -509,7 +545,7 @@ class MemoryMemberRepositoryTest {
 ```
 </details>
 
-
+<br>
 
 ### 4-6. 회원 서비스 코드
 
@@ -580,6 +616,7 @@ public class MemberService {
 }  
 ```
 
+<br>
 
 ### 4-7. 회원 서비스 테스트 코드
 
@@ -670,41 +707,370 @@ class MemberServiceTest {
 
 DI에 관한 내용은 아래에서 그리고 이후의 포스트에서 더 자세히 다룰 예정이다.
 
+<br>
+
 ---
 
 ## 5) Spring Bean & Dependency
 
-> 컴포넌트 스캔(Component Scan), 의존관계, 스프링 빈, 의존성 주입(DI)에 대한 간단한 소개
+> 스프링 빈(Spring Bean)을 등록하는 것에는 **컴포넌트 스캔(Component Scan)**과 **Java 코드로 직접 스프링 빈을 등록**하기의 두 가지 방법이 있다.
+>
+> 스프링 빈, 의존성 주입(Dependency Injection) 그리고 위의 두 가지 방법에 대한 간단한 소개를 다룬다.
 
 ```MemberController```를 추가 해보자. ```MemberController```는 ```MemberService```를 통해서 회원 가입과 조회 등이 가능해야 한다. 이런 경우를 ```MemberController```가 ```MemberService```를 의존한다고 표현한다. 
 
+<br>
+
+### 5-1. 컴포넌트 스캔(Component Scan)
+
+```controller/MemberController```
+
+```java
+/**
+ * @Controller가 있으면 스프링 컨테이너에 MemberController 객체를 생성해서 넣어둔고, 스프링이 관리한다
+ * 이것을 스프링 컨테이너에서 스프링 빈(Spring Bean)이 관리된다고 표현한다
+ */
+@Controller
+// @Component로도 사용 가능
+public class MemberController {
+    /**
+     * 스프링이 관리를 하게 되면 컨테이너에 등록이 되고, 컨테이너로 부터 받아서 쓰도록 해야함
+     * new를 사용하면 MemberController가 아니더라도 다른 Controller들이 MemberService를 사용할 수 있게 됨
+     * private final MemberService memberService = new MemberService();
+     */
+
+    private final MemberService memberService;
+
+    /**
+     * @Autowired가 있으면 스프링 컨테이너의 MemberService와 연결 시켜줌
+     * 생성자의 @Autowired를 통해서 스프링이 연관된 객체를 컨테이너에서 찾아서 넣어준다 - 의존성 주입
+     * MemberService에 @Service 애노테이션이 있어야 함
+     * @Service가 있아야 컨테이너에 MemberService를 등록 해줌
+     */
+    @Autowired
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+}
+```
+
+* ```@Controller```가 있으면 스프링 컨테이너에 ```MemberController``` 객체를 자동으로 생성해서 넣어두고, 스프링이 관리한다
+* 이것을 스프링 컨테이너에서 **스프링 빈(Spring Bean)**이 관리된다고 한다
+* 생성자에 ```@Autowired```를 사용하면 객체 생성 시점에 스프링 컨테이너에서 해당 스프링 빈을 찾아서 주입한다(DI)
+  * 생성자가 1개만 있으면 ```@Autowired```는 생략 가능
+  * ```@Autowired```는 스프링이 관리하는 객체에서만 동작한다. 스프링 빈으로 등록하지 않고 내가 직접 생성한 객체에 대해서 동작하지 않는다.
+
+```java
+// @Service로 컨테이너에 빈을 등록하지 않고 애플리케이션을 실행하는 경우
+Description:
+
+Parameter 0 of constructor in de.springdemo.controller.MemberController required a bean of type 'de.springdemo.service.MemberService' that could not be found.
 
 
+Action:
 
+Consider defining a bean of type 'de.springdemo.service.MemberService' in your configuration.
+```
 
+* ```MemberService```에 ```@Service```를 추가하지 않으면 컨테이너에 빈으로 등록되지 않는다
 
+> 객체 의존 관계를 외부에서 넣어주는 것을 **의존성 주입(Dependency Injection)**이라고 한다.
+>
+> DI에는 **Field Injection(필드 주입), Setter Injection(설정자 주입), Construction Injection(생성자 주입)**의 3가지 방식이 있다.
+>
+> 주로 생성자 주입을 권장한다.
 
+<br>
 
+```service/MemberService```
 
+```java
+@Service
+public class MemberService {
+  
+    private final MemberRepository memberRepository;
 
+    @Autowired
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+		/**
+		 * 나머지 구현 부분
+     */
+}
+```
 
+* ```MemberService```에 ```@Service``` 애노테이션이 있어야 함
+  * ```@Service```가 있아야 컨테이너에 ```MemberService```를 등록 해줌
+* ```MemberService```도 생성자에 ```@Autowired```가 있어야 ```MemberRepository```를 찾아서 넣어줌
 
+```repository/MemoryMemberRepository```
 
+```java
+@Repository
+public class MemoryMemberRepository implements MemberRepository{}
+```
 
+* 레포지토리 구현체에도 ```@Repository```를 붙인다
+
+<br>
+
+<p align="center">   <img src="img/springbean1.png" alt="springboot" style="width: 85%;"> </p>
+
+<p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
+
+* ```@Autowired```를 통해서 ```memberController```가 ```memberService```를 사용 가능
+  * ```memberService``` 또한 ```memberRepository```를 사용할 수 있게 해줌
+
+> * 컴포넌트 스캔은 ```@Component```애노테이션을 포함하는 ```@Service```, ```@Controller```, ```@Repository``` 같은 스프링 빈을 찾아서 자동으로 등록 해준다. 
+> * 스프링 컨테이너에 스프링 빈이 등록될 때 기본적으로 [싱글톤(Singleton)](https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html)으로 등록된다.(유일하게 하나만 등록해서 공유) 따라서 같은 스프링 빈이면 같은 인스턴스이다.
+> * 컨트롤러, 서비스, 레포지토리와 같이 정형화 되어 있을 경우 보통 컴포낸트 스캔을 사용한다.
+> * 보통 스프링 빈으로 등록되는 범위는 애플리케이션의 패키지를 포함한 하위 패키지들 까지.
+
+<br>
+
+### 5-2. 자바 코드로 직접 스프링 빈 등록
+
+```MemberService```, ```MemberRepository```에 ```@Component``` 애노테이션이 붙지 않았을 경우. (```@Autowired```도 지움, ```@Controller```는 유지한다.)
+
+```service/MemberService```
+
+```java
+public class MemberService {
+  
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+		/**
+		 * 나머지 구현 부분
+     */
+}
+```
+
+```repository/MemberRepository```
+
+```java
+public class MemoryMemberRepository implements MemberRepository{}
+```
+
+<br>
+
+직접 빈을 코드로 추가하기 위해서 ```SpringConfig```를 추가해보자.(```SpringDemoApplication```과 같은 위치)
+
+```SpringConfig```
+
+```java
+@Configuration // Configuration Class이고, bean들을 정의하고 있음 나타냄 
+public class SpringConfig {
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberService(memberRepository()); // 생성자 주입으로 MemoryRepository의 구현체를 주입
+    }
+    
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository(); // MemberRepository의 구현체
+    }
+}
+```
+
+자바 코드로 직접 빈을 설정하는 방법은 컴포넌트 스캔이 비해서 복잡해보이는데 왜 사용할까? 일단 정형화 되지 않거나, 상황에 따라 구현 클래스를 변경해야하는 경우 설정을 통해서 스프링 빈으로 등록한다. 예를 들어, 현재 우리가 사용하는 ```MemoryMemberRepository```는 DB가 선정되지 않았다는 가상의 상황을 설정하에 사용하는 ```MemberRepository```인터페이스의 구현체이다. 이 때 코드로 빈을 설정해서 사용하는 경우, **기존에 운영하던 코드를 건들지 않고 ```MemoryMemberRepository```를 변경할 수 있다**.
+
+* 이후에 ```SpringConfig```에서 ```MemoryMemberRepository```를 ```DbMemberRepository```로 변경하기만 하면 됨
+
+<br>
 
 ---
 
 ## 6) 회원 관리 기능 개발 II
 
+> 회원 관리 예제에 대한 웹 기능 추가. 컨트롤러를 통해서 회원을 등록하고 조회.
 
+### 6-1. 홈 화면 추가
 
+```controller/HomeController```
 
+```java
+@Controller
+public class HomeController {
+    @GetMapping("/")
+    public String home() {
+        return "home";
+    }
+}
+```
 
+```resources/template/home.html```
 
+```html
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+  <div>
+    <h1>Hello Spring</h1> <p>회원 기능</p>
+    <p>
+      <a href="/members/new">회원 가입</a>
+      <a href="/members">회원 목록</a> </p>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>
+```
+
+ <p align="center">   <img src="img/home1.png" alt="springboot" style="width: 55%;"> </p>
+
+* 기존의 ```index.html```이 표시되지 않는 이유는 컨트롤러가 정적 컨텐츠보다 우선 순위가 높기 때문이다
+
+<br>
+
+### 6-2. 회원 등록(가입) 기능
+
+기존의 ```MemberController``` 사용.
+
+```controller/MemberController```
+
+```java
+@Controller
+public class MemberController {
+
+    private final MemberService memberService;
+
+    @Autowired
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    @GetMapping("/members/new")
+    public String createForm() {
+        return "members/createMemberForm"; // "templates/members/createMemberForm.html"
+    }
+  	
+  	@PostMapping("/members/new")
+    public String create(MemberForm form) {
+        Member member = new Member();
+        member.setName(form.getName());
+
+        memberService.join(member); // join을 통해서 회원 등록
+
+        return "redirect:/"; // 홈 화면으로 돌려보내기
+    }
+}
+```
+
+```templates/member/createMemberForm.html```
+
+```html
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+  <form action="/members/new" method="post">
+    <div class="form-group">
+      <label for="name">이름</label>
+      <!-- 폼에 이름을 입력하면 해당 이름이 서버로 넘어감 -->
+      <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+    </div>
+    <button type="submit">등록</button> </form>
+</div> <!-- /container -->
+</body>
+</html>
+```
+
+```controller/MemberForm```
+
+```java
+public class MemberForm {
+    private String name; // createMemberForm의 "name"과 매칭
+
+    // getter and setter
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+회원 등록의 동작 과정은 다음과 같다.
+
+1. 회원가입(```/members/new```)으로 들어가면(```GET``` 방식) ```@GetMapping```에 의해 ```createMemberForm.html```이 렌더링
+2. ```form``` 태그에서 이름을 입력하고 등록을 진행하면 ```members/new```에 ```POST```방식으로 넘어간다
+3. ```@PostMapping```에서 ```MemberForm```의 ```name```에 입력한 이름을 넣어준다
+4. ```member.setName(form.getName());``` : 폼에서 이름을 꺼내고, ```member```에 ```setName```
+5. ```join```으로 회원(멤버) 등록
+
+<br>
+
+### 6-3. 회원 조회 기능
+
+기존의 ```MemberController``` 에 조회 기능을 추가하자.
+
+```controller/MemberController```
+
+```java
+@Controller
+public class MemberController {
+    /**
+     * 기존의 코드 
+     */
+  
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members); // 뷰에서 데이터를 볼 수 있도록 addAttribute
+        return "members/memberList";
+    }
+}
+```
+
+```templates/members/memberList.html```
+
+```html
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>이름</th> </tr>
+      </thead>
+      <tbody>
+      <!-- 테이블 형식으로 모델의 멤버들을 루프로 돌려서 보여줌 -->
+      <tr th:each="member : ${members}">
+        <td th:text="${member.id}"></td>
+        <td th:text="${member.name}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>
+```
+
+* 메모리 내에서 처리하고 있기 때문에 서버 재시작 하면 데이터가 전부 날아감 
+
+ <p align="center">   <img src="img/membercheck.png" alt="springboot" style="width: 55%;"> </p>
+
+<br>
 
 ---
 
 ## 7) Spring DB Access
+
+
+
+
+
+
 
 
 
@@ -733,3 +1099,4 @@ DI에 관한 내용은 아래에서 그리고 이후의 포스트에서 더 자�
 1. [https://docs.spring.io/spring-boot/docs/3.2.2/reference/html/index.html](https://docs.spring.io/spring-boot/docs/3.2.2/reference/html/index.html)
 1. [https://www.thymeleaf.org/](https://www.thymeleaf.org/)
 1. [https://en.wikipedia.org/wiki/Query_string](https://en.wikipedia.org/wiki/Query_string)
+1. [https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html](https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html)

@@ -1,6 +1,7 @@
 package de.springdemo.repository;
 
 import de.springdemo.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
@@ -8,6 +9,7 @@ import java.util.*;
  * 간단한 예시이기 때문에 동시성 문제를 고려하지 않음
  */
 
+//@Repository
 public class MemoryMemberRepository implements MemberRepository{
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;

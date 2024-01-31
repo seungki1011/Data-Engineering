@@ -3,6 +3,8 @@ package de.springdemo.service;
 import de.springdemo.domain.Member;
 import de.springdemo.repository.MemberRepository;
 import de.springdemo.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +13,11 @@ import java.util.Optional;
  * 서비스 레이어쪽은 비즈니스에 의존적으로 네이밍하고 설계한다
  * cmd+shift+t : Create New Test
  */
-
+//@Service
 public class MemberService {
     private final MemberRepository memberRepository;
 
+//    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }

@@ -5,7 +5,9 @@
   * 정적 변수 (static variable)
 * [Java Memory Structure]()
 
+<br>
 
+---
 
 ## 2) Static Variable
 
@@ -17,6 +19,8 @@
   * JVM이 종료되기 전까지 생존
 
 * 공용으로 사용하기 위해 클래스에서 특별히 관리하는 녀석으로 생각하면 편함
+
+<br>
 
 ### Without Static vs With Static
 
@@ -100,7 +104,9 @@ d2 count : 2
 d3 count : 3
 ```
 
+<br>
 
+---
 
 ## 3) Static Method
 
@@ -146,11 +152,15 @@ This is the string value
 =========== This is the string value ===========
 ```
 
+<br>
+
 ### main() 메서드
 
 * ```main()```은 ```static```메서드이기 때문에 ```main()```이 호출하는 메서드는 무조건 ```static``` 메서드를 사용
 
+<br>
 
+---
 
 ## 4) Static Import
 
@@ -164,15 +174,17 @@ import static java.lang.System.out;  // System.out을 out으로 참조가능
 
 * 인텔리제이 ```alt+enter``` : Add on-demand static import
 
+<br>
 
+---
 
 ## 5) Further Reading
 
 * Java Permgen vs Metaspace
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

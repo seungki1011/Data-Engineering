@@ -6,6 +6,10 @@
 
 * 중첩 반복문을 통해 이중, 삼중 반복문을 구현 가능 (nested loop)
 
+<br>
+
+---
+
 ## 2) while
 
 * 조건식이 참이면 코드 블럭 실행, 거짓이면 ```while```문 탈출
@@ -35,6 +39,10 @@ Current cnt is : 3
 Current cnt is : 4
 Current cnt is : 5
 ```
+
+<br>
+
+---
 
 ## 3) do-while
 
@@ -68,6 +76,10 @@ cnt is 3
 do will execute first
 ```
 
+<br>
+
+---
+
 ## 4) for
 
 * 반복 횟수가 정해져 있을때 주로 사용
@@ -100,6 +112,10 @@ current i is 3
 current i is 4
 current i is 5
 ```
+
+<br>
+
+---
 
 ## 5) for-each
 
@@ -140,9 +156,9 @@ Shawn
 Merry
 ```
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

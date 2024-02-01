@@ -4,6 +4,10 @@
 * 특정 조건(condition)에 따라 특정 코드를 실행하는 것
 * ```if```, ```else if```, ```switch```, 삼항연산자
 
+<br>
+
+---
+
 ## 2) if, else-if
 
 ### if
@@ -67,6 +71,10 @@ You are a child
 * ```else if```를 사용하는 것은 서로 연관 조건인 경우에만 사용
 * 독립된 조건이라면 그냥 ```if```문을 따로 사용
 
+<br>
+
+---
+
 ## 3) switch
 
 * 조건식의 결과 값이 어떤 케이스의 값과 동일하면 해당 케이스의 코드 실행
@@ -110,6 +118,10 @@ This is the remaining code executed after the switch block
 
 * Java 14부터 새로운 ```switch```도 생겼음
 
+<br>
+
+---
+
 ## 4) 삼항 연산자(Ternary Operator)
 
 * 참과 거짓에 따른 특정 값을 구하는 경우 ```?:``` 연산자를 사용해서 ```if```문에 비해 코드를 간결화 시킬 수 있음
@@ -136,9 +148,9 @@ public class con3 {
 With your asset 40000$ You can buy it!
 ```
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

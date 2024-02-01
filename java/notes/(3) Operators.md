@@ -1,8 +1,10 @@
 ## Operators
 
-* 변수들의 계산 및 비교를 위해 사용됨
+오퍼레이터들은 변수들의 계산 및 비교를 위해 사용됨
 
+<br>
 
+---
 
 ## 1) Arithmetic Operators
 
@@ -56,7 +58,9 @@ a % b = 0
 a % c = 6
 ```
 
+<br>
 
+---
 
 ## 2) Comparison Operators
 
@@ -99,7 +103,7 @@ a < b returns false
 a <= b returns false
 ```
 
-
+<br>
 
 ### 문자열 비교
 
@@ -141,7 +145,9 @@ compare str1 with str2 : true
 compare str1 with str3 : false
 ```
 
+<br>
 
+---
 
 ## 3) Logical Operators
 
@@ -154,9 +160,12 @@ compare str1 with str3 : false
   * ```!``` : 피연산자의 논리값에 대한 부정을 반환한다
     * 예시 ```true```를 ```false```로
 
+<br>
+
+---
+
 ## 4) Further Reading
 
-* c 언어랑 기본적인 문법은 비슷한 것이 많은 것 같음
 * 굳이 기초 문법에 대한 예시 코드를 작성할 필요는 없을 것 같다..
 * Java에서 String의 동작 방식 찾아보기
   * [https://www.geeksforgeeks.org/strings-in-java/](https://www.geeksforgeeks.org/strings-in-java/)
@@ -164,10 +173,10 @@ compare str1 with str3 : false
 * 비트 연산자에 대한 내용을 찾아볼 필요가 있을까?
   * [위키피디아 Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
 
+<br>
 
 
-
-## 참고
+## Reference
 
 ---
 

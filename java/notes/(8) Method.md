@@ -47,6 +47,10 @@ This is a start message!
 
 * **변수의 값이 복사되어서 대입된다**
 
+<br>
+
+---
+
 ## 2) Static Method
 
 * 정적 메소드
@@ -55,10 +59,18 @@ This is a start message!
 * 메소드 내에 인스턴스 변수 사용 불가
 * [OOP](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md)와 [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)에서 추가 설명
 
+<br>
+
+---
+
 ## 3) Instance Method
 
 * 객체(instance) 생성 후 ```참조변수.methodName()``` 으로 호출
 * [OOP](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md)에서 추가 설명
+
+<br>
+
+---
 
 ## 4) Overloading
 
@@ -70,6 +82,8 @@ This is a start message!
   * 반환 타입은 영향이 없음
 * 메서드는 구분하기 위한 메서드 시그니쳐는 메서드의 이름 & 매개변수 타입, 갯수
 * 오버라이딩된 메소드를 호출하는 경우 파리미터 타입에 가장 알맞은 메소드 부터 선택해서 호출
+
+<br>
 
 ### 성립하는 경우
 
@@ -89,15 +103,19 @@ long add(int a, int b) {return (long)(a+b);}
 
 * 반환 타입은 오버로딩의 성립에 영향이 없음
 
+<br>
+
+---
+
 ## 5) Overriding
 
 * 오버라이딩
 * 조상 클래스로 부터 상속 받 메서드의 내용 상속받는 클래스에 맞게 변경하는 것(덮어쓰는 것)
 * [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)에서 추가 설명
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

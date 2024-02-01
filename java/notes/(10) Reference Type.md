@@ -6,6 +6,10 @@
 * 참조형은 객체의 메모리 주소를 담는다(참조값)
   * ```.```을 통해 멤버 변수에 접근해서 연산에 사용
 
+<br>
+
+---
+
 ## 2) 참조형 대입
 
 * 참조형에 대입하는 경우 변수에 들어가 있는 참조값을 복사해서 대입하는 것
@@ -45,6 +49,10 @@ Unit name: Marine| Attack: 30| Defense: 150
 Unit name: Firebat| Attack: 50| Defense: 250
 ```
 
+<br>
+
+---
+
 ## 3) null
 
 * 참조 변수가 참조가 없는 경우(어떠한 객체도 가리키지 않는 경우)
@@ -53,6 +61,10 @@ Unit name: Firebat| Attack: 50| Defense: 250
   * ```c```언어 같은 경우에는 ```malloc```으로 메모리를 allocate하고 ```free```로 메모리를 놔줌
   * ```java```에서는 JVM의 GC(Garbage Collector)가 사용하지 않는 인스턴스를 자동으로 메모리에서 제거
 
+<br>
+
+---
+
 ## 4) NullPointerException
 
 * ```null```값을 가지는 객체/변수를 호출하는 경우 발생
@@ -60,11 +72,9 @@ Unit name: Firebat| Attack: 50| Defense: 250
   * 예시: ```null```값을 가진 객체에 대해 메소드를 호출하는 경우
 * null safe하게 코딩하는 것이 중요
 
+<br>
 
-
-
-
-## 참고
+## Reference
 
 ---
 

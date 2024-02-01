@@ -17,7 +17,9 @@
 * ```RuntimeException```은 보통 개발자의 실수로 발생하는 예외
 * 나머지 ```Exception```들은 사용자의 사용과 같은 외적인 요인으로 발생하는 예외
 
+<br>
 
+---
 
 
 ## 2) Exception Handling
@@ -185,7 +187,9 @@ Exception 발생!
 
 * 구체적인 하위의 ```Exception```을 위에, 가장 상위의 ```Exception```은 아래에
 
+<br>
 
+---
 
 ## 3) Exception Variable
 
@@ -245,7 +249,9 @@ java.lang.ArithmeticException: / by zero
 * ```getMessage()``` : 발생한 예외의 인스턴스에 저장된 ```detailMessage```를 얻을 수 있음
 * ```printStackTrace()``` : 예외 발생 당시 Call Stack에 있었던 메서드 정보와 예외 메세지를 출력
 
+<br>
 
+---
 
 ## 4) Multi Catch
 
@@ -271,7 +277,9 @@ try{
 }
 ```
 
+<br>
 
+---
 
 ## 5) ```throw```
 
@@ -300,7 +308,9 @@ public class ExceptionMain4 {
 e.getMessage : Exception was made(This is the message)
 ```
 
+<br>
 
+---
 
 ## 6) Checked, Unchecked Exception
 
@@ -318,7 +328,9 @@ e.getMessage : Exception was made(This is the message)
 
 <p align='center'>https://medium.com/javarevisited/checked-and-unchecked-exceptions-in-java-19166e68b66f</p>
 
+<br>
 
+---
 
 ## 7) ```throws```
 
@@ -374,12 +386,16 @@ Handled Exception in main
 * 무조건 ```main```에서 예외 처리를 하라는 뜻은 아님
   * 상황에 따라 어디에서 예외 처리를 진행할지 판단하면 됨
 
+<br>
+
 ### exception rethrow
 
 * 예외 되던지기
 * ```catch```에서 예외처리를 하고 다시 ```throw```로 예외를 던짐 → 메서드와 ```main``` 양쪽에서 예외를 처리
 
+<br>
 
+---
 
 ## 8) ```try-catch-finally```
 
@@ -422,7 +438,9 @@ Writing data to data.txt!
 [finally block] 아래 코드는 항상 실행
 ```
 
+<br>
 
+---
 
 ## 9) ```try-with-resource```
 
@@ -456,7 +474,9 @@ public class ExceptionMain7 {
 Writing data to Data2.txt!
 ```
 
+<br>
 
+---
 
 ## 10) User Defined Exception
 
@@ -474,16 +494,18 @@ class UserDefinedException extends Exception { // Exception을 상속 받으면 
 }
 ```
 
+<br>
 
+---
 
 ## Further Reading
 
 * Transaction내의 예외 처리
 * chained exception
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

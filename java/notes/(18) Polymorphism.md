@@ -76,9 +76,15 @@ p2.parentMethod() 실행 : called parentMethod
 * ```Parent p2 = new Child();``` 처럼 부모 타입이 자식 타입을 참조하는 경우라도 ```p2.childMethod()```로 자식 타입의 메서드를 호출하는 것은 불가능
   * ```p2```는 일단 ```Parent```타입이기 때문에 자식에 대한 정보 x
 
+<br>
+
+---
+
 ## 2) Casting
 
 * 형변환
+
+<br>
 
 ### Downcasting
 
@@ -116,6 +122,8 @@ called childMethod
 called parentMethod
 ```
 
+<br>
+
 #### Temporary Downcasting
 
 * 일시적 다운캐스팅
@@ -143,7 +151,9 @@ public class TempCastMain1 {
 * 이 과정에서 ```p4``` 타입 자체가 ```Child```로 변경되는 것은 아님
   * ```p4```의 참조값을 복사후, 복사한 참조값이 ```Child``` 타입이 됨
 
-#### Things to note for Downcasting
+<br>
+
+#### 다운 캐스팅시 주의할 점
 
 * 다운캐스팅시 주의점
 * 업캐스팅과 달리 다운캐스팅은 무조건 명시적으로 캐스팅을 해야하는 이유
@@ -182,6 +192,8 @@ Exception in thread "main" java.lang.ClassCastException: de.java.polymorphism.Pa
 
 * 다운 캐스팅을 안전하게 사용하기 위해서 ```instanceof``` 사용 가능 (인스턴스 타입 확인)
 
+<br>
+
 ### Upcasting
 
 * 업캐스팅
@@ -215,7 +227,9 @@ public class CastMain2 {
 }
 ```
 
+<br>
 
+---
 
 ## 3) ```instanceof```
 
@@ -286,6 +300,8 @@ Is poly5 a instance of GrandChild? : false
   * 대입이 가능하면 ```true```
   * 불가능하면 ```false```
 
+<br>
+
 [```InstanceOfMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/InstanceOfMain2.java)
 
 ```java
@@ -320,7 +336,9 @@ c instanceof Parent : true
 * 인스턴스가 존재하기 위해서는 해당 인스턴스가 존재 가능하게 하위 클래스의 인스턴스가 선언 되어야 함
   * ```Child```인스턴스가 존재하기 위해서는 ```Child``` 이하 클래스의 객체가 선언 되어야 함 → ```Child``` 이상의 인스턴스 존재
 
+<br>
 
+---
 
 ## 4) Method Overriding
 
@@ -410,7 +428,9 @@ Child's commonMethod (Overrided)
   * 만약 더 하위 계층의 자식 중에서 오버라이딩 된 메서드가 존재한다면 해당 메서드가 우선권을 가진
     * 쉽게 말해서 오버라이딩 된 메서드가 있다면 아래 클래스쪽으로 찾아서 실행
 
+<br>
 
+---
 
 ## 5) Usage of Polymorphism
 
@@ -524,7 +544,7 @@ Moo~
 
 <p align="center">   <img src="img/Polymorphism1.png" alt="Usage of polymorphism" style="width: 60%;"> </p>
 
-
+<br>
 
 ### 한계
 
@@ -535,7 +555,9 @@ Moo~
 
 * 위의 문제를 해결하기 위해서 추상 클래스(Abstract Class)를 도입
 
+<br>
 
+---
 
 ## 6) Abstract Class (```abstract```)
 
@@ -639,7 +661,9 @@ Oink~
 * 추상 클래스를 통해 제약을 추가 (추상 메서드)
 * 순수하게 추상 메서드로만 이루어진 클래스를 구현 → 경우에 따라 다를 수 있지만 인터페이스를 이용해서 구현
 
+<br>
 
+---
 
 ## 7) Interface
 
@@ -665,6 +689,8 @@ Oink~
 >
 > * 제약을 통해서 규격 제공 
 > * 인터페이스의 다중 구현 (클래스에서는 불가능했던 다중 상속)
+
+<br>
 
 ### Interface Multi Implementation
 
@@ -836,16 +862,18 @@ Used Honk! Bing Bong~
 * 다중 구현에서 다이아몬드 문제를 발생하지 않는다
   * ```Fly```, ```Move``` 인터페이스에 둘다 추상 메서드 ```move```가 존재하지만 두 인터페이스 다중 구현시 ```move```는 하나만 구현하기 때문에 메서드 선택이 문제인 다이아몬드 문제는 존재하지 않음
 
+<br>
 
+---
 
 ## 8) Further Reading
 
 * Compile-time polymorphism (method overloading) vs Runtime polymorphism (method overriding)
 * Dynamic Method Dispatch
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

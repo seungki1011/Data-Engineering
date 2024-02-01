@@ -38,7 +38,9 @@
 * ```Collection```,```List```, ```Set```, ```Map``` 등 과 같은 코어 인터페이스 제공
 * 코어 인터페이스를 구현한 ```ArrayList```, ```LinkedList```, ```HashSet```, ```HashMap``` 등 과 같은  클래스들 제공
 
+<br>
 
+---
 
 ## 2) ```Collection```
 
@@ -51,6 +53,10 @@
 <p align='center'>geeksforgeeks - java collection inheritence</p>
 
 * [Java docs - ```Collection```](https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html)
+
+<br>
+
+---
 
 ## 3) ```Iterator```
 
@@ -74,14 +80,16 @@ it = hashSet.iterator();
 * ```Map```은 ```iterator()```가 없음
   * ```keySet()```, ```values()``` 등을 호출한 후에 ```iterator()``` 사용
 
+<br>
 
+---
 
 ## 4) ```List```
 
 * 순서가 있고, 중복을 허용한다
 * [Java docs - ```List```](https://docs.oracle.com/javase/8/docs/api/java/util/List.html)
 
-
+<br>
 
 ### 4-1) ```ArrayList```
 
@@ -178,7 +186,7 @@ The ArrayList contains Grape
   * 복사하는 과정이 부담되기 때문에 ```remove```를 사용하는 경우 끝 인덱스 부터 시작하는 것을 권장
     * 마지막 부터 ```remove```하는 경우 배열 복사가 없음
 
-
+<br>
 
 ### 4-2) ```LinkedList```
 
@@ -240,7 +248,9 @@ Mango
 
 * ```ArrayList```와 마찬가지로 ```List```인터페이스를 구현하기 때문에 ```ArrayList```처럼 사용하면 됨
 
+<br>
 
+---
 
 ## 5) ```Set```
 
@@ -249,7 +259,7 @@ Mango
 * 집합
 * [Java docs - ```Set```](https://docs.oracle.com/javase/8/docs/api/java/util/Set.html)
 
-
+<br>
 
 ### 5-1) ```HashSet```
 
@@ -329,7 +339,7 @@ Title: Title4, Author: Author2, ISBN: ISBN999
 Title: Title3, Author: Author3, ISBN: ISBN789
 ```
 
-
+<br>
 
 [```HashSetMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/HashSetMain2.java)
 
@@ -408,7 +418,7 @@ Size of the HashSet: 3
 HashSet is now empty.
 ```
 
-
+<br>
 
 ### 5-2) ```TreeSet```
 
@@ -508,6 +518,8 @@ Mark is 35 years old.
 * 따로 클래스를 만들어서 사용하는 경우 정렬 기준(```Comparable```, ```Comparator```)을 구현해야 함
   * ```equals```과 ```hashCode```도 구현
 
+<br>
+
 [```TreeSetMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/TreeSetMain2.java)
 
 ```java
@@ -566,7 +578,9 @@ treeSet.headSet(5) = [1, 2, 3]
 treeSet.tailSet(6) = [6, 8]
 ```
 
+<br>
 
+---
 
 ## 6) ```Map```
 
@@ -581,7 +595,7 @@ treeSet.tailSet(6) = [6, 8]
   * 해쉬 함수(hash function)로 해시 테이블(hash table)에 데이터를 저장하고 검색
   * 해시 테이블은 배열과 링크드 리스트가 조합된 형태 (사전 비슷하게 생각하면 됨)
 
-
+<br>
 
 
 ### 6-1) ```HashMap```
@@ -663,7 +677,9 @@ HashMap after removing Bob: {Alice=90, Charlie=92, David=88}
 HashMap after clearing: {}
 ```
 
+<br>
 
+---
 
 ## 7) ```Stack```, ```Queue```, ```ArrayDeque```
 
@@ -672,12 +688,14 @@ HashMap after clearing: {}
 * ```ArrayDeque```는 ```Stack```, ```Queue```의 기능 모두 포함
 * [Java docs - ```ArrayDeque```](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayDeque.html)
 
+<br>
+
 ### 7-1) ```ArrayDeque```
 
 * ```Stack``` 보다 많이 사용
 * 양 끝에서 삽입과 반환이 가능함
 
-
+<br>
 
 [```ArrayDequeMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/ArrayDequeMain.java)
 
@@ -749,9 +767,9 @@ The returned element after pop(): Urgent Task 1
 
 > `IllegalStateException` - if the element cannot be added at this time due to capacity restrictions
 
+<br>
 
-
-
+---
 
 ## 8) Anonymous Class
 
@@ -787,13 +805,17 @@ public class AnonymousClassMain {
 Greetings from the anonymous class!
 ```
 
+<br>
 
+---
 
 ## 9) ```Comparable``` & ```Comparator```
 
 * 객체를 비교하기 위해서 사용(정렬 기준을 제시)
 * ```sort()``` 디폴트는 오름차순
 * ```compareTo``` 또는 ```compare```를 통해서 사용자가 정한 기준을 토대로 양수, 0, 음수 중 하나가 반환 → 정렬 기준에 사용
+
+<br>
 
 ### ```Comparable```
 
@@ -882,7 +904,7 @@ Fruit{name='Orange', quantity=8}
 Fruit{name='Orange', quantity=2}
 ```
 
-
+<br>
 
 ### ```Comparator```
 
@@ -953,11 +975,9 @@ Fruit{name='Apple', quantity=10}
 Fruit{name='Grape', quantity=19}
 ```
 
+<br>
 
-
-
-
-## 참고
+## Reference
 
 ---
 

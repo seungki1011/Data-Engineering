@@ -12,6 +12,9 @@
 * [접근 제어자(access modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)를 명시하지 않으면 생성자는 기본적으로 ```package-private```이 됨(같은 패키지 내에서만 접근 가능)
   * [접근 제어자](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)에서 추가 설명
 
+<br>
+
+---
 
 ## 2) this
 
@@ -74,6 +77,10 @@ public class Con1 {
 Name: Pen, Price: 6000, Rating: 9.0
 ```
 
+<br>
+
+---
+
 ## 3) 생성자 사용 조건
 
 * 생성자의 이름은 클래스의 이름과 같아야 한다
@@ -114,6 +121,10 @@ public class Con2 {
 Name: Chicken, Price: 20000, Rating: 8.5
 ```
 
+<br>
+
+---
+
 ## 4) Default Constructor
 
 * 기본 생성자
@@ -124,6 +135,10 @@ Name: Chicken, Price: 20000, Rating: 8.5
 ```java
 Car car = new Car(); // 기본 생성자 호출
 ```
+
+<br>
+
+---
 
 ## 5) Constructor Overloading
 
@@ -165,6 +180,10 @@ public class Con3 {
 Product name: Laptop, Price: 1000000, Rating: 7.0
 ```
 
+<br>
+
+---
+
 ## 6) this()
 
 * 같은 클래스의 다른 생성자를 호출할 때 사용
@@ -191,9 +210,9 @@ public class ProductInfo5 {
 }
 ```
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

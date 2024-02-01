@@ -12,6 +12,8 @@
 * 초기값을 끝까지 사용
 * ```final```을 이용해서 선언
 
+<br>
+
 ### Primitive Type
 
 #### 정수형
@@ -35,6 +37,8 @@
 #### 논리형
 
 * boolean : ```true```or ```false```
+
+<br>
 
 ### Reference Type
 
@@ -99,9 +103,13 @@ Min of double : 4.9E-324
 Max of double : 1.7976931348623157E308
 ```
 
+<br>
+
+---
+
 ## 2) Java Convention
 
-Java의 경우 CamelCase를 이용하는 것이 사실상 표준
+> Java의 경우 CamelCase를 이용하는 것이 사실상 표준
 
 ### 변수
 
@@ -123,7 +131,9 @@ Java의 경우 CamelCase를 이용하는 것이 사실상 표준
 * 패지키는 모든 글자를 소문자 사용
 * 예시 ```com.de.java```
 
+<br>
 
+---
 
 ## 3) P.S.
 
@@ -133,9 +143,9 @@ Java의 경우 CamelCase를 이용하는 것이 사실상 표준
   * ```float```는 정밀도가 너무 낮음
 * 문자는 ```String``` 이용하자
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

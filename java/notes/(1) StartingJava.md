@@ -1,4 +1,4 @@
-
+> 자바에 대한 소개 및 메모리 구조
 
 ## 1) Java Introduction
 
@@ -9,6 +9,8 @@
 <p align="center">   <img src="img/computer-languages.png" alt="Computer Languages"> </p>
 
 <p align="center">https://www.cs.mtsu.edu/~xyang/2170/computerLanguages.html</p>
+
+<br>
 
 ### Translator
 
@@ -30,7 +32,9 @@
 
 * 소스 코드를 한줄씩 읽으면서 실행
 
+<br>
 
+---
 
 ## 2) How Java Works
 
@@ -49,6 +53,10 @@
 * 실행 : ```java Main```
 * IDE를 사용하는 경우 보통 위의 과정을 한번에 처리해줌
 
+<br>
+
+---
+
 ## 3) Java Memory Structure
 
 <p align="center">   <img src="img/javamemory1.png" alt="java memory area" style="width: 70%;"> </p>
@@ -58,6 +66,8 @@
 <p align="center">   <img src="img/javamemory2.png" alt="java memory area" style="width: 70%;"> </p>
 
 <p align="center">https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV</p>
+
+<br>
 
 ### 메서드 영역(Method Area)
 
@@ -90,6 +100,10 @@
   * 참조되지 않는 인스턴스는 GC에 의해 제거
 * String Constant Pool
 
+<br>
+
+---
+
 ## 4) Further Reading
 
 * JIT 컴파일러
@@ -98,9 +112,9 @@
 * 메모리 구조
 * Java Permgen vs Metaspace
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

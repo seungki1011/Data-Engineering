@@ -20,7 +20,9 @@
 
 * 범위 : ```public```>```protected```>```default(package-private)```>```private```
 
+<br>
 
+---
 
 ## 2) Using Access Modifiers
 
@@ -152,6 +154,8 @@ private String = This is a private String(Inner Access)
 * ```Package1Main```에서 ```innerAccess()```를 호출 → ```Package2Data```에서의 ```innerAccess()```는 ```public```, ```default```, ```private```에 해당하는 모든 필드 접근 가능 (같은 클래스 내)
 * ```default```는 서로 다른 패키지에서 접근 불가능 (```de.java.accessmodifier.package1``` → ```de.java.accessmodifier.package2```)
 
+<br>
+
 ### Constructor (접근 제어자의 사용)
 
 * 일반적으로 생성자의 접근 제어자는 클래스의 접근 제어자와 일치함
@@ -163,6 +167,10 @@ private String = This is a private String(Inner Access)
 * ```public``` 클래스는 반드시 파일명과 이름이 같아야 함
 * 하나의 ```java```파일(소스 파일)에는 ```public```클래스는 단 하나만 존재 가능
   * ```java```파일에 ```default```를 사용하는 클래스는 무한정 생성 가능
+
+<br>
+
+---
 
 ## 3) Encapsulation
 
@@ -283,13 +291,17 @@ Name: MakGukSu, Price: 11000, Quantity: 1
 Total Price: 206000
 ```
 
+<br>
+
+---
+
 ## 4) Further Reading
 
-* Getter and Setter
+* Getter and Setter를 사용하는 것이 좋은가?
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

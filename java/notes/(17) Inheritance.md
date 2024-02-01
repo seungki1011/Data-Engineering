@@ -11,6 +11,8 @@
 * ```extends``` 대상은 하나만 선택 가능
 * 자식 클래스는 부모 클래스를 상속 받기 때문에 접근이 가능하지만. 부모 클래스는 자식 클래스를 사용하는 것은 불가능
 
+<br>
+
 ### 상속하지 않는 경우 (Without Inheritence)
 
 ```ElectricCar```
@@ -68,6 +70,8 @@ Filling up the car!
 <p align="center">   <img src="img/NoInheritance.png" alt="Inheritance" style="width: 50%;"> </p>
 
 <p align='center'>상속받지 않은 두 클래스</p>
+
+<br>
 
 ### 상속하는 경우 (Using ```extends```)
 
@@ -140,6 +144,10 @@ The car is currently moving on ground!
 
 <p align='center'>상속받는 경우</p>
 
+<br>
+
+---
+
 ## 2) Single Inheritance
 
 * 단일 상속
@@ -203,7 +211,9 @@ This vehicle used the brake!
 
 <p align='center'>Multilevel Inheritance</p>
 
+<br>
 
+---
 
 ## 3) Java Inheritance Memory Allocation
 
@@ -224,6 +234,10 @@ ElectricCar e1 = new ElectricCar();
 * ``e1``에서 ```move()```를 호출하는 경우 ```ElectricCar```를 확인하고, 존재하지 않는 경우 부모 클래스인 ```Car()```에서 찾아서 호출
 * ```e1```에서 ```brake()```를 호출하는 경우 ```ElectricCar```부터 시작해서 상위 부모로 이동하면서 해당 메서드가 존재하는 클래스에서 찾아서 호출
   * 지금의 경우에는 ```Vehicle```클래스
+
+<br>
+
+---
 
 ## 4) Method Overriding
 
@@ -316,6 +330,10 @@ This vehicle used the brake!
 <p align="center">   <img src="img/Inheritance5.png" alt="Inheritance" style="width: 30%;"> </p>
 
 <p align='center'>Overriding</p>
+
+<br>
+
+---
 
 ## 5) Protected
 
@@ -421,7 +439,9 @@ Default(package-private) method in the parent package, parent class.
 Private method in the parent package, parent class.
 ```
 
+<br>
 
+---
 
 ## 6) ```super```
 
@@ -501,7 +521,9 @@ called bark() : Barking. Bow wow!
 
 * 자식 클래스에 부모 클래스와 동일한 변수가 존재하거나 오버라이드한 메서드가 존재하는 경우, ```super```를 이용해서 부모 클래스의 변수나 메서드를 호출할 수 있음
 
+<br>
 
+---
 
 ## 7) ```super()```
 
@@ -602,9 +624,9 @@ ClassC, a = 10, b = 20, c = 30
 
 <p align='center'>생성자 호출 순서</p>
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

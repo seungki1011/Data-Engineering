@@ -20,6 +20,10 @@ public class NewPackage1 {
 
 * ```de```안의 ```java```안의 ```newpackage``` : ```de.java.newpackage```
 
+<br>
+
+---
+
 ## 2) import
 
 * ```import```는 사용할 클래스가 속한 패키지를 지정하는데 사용함
@@ -28,6 +32,8 @@ public class NewPackage1 {
 * 같은 이름의 클래스가 있는 경우 ``import``는 둘중 하나만 선택 가능
   * 자주 사용하는 클래스를 ```import```
   * 자주 사용하지 않는 클래스는 풀 경로를 적어서 사용
+
+<br>
 
 ### import 사용 x
 
@@ -58,6 +64,10 @@ class ImportTest {
 
 * ```static```메소드 사용시 클래스명 없이 바로 사용 가능
 
+<br>
+
+---
+
 ## 3) Package Convention
 
 * [자바 관례 참고](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#2-java-convention)
@@ -78,9 +88,9 @@ class ImportTest {
 >
 > 패키지는 ```de.java.a```, ```de.java.b```, ```de.java```, ```de``` 총 4개가 존재함
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

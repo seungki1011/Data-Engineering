@@ -15,6 +15,9 @@
   * 오버라이딩 불가
   * 상속 받은 자식 클래스는 해당 메서드 변경(오버라이딩) 불가
 
+<br>
+
+---
 
 ## 2) final local variable
 
@@ -50,7 +53,9 @@ This is a string value made with final
 This is the parameter passed to the method: 500
 ```
 
+<br>
 
+---
 
 ## 3) final member variable(field)
 
@@ -75,6 +80,8 @@ public class FinalConstructInit {
 * 생성자를 통해서 초기화하는 경우 인스턴스를 새로 생성하면서 각 인스턴스에 대한 ```final``` 멤버 변수에 다른 값 할당 가능
   * 생성 이후에는 값 변경 불가
 
+<br>
+
 [```FinalFieldInit.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalFieldInit.java)
 
 ```java
@@ -90,6 +97,8 @@ public class FinalFieldInit {
   * 모든 인스턴스에 대해서 똑같이 중복으로 존재함
 * ```static final```을 붙여서 사용하는 경우 ```static```영역에 단하나 존재하기 때문에 불필요한 중복 해결
 * 결론: ```final```을 field에서 초기화는 경우 ```static final```을 이용하자
+
+<br>
 
 [```FinalMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalMain2.java)
 
@@ -122,7 +131,9 @@ finalInt = 30
 FINAL_CONST = 40
 ```
 
+<br>
 
+---
 
 ## 4) Constant
 
@@ -133,9 +144,9 @@ FINAL_CONST = 40
   * 특정 위치에서 사용해야 하는 경우 다른 접근 제어자 사용하면 됨
 * 상수는 런타임에 변경 불가
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

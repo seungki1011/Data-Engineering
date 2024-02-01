@@ -62,9 +62,13 @@ Name: Jane, Age: 22, Points: 80000
 * 참조 변수가 해당 참조값을 가지고 객체에 접근이 가능하다(참조 변수를 통해 객체 접근)
   * 참조 변수 자체를 ```print```해서 확인해보면 됨
 
-<p align="center">   <img src="img/instancemem.gif" alt="instance memory" style="width: 80%;"> </p>
+<p align="center">   <img src="img/instancemem.gif" alt="instance memory" style="width: 60%;"> </p>
 
 <p align='center'>https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html</p>
+
+<br>
+
+---
 
 ## 2) Array of Instances
 
@@ -104,9 +108,9 @@ public class cp2 {
 * ```Customer c = customers[i];``` 같은 형식으로 축약 가능
   * 그냥 ```for-each```문 사용하는 것이 편함
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

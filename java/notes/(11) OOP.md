@@ -10,6 +10,10 @@
 
 <p align='center'>https://simplesnippets.tech/java-introduction-to-object-oriented-programming-oop/</p>
 
+<br>
+
+---
+
 ## 2) Instance Method
 
 * 인스턴스 메소드는 인스턴스 생성 후 ```참조변수.methodName();```으로 호출
@@ -58,6 +62,10 @@ Increased value(+1) | value = 3
 Current value = 3
 ```
 
+<br>
+
+---
+
 ## 3) Static Method
 
 * 정적 메소드
@@ -65,6 +73,10 @@ Current value = 3
 * 인스턴스 멤버와 관련 없는 작업 함
 * 메소드 내에 인스턴스 변수 사용 불가
 * [Static](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(15)%20Static.md)에서 추가 설명
+
+<br>
+
+---
 
 ## 4) OOP Example
 
@@ -119,7 +131,9 @@ Insufficient Balance!
 Current Balance: 3000, Withdraw Amount: 4000
 ```
 
+<br>
 
+---
 
 ## 5) Encapsulation
 
@@ -134,15 +148,17 @@ Current Balance: 3000, Withdraw Amount: 4000
 
 <p align='center'>https://waytoeasylearn.com/learn/encapsulation/</p>
 
+<br>
 
+---
 
 ## Further Reading
 
 * [함수형 프로그래밍(Functional Programming)](https://www.geeksforgeeks.org/functional-programming-paradigm/)
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

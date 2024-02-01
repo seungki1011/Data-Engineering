@@ -10,6 +10,10 @@
 
 <p align='center'>https://tcpschool.com/c/c_array_twoDimensional</p>
 
+<br>
+
+---
+
 ## 2) Using Arrays
 
 * 배열 선언 : ```datatype[] variableName;```
@@ -60,6 +64,10 @@ public class arr1 {
 [Andy, Caillou, Alex, Shelby]
 ```
 
+<br>
+
+---
+
 ## 3) 2D Array
 
 * 2차원 배열
@@ -105,6 +113,10 @@ public class arr2 {
 twodArray[0][0] = 30 twodArray[0][1] = 0 twodArray[0][2] = 0 twodArray[0][3] = 0 
 twodArray[1][0] = 0 twodArray[1][1] = 0 twodArray[1][2] = 22 twodArray[1][3] = 60 
 ```
+
+<br>
+
+---
 
 ## 4) Further Reading
 

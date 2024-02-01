@@ -3,6 +3,10 @@
 * 형변환
 * 자료형을 다른 형태로 변경하는 것
 
+<br>
+
+---
+
 ## 2) 자동 형변환(Widening Type Casting)
 
 * 자동 형변환, 묵시적 형변환 등에 해당
@@ -42,6 +46,10 @@ longVal is 5
 doubleVal is 5.0
 ```
 
+<br>
+
+---
+
 ## 3) 명시적 형변환(Narrow Type Casting)
 
 * 명시적 형변환, 강제 형변환 등에 해당
@@ -74,6 +82,8 @@ original doubleVal is 10.345
 Value after type casting to int is 10
 ```
 
+<br>
+
 ### 계산시 형변환
 
 * 다른 타입간의 계산은 상위 타입으로 자동 형변환
@@ -103,15 +113,17 @@ public class tc3 {
 10.0/4 is d1 = 2.5
 ```
 
+<br>
 
+---
 
 ## Further Reading
 
 * [Upcasting, Downcasting](https://www.geeksforgeeks.org/typecasting-in-java/)
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

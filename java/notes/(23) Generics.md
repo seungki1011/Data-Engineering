@@ -7,7 +7,9 @@
   * 사용할 때 마다 형변환하는 것을 생략 가능
 * 타입 파라미터로 명시할 수 있는 것은 참조 타입만 가능
 
+<br>
 
+---
 
 ## 2) Using Generics
 
@@ -38,7 +40,7 @@ public interface InterfaceName2<T, K> {...}
   * ```<N>``` : Number
   * ```<R>``` : Result
 
-
+<br>
 
 ### 2-1) Generic Class
 
@@ -96,7 +98,7 @@ Box value: This is a string!
 * 타입 파라미터로 명시할 수 있는 것은 참조 타입(Reference Type)만 가능하기 때문에 ```int```, ```double``` 같은 원시 타입을 이용하고 싶으면 ```Integar```, ```Double``` 같은 Wrapper Type을 이용해야 한다
 * 사용자 정의 클래스도 타입 파라미터로 사용가능
 
-
+<br>
 
 ### 2-2) Generic Method
 
@@ -112,19 +114,21 @@ Box value: This is a string!
 
 
 
+<br>
 
-
-
+---
 
 ## 3) Constraint Generic
 
 
 
+<br>
+
 ### 3-1) ```extends```
 
 
 
-
+<br>
 
 ### 3-2) ```super```
 
@@ -134,7 +138,9 @@ Box value: This is a string!
 
 
 
+<br>
 
+---
 
 ## 4) Wildcard
 
@@ -154,7 +160,7 @@ Box value: This is a string!
 
 
 
-## 참고
+## Reference
 
 ---
 

@@ -43,7 +43,9 @@ new Date().compareTo(new Date(1000)) = 1
 new Date(1000).compareTo(new Date()) = -1
 ```
 
+<br>
 
+---
 
 ## 2) ```Calendar```
 
@@ -109,7 +111,9 @@ date.getTime() after date.clear(): Thu Jan 01 00:00:00 KST 1970
 
 * ```Calendar``` 에서 두 날짜의 차이, 시간 변환 등의 사용법 찾아보기
 
+<br>
 
+---
 
 ## 3) ```java.time``` package
 
@@ -118,6 +122,8 @@ date.getTime() after date.clear(): Thu Jan 01 00:00:00 KST 1970
 * immutable
 
 > 시간과 날짜를 계산하는 방법은 여러가지가 있음. 여러 방법을 찾아보면서 적용해보면서 차이를 알아가면 됨.
+
+<br>
 
 ### 3-1) ```LocalDate```
 
@@ -204,7 +210,7 @@ LocalDate.parse("2024-01-04").isBefore(LocalDate.parse("2005-01-04")) = false
 LocalDate.parse("2024-01-04").isAfter(LocalDate.parse("2005-01-04")) = true
 ```
 
-
+<br>
 
 ### 3-2) ```LocalTime```
 
@@ -248,7 +254,7 @@ LocalTime.of(3, 30).plusHours(2) = 05:30
 
 * 비교는 ```LocalDate```와 마찬가지로 ```isBefore```, ```isAfter``` 등을 사용한다
 
-
+<br>
 
 ### 3-3) ```LocalDateTime```
 
@@ -278,7 +284,7 @@ LocalDateTime.of(2020, Month.OCTOBER, 15, 4, 20) = 2020-10-15T04:20
 LocalDateTime.now().getMonth() = JANUARY
 ```
 
-
+<br>
 
 ### 3-4) ```ZonedDateTime```
 
@@ -332,7 +338,9 @@ LocalDateTime.of(2022, 1, 14, 12, 0) = 2022-01-14T12:00
 OffsetDateTime.of(localDateTime, offset) = 2022-01-14T12:00+03:00
 ```
 
+<br>
 
+---
 
 ## 4) Period, Duration
 
@@ -386,7 +394,9 @@ ChronoUnit.SECONDS.between(startTime, endTime) = 27000
 ChronoUnit.SECONDS.between(startTime, endTime2) = 1800 (30분 차이)
 ```
 
+<br>
 
+---
 
 ## 5) ```Instant```
 
@@ -464,7 +474,9 @@ LocalDateTime: 2024-01-15T05:45:04.883
 Date: Mon Jan 15 05:45:04 KST 2024
 ```
 
+<br>
 
+---
 
 ## 6) ```Formatter```
 
@@ -504,7 +516,9 @@ Before Format : 2030-01-15T09:30
 After Format : 2030. 1. 15 오전 9:30:00
 ```
 
+<br>
 
+---
 
 ## Further Reading
 
@@ -513,9 +527,9 @@ After Format : 2030. 1. 15 오전 9:30:00
 * ```DecimalFormat```
 * ```SimpleDateFormat```
 
+<br>
 
-
-## 참고
+## Reference
 
 ---
 

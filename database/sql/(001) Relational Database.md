@@ -1,10 +1,10 @@
-> 데이터베이스 그리고 관계형 데이터베이스(Relational Database)에 대한 기본 개념.
+> 관계형 데이터베이스(Relational Database)에 대한 기본 개념.
 >
 > 한국 데이터 산업 진흥원 - SQL 전문가 가이드를 많이 참고 했습니다.
 
 ---
 
-## Index
+## Table of Content
 
 1. 데이터베이스(Database, DB) 소개
    * 데이터베이스의 정의
@@ -24,14 +24,22 @@
    * 식별자의 분류
    * 주식별자의 특징
    * 식별자와 비식별자 관계
-5. 성능 데이터 모델링
-6. 정규화(Normalization)
-7. 반정규화(Denormalization)
-8. 대용량 데이터(Large-Scale Data)에 따른 성능
-9. 데이터베이스 구조와 성능
-10. 분산 데이터베이스(Distributed Database)와 성능
-
-
+5. 테이블(Table), 키(Key)
+   * 테이블(Table)
+   * 키(Key)의 정의
+   * 키(Key)의 종류
+6. 성능 데이터 모델링
+   * 성능 데이터 모델링의 정의
+   * 성능 데이터 모델링의 수행 시점
+   * 성능 데이터 모델링의 고려 사항
+7. 정규화(Normalization)
+   * 정규화의 정의
+   * 정규화와 성능
+   * 정규화의 단계
+8. 반정규화(Denormalization)
+9. 대용량 데이터(Large-Scale Data)에 따른 성능
+10. 데이터베이스 구조와 성능
+11. 분산 데이터베이스(Distributed Database)와 성능
 
 
 
@@ -416,9 +424,103 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 ---
 
-## 5) 성능 데이터 모델링
+## 5) 테이블(Table), 키(Key)
 
-### 5-1. 성능 데이터 모델링의 정의
+### 5-1. 테이블(Table)
+
+> 데이터는 관계형 데이터베이스의 기본 단위인 테이블 형태로 저장된다. 모든 자료는 테이블에 등록이 되고, 우리는 테이블로부터 원하는 자료를 꺼내 올 수 있다.
+
+<p align="center">   <img src="img/databasetable.png" alt="database" style="width: 60%;"> </p>
+
+<p align='center'>SQL 전문가 가이드</p>
+
+테이블은 특정한 주제와 목적으로 만들어지는 일종의 데이터 집합이다. 데이터베이스의 관점에서 설명하자면, 테이블은 데이터를 저장하는 객체(Object)로서 관계형 데이터베이스(RDBMS)의 기본 단위이다.
+
+<br>
+
+<p align="center">   <img src="img/table4.png" alt="database" style="width: 60%;"> </p>
+
+<p align='center'>javatpoint - what is rdbms</p>
+
+* 열(Column) : 테이블에서 세로 방향으로 이루어진 하나하나의 특정 속성(Attribute)
+* 행(Row) : 테이블에서 가로 방향으로 이루어진 연결된 데이터. 튜플(Tuple)이라고도 한다. (Record로 표현하기도 함)
+* 도메인(Domain)은 특정 속성이 가져야하는 값의 범위로 보면 편하다 
+
+> 데이터를 저장할 때 모든 데이터를 하나의 테이블에 저장하지는 않는다. 보통은 여러 테이블로 분할하면서 불필요한 중복값을 제거한다. 이 과정을  정규화(Normalization)라고 한다. 정규화는 뒤에서 더 자세히 알아볼 예정이다.
+
+<br>
+
+### 5-2. 키(Key)의 정의
+
+> 데이터베이스에서 키(Key)는 조건에 만족하는 튜플(Tuple)을 찾거나, 순서대로 정렬할 때 다른 튜플들과 구분할 수 있는 기준이 되는 속성이다.
+>
+> 키는 속성 하나(single attribute)로만 이루어지지 않고 다중 속성(multiple attributes)으로 이루어진 속성들의 집합(attribute set)일 수 있다.
+
+위의 식별자에서도 언급했지만 **식별자는 논리 데이터 모델링 단계에서 사용되고, 키는 데이터베이스 테이블에 접근을 위한 매개체로서 물리 데이터 모델링 단계에서 사용된다.** 
+
+> 키의 종류를 살피기 전에 유일성과 최소성의 개념을 다시 살펴보자.
+>
+> * 유일성(uniqueness): 하나의 키로 튜플을 유일하게 식별
+> * 최소성(minimality): 키를 구성하는 속성들 중 필요한 최소한의 속성들로 키를 구성
+
+<br>
+
+### 5-3. 키(Key)의 종류
+
+<p align="center">   <img src="img/tableforkey.png" alt="database" style="width: 80%;"> </p>
+
+<p align='center'>EMPLOYEE라는 테이블과 그 속성들</p>
+
+<br>
+
+키의 종류는 다음과 같다.
+
+1. 슈퍼 키(Super Key)
+
+   * 튜플을 유일(unique)하게 식별할 수 있는 키 (**유일성 만족**)
+   * 예) ```{employee_id}```, ```{employee_id, name, department}```, ```{name, email}```
+     * ```{employee_id}``` 이나 ```{name, email}``` 처럼 튜플을 유일하게 식별해주는 속성의 집합(attribute set)
+
+   * 다른 테이블로 예시를 들면
+     * 예) ```{team_name}``` + ```{back_number}``` 
+
+2. 복합 키(Composite Key)
+
+   * 2개 이상의 속성을 이용하는 키
+
+3. 후보 키(Candidate Key)
+
+   * 슈퍼키중에서 어느 한 속성이라도 제거하면 유일하게 튜플을 식별할 수 없는 키
+   * 예) ```{employee_id}``` 
+   * 예) ```{team_name, back_number}```에서 ```team_name```이든 ```back_number```든 하나라도 제거하면 유일 식별 불가능
+
+4. **기본 키(Primary Key)**
+
+   * **튜플을 유일하게 식별하기 위해 선택된 후보 키**
+   * **유일성, 최소성** 만족
+   * 보통 최소성에 의해 속성의 수가 적은 후보 키를 고름
+   * 예) ```{employee_id}```
+
+5. 대체 키(Alternate Key)
+
+   * 후보 키 중에서 기본 키로 선택되지 않은 키
+
+6. 외래 키(Foreign Key)
+
+   * 다른 테이블의 PK(Primary Key, 기본키)를 참조하는 키
+   * 예) 아래 그림의 {팀 코드}
+
+<p align="center">   <img src="img/key1.png" alt="database" style="width: 60%;"> </p>
+
+<p align='center'>SQL 전문가 가이드</p>
+
+<br>
+
+---
+
+## 6) 성능 데이터 모델링
+
+### 6-1. 성능 데이터 모델링의 정의
 
 성능 데이터 모델링을 정의하자면 다음과 같다.
 
@@ -432,7 +534,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-### 5-2. 성능 데이터 모델링 수행 시점
+### 6-2. 성능 데이터 모델링 수행 시점
 
 **성능 향상을 위한 비용은 프로젝트 수행 중에 있어서 사전에 할수록 비용이 들지 않는다**. 성능을 향상 시키기 위한 작업을 초기에 하지 않으면 여러가지 추가적인 비용을 소진하게 되는 원인이 된다. 특히 데이터 증가가 빠르면 빠를수록 성능저하에 따른 개선비용은 기하급수적으로 증가한다.
 
@@ -444,7 +546,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-### 5-3. 성능 데이터 모델링 고려사항
+### 6-3. 성능 데이터 모델링 고려사항
 
 데이터 모델링 단계에서 다음과 같은 프로세스로 진행하는 것이 모델링 단계에서 성능을 고려할 수 있다.
 
@@ -465,9 +567,9 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 ---
 
-## 6) 정규화(Normalization)
+## 7) 정규화(Normalization)
 
-### 6-1. 정규화의 정의
+### 7-1. 정규화의 정의
 
 정규화의 정의는 다음과 같다.
 
@@ -479,7 +581,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-### 6-2. 정규화와 성능
+### 7-2. 정규화와 성능
 
 정규화를 하는 것은 기본적으로 데이터에 대한 중복성을 제거하여 주고 데이터가 관심사별로 처리되는 경우가 많기 때문에 성능이 향상되는 특징을 가지고 있다. 엔터티가 계속 발생되므로 SQL문장에서 조인이 많이 발생하여 이로 인한 성능저하가 나타나는 경우도 있지만 이런 부분은 사례별로 유의하여 반정규화를 적용하는 전략을 사용할 수 있다.
 
@@ -491,7 +593,11 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-### 6-3. 정규화의 단계
+### 7-3. 정규화의 단계
+
+<p align="center">   <img src="img/normal_forms.png" alt="database" style="width: 60%;"> </p>
+
+<p align='center'>https://algodaily.com/lessons/normalization-sql-normal-forms</p>
 
 
 
@@ -504,6 +610,22 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
 
 ## 요약
 
@@ -534,3 +656,5 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 1. [한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)
 2. [유튜브 쉬운코드 - 데이터베이스](https://www.youtube.com/watch?v=aL0XXc1yGPs&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=1)
 3. [datawiz - organizing data](https://datawizkb.leibniz-psychology.org/index.php/during-data-collection/what-should-i-know-about-the-organization-of-datasets/)
+4. [javatpoint - what is rdbms](https://www.javatpoint.com/what-is-rdbms)
+5. [algo daily - normalization](https://algodaily.com/lessons/normalization-sql-normal-forms)

@@ -39,9 +39,12 @@
    * 함수적 종속성(Functional Dependency, FD)
    * 정규화의 단계
 8. 반정규화(Denormalization)
-9. 대용량 데이터(Large-Scale Data)에 따른 성능
-10. 데이터베이스 구조와 성능
-11. 분산 데이터베이스(Distributed Database)와 성능
+   * 반정규화의 정의
+   * 반정규화의 적용
+9. 분산 데이터베이스(Distributed Database)
+10. 락(Lock)
+11. 트랜잭션(Transaction)
+12. 동시성 제어(Concurrency Control)
 
 
 
@@ -161,8 +164,6 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 <p align="center">   <img src="img/datamodel1.png" alt="data modeling" style="width: 60%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
-
-
 
 <br>
 
@@ -870,7 +871,39 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 ---
 
-## 8) 반정규화(De-normalization)
+## 8) 반정규화(Denormalization)
+
+### 8-1. 반정규화의 정의
+
+> 기본적으로 반정규화(Denormalization)는 데이터를 중복하여 성능을 향상시키기 위한 기법이라고 정의할 수 있다. 좀 더 넓은 의미의 반정규화는 성능을 향상시키기 위해 정규화된 데이터 모델에서 중복, 통합, 분리 등을 수행하는 모든 과정을 의미한다.
+
+기본적으로 정규화는 입력/수정/삭제에 대한 성능을 향상시킬 뿐만 아니라 조회에 대해서도 성능을 향상시키는 역할을 한다. 그러나 정규화만을 수행하면 엔터티의 갯수가 증가하고 관계가 많아져 여러 개의 조인(Join)이 걸려야만 데이터를 가져오는 경우가 있다. 이러한 경우, 데이터에 대한 조회 성능이 중요한 경우 부분적으로 반정규화를 고려한다. 
+
+이전에 1NF 부터 BCNF 정규화를 거치면서 테이블이 점점 늘어나는 것을 확인 할 수 있었다. 이 때 BCNF 에서 다시 3NF으로 테이블을 합치는 것을 반정규화의 예시 중 하나로 볼 수 있다. 정규화의 역 작용을 한다고 해서 역정규화로 표현하기도 한다.
+
+<br>
+
+### 8-2. 반정규화 적용 방법
+
+반정규화를 적용할 때는 기본적으로 데이터 무결성이 깨질 가능성이 많이 있기 때문에 반드시 데이터 무결성을 보장할 수 있는 방법을 고려한 이후에 반정규 화를 적용하도록 해야 한다.
+
+<p align="center">   <img src="img/denormalization2.png" alt="database" style="width: 60%;"> </p>
+
+<p align='center'>SQL 전문가 가이드</p>
+
+<br>
+
+> 정규화(Normalization)와 반정규화(Denormalization)은 일종의 Trade-Off 관계에 있기 때문에, 상황에 맞게 정규화와 반정규화를 적용해서 데이터베이스를 설계해야한다. 
+
+<br>
+
+---
+
+## 9) 
+
+
+
+
 
 
 
@@ -900,12 +933,10 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 ---
 
-## 느낀 점
+## P.S
 
-* 정규화 파트에서 [유튜브 쉬운코드 - DB 정규화](https://www.youtube.com/watch?v=EdkjkifH-m8&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=23)를 많이 참고 함
-* *SQL 전문가 가이드*를 읽고나서 드는 생각은 내용이 친절한거랑 내용이 자세한거랑 아주 다르다 ..
-
-
+* 정규화 파트에서 [유튜브 쉬운코드 - DB 정규화](https://www.youtube.com/watch?v=EdkjkifH-m8&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=23)를 많이 참고했습니다. 인프런에도 강의가 올라와 있으니 데이터베이스 기초에 대해 알고 싶으면 한번 보시는 것을 추천드립니다.
+* **SQL 전문가 가이드**는 별로 친절하지 않은 것 같다. 보조 이론서가 필요할 듯..
 
 
 

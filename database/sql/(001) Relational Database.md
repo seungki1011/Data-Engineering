@@ -6,42 +6,42 @@
 
 ## Table of Content
 
-1. 데이터베이스(Database, DB) 소개
+1. [데이터베이스(Database, DB) 소개](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4database-%EC%86%8C%EA%B0%9C)
    * 데이터베이스의 정의
    * 데이터베이스 관리 시스템(DBMS)
    * 메타데이터(Metadata)
-2. Modeling
+2. [Modeling](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#2-modeling)
    * 데이터 모델링의 정의
    * 데이터 모델링의 3단계
    * 데이터 독립성(Data Independence)
      * three-schema-architecture
-3. Entity, Attribute, Relationship
+3. [Entity, Attribute, Relationship](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#3-entity-attribute-relationship)
    * 엔티티(Entity)
    * 속성(Attribute)
    * 관계(Relationship)
-4. 식별자(Identifier)
+4. [식별자(Identifier)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#4-%EC%8B%9D%EB%B3%84%EC%9E%90identifier)
    * 식별자의 정의
    * 식별자의 분류
    * 주식별자의 특징
    * 식별자와 비식별자 관계
-5. 테이블(Table), 키(Key)
+5. [테이블(Table), 키(Key)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#5-%ED%85%8C%EC%9D%B4%EB%B8%94table-%ED%82%A4key)
    * 테이블(Table)
    * 키(Key)의 정의
    * 키(Key)의 종류
-6. 성능 데이터 모델링
+6. [성능 데이터 모델링](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#6-%EC%84%B1%EB%8A%A5-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%AA%A8%EB%8D%B8%EB%A7%81)
    * 성능 데이터 모델링의 정의
    * 성능 데이터 모델링의 수행 시점
    * 성능 데이터 모델링의 고려 사항
-7. 정규화(Normalization)
+7. [정규화(Normalization)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-%EC%A0%95%EA%B7%9C%ED%99%94normalization)
    * 정규화의 정의
    * 잘못된 구조의 테이블
    * 정규화와 성능
    * 함수적 종속성(Functional Dependency, FD)
    * 정규화의 단계
-8. 반정규화(Denormalization)
+8. [반정규화(Denormalization)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#8-%EB%B0%98%EC%A0%95%EA%B7%9C%ED%99%94denormalization)
    * 반정규화의 정의
    * 반정규화의 적용
-9. 분산 데이터베이스(Distributed Database)
+9. [분산 데이터베이스(Distributed Database)]()
 10. 락(Lock)
 11. 트랜잭션(Transaction)
 12. 동시성 제어(Concurrency Control)
@@ -60,7 +60,7 @@
 
 여기서 말하는 조직화된 집합(organized collection)은 혼돈 상태로 존재하는 데이터를 분류하고 질서를 부여한 상태를 말한다. 예를 들어 뒤에서 설명할 관계형 데이터베이스(Relational Database)는 관련된 데이터들이 테이블과 인덱스를 이용해서 논리적으로 모여있다.
 
-<p align="center">   <img src="img/organization1.jpeg" alt="data organization" style="width: 65%;"> </p>
+<p align="center">   <img src="img/organization1.jpeg" alt="data organization" style="width: 70%;"> </p>
 
 <p align='center'>datawiz - data organization</p>
 
@@ -161,7 +161,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 현실 세계에서 데이터베이스까지 만들어지는 과정은 시간에 따라 진행되는 과정을 추상화해서 표현하면 다음과 같이 **개념적(Conceptual) →논리적(Logical, Represential) → 물리적(Physical, Low-level) 데이터 모델링**으로 표현할 수 있다. 
 
-<p align="center">   <img src="img/datamodel1.png" alt="data modeling" style="width: 60%;"> </p>
+<p align="center">   <img src="img/datamodel1.png" alt="data modeling" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 
@@ -205,7 +205,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 간단하게 말하자면 **데이터 독립성은 데이터베이스 구조와 데이터가 서로 영향을 미치지 않는 것**을 의미한다. 그러면 데이터 독립성은 왜 필요한 것일까? 
 
-<p align="center">   <img src="img/schema3.png" alt="database" style="width: 55%;"> </p>
+<p align="center">   <img src="img/schema3.png" alt="database" style="width: 60%;"> </p>
 
 <p align='center'>https://www.geeksforgeeks.org/introduction-of-3-tier-architecture-in-dbms-set-2/</p>
 
@@ -294,7 +294,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 * 동일 의미의 여러 속성이 있으면 안됨
 * 주식별자에게 함수적으로 종속된다 → 기본키가 달라지면 속성의 값도 변경이 될 수 있다
 
-<p align="center">   <img src="img/entity1.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/entity1.png" alt="database" style="width: 70%;"> </p>
 
 <br>
 
@@ -335,15 +335,15 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-<p align="center">   <img src="img/1toM.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/1toM.png" alt="database" style="width: 70%;"> </p>
 
-<p align="center">   <img src="img/MtoM.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/MtoM.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 
 <br>
 
-<p align="center">   <img src="img/entity2.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/entity2.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>ER Diagram (보통은 IE표기법으로 표현한다)</p>
 
@@ -367,7 +367,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 >
 > 하나의 엔티티는 반드시 하나의 유일한 식별자(Unique Identifier)가 존재해야 한다. (유일 식별자는 다중속성으로 이루어질 수 있음)
 
-<p align="center">   <img src="img/identifier1.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/identifier1.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 
@@ -435,7 +435,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 > 데이터는 관계형 데이터베이스의 기본 단위인 테이블 형태로 저장된다. 모든 자료는 테이블에 등록이 되고, 우리는 테이블로부터 원하는 자료를 꺼내 올 수 있다.
 
-<p align="center">   <img src="img/databasetable.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/databasetable.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 
@@ -443,7 +443,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-<p align="center">   <img src="img/table4.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/table4.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>javatpoint - what is rdbms</p>
 
@@ -517,7 +517,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
    * 다른 테이블의 PK(Primary Key, 기본키)를 참조하는 키
    * 예) 아래 그림의 {팀 코드}
 
-<p align="center">   <img src="img/key1.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/key1.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 
@@ -547,7 +547,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 **성능 향상을 위한 비용은 프로젝트 수행 중에 있어서 사전에 할수록 비용이 들지 않는다**. 성능을 향상 시키기 위한 작업을 초기에 하지 않으면 여러가지 추가적인 비용을 소진하게 되는 원인이 된다. 특히 데이터 증가가 빠르면 빠를수록 성능저하에 따른 개선비용은 기하급수적으로 증가한다.
 
-<p align="center">   <img src="img/database_performance1.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/database_performance1.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 
@@ -637,7 +637,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 정규화를 하는 것은 기본적으로 데이터에 대한 중복성을 제거하여 주고 데이터가 관심사별로 처리되는 경우가 많기 때문에 성능이 향상되는 특징을 가지고 있다. 엔터티가 계속 발생되므로 SQL문장에서 조인이 많이 발생하여 이로 인한 성능저하가 나타나는 경우도 있지만 이런 부분은 사례별로 유의하여 반정규화를 적용하는 전략을 사용할 수 있다.
 
-<p align="center">   <img src="img/normalization1.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/normalization1.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 
@@ -657,7 +657,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-<p align="center">   <img src="img/fd1.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/fd1.png" alt="database" style="width: 70%;"> </p>
 
 위의 예시를 살펴보자.
 
@@ -887,7 +887,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 반정규화를 적용할 때는 기본적으로 데이터 무결성이 깨질 가능성이 많이 있기 때문에 반드시 데이터 무결성을 보장할 수 있는 방법을 고려한 이후에 반정규 화를 적용하도록 해야 한다.
 
-<p align="center">   <img src="img/denormalization2.png" alt="database" style="width: 60%;"> </p>
+<p align="center">   <img src="img/denormalization2.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
 

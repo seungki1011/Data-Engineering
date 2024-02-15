@@ -1,10 +1,10 @@
 > 관계형 데이터베이스(Relational Database)에 대한 기본 개념.
 >
-> 한국 데이터 산업 진흥원 - SQL 전문가 가이드를 많이 참고 했습니다.
+> "[한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)"와 "[인프런 - 쉬운코드 데이터베이스 개론](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)"을 많이 참고 했습니다.
 
 ---
 
-## Table of Content
+## Table of Contents
 
 1. [데이터베이스(Database, DB) 소개](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4database-%EC%86%8C%EA%B0%9C)
    * 데이터베이스의 정의
@@ -41,7 +41,6 @@
 8. [반정규화(Denormalization)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#8-%EB%B0%98%EC%A0%95%EA%B7%9C%ED%99%94denormalization)
    * 반정규화의 정의
    * 반정규화의 적용
-9. [분산 데이터베이스(Distributed Database)]()
 10. 락(Lock)
 11. 트랜잭션(Transaction)
 12. 동시성 제어(Concurrency Control)
@@ -602,7 +601,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <p align="center">   <img src="img/normalization2.png" alt="database" style="width: 80%;"> </p>
 
-<p align='center'>유튜브 쉬운코드 - 데이터베이스</p>
+<p align='center'>EMPLOYEE_DEPARTMENT 테이블</p>
 
 * [1] : 데이터가 중복되어 저장공간 낭비 그리고 잘못된 입력으로 인한 데이터 불일치 가능성 존재
 * [2] : ``null`` 값 사용은 최소화 하는 것이 좋다
@@ -614,7 +613,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <p align="center">   <img src="img/normalization5.png" alt="database" style="width: 80%;"> </p>
 
-<p align='center'>유튜브 쉬운코드 - 데이터베이스</p>
+<p align='center'>테이블 분리</p>
 
 * [4] : 단순히 사원에 대한 정보만 기록하면 되고, 부서에 대한 정보는 FK(Foreign Key)인 ```dept_id```를 통해서 접근
 * [5]
@@ -752,7 +751,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <p align="center">   <img src="img/normalizationtable.png" alt="database" style="width: 80%;"> </p>
 
-<p align='center'>"유튜브 쉬운코드 - DB 정규화"에서 사용한 스키마 예시</p>
+<p align='center'>"인프런 쉬운코드 - DB 정규화"에서 사용한 스키마 예시</p>
 
 * 테이블은 사원(EMPLOYEE)의 월급 계좌(ACCOUNT)를 관리하는 테이블
 * 월급 계좌는 ```woori``` 또는 ```kookmin``` 은행 중 하나
@@ -779,7 +778,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-#### 1NF
+#### 7-5-1. 1NF
 
 > *제 1 정규화(1NF)*는 테이블의 속성이 atomic value(나눠질 수 없는 값)를 갖도록 테이블을 분해하는 것이다.
 
@@ -796,7 +795,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-#### 2NF
+#### 7-5-2. 2NF
 
 > *제 2 정규화(2NF)*는 모든 Non-prime Attribute들이 모든 키(Key)에 대해 완전 함수적 종속(Fully Functional Dependent) 되어야 한다.
 
@@ -823,7 +822,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-#### 3NF
+#### 7-5-3. 3NF
 
 > *제 3 정규화(3NF)*는 모든 non-prime attribute가 어떤 키(Key)에도 이행적 종속(Transitive Dependent)하면 안된다.
 >
@@ -859,7 +858,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-#### BCNF(Boyce-Codd Normal Form)
+#### 7-5-4. BCNF(Boyce-Codd Normal Form)
 
 > 모든 유효한 비자명한 함수적 종속성(Non-Trivial Functional Dependency)을 만족하는 X → Y 에서 X는 슈퍼키(Super Key)이어야 한다.
 
@@ -898,10 +897,6 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 <br>
 
 ---
-
-## 9) 
-
-
 
 
 
@@ -947,8 +942,11 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 ---
 
 1. [한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)
-2. [유튜브 쉬운코드 - 데이터베이스](https://www.youtube.com/watch?v=aL0XXc1yGPs&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=1)
-3. [datawiz - organizing data](https://datawizkb.leibniz-psychology.org/index.php/during-data-collection/what-should-i-know-about-the-organization-of-datasets/)
-4. [javatpoint - what is rdbms](https://www.javatpoint.com/what-is-rdbms)
-5. [algo daily - normalization](https://algodaily.com/lessons/normalization-sql-normal-forms)
-6. [Stackademic(Mohomed Ashkar Haris) - database normalization in brief](https://blog.stackademic.com/database-normalization-in-brief-7298c0f01b1f)
+
+2. [인프런 쉬운코드 - 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)
+
+3. [javatpoint - what is rdbms](https://www.javatpoint.com/what-is-rdbms)
+
+4. [algo daily - normalization](https://algodaily.com/lessons/normalization-sql-normal-forms)
+
+   

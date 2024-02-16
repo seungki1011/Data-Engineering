@@ -1,4 +1,4 @@
-> SQL을 익히기 위한 실습. 
+> 기보적인 SQL 문법을 익히기 위한 실습. 
 >
 > "[한빛 미디어 - 이것이 MySQL이다](https://www.youtube.com/watch?v=VnnTh83sjcc&list=PLVsNizTWUw7Hox7NMhenT-bulldCp9HP9&index=6)"와 "[인프런 - 쉬운코드 데이터베이스 개론](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)"을 많이 참고 했습니다.
 
@@ -10,7 +10,7 @@
    * ```MySQL``` 설치와 연결
      * CLI
      * GUI
-1. 기초 SQL문 (SQL로 데이터 처리)
+1. 기초 SQL문 I
    * 데이터베이스 생성 (```CREATE```)
    * 속성의 자료형 (Attribute Data Types)
    * 테이블 생성, Constraint 적용
@@ -18,6 +18,7 @@
      * 테이블 스키마 변경 (```ALTER```)
    * 테이블에 데이터 추가 / 수정 / 삭제
    * 데이터 조회 (```SELECT```)
+1. 기초 SQL문 II
    * Subquery (Nested Query)
    * 조인 (```JOIN```)
    * 그룹짓기 (```GROUP BY```)
@@ -136,7 +137,7 @@ Delete Connection으로 만들어뒀던 열결을 삭제하고 새로 만들어�
 
 ---
 
-## 2) 기초 SQL문
+## 2) 기초 SQL문 I
 
 > SQL문을 이용한 기본적인 데이터 처리에 대한 실습.
 >
@@ -203,9 +204,9 @@ DROP DATABASE test_company;
 
 <br>
 
-### 2-2. Attribute Datatype
+### 2-2. Attribute Data Types
 
-> MySQL에서 속성(Attribute)들이 가질 수 있는 자료형(Data Type)에 대해 알아보자.
+MySQL에서 속성(Attribute)들이 가질 수 있는 자료형(Data Type)에 대해 알아보자.
 
 * [MySQL Document - Data Types](https://dev.mysql.com/doc/refman/8.0/en/data-types.html)
 
@@ -249,7 +250,7 @@ MySQL에서는 대략적으로 다음과 같이 데이터를 분류할 수 있�
 
 <br>
 
-### 2-2. 테이블 생성, Constraint 적용
+### 2-3. 테이블 생성, Constraint 적용
 
 이제 테이블에 대한 스키마를 대략적으로 정하고 테이블을 생성해보자.
 
@@ -388,13 +389,13 @@ ON DELETE SET NULL; -- 참조값이 삭제되면 NULL로 변경
 
 <br>
 
-### 2-3. 테이블에 데이터 추가 / 수정 / 삭제
+### 2-4. 테이블에 데이터 추가 / 수정 / 삭제
 
 > 생성했던 테이블에 데이터를 추가 / 수정 / 삭제하는 과정을 다룬다.
 
 <br>
 
-#### 2-3-1. 추가(```INSERT```)
+#### 2-4-1. 추가(```INSERT```)
 
 ```EMPLOYEE``` 테이블에 데이터를 추가해보자. 
 
@@ -421,7 +422,7 @@ INSERT INTO EMPLOYEE
 ```mysql
 -- 입력하고 싶은 attribute와 그 순서를 정할 수 있다
 INSERT INTO EMPLOYEE (name, birth_date, sex, POSITION, id) -- dept_id와 salary 없이 입력
-	VALUES ('JENNY', '2000-10-12', 'F', 'DEV_BACK', 3); -- 위에서 정한 순서와 동일하게 입력
+	VALUES ('JENNY', '2000-10-12', 'F', 'DEV_BACK', 3); -- 위에서 정한 attribute 순서와 동일하게 입력
 ```
 
 <br>
@@ -442,8 +443,6 @@ INSERT INTO EMPLOYEE VALUES
 	(13, 'JISUNG', '1989-07-07', 'M', 'PO', 90000000, null),
 	(14, 'SAM', '1992-08-04', 'M', 'DEV_INFRA', 70000000, null);
 ```
-
-
 
 <br>
 
@@ -499,11 +498,505 @@ INSERT INTO WORKS_ON VALUES
 
 <br>
 
-#### 2-3-2. 수정(```UPDATE```)
+#### 2-4-2. 수정(```UPDATE```)
 
 테이블의 데이터를 수정해보자. 먼저 ```EMPLOYEE``` 테이블의 ```dept_id```의 ```null```값을 업데이트 해보자.
 
 ```EMPLOYEE(id)```가 1인 ```MESSI```는 development 부서 소속 → ```DEPARTMENT(id)```는 1003 
+
+```mysql
+/*
+ * SET를 통해서 어떤 attribute를 어떤 값으로 설정할 것인지 지정
+ * WHERE를 통해서 무엇을 업데이트 할 것인지 조건(condition) 명시
+ * MESSI를 업데이트 하기 위해서 id = 1로  
+ */
+UPDATE EMPLOYEE SET dept_id = 1003 WHERE id = 1;
+```
+
+성공적으로 변경되었는지 확인해보자.
+
+```mysql
+SELECT * FROM EMPLOYEE WHERE id = 1;
+```
+
+```
++----+-------+------------+------+----------+-----------+---------+
+| id | name  | birth_date | sex  | POSITION | salary    | dept_id |
++----+-------+------------+------+----------+-----------+---------+
+|  1 | MESSI | 1987-02-01 | M    | DEV_BACK | 100000000 |    1003 |
++----+-------+------------+------+----------+-----------+---------+
+1 row in set (0.02 sec)
+```
+
+<br>
+
+이번에는 개발(development)팀의 ```salary```를 두 배로 인상하는 경우를 살펴보겠다.
+
+```mysql
+UPDATE EMPLOYEE
+SET salary = salary * 2
+WHERE dept_id = 1003;
+```
+
+```salary``` 인상 전
+
+```
++----+----------+------------+------+-----------+-----------+---------+
+| id | name     | birth_date | sex  | POSITION  | salary    | dept_id |
++----+----------+------------+------+-----------+-----------+---------+
+|  1 | MESSI    | 1987-02-01 | M    | DEV_BACK  | 100000000 |    1003 |
+|  3 | JENNY    | 2000-10-12 | F    | DEV_BACK  |  50000000 |    1003 |
+|  8 | HEUNGMIN | 1999-10-22 | M    | DEV_FRONT |  65000000 |    1003 |
+| 10 | NICOLE   | 1991-03-26 | F    | DEV_FRONT |  90000000 |    1003 |
+| 14 | SAM      | 1992-08-04 | M    | DEV_INFRA |  70000000 |    1003 |
++----+----------+------------+------+-----------+-----------+---------+
+```
+
+```salary``` 인상 후
+
+```
++----+----------+------------+------+-----------+-----------+---------+
+| id | name     | birth_date | sex  | POSITION  | salary    | dept_id |
++----+----------+------------+------+-----------+-----------+---------+
+|  1 | MESSI    | 1987-02-01 | M    | DEV_BACK  | 200000000 |    1003 |
+|  3 | JENNY    | 2000-10-12 | F    | DEV_BACK  | 100000000 |    1003 |
+|  8 | HEUNGMIN | 1999-10-22 | M    | DEV_FRONT | 130000000 |    1003 |
+| 10 | NICOLE   | 1991-03-26 | F    | DEV_FRONT | 180000000 |    1003 |
+| 14 | SAM      | 1992-08-04 | M    | DEV_INFRA | 140000000 |    1003 |
++----+----------+------------+------+-----------+-----------+---------+
+```
+
+<br>
+
+이번에는 프로젝트 ID 2002에 참여한 임직원 의 연봉(```salary```)을 두 배로 인상하는 경우를 보자.
+
+```mysql
+UPDATE EMPLOYEE, WORKS_ON -- 연관된 두 테이블 
+SET salary = salary * 2
+WHERE empl_id AND proj_id = 2002; -- empl_id가 두 테이블의 연결고리 역할
+-- 더 직관적으로 표현하고 싶으면 아래와 같이 사용 가능
+WHERE EMPLOYEE.id = WORKS_ON.empl_id and proj_id = 2002;
+```
+
+<br>
+
+#### 2-4-3. 삭제(```DELETE```)
+
+테이블의 데이터를 삭제해보자. ```NICOLE```이라는 이름의 사원이 퇴사하는 상황이다. 이 경우 ```EMPLOYEE``` 테이블에서 ```NICOLE```을 삭제해야한다. 또한 ```NICOLE```은 프로젝트 2001과 2003에 참여하고 있다.
+
+```mysql
+DELETE FROM EMPLOYEE WHERE id = 10; -- NICOLE의 id는 10
+```
+
+* ```NICOLE```을 삭제하는 과정에서 ```WORKS_ON``` 테이블의 데이터도 삭제해줄 필요가 없다. FK를 설정하면서 CASCADE 옵션을 줬기 때문에, ```EMPLOYEE``` 테이블에서 ```NICOLE```이 삭제되는 과정에서 ```WORKS_ON``` 테이블에서 ```NICOLE```에 대한 정보도 삭제되었기 때문이다.
+
+<br>
+
+이번에는 프로젝트 2001과 2002에 참여하고 있는 ```JANE```이 2002 프로젝트에서 빠지도록 삭제하는 작업을 해볼것이다. 
+
+```mysql
+/*
+ * proj_id <> 2001는 2001 프로젝트를 제외한 모든 프로젝트 삭제
+ * <> 대신 != 사용 가능
+ */
+DELETE FROM WORKS_ON WHERE empl_id = 2 AND proj_id <> 2001;
+```
+
+* ```WHERE```절 없이 삭제하는 경우 모든 데이터 삭제 (조심하자!)
+* ```<>```는 ```!=``` 으로 대체 가능하다 (```<>```는 not equal to 로 생각하면 편하다)
+
+<br>
+
+### 2-5. 데이터 조회 (```SELECT```)
+
+이번에는 테이블에 존재하는 데이터를 조회하는 방법에 대해서 알아보자. ```EMPLOYEE(id)```가 7인 임직원의 ```name```과 ```position```을 조회해보자.
+
+```mysql
+SELECT name, position FROM EMPLOYEE WHERE id = 7;
+```
+
+```
++--------+----------+
+| name   | position |
++--------+----------+
+| MBAPPE | DSGN     |
++--------+----------+
+```
+
+* 조회에는 ```SELECT```라는 키워드 사용
+* ```WHERE```로 명시한 조건을 selection condition라고 함 (```id = 7```)
+* 관심있어하는 attribute들을 project attribute라고 함 (```name, position```)
+
+<br>
+
+이번에는 프로젝트 2002의 리더를 맡고 있는 임직원의 ```id```, ```name```, ```position```을 조회해보자.
+
+```mysql
+SELECT e.id, e.name, e.position -- PROJECT 테이블의 id와 name과 구별하기 위해서 EMPLOYEE를 통해서 접근 
+FROM PROJECT p, EMPLOYEE e -- alias 설정
+WHERE p.id = 2002 AND p.leader_id = e.id;
+```
+
+```
++----+--------+----------+
+| id | name   | position |
++----+--------+----------+
+| 13 | JISUNG | PO       |
++----+--------+----------+
+```
+
+* attribute의 이름이 테이블 마다 동일하면 충돌나지 않게 구분해야한다 (ambiguous하면 안됨)
+* ```FROM PROJECT p, EMPLOYEE e``` 처럼 테이블에 alias를 설정해서 사용가능하다
+  * ```FROM PROJECT AS p, EMPLOYEE AS e``` 처럼 ```AS``` 키워드를 붙여도 되고, 생략해도 된다
+* ```AS```로 별칭(alias)을 붙이는 것은 테이블, 속성(attribute) 전부 가능하다
+
+위의 과정을 설명해보자면, 우리가 현재 관심가지고 있는 것은 일단 프로젝트 2002의 ```leader_id``` 이다. 이때 ```PROJECT``` 테이블에는 임직원의 세부 데이터가 존재하지 않기 때문에, ```leader_id```를 FK로 해서 ```EMPLOYEE``` 테이블의 ```id```를 참조 해야한다. 이를 통해서 프로젝트 2002의 ```leader_id```인 13을 통해서 ```EMPLOYEE``` 13번인 ```JISUNG```의 ```name```과 ```position```을 조회할 수 있다.
+
+<br>
+
+이번에는 디자이너(```DSGN```)들이 참여하고 있는 프로젝트 id와 ```name```을 조회해보자.
+
+```mysql
+SELECT p.id, p.name
+FROM PROJECT p, EMPLOYEE e, WORKS_ON w
+WHERE e.position = 'DSGN' AND e.id = w.empl_id  AND w.proj_id = p.id;
+```
+
+```
++------+-------------------------+
+| id   | name                    |
++------+-------------------------+
+| 2001 | 쿠폰 서비스 개발           |
+| 2003 | 홈페이지 UI 개선           |
+| 2003 | 홈페이지 UI 개선           |
++------+-------------------------+
+```
+
+* 조회하려는 것 : ```DSGN```이 참여하는 프로젝트의 ```proj_id```와 ```name```
+* ```EMPLOYEE``` 테이블 → ```WORKS_ON``` 테이블 → ```PROJECT``` 테이블 
+* 여기서 ```WORKS_ON``` 테이블이 중간의 연결고리 역할을 한다
+
+위에서 프로젝트 ```name```들을 조회하면 중복되는 경우 중복되어서 표시된다는 것을 알 수 있다. 중복되어 조회되는 것을 방지하기 위해서 ```DISTINCT``` 키워드를 사용해볼 수 있다. 
+
+```mysql
+SELECT DISTINCT p.id, p.name -- 기존의 조회에 DISTINCT 키워드를 붙이면 된다
+FROM PROJECT p, EMPLOYEE e, WORKS_ON w
+WHERE e.position = 'DSGN' AND e.id = w.empl_id  AND w.proj_id = p.id;
+```
+
+```
++------+-------------------------+
+| id   | name                    |
++------+-------------------------+
+| 2001 | 쿠폰 서비스 개발           |
+| 2003 | 홈페이지 UI 개선           |
++------+-------------------------+
+```
+
+중복되어서 조회되는 튜플이 제외된 것을 볼 수 있다.
+
+<br>
+
+이번에는 이름이 'N'으로 시작하거나 'N'으로 끝나는 임직원들의 ```name```을 조회 해보자.
+
+```mysql
+SELECT name
+FROM EMPLOYEE
+WHERE name LIKE 'N%' OR name LIKE '%N'; -- N으로 시작하거나 N으로 끝나는 name
+```
+
+```
++----------+
+| name     |
++----------+
+| BROWN    |
+| HEUNGMIN |
+| NEIMAR   |
++----------+
+```
+
+* ```%``` : 스트링 패턴에서 와일드카드(wildcard)로 쓰임
+
+<br>
+
+이번에는 ```LIKE``` 키워드를 사용해서 이름에 'NG'가 들어가는 임직원들의 ```name```을 조회 해보자.
+
+```mysql
+SELECT name
+FROM EMPLOYEE
+WHERE name LIKE '%NG%';
+```
+
+```
++----------+
+| name     |
++----------+
+| DINGYO   |
+| HEUNGMIN |
+| JISUNG   |
++----------+
+```
+
+<br>
+
+이번에는 'J'로 시작하면서, 총 4 글자의 이름을 가지는 임직원들의 ```name```을 조회 해보자.
+
+```mysql
+SELECT name
+FROM EMPLOYEE
+WHERE name LIKE 'J___'; -- J로 시작하고 뒤에 3글자가 오는 name
+```
+
+```
++------+
+| name |
++------+
+| JANE |
++------+
+```
+
+* ```_```(underscore) : 언더스코어는 한 글자 의미 
+
+<br>
+
+다음은 ```%```나 ```_``` 를 특별한 의미로 사용하는 것이 아니라 문자 그대로 조회하고 싶은 경우이다. ```%```로 시작하거나 ```_```로 끝나는 프로젝트를 검색하는 방법은 다음과 같다. 
+
+```mysql
+SELECT name FROM PROJECT WHERE name LIKE '\%%' or name LIKE '%\_'
+```
+
+* 문자 그대로 사용하고 싶은 특수문자 앞에 ```\```(backslash)를 붙여서 사용하면 됨.
+
+>  지금까지 살펴본 것 처럼 ```LIKE``` 키워드는 스트링(String)의 패턴 매칭(Pattern Matching)에 사용
+
+<br>
+
+이번에는 ```EMPLOYEE(id)```가 1인 임직원의 모든 attribute를 조회 해보자.
+
+```mysql
+SELECT * FROM EMPLOYEE WHERE id = 1; -- 원래 attribute의 자리에 * 사용
+```
+
+```
++----+-------+------------+------+----------+-----------+---------+
+| id | name  | birth_date | sex  | POSITION | salary    | dept_id |
++----+-------+------------+------+----------+-----------+---------+
+|  1 | MESSI | 1987-02-01 | M    | DEV_BACK | 400000000 |    1003 |
++----+-------+------------+------+----------+-----------+---------+
+```
+
+* 원래 알고 싶었던 attribute의 자리에 ```*```(asterisk)를 사용해서 모든 attribute를 조회 가능
+* 두 개의 테이블에 대해 ```*```를 사용하게 되면 두 개의 테이블의 모든 attribute를 조회하기 때문에 조심
+
+<br>
+
+> 1. ```SELECT```로 조회할 때 조건을 포함해서 조회하는 경우, 이 조건들과 관련된 attribute들에 인덱스(index)가 걸려있어야 함. 그렇지 않은 경우 데이터가 많으면 많아질수록 조회 속도가 느려짐
+> 2. ```WHERE```절 없이 ```SELECT```를 사용하게 되면 테이블에 있는 모든 튜플들을 반환한다. 
+
+<br>
+
+---
+
+## 3) 기초 SQL문 II
+
+> Subquery 부터 집계(Aggregation)하는 것 까지 조금 더 복잡한 데이터 처리를 하는 경우.
+
+<br>
+
+### 3-1. Subquery (Nested Query)
+
+Subquery를 통해서 조금 더 복잡한 쿼리를 작성해보자.
+
+```EMPLOYEE(id)```가 14인 임직원 보다 ```birth_date```가 빠른 임직원의 ```id```, ```name```, ```birthdate```를 조회 해보자.
+
+```mysql
+-- 1. 첫 번째 쿼리 
+SELECT birth_date FROM EMPLOYEE WHERE id = 14; -- 결과는 1992-08-04가 나온다 
+
+-- 2. 두 번째 쿼리
+SELECT id, name, birth_date FROM EMPLOYEE
+WHERE birth_date < '1992-08-04'; -- 첫 번째 쿼리에서 나온 결과를 직접 입력해서 사용하고 있음
+
+-- 3. Subquery를 이용하는 경우
+SELECT id, name, birth_date FROM EMPLOYEE
+WHERE birth_date < (
+	SELECT birth_date FROM EMPLOYEE WHERE id = 14 -- (subquery) 기존의 첫 번째 쿼리를 ()안에 기술한다
+);
+```
+
+```
++----+--------+------------+
+| id | name   | birth_date |
++----+--------+------------+
+|  1 | MESSI  | 1987-02-01 |
+|  5 | DINGYO | 1990-11-05 |
+|  6 | JULIA  | 1986-12-11 |
+|  9 | HENRY  | 1982-05-20 |
+| 13 | JISUNG | 1989-07-07 |
+| 15 | NEIMAR | 1987-01-03 |
++----+--------+------------+
+```
+
+* 여기서 subquery는 inner query 또는 nested query라고도 불리며, ```()``` 안에 기술한다
+* outer query는 subquery를 포함하고 있는 query (subquery를 감싸고 있는 쿼리로 생각하면 편한다)
+
+<br>
+
+이번에는 ```id```가 1인 임직원과 같은 부서(```dept_id```) 같은 성별(```sex```)인 임직원들의 ```id```, ```name```, ```position```을 조회 해보자.
+
+```mysql
+SELECT id, name, position
+FROM EMPLOYEE
+WHERE (dept_id, sex) = (
+	SELECT dept_id, sex 
+	FROM EMPLOYEE
+	WHERE id = 1
+);
+```
+
+```
++----+----------+-----------+
+| id | name     | position  |
++----+----------+-----------+
+|  1 | MESSI    | DEV_BACK  |
+|  8 | HEUNGMIN | DEV_FRONT |
+| 14 | SAM      | DEV_INFRA |
++----+----------+-----------+
+```
+
+<br>
+
+이번에는 ```id```가 2인 임직원과 같은 프로젝트에 참여한 임직원들의 ```id```를 조회 해보자. 
+
+```mysql
+-- 1. id가 2인 임직원이 참여한 프로젝트를 조회해보자
+SELECT proj_id FROM WORKS_ON WHERE empl_id = 2; -- 2001, 2003이 조회된다 
+
+-- 2. 이제 2001, 2003 프로젝트에 참여한 임직원들의 id를 조회해보자 
+SELECT DISTINCT empl_id FROM WORKS_ON -- 중복을 제거하기 위해 DISTINCT 사용 
+WHERE empl_id != 2 AND proj_id IN (2001, 2003);
+/*
+ * proj_id IN (2001, 2003)는 원래
+ * (proj_id = 2001 OR proj_id = 2003)으로 구했다 
+ */ 
+
+-- 3. 위의 두 쿼리를 subquery로 구현 (합치면 됨)  
+SELECT DISTINCT empl_id FROM WORKS_ON
+WHERE empl_id != 2 AND proj_id IN ( -- outer query의 empl_id와 proj_id는 outer query의 WORKS_ON 참조
+	SELECT proj_id FROM WORKS_ON WHERE empl_id = 2 -- subquery의 empl_id는 해당 쿼리안의 WORKS_ON 참조
+);
+
+-- 4. 3의 subquery안에 subquery를 이용
+-- 구한 임직원들의 id를 통해 해당 임직원들의 id, name을 조회
+SELECT id, name
+FROM EMPLOYEE
+WHERE id IN (
+	SELECT DISTINCT empl_id FROM WORKS_ON
+	WHERE empl_id != 2 AND proj_id IN (
+		SELECT proj_id FROM WORKS_ON WHERE empl_id = 2
+	)
+);
+
+-- 5. WHERE절 대신 FROM절에 사용하는 subquery (4와 결과는 똑같음)
+SELECT id, name
+FROM EMPLOYEE,
+	(
+		SELECT DISTINCT empl_id FROM WORKS_ON
+		WHERE empl_id != 2 AND proj_id IN (
+			SELECT proj_id FROM WORKS_ON WHERE empl_id = 2
+		)
+	) AS DISTINCT_E -- 위의 subquery의 결과를 가상의 테이블 DISTINCT_E로 설
+	-- FROM EMPLOYEE, (subquery) AS DISTINCT_E 같은 형태로 생각하면 됨 
+WHERE EMPLOYEE.id = DISTINCT_E.empl_id; 
+```
+
+```
++---------+
+| empl_id |
++---------+
+|       1 |
+|       4 |
+... 생략
+|       9 |
+|      12 |
++---------+
+```
+
+```
++----+----------+
+| id | name     |
++----+----------+
+|  1 | MESSI    |
+|  4 | BROWN    |
+... 생략
+|  9 | HENRY    |
+| 12 | CURRY    |
++----+----------+
+```
+
+* ```v IN (v1, v2, v3..)```:  ```v```가 ```(v1, v2, v3..)```와 하나라도 값이 같으면 ```TRUE``` 반환 
+* ```v NOT IN (v1, v2, v3..)```:  ```v```가 ```(v1, v2, v3..)```와 모든 값이 다르면 ```TRUE``` 반환 
+* unqualified attribute가 참조하는 테이블은 해당 attribute가 사용된 쿼리를 포함해서 그 쿼리에 바깥쪽으로 존재하는 모든 쿼리 중에 해당 attribute를 가지는 가장 가까운 테이블을 참조
+
+<br>
+
+이번에는 ```IN``` 대신 ```EXISTS``` 키워드를 사용해서 ```id```가 7 또는 12인 임직원이 참여한 프로젝트의 ```proj_id```, ```name```을 조회해보자.
+
+```mysql
+-- 1. EXISTS를 사용하는 경우
+SELECT p.id, p.name
+FROM PROJECT p -- 우리가 관심 가지는 것은 PROJECT 테이블
+WHERE EXISTS ( -- EXISTS : 하나라도 존재하면 TRUE 반환
+	SELECT * 
+	FROM WORKS_ON w
+	WHERE w.proj_id = p.id AND w.empl_id IN (7, 12) -- 프로젝트가 WORKS_ON 테이블에 존재하고 참여한 임직원 id가 7 또는 12인 튜플이 존재하면(EXISTS) 해당 프로젝트 선택
+);
+
+-- 2. IN을 사용하는 경우 
+SELECT p.id, p.name
+FROM PROJECT p 
+WHERE id IN ( 
+	SELECT w.proj_id
+	FROM WORKS_ON w
+	WHERE w.empl_id IN (7, 12)
+);
+```
+
+* ```EXISTS``` : subquery의 결과가 최소 하나의 튜플이라도 가지고 있다면 ```TRUE```반환
+* ```NOT EXISTS``` : subquery의 결과가 단 하나의 튜플이라도 없다면 ```TRUE```반환
+* subquery가 바깥쪽 쿼리의 attribute를 참조하면 correlated subquery라고 부른다
+  * 위의 예시의 경우 ```p.id```가 outer query의 ```Project```를 참조하고 있기 때문에 해당 subquery는 correlated subquery
+
+<br>
+
+이번에는 ```NOT EXISTS```를 활용해보자. 2000년대생이 없는 부서의 ```DEPARTMENT(id)```와 ```name```을 조회하자.
+
+```mysql
+SELECT d.id, d.name
+FROM DEPARTMENT d 
+WHERE NOT EXISTS ( -- 2000년생이 하나라도 없는 경우 TRUE 반환되면서 해당 부서 선택 
+	SELECT *
+	FROM EMPLOYEE e 
+	WHERE e.dept_id = d.id AND e.birth_date >= '2000-01-01'
+);
+```
+
+```
++------+-------------+
+| id   | name        |
++------+-------------+
+| 1004 | design      |
+| 1001 | headquarter |
+| 1002 | HR          |
+| 1005 | product     |
++------+-------------+
+```
+
+* 해당 쿼리도 ```NOT EXISTS``` 대신 ```NOT IN```을 사용해서 구현할 수 있다
+
+<br>
+
+이번에는 리더보다 높은 연봉을 받는 부서원을 가진 ```leader_id```, ```name```, ```salary```를 조회하자.
 
 ```mysql
 ```
@@ -520,7 +1013,7 @@ INSERT INTO WORKS_ON VALUES
 
 
 
-
+---
 
 ## Reference
 

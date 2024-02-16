@@ -5,7 +5,7 @@
 ## Index
 
 1. [RDBMS](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md)
-2. [SQL 실습]()
+2. [SQL 실습](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md)
 3. [NoSQL ]()
 
 
@@ -14,14 +14,8 @@
 
 ## Requirments
 
-* MySQL 8.0
-* 
-
-
-
-
-
-
+* MySQL 8.0 (InnoDB 사용)
+* GUI 툴(MySQL Workbench, DBeaver)은 선택
 
 ---
 

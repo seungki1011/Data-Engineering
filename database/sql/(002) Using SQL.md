@@ -20,18 +20,27 @@
    * 데이터 조회 (```SELECT```)
 1. 기초 SQL문 II
    * Subquery (Nested Query)
+     * subquery
+     * ```IN```, ```EXISTS```
+     * ```ANY```
+     * ```ALL```
+   * ```NULL```과의 비교 연산, Three-valued logic
    * 조인 (```JOIN```)
    * 그룹짓기 (```GROUP BY```)
    * 정렬하기 (```ORDER BY```)
    * 집계하기 (Aggregate)
 1. Stored Procedure
-   * Stored Procdedure 소개
+   * Stored Procedure 소개
+   * Stored Procedure 활용
+1. SQL Trigger
 
 
 
 ---
 
 > MySQL에서 스키마(Schema)와 데이터베이스(Database)는 상호교환적(interchangeably)으로 사용 가능하지만 Oracle Database에서의 스키마는 데이터베이스의 논리적인 구조를 나타내는 용어이다.
+
+<br>
 
 ## 1) MySQL 설치와 설정
 
@@ -442,6 +451,7 @@ INSERT INTO EMPLOYEE VALUES
 	(12, 'CURRY', '1998-01-15', 'M', 'PLN', 85000000, null),
 	(13, 'JISUNG', '1989-07-07', 'M', 'PO', 90000000, null),
 	(14, 'SAM', '1992-08-04', 'M', 'DEV_INFRA', 70000000, null);
+	(15, 'NEIMAR', '1987-01-03', 'M', 'HR', 70000000, null);
 ```
 
 <br>
@@ -475,9 +485,9 @@ SELECT * FROM EMPLOYEE;
 -- DEPARTMENT 테이블
 INSERT INTO DEPARTMENT VALUES
 	(1001, 'headquarter', 4),
-	(1002, 'HR', 6),
-	(1003, 'development', 1),
-	(1004, 'design', 3),
+	(1002, 'HR', 15),
+	(1003, 'development', 14),
+	(1004, 'design', 2),
 	(1005, 'product', 13);
 	
 -- PROJECT 테이블
@@ -905,7 +915,7 @@ FROM EMPLOYEE,
 		WHERE empl_id != 2 AND proj_id IN (
 			SELECT proj_id FROM WORKS_ON WHERE empl_id = 2
 		)
-	) AS DISTINCT_E -- 위의 subquery의 결과를 가상의 테이블 DISTINCT_E로 설
+	) AS DISTINCT_E -- 위의 subquery의 결과를 가상의 테이블 DISTINCT_E로 설정 
 	-- FROM EMPLOYEE, (subquery) AS DISTINCT_E 같은 형태로 생각하면 됨 
 WHERE EMPLOYEE.id = DISTINCT_E.empl_id; 
 ```
@@ -996,11 +1006,120 @@ WHERE NOT EXISTS ( -- 2000년생이 하나라도 없는 경우 TRUE 반환되면
 
 <br>
 
-이번에는 리더보다 높은 연봉을 받는 부서원을 가진 ```leader_id```, ```name```, ```salary```를 조회하자.
+이번에는 ```ANY```라는 키워드를 사용해서 리더보다 높은 연봉을 받는 부서원을 가진 ```leader_id```, ```name```, ```salary``` 그리고 부서명(```DEPARTMENT(name)```)을 조회하자.
 
 ```mysql
+-- 1. ANY를 사용해보자
+SELECT e.id, e.name, e.salary, d.name -- 일단 EMPLOYEE 테이블에서 id, name, salary 등을 찾고 있음
+FROM DEPARTMENT d, EMPLOYEE e 
+WHERE d.leader_id = e.id AND e.salary < ANY ( 
+	SELECT salary 
+	FROM EMPLOYEE e2
+	WHERE e2.id != d.leader_id AND e2.dept_id = e.dept_id -- 리더외의 부서원이 필요함, 속성이 참조하는 테이블을 잘 파악하자
+);
+
+-- 2. 리더보다 높은 연봉을 받는 부서원의 해당 부서에서 최고 연봉을 추가로 조회
+SELECT e.id, e.name, e.salary, d.name, 
+	(
+		SELECT MAX(salary)
+		FROM EMPLOYEE
+		WHERE dept_id = e.dept_id
+	) AS dept_max_salary -- 기존 1에서 해당 subquery만 추가, 해당 부서의 최고 연봉을 dept_max_salary로 별칭
+FROM DEPARTMENT d, EMPLOYEE e 
+WHERE d.leader_id = e.id AND e.salary < ANY ( 
+	SELECT salary 
+	FROM EMPLOYEE e2
+	WHERE e2.id != d.leader_id AND e2.dept_id = e.dept_id 
+);	
 ```
 
+```
++----+--------+-----------+-------------+
+| id | name   | salary    | name        |
++----+--------+-----------+-------------+
+| 15 | NEIMAR |  70000000 | HR          |
+| 14 | SAM    | 280000000 | development |
++----+--------+-----------+-------------+
+```
+
+```
++------+--------+-----------+-------------+-----------------+
+| id   | name   | salary    | name        | dept_max_salary |
++------+--------+-----------+-------------+-----------------+
+|   15 | NEIMAR |  70000000 | HR          |       164000000 |
+|   14 | SAM    | 280000000 | development |       400000000 |
++------+--------+-----------+-------------+-----------------+
+```
+
+* ```v {비교연산자} ANY (subquery)``` : subquery가 반환한 결과들 중에 단 하나라도 ```v```와의 비교연산이 ```TRUE```라면 ```TRUE``` 반환
+* ```ANY``` 대신 ```SOME``` 사용 가능
+
+<br>
+
+이번에는 ```ALL```이라는 키워드를 사용해서 ```id```가 2인 임직원과 한번도 같은 프로젝트에 참여하지 못한 임직원들의 ```id```, ```name```, ```position```을 조회하자.
+
+```mysql
+SELECT DISTINCT e.id, e.name, e.position
+FROM EMPLOYEE e, WORKS_ON w
+WHERE e.id = w.empl_id AND w.proj_id != ALL ( -- w.proj.id 가 그 어떤과도 같지 않다면 조건이 TRUE가 됨
+	SELECT proj_id 
+	FROM WORKS_ON
+	WHERE empl_id = 2
+);
+```
+
+```
++----+---------+----------+
+| id | name    | position |
++----+---------+----------+
+|  1 | MESSI   | DEV_BACK |
+|  6 | JULIA   | CFO      |
+| 11 | SUZANNE | PO       |
++----+---------+----------+
+```
+
+* ```v {비교 연산자} ALL (subquery)``` : subquery가 반환한 결과들과 ```v```와의 비교 연산이 모두 ```TRUE```라면 ```TRUE```반환 
+
+<br>
+
+### 3-2. ```NULL```과의 비교 연산, Three-valued logic
+
+SQL에서 ```NULL```이 가지는 의미가 뭔지 일단 알아보자.
+
+>1. Unknown (알려지지 않음)
+>2. Unavailable or withheld (이용 불가)
+>3. Not applicable (적용 불가)
+
+<br>
+
+```NULL```로 처리된 값은 같거나 다르다와 같은 비교 연산을 사용하면 안된다.
+
+```mysql
+SELECT id FROM EMPLOYEE WHERE birth_date = NULL; -- '='를 사용하면 안됨. IS라는 연산자를 사용해야함
+SELECT id FROM EMPLOYEE WHERE birth_date IS NULL;
+```
+
+<br>
+
+SQL에서 ```NULL```과 비교연산을 하게 되면 결과는 ```UNKWOWN```이다. ```UNKNOWN```은 ```TRUE``` 또는 ```FALSE```일 수도 있다는 의미이다. SQL에서의 *three-valued logic* 이라는 것은 비교/논리 연산이 결과로 ```TRUE```, ```FALSE```, ```UNKNOWN```을 가질수 있다는 의미이다.  
+
+```AND```, ```OR```의 논리 연산에서는 ```UNKOWN```이 ```TRUE```와 ```FALSE```와 연산을 하는지에 따라 ```TRUE```, ```FALSE```, ```UNKNOWN```이 나올 수 있다.
+
+* 예) ```FALSE AND UNKOWN``` 은 ```FALSE```
+
+<br>
+
+```WHERE```절의 조건(condition)의 결과가 ```TRUE```인 튜플(tuple)만 선택하게 된다. 여기서 **```UNKNOWN```에 대해서 중요한 포인트는 결과가 ```UNKNOWN```이면 절대로 튜플이 선택되지 않는다는 것이다.**
+
+<br>
+
+> 결국 ```NULL```값의 처리를 위해서 ```IN``` 대신 ```EXISTS```를 사용, 테이블에서 ```NOT NULL``` 제약 걸기, ```IS NOT NULL```로 체크해서 ```NULL```이 포함되지 않도록 처리, 등 여러가지 방법으로 생각해보면서 쿼리를 작성하면 된다.
+
+<br>
+
+### 3-3. 조인 (```JOIN```)
+
+```JOIN```에 대해서 알아보자.
 
 
 
@@ -1010,6 +1129,21 @@ WHERE NOT EXISTS ( -- 2000년생이 하나라도 없는 경우 TRUE 반환되면
 
 
 
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+## P.S.
+
+* 중간에 중복 연산된 부분들이 있어서 결과가 똑깥지 않을 수 있음
 
 
 

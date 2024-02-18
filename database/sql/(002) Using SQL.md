@@ -16,7 +16,7 @@
    * 테이블 생성, Constraint 적용
      * 각 테이블 생성 및 설명
      * 테이블 스키마 변경 (```ALTER```)
-   * 테이블에 데이터 추가 / 수정 / 삭제
+   * 테이블에 데이터 추가 / 수정 / 삭제 (```INSERT```/```UPDATE```/```DELETE```)
    * 데이터 조회 (```SELECT```)
 1. 기초 SQL문 II
    * Subquery (Nested Query)
@@ -26,12 +26,24 @@
      * ```ALL```
    * ```NULL```과의 비교 연산, Three-valued logic
    * 조인 (```JOIN```)
-   * 그룹짓기 (```GROUP BY```)
-   * 정렬하기 (```ORDER BY```)
-   * 집계하기 (Aggregate)
+     * Implicit vs Explicit ```JOIN```
+     * ```INNER JOIN```
+     * ```OUTER JOIN```
+     * ```USING```
+     * ```NATURAL JOIN```
+     * ```CROSS JOIN```
+   * ```ORDER BY```
+   * 집계 함수 (Aggregate Function)
+   * ```GROUP BY```
+   * ```HAVING```
+   * 조회, 집계 예시
+1. Stored Function
+   * Stored Function 사용하기
+   * Stored Function을 사용하는 상황
 1. Stored Procedure
-   * Stored Procedure 소개
-   * Stored Procedure 활용
+   * Stored Procedure 사용하기
+   * Stored Function vs Stored Procedure
+   * 실무에서 활용하는 경우
 1. SQL Trigger
 
 
@@ -876,6 +888,8 @@ WHERE (dept_id, sex) = (
 
 <br>
 
+#### 3-1-2. ```IN```, ```EXISTS```
+
 이번에는 ```id```가 2인 임직원과 같은 프로젝트에 참여한 임직원들의 ```id```를 조회 해보자. 
 
 ```mysql
@@ -1006,6 +1020,8 @@ WHERE NOT EXISTS ( -- 2000년생이 하나라도 없는 경우 TRUE 반환되면
 
 <br>
 
+#### 3-1-3. ```ANY```
+
 이번에는 ```ANY```라는 키워드를 사용해서 리더보다 높은 연봉을 받는 부서원을 가진 ```leader_id```, ```name```, ```salary``` 그리고 부서명(```DEPARTMENT(name)```)을 조회하자.
 
 ```mysql
@@ -1055,6 +1071,8 @@ WHERE d.leader_id = e.id AND e.salary < ANY (
 * ```ANY``` 대신 ```SOME``` 사용 가능
 
 <br>
+
+#### 3-1-4. ```ALL```
 
 이번에는 ```ALL```이라는 키워드를 사용해서 ```id```가 2인 임직원과 한번도 같은 프로젝트에 참여하지 못한 임직원들의 ```id```, ```name```, ```position```을 조회하자.
 
@@ -1119,13 +1137,675 @@ SQL에서 ```NULL```과 비교연산을 하게 되면 결과는 ```UNKWOWN```이
 
 ### 3-3. 조인 (```JOIN```)
 
-```JOIN```에 대해서 알아보자.
+```JOIN```에 대해서 알아보자. 
+
+> ```JOIN```은 두 개 이상의 테이블들에 있는 데이터를 한 번에 조회하는 것이다. 쉽게 말해서 여러가지 테이블로 부터 공통의 attribute를 통해서 테이블들을 특정 기준과 조건으로 합치는 것으로 생각하면 편하다.
+>
+> 여러가지 종류의 ```JOIN```이 존재한다. 
+
+#### 3-3-1. Implicit ```JOIN``` vs Explicit ```JOIN```
+
+##### Implicit ```JOIN``` (묵시적)
+
+```EMPLOYEE(id)```가 1인 임직원이 속한 부서의 이름을 조회한다고 가정해보자.
+
+```mysql
+SELECT d.name
+FROM EMPLOYEE e, DEPARTMENT d
+WHERE e.id = 1 AND e.dept_id = d.id; -- id가 1인 EMPLOYEE의 dept_id를 통해서 DEPARTMENT 테이블의 맞는 튜플을 찾음
+-- e.id = 1를 통해 EMPLOYEE 테이블에서 튜플을 찾고, JOIN 조건인 e.dept_id = d.id을 통해서 DEPARTMENT 테이블의 맞는 튜플을 찾음
+```
+
+* **Implicit ```JOIN``` (묵시적)** : ```FROM```절에는 테이블만 나열하고 ```WHERE```절에는 ```JOIN``` 조건(condition)을 나타내는 방식
+* 구시대적인 방식 (old-style)
+* Selection condition과 ```JOIN``` condition이 같이 있기 때문에 가독성이 떨어진다
+* 복잡한 ```JOIN``` 쿼리를 작성하면서 실수할 가능성이 높아진다
+
+<br>
+
+##### Explicit ```JOIN``` (명시적)
+
+```mysql
+SELECT d.name
+FROM EMPLOYEE e JOIN DEPARTMENT d ON e.dept_id = d.id -- FROM절에 joined 테이블들을 명시하는 방식 
+WHERE e.id = 1;
+```
+
+* **Explicit ```JOIN``` (명시적)** : ```FROM```절에는 ```JOIN``` 키워드와 함께 joined 테이블들을 **명시**하는 방식
+* ```FROM```절의 ```ON``` 뒤에 ```JOIN``` condition이 명시된다
+* Explicit ```JOIN```의 사용을 권장한다 
+
+<br>
+
+#### 3-3-2. ```INNER JOIN```
+
+```INNER JOIN```에 대해서 알아보자.
+
+```mysql
+INSERT INTO EMPLOYEE VALUES
+	(16, 'SIMON', '1990-08-11', 'M', 'DEV_FRONT', 80000000, null); -- dept_id가 null인 임직원 'SIMON'을 추가하자 
+	
+SELECT * 
+FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.id; -- e.dept_id와 d.id들이 서로 동일한 것 끼리 연결된다
+-- INNER JOIN은 그냥 JOIN으로 사용가능 
+```
+
+```
++----+----------+------------+------+-----------+-----------+---------+------+-------------+-----------+
+| id | name     | birth_date | sex  | POSITION  | salary    | dept_id | id   | name        | leader_id |
++----+----------+------------+------+-----------+-----------+---------+------+-------------+-----------+
+|  4 | BROWN    | 1996-03-13 | M    | CEO       | 240000000 |    1001 | 1001 | headquarter |         4 |
+|  5 | DINGYO   | 1990-11-05 | M    | CTO       | 240000000 |    1001 | 1001 | headquarter |         4 |
+|  6 | JULIA    | 1986-12-11 | F    | CFO       | 240000000 |    1001 | 1001 | headquarter |         4 |
+|  9 | HENRY    | 1982-05-20 | M    | HR        | 164000000 |    1002 | 1002 | HR          |        15 |
+| 15 | NEIMAR   | 1987-01-03 | M    | HR        |  70000000 |    1002 | 1002 | HR          |        15 |
+|  1 | MESSI    | 1987-02-01 | M    | DEV_BACK  | 400000000 |    1003 | 1003 | development |        14 |
+|  3 | JENNY    | 2000-10-12 | F    | DEV_BACK  | 200000000 |    1003 | 1003 | development |        14 |
+|  8 | HEUNGMIN | 1999-10-22 | M    | DEV_FRONT | 260000000 |    1003 | 1003 | development |        14 |
+| 14 | SAM      | 1992-08-04 | M    | DEV_INFRA | 280000000 |    1003 | 1003 | development |        14 |
+|  2 | JANE     | 1996-05-05 | F    | DSGN      | 180000000 |    1004 | 1004 | design      |         2 |
+|  7 | MBAPPE   | 1993-06-17 | F    | DSGN      | 160000000 |    1004 | 1004 | design      |         2 |
+| 11 | SUZANNE  | 1993-03-23 | F    | PO        | 150000000 |    1005 | 1005 | product     |        13 |
+| 12 | CURRY    | 1998-01-15 | M    | PLN       | 170000000 |    1005 | 1005 | product     |        13 |
+| 13 | JISUNG   | 1989-07-07 | M    | PO        | 180000000 |    1005 | 1005 | product     |        13 |
++----+----------+------------+------+-----------+-----------+---------+------+-------------+-----------+
+```
+
+* 결과를 살펴보면 임직원 ```SIMON```이 없다는 것을 알 수 있다. 그 이유는 ```null```값인 ```dept_id```와 매칭을 할 수 없기 때문(비교 연산 불가능)
+* ```INNER JOIN``` : 두 테이블에서 ```JOIN``` condition을 만족하는 튜플들로 result 테이블을 만든다
+* ```JOIN``` condition에는 여러가지 비교 연산자를 사용할 수 있다
+* ```JOIN``` condition에서 ```null``` 값을 가지는 튜플은 result 테이블에 포함되지 못한다
+
+<br>
+
+#### 3-3-3. ```OUTER JOIN```
+
+다양한 ```OUTER JOIN```들에 대해 알아보자.
+
+> ```OUTER JOIN```의 경우 두 테이블에서 ```JOIN``` 컨디션을 만족하지 않는 튜플들도 result 테이블에 포함시키는 ```JOIN```이다.
+>
+> ```OUTER JOIN```은 다음과 같이 ```LEFT OUTER JOIN```, ```RIGHT OUTER JOIN```, ```FULL OUTER JOIN```이 존재한다.
+>
+> ```OUTER```는 생략 가능하다.
+
+<br>
+
+<p align="center">   <img src="img/depart_emp.png" alt="mysql" style="width: 80%;"> </p>
+
+<p align='center'>OUTER JOIN에서 사용할 EMPLOYEE, DEPARTMENT 테이블</p>
+
+<br>
+
+먼저 ```LEFT JOIN```에 대해서 알아보자.
+
+```mysql
+SELECT *
+FROM EMPLOYEE e LEFT JOIN DEPARTMENT d ON e.dept_id = d.id; -- LEFT는 EMPLOYEE 테이블을 말한다
+```
+
+* ```LEFT```인 ```EMPLOYEE``` 테이블에서 ```JOIN``` 컨디션에 매칭되지 않는 튜플까지 포함해서 반환
+  * 예시의 경우에는 ```SIMON```이라는 이름의 임직원의 튜플
+
+<p align="center">   <img src="img/leftjoin.png" alt="mysql" style="width: 80%;"> </p>
+
+<p align='center'>LEFT JOIN</p>
+
+* ```LEFT OUTER JOIN```이기 때문에 ```EMPLOYEE``` 테이블에 대해서 튜플을 누락하지 않고 포함해서 반환
+  * 그래서 ```DEPARTMENT```의 1006 부서를 튜플에 포함해서 반환하지는 않는다
+
+<br>
+
+이번에는 ```RIGHT JOIN```을 살펴보자.
+
+```mysql
+SELECT *
+FROM EMPLOYEE e RIGHT JOIN DEPARTMENT d ON e.dept_id = d.id; -- RIGHT는 DEPARTMENT 테이블을 말한다
+```
+
+* ```JOIN``` 컨디션에 매칭되지 못한 RIGHT의 테이블(```DEPARTMENT```)의 튜플들도 포함해서 반환
+  * 이 경우에는 1006 ```data``` 부서를 말한다
+
+<p align="center">   <img src="img/rightjoin.png" alt="mysql" style="width: 80%;"> </p>
+
+<p align='center'>RIGHT JOIN</p>
+
+<br>
+
+마지막으로 ```FULL OUTER JOIN```에 대해서 알아보겠다. MySQL의 경우 ```FULL OUTER JOIN```을 지원하지 않는다. ```FULL OUTER JOIN```을 실행하기 위해서는 ```postgresql``` 같은 DBMS를 사용하면 된다.
+
+```FULL OUTER JOIN```은 기존의 ```LEFT JOIN```과 ```RIGHT JOIN```을 전부한다고 생각하면 편하다. 
+
+<br>
 
 
 
+<br>
 
+#### 3-3-4. ```USING```
 
+> 들어가기에 앞서 Equi ```JOIN```(동등 조인)에 대해서 설명하겠다.
+>
+> 일단 Equi ```JOIN```은 ```JOIN``` 컨디션에서 ```=```(equality comparator, 등호)를 사용하는 경우의 ```JOIN```이다. 그래서 우리가 이전에 예시로 사용했던 ```JOIN```들은 ```ON e.dept_id = d.id``` 처럼 ```=```를 사용했기 때문에 전부 Equi ```JOIN```이라고 부를 수 있다.
 
+<br>
+
+```USING``` 키워드에 대해 알아보자. 그리고 다음 상황은 ```DEPARTMENT``` 테이블의 ```id```를 ```id```가 아닌 ```dept_id```라고 하고 ```EMPLOYEE(dept_id)```와 이름이 같은 상황임을 가정하자. 
+
+```mysql
+-- Change Schema: id to dept_id
+ALTER TABLE test_company.DEPARTMENT CHANGE id dept_id int NOT NULL;
+```
+
+```mysql
+-- 1. 기존의 INNER JOIN 사용
+SELECT *
+FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.dept_id;
+
+-- 2. USING을 사용
+SELECT *
+FROM EMPLOYEE e INNER JOIN DEPARTMENT d USING (dept_id); -- 중복으로 사용하는 dept_id를 간편하게 표현
+```
+
+<p align="center">   <img src="img/using.png" alt="mysql" style="width: 80%;"> </p>
+
+<p align='center'>INNER JOIN (기존의 d.id는 d.dept_id로 바뀐 상황)</p>
+
+```USING```을 이용해서 쿼리를 실행하면, ```dept_id```가 중복으로 나타난것이 없어지고, 테이블의 앞으로 공통으로 사용하는 ```dept_id```가 존재하는 것을 확인 할 수 있다. 
+
+그럼 ```USING```을 정리하자면 다음과 같다.
+
+* 두 테이블이 Equi ```JOIN``` 을 할 때, ```JOIN```을 하는 두 attribute의 이름이 같다면, ```USING```을 이용해서 간단하게 쿼리를 작성할 수 있다
+* ```FROM table1 JOIN table2 USING(attribute(s))```
+* 결과 테이블에서 해당 attribute는 한번만 표시 된다
+
+<br>
+
+#### 3-3-5. ```NATURAL JOIN```
+
+```NATURAL JOIN```에 대해서 알아보자. 
+
+> ```NATURAL JOIN```은 두 테이블에서 같은 이름을 가지는 모든 *attribute pair*에 대해서 Equi ```JOIN```을 수행한다.
+>
+> ```JOIN``` 컨디션은 따로 명시하지 않는다.
+>
+> ```FROM table1 NATURAL JOIN table2```
+
+<br>
+
+```DEPARTMENT(name)```을 ```dept_name```으로 변경한 상황이다.  
+
+```mysql
+-- Change Schema: name to dept_name
+ALTER TABLE test_company.DEPARTMENT CHANGE name dept_name varchar(20) NOT NULL UNIQUE;
+```
+
+<br>
+
+먼저 현재의 ```EMPLOYEE```와 ```DEPARTMENT``` 테이블의 상황을 살펴보고 가자.
+
+<p align="center">   <img src="img/empdepart.png" alt="mysql" style="width: 80%;"> </p>
+
+<p align='center'>EMPLOYEE, DEPARTMENT 테이블</p>
+
+* 이전 ```USING```의 상황 처럼 ```dept_id```라는 attribute의 이름이 같다
+* ```DEPARTMENT```의 ```name```이 일단 ```dept_name```이라는 상황에서 ```NATURAL JOIN```을 살펴보자
+
+<br>
+
+현재의 테이블 상황에서 ```NATURAL JOIN```을 수행해보자. 
+
+```mysql
+SELECT *
+FROM EMPLOYEE e NATURAL INNER JOIN DEPARTMENT d;
+```
+
+```
++---------+----+----------+------------+------+-----------+-----------+-------------+-----------+
+| dept_id | id | name     | birth_date | sex  | POSITION  | salary    | dept_name   | leader_id |
++---------+----+----------+------------+------+-----------+-----------+-------------+-----------+
+|    1001 |  4 | BROWN    | 1996-03-13 | M    | CEO       | 240000000 | headquarter |         4 |
+|    1001 |  5 | DINGYO   | 1990-11-05 | M    | CTO       | 240000000 | headquarter |         4 |
+|    1001 |  6 | JULIA    | 1986-12-11 | F    | CFO       | 240000000 | headquarter |         4 |
+|    1002 |  9 | HENRY    | 1982-05-20 | M    | HR        | 164000000 | HR          |        15 |
+|    1002 | 15 | NEIMAR   | 1987-01-03 | M    | HR        |  70000000 | HR          |        15 |
+|    1003 |  1 | MESSI    | 1987-02-01 | M    | DEV_BACK  | 400000000 | development |        14 |
+|    1003 |  3 | JENNY    | 2000-10-12 | F    | DEV_BACK  | 200000000 | development |        14 |
+|    1003 |  8 | HEUNGMIN | 1999-10-22 | M    | DEV_FRONT | 260000000 | development |        14 |
+|    1003 | 14 | SAM      | 1992-08-04 | M    | DEV_INFRA | 280000000 | development |        14 |
+|    1004 |  2 | JANE     | 1996-05-05 | F    | DSGN      | 180000000 | design      |         2 |
+|    1004 |  7 | MBAPPE   | 1993-06-17 | F    | DSGN      | 160000000 | design      |         2 |
+|    1005 | 11 | SUZANNE  | 1993-03-23 | F    | PO        | 150000000 | product     |        13 |
+|    1005 | 12 | CURRY    | 1998-01-15 | M    | PLN       | 170000000 | product     |        13 |
+|    1005 | 13 | JISUNG   | 1989-07-07 | M    | PO        | 180000000 | product     |        13 |
++---------+----+----------+------------+------+-----------+-----------+-------------+-----------+
+```
+
+* ```FROM EMPLOYEE e INNER JOIN DEPARTMENT d USING (dept_id);```를 사용하는 경우와 결과가 똑같은 것을 볼 수 있다
+
+<br>
+
+그러면 기존의 ```DEPARTMENT``` 테이블 처럼 ```dept_name```이 아니라 ```name```을 사용하는 상황에서 ```NATURAL JOIN```을 수행하면 어떻게 될까? 결론부터 말하자면 ```Empty Set```을 반환하게 된다.
+
+```mysql
+-- 1. NATURAL JOIN 수행
+SELECT *
+FROM EMPLOYEE e NATURAL INNER JOIN DEPARTMENT d;
+
+-- 2. USING 사용시
+SELECT *
+FROM EMPLOYEE e INNER JOIN DEPARTMENT d USING (dept_id, name); -- DEPARTMENT, EMPLOYEE 모두 name이라는 attribute가 존재
+
+-- 3. 만약 ON을 사용한다면
+SELECT *
+FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.dept_id AND e.name = d.name;
+```
+
+* ```Empty Set```을 반환하는 이유는 ```EMPLOYEE```의 ```name```과 ```DEPARTMENT```의 ```name```과 매칭되는 것이 없기 때문에
+
+<br>
+
+#### 3-3-6. ```CROSS JOIN```
+
+```CROSS JOIN```에 대해서 알아보자.
+
+> ```CROSS JOIN```은 두 테이블의 튜플 쌍(tuple pair)로 만들 수 있는 모든 조합(cartesian product)을 result 테이블로 반환한다.
+>
+> ```CROSS JOIN```은 ```JOIN``` 컨디션이 없다.
+>
+> * Implicit ```CROSS JOIN``` : ```FROM table1, table2```
+> * Explicit ```CROSS JOIN``` : ```FROM table1 CROSS JOIN table2```
+
+<br>
+
+```CROSS JOIN```이 수행되는 과정을 선으로 표현해보면 다음과 같다.
+
+<p align="center">   <img src="img/crossjoin.png" alt="mysql" style="width: 80%;"> </p>
+
+<p align='center'>CROSS JOIN</p>
+
+결과를 살펴보면 다음과 같다.
+
+```mysql
+SELECT *
+FROM EMPLOYEE e CROSS JOIN DEPARTMENT d;
+```
+
+<p align="center">   <img src="img/crossjoin2.png" alt="mysql" style="width: 80%;"> </p>
+
+<p align='center'>CROSS JOIN Result</p>
+
+* 이미지에서는 잘렸지만 총 90개 (사원 15명 x 부서 6곳)의 튜플이 존재하는 테이블이 반환된다
+
+> MySQL에서는 ```CROSS JOIN```이 ```INNER JOIN```과 같다. 
+>
+> * ```CROSS JOIN```에 ```ON``` 또는 ```USING```을 같이 사용하면 ```INNER JOIN```으로 동작한다.
+> * 마찬가지로 ```INNER JOIN```이 ```ON``` 또는 ```USING``` 없이 사용되면 ```CROSS JOIN```으로 동작한다.
+
+<br>
+
+### 3-4. ```ORDER BY```
+
+정렬을 위한 ```ORDER BY```에 대해서 알아보자.
+
+> ```ORDER BY```는 조회 결과를 특정 attribute(s) 기준으로 정렬하여 가져오고 싶을 때 사용한다.
+>
+> * 기본(default) 정렬 방식은 오름차순
+> * 오름차순 정렬 : ```ASC```로 표기
+> * 내림차순 정렬 : ```DESC```로 표기
+
+<br>
+
+그럼 임직원들의 데이터에 대해서 ```salary``` 를 오름차순으로 정렬해서 조회하고 싶은 경우를 살펴보자.
+
+```mysql
+-- 1. 오름차순 (ASC)
+SELECT *
+FROM EMPLOYEE e ORDER BY salary; -- ASC 생략 가능
+
+-- 2. 내림차순 (DESC)
+SELECT *
+FROM EMPLOYEE e ORDER BY salary DESC;
+```
+
+```
+id|name    |birth_date|sex|POSITION |salary   |dept_id|
+--+--------+----------+---+---------+---------+-------+
+15|NEIMAR  |1987-01-03|M  |HR       | 70000000|   1002|
+16|SIMON   |1990-08-11|M  |DEV_FRONT| 80000000|       |
+11|SUZANNE |1993-03-23|F  |PO       |150000000|   1005|
+ 7|MBAPPE  |1993-06-17|F  |DSGN     |160000000|   1004|
+... 생략
+ 6|JULIA   |1986-12-11|F  |CFO      |240000000|   1001|
+ 8|HEUNGMIN|1999-10-22|M  |DEV_FRONT|260000000|   1003|
+14|SAM     |1992-08-04|M  |DEV_INFRA|280000000|   1003|
+ 1|MESSI   |1987-02-01|M  |DEV_BACK |400000000|   1003|
+```
+
+```
+id|name    |birth_date|sex|POSITION |salary   |dept_id|
+--+--------+----------+---+---------+---------+-------+
+ 1|MESSI   |1987-02-01|M  |DEV_BACK |400000000|   1003|
+14|SAM     |1992-08-04|M  |DEV_INFRA|280000000|   1003|
+ 8|HEUNGMIN|1999-10-22|M  |DEV_FRONT|260000000|   1003|
+ 4|BROWN   |1996-03-13|M  |CEO      |240000000|   1001|
+... 생략
+ 7|MBAPPE  |1993-06-17|F  |DSGN     |160000000|   1004|
+11|SUZANNE |1993-03-23|F  |PO       |150000000|   1005|
+16|SIMON   |1990-08-11|M  |DEV_FRONT| 80000000|       |
+15|NEIMAR  |1987-01-03|M  |HR       | 70000000|   1002|
+```
+
+<br>
+
+그럼 이번에는 부서별로 묶고, 그 안에서 또 ```salary```를 내림차순으로 조회하고 싶으면 어떻게 할까?
+
+```mysql
+-- 2개 이상의 attribute로 정렬
+SELECT *
+FROM EMPLOYEE ORDER BY dept_id ASC, salary DESC; -- 1차적으로 dept_id를 오름차순 정렬하고, 그 이후 salary를 기준으로 내림차순 정렬
+```
+
+```
+id|name    |birth_date|sex|POSITION |salary   |dept_id|
+--+--------+----------+---+---------+---------+-------+
+16|SIMON   |1990-08-11|M  |DEV_FRONT| 80000000|       |
+ 4|BROWN   |1996-03-13|M  |CEO      |240000000|   1001|
+ 5|DINGYO  |1990-11-05|M  |CTO      |240000000|   1001|
+ 6|JULIA   |1986-12-11|F  |CFO      |240000000|   1001|
+ 9|HENRY   |1982-05-20|M  |HR       |164000000|   1002|
+15|NEIMAR  |1987-01-03|M  |HR       | 70000000|   1002|
+ 1|MESSI   |1987-02-01|M  |DEV_BACK |400000000|   1003|
+14|SAM     |1992-08-04|M  |DEV_INFRA|280000000|   1003|
+ 8|HEUNGMIN|1999-10-22|M  |DEV_FRONT|260000000|   1003|
+ 3|JENNY   |2000-10-12|F  |DEV_BACK |200000000|   1003|
+ 2|JANE    |1996-05-05|F  |DSGN     |180000000|   1004|
+ 7|MBAPPE  |1993-06-17|F  |DSGN     |160000000|   1004|
+13|JISUNG  |1989-07-07|M  |PO       |180000000|   1005|
+12|CURRY   |1998-01-15|M  |PLN      |170000000|   1005|
+11|SUZANNE |1993-03-23|F  |PO       |150000000|   1005|
+```
+
+<br>
+
+### 3-5. Aggregate Function
+
+Aggregate Function에 대해서 알아보자. 
+
+> Aggregate Function(집계 함수)은 여러 튜플들의 데이터를 요역해서 하나의 값으로 추출하는 함수들을 일컫는다.
+>
+> * 대표적으로 ```COUNT```, ```SUM```, ```AVG```, ```MAX```, ```MIN``` ..
+> * 관심있는 attribute에 사용되는 경우가 많다
+>   * 예) ```AVG(salary)```
+> * null값들은 제외하고 요약 값을 계산한다
+
+<br>
+
+Aggregate Function들을 사용해보자.
+
+먼저 임직원의 수를 알고 싶은 경우를 살펴보자.
+
+```mysql
+-- 1. COUNT 사용
+SELECT COUNT(*) FROM EMPLOYEE; 
+/*
+ * COUNT를 이용할때 중복까지 다 포함해서 계산해줌
+ * COUNT안의 *를 position으로 변경해도 똑같이 15가 나올것임
+ */
+ 
+-- 2. COUNT(*) 대신 COUNT(dept_id) 사용하는 경우
+SELECT COUNT(dept_id) FROM EMPLOYEE; -- 이번에는 결과가 14가 나옴
+```
+
+```
+COUNT(*)|
+--------+
+      15|
+```
+
+* ```COUNT(*)``` 대신 ```COUNT(dept_id)```를 사용하는 경우 14가 나오는 이유는 ```dept_id```의 값중 ```null```값은 제외하고 집계하기 때문이다
+
+<br>
+
+이번에는 프로젝트 2002에 참여한 임직원 수와 최대 ```salary```, 최소 ```salary```, 평균 ```salary```를 집계하는 경우이다.
+
+```mysql
+SELECT COUNT(*), MAX(salary), MIN(salary), AVG(salary)
+FROM WORKS_ON w JOIN EMPLOYEE e ON w.empl_id = e.id -- WORKS_ON과 EMPLOYEE를 INNER JOIN (id를 기준으로 컨디션 정의)
+WHERE w.proj_id = 2002;
+```
+
+```
++----------+-------------+-------------+----------------+
+| COUNT(*) | MAX(salary) | MIN(salary) | AVG(salary)    |
++----------+-------------+-------------+----------------+
+|        3 |   400000000 |   150000000 | 263333333.3333 |
++----------+-------------+-------------+----------------+
+```
+
+<br>
+
+### 3-6. ```GROUP BY```
+
+```GROUP BY```를 이용해서 그룹별로 묶어서 집계하는 방법에 대해 알아보자. 
+
+> ```GROUP BY```는 관심있는 attribute(s) 기준으로  그룹을 나눠서 그룹별로 Aggregate Function을 적용하고 싶을 때 사용한다.
+>
+> * grouping attribute(s) : 그룹을 나눈 기준이 되는 attribute(s)
+> * ```SELECT select_attribute(s) FROM table GROUP BY grouping_attribute(s)```
+
+바로 이전의 예시를 이어서, 이번에는 특정 프로젝트가 아니라 각 프로젝트에 참여한 임직원 수, 최대 ```salary```, 최소 ```salary```, 평균 ```salary```를 집계해보자.
+
+```mysql
+-- GROUP BY 사용
+SELECT w.proj_id, COUNT(*), MAX(salary), MIN(salary), AVG(salary)
+FROM WORKS_ON w JOIN EMPLOYEE e ON w.empl_id = e.id 
+GROUP BY w.proj_id; -- 기존의 WHERE절에 GROUP BY를 사용해서 w.proj_id 기준으로 그룹핑을 하겠다는 것을 명시
+-- w.proj_id가 grouping attribute
+```
+
+```
++---------+----------+-------------+-------------+----------------+
+| proj_id | COUNT(*) | MAX(salary) | MIN(salary) | AVG(salary)    |
++---------+----------+-------------+-------------+----------------+
+|    2001 |        5 |   400000000 |   180000000 | 248000000.0000 |
+|    2002 |        3 |   400000000 |   150000000 | 263333333.3333 |
+|    2003 |        6 |   260000000 |   160000000 | 189000000.0000 |
++---------+----------+-------------+-------------+----------------+
+```
+
+<br>
+
+### 3-7. ```HAVING```
+
+```HAVING```에 대해서 알아보자.
+
+> ```HAVING```은 ```GROUP BY```와 함께 사용해서, 집계 함수(Aggregate Function)의 결과값을 바탕으로 그룹을 필터링하고 싶을 때 사용한다.
+>
+> * ```HAVING``` 절에 필터링할 컨디션을 명시한다
+
+프로젝트 참여 인원이 5명 이상인 프로젝트들에 대해서 각 프로젝트에 참여한 임직원 수, 최대 ```salary```, 최소 ```salary```, 평균 ```salary```를 집계해보자. 이 말은 이전에 ```GROUP BY```로 그룹핑해서 나온 결과를 기준으로  ```참여인원 >= 5```인 조건으로 필터링해서 결과를 확인하겠다는 말과 일치한다. 
+
+이것을 ```HAVING```을 이용해서 구해보자. 
+
+```mysql
+-- HAVING 사용
+SELECT w.proj_id, COUNT(*), MAX(salary), MIN(salary), AVG(salary)
+FROM WORKS_ON w JOIN EMPLOYEE e ON w.empl_id = e.id 
+GROUP BY w.proj_id
+HAVING COUNT(*) >= 5; -- 참여인원이 5명 이상인 경우를 조건으로 필터링
+```
+
+```
++---------+----------+-------------+-------------+----------------+
+| proj_id | COUNT(*) | MAX(salary) | MIN(salary) | AVG(salary)    |
++---------+----------+-------------+-------------+----------------+
+|    2001 |        5 |   400000000 |   180000000 | 248000000.0000 |
+|    2003 |        6 |   260000000 |   160000000 | 189000000.0000 |
++---------+----------+-------------+-------------+----------------+
+```
+
+<br>
+
+### 3-8. 조회, 집계 예시
+
+특정 기준으로 데이터를 조회하고 집계하는 예시들을 살펴보자.
+
+<br>
+
+#### 3-8-1. ```GROUP BY``` + ```ORDER BY```
+
+각 부서별로 인원수를 인원 수가 많은 순서대로 정렬해서 조회해보자.
+
+```mysql
+SELECT dept_id, COUNT(*) AS empl_count
+FROM EMPLOYEE
+GROUP BY dept_id -- dept_id로 그룹핑 
+ORDER BY empl_count DESC; -- empl_count 내림차순 정렬
+```
+
+```
++---------+------------+
+| dept_id | empl_count |
++---------+------------+
+|    1003 |          4 |
+|    1001 |          3 |
+|    1005 |          3 |
+|    1002 |          2 |
+|    1004 |          2 |
+|    NULL |          1 |
++---------+------------+
+```
+
+* 여기서 알아야할 것은 ```NULL```값이 하나의 ```dept_id```에 해당하는 것이 아니라, ```NULL```인 모든 ```dept_id```들을 다 그룹핑해서 집계한 것이다
+  * 그래서 ```NULL```은 아직 설정되지 않은 1006이 될 수도 있고, 1006, 1007, 1008 등 잠재적으로 다양한 ```dept_id```값이 될 수 도 있는 것이다
+
+<br>
+
+이번에는 각 부서별 - 성별 인원수를 인원 수가 많은 순서대로 정렬해서 조회해보자.
+
+```mysql
+SELECT dept_id, sex, COUNT(*) AS empl_count -- SELECT에 sex도 포함되어야 함 
+FROM EMPLOYEE
+GROUP BY dept_id, sex -- 부서별 성별로 그룹핑 
+ORDER BY empl_count DESC;
+```
+
+```
++---------+------+------------+
+| dept_id | sex  | empl_count |
++---------+------+------------+
+|    1003 | M    |          3 |
+|    1004 | F    |          2 |
+|    1001 | M    |          2 |
+|    1002 | M    |          2 |
+|    1005 | M    |          2 |
+|    1003 | F    |          1 |
+|    1001 | F    |          1 |
+|    1005 | F    |          1 |
+|    NULL | M    |          1 |
++---------+------+------------+
+```
+
+<br>
+
+#### 3-8-2. ```GROUP BY``` + ```HAVING``` + subquery
+
+이번에는 회사 전체의 평균 연봉보다 평균 연봉이 적은 부서들의 평균 연봉을 조회하자.
+
+```mysql
+SELECT dept_id, AVG(salary) AS avg_salary 
+FROM EMPLOYEE
+GROUP BY dept_id -- EMPLOYEE 테이블에서 각 부서별로 그룹핑 
+HAVING avg_salary < ( -- 각 부서별로 평균 연봉을 구함 → 부서의 평균 연봉이 전체 평균 연봉보다 작은 경우만 결과를 가져온다
+	SELECT AVG(salary) FROM EMPLOYEE -- EMPLOYEE 테이블에서 회사 전체 평균 연봉
+	) 
+```
+
+```
++---------+----------------+
+| dept_id | avg_salary     |
++---------+----------------+
+|    NULL |  80000000.0000 |
+|    1002 | 117000000.0000 |
+|    1004 | 170000000.0000 |
+|    1005 | 166666666.6667 |
++---------+----------------+
+```
+
+<br>
+
+#### 3-8-3. ```GROUP BY``` + ```ORDER BY``` + ```HAVING``` + subquery
+
+이번에는 각 프로젝트별로 프로젝트에 참여한 90년대생들의 수와 이들의 평균 연봉을 조회해보자. 
+
+```mysql
+SELECT proj_id, COUNT(*), ROUND(AVG(salary), 0) AS avg_salary
+FROM WORKS_ON w JOIN EMPLOYEE e ON w.empl_id = e.id
+WHERE e.birth_date BETWEEN '1990-01-01' AND '1999-12-31'
+GROUP BY w.proj_id; -- proj_id 기준으로 그룹핑
+```
+
+```
++---------+----------+------------+
+| proj_id | COUNT(*) | avg_salary |
++---------+----------+------------+
+|    2001 |        3 |  220000000 |
+|    2003 |        4 |  192500000 |
+|    2002 |        1 |  150000000 |
++---------+----------+------------+
+```
+
+<br>
+
+이전의 예시를 이어서 **프로젝트 참여 인원이 5명 이상인 프로젝트에 한정**해서 각 프로젝트 별로 프로젝트에 참여한 90년대생들의 수와 이들의 평균 연봉을 조회해보자.
+
+```mysql
+SELECT proj_id, COUNT(*), ROUND(AVG(salary), 0) AS avg_salary 
+FROM WORKS_ON w JOIN EMPLOYEE e ON w.empl_id = e.id
+WHERE e.birth_date BETWEEN '1990-01-01' AND '1999-12-31'
+	AND w.proj_id IN (
+						SELECT proj_id FROM WORKS_ON
+						GROUP BY proj_id
+						HAVING COUNT(*) >= 5
+					 )
+GROUP BY w.proj_id;
+-- HAVING 절을 이용하게 되면 이미 90년대생에 대해 집계된 결과를 필터링하게 됨 
+```
+
+```
++---------+----------+------------+
+| proj_id | COUNT(*) | avg_salary |
++---------+----------+------------+
+|    2001 |        3 |  220000000 |
+|    2003 |        4 |  192500000 |
++---------+----------+------------+
+```
+
+<br>
+
+지금까지 ```SELECT```로 조회하는 방법을 정리하면 다음과 같다. 
+
+> ```SELECT``` 쿼리에서 각 절의 개념적인 실행 순서는 다음과 같다.
+>
+> 6. ```SELECT```
+>
+> 1. ```FROM```
+> 2. ```WHERE```
+> 3. ```GROUP BY```
+> 4. ```HAVING```
+> 5. ```ORDER BY```
+>
+> 이것은 말 그대로 *개념적인* 순서로, 실제 실행 순서는 RDBMS 마다 구현한 동작 원리에 따라 다를 수 있다.
+
+<br>
+
+---
+
+## 4) Stored Function
+
+Stored Function에 대해 알아보자.
+
+> 
 
 
 

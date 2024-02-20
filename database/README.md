@@ -111,7 +111,7 @@
 
 ---
 
-## Requirments
+## Requirements
 
 * MySQL 8.0 (InnoDB 사용)
 * GUI 툴(MySQL Workbench, DBeaver)은 선택

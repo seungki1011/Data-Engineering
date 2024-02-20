@@ -4,7 +4,7 @@
 
 ## Index
 
-1. [RDBMS 기초](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md)
+1. [RDBMS I](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md)
    * [데이터베이스(Database, DB) 소개](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4database-%EC%86%8C%EA%B0%9C)
    * [Modeling](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#2-modeling)
    * [Entity, Attribute, Relationship](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#3-entity-attribute-relationship)
@@ -14,10 +14,17 @@
    * [정규화(Normalization)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-%EC%A0%95%EA%B7%9C%ED%99%94normalization)
    * [반정규화(Denormalization)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#8-%EB%B0%98%EC%A0%95%EA%B7%9C%ED%99%94denormalization)
 2. [SQL 기초 및 활용](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md)
-3. [RDBMS 심화](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md)
-4. [NoSQL ]()
-
-
+   * MySQL 설치
+   * 기초 SQL문 I
+   * 기초 SQL문 II
+   * Stored Function
+   * Stored Procedure
+   * 트리거(Trigger)
+   * 인덱스(Index)
+3. [RDBMS II](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md)
+   * 트랜잭션(Transaction)
+   * Lock
+   * 동시성 제어(Concurrency Control)
 
 ---
 
@@ -40,4 +47,6 @@
 
 1. [한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)
 2. [인프런 쉬운코드 - 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)
+3. [MySQL 8.0 Document](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/macos-installation.html)
+4. [https://www.mysqltutorial.org/mysql-basics/mysql-data-types/](https://www.mysqltutorial.org/mysql-basics/mysql-data-types/)
 

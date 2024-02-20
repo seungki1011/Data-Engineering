@@ -41,9 +41,6 @@
 8. [반정규화(Denormalization)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#8-%EB%B0%98%EC%A0%95%EA%B7%9C%ED%99%94denormalization)
    * 반정규화의 정의
    * 반정규화의 적용
-10. 락(Lock)
-11. 트랜잭션(Transaction)
-12. 동시성 제어(Concurrency Control)
 
 
 

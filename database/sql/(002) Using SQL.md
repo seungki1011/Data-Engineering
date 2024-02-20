@@ -6,10 +6,10 @@
 
 ## Table of Contents
 
-1. ```MySQL``` 설치
-   * ```MySQL``` 설치와 연결
-     * CLI
-     * GUI
+1. [```MySQL``` 설치]()
+   * [```MySQL``` 설치와 연결](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-1-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%97%B0%EA%B2%B0)
+     * [CLI]()
+     * [GUI]()
 1. 기초 SQL문 I
    * 데이터베이스 생성 (```CREATE```)
    * 속성의 자료형 (Attribute Data Types)
@@ -60,7 +60,7 @@
 
 <br>
 
-## 1) MySQL 설치와 설정
+## 1) MySQL 설치
 
 > 해당 ```MySQL ```설치와 연결은 MacOS 로컬 환경 위에서 진행되었습니다.
 

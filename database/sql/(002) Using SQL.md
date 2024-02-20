@@ -47,8 +47,10 @@
    * Example
    * 주의 사항
 1. 인덱스(Index)
-   * 인덱스 설명
-   * B-tree
+   * ```INDEX``` 사용법
+   * 인덱스 동작 원리
+   * 주의 사항
+1. B-tree
 
 
 
@@ -2308,7 +2310,7 @@ SQL의 인덱스(Index)에 대해 알아보자.
 
 <br>
 
-들어가기에 앞서 예시와 설명에 사용한 테이터베이스는 MySQL에서 제공해주는 예시 데이터베이스인 ```employees``` DB를 사용했다.
+들어가기에 앞서 Example에 사용한 테이터베이스는 MySQL에서 제공해주는 sample 데이터베이스인 ```employees``` DB를 사용했다.
 
 * [https://dev.mysql.com/doc/employee/en/employees-installation.html](https://dev.mysql.com/doc/employee/en/employees-installation.html)
 
@@ -2391,6 +2393,8 @@ mysql> SELECT * FROM employees WHERE first_name = 'Leen';
 246 rows in set (0.01 sec)
 ```
 
+<br>
+
 두 번째 경우도 ```0.19sec``` → ```0.01sec```으로 조회 시간이 줄어든것을 확인 할 수 있다.
 
 ```
@@ -2429,7 +2433,137 @@ CREATE TABLE employees (
 이번에는 테이블에 걸려있는 인덱스들을 볼 수 있는 방법에 대해 알아보자. 
 
 ```mysql
+SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확인
 ```
+
+<p align="center">   <img src="img/emp_index1.png" alt="mysql" style="width: 100%;"> </p>
+
+* 특정 테이블에 속한 인덱스의 이름을 포함한 여러가지 정보를 확인 할 수 있다
+* 인덱스의 ```Key_name```이 여러개 존재한다는 것은 composite index라는 뜻
+  * ```Seq_in_index```를 통해서 어떤 ```Column_name```이 어떤 순서로 들어갔는지 확인 가능
+
+<br>
+
+### 7-2. 인덱스 동작 방식
+
+> B-tree 기반의 인덱스가 동작하는 방식을 아주 간략화해서 설명합니다. 세세한 내용은  B-tree에서 다룰 예정.
+
+<br>
+
+```a```, ```b```, ```c``` 라는 attribute을 가지는 테이블이 존재하고, ```a```를 이용해서 인덱스를 만들었다고 가정해보자.
+
+<p align="center">   <img src="img/index2.png" alt="mysql" style="width: 80%;"> </p>
+
+* ```INDEX(a)```는 ```a```에 대해 정렬이 되어 있는 형태로 저장된다
+* pointer는 원본 테이블에 있는 튜플(row)를 가리키는 참조 데이터가 들어가 있다 (row identifier로 표현하기도 한다)
+
+여기서 ```WHERE a = 7;```을 통해서 ```a```가 7인 튜플을 찾는 상황이라고 생각해보자. 이 때 해당 튜플을 찾는 과정은 다음과 같다.
+
+(Binary Search의 과정은 알고 있다는 가정하에 설명)
+
+1. Binary Search를 통해서 일단 7을 찾음
+2. 그 과정에서 찾은 모든 7들을 원본 테이블과 매칭해서 튜플 선택 
+
+<br>
+
+그러면 이번에는 ```WHERE a = 7 AND b = 95;```를 통해 ```a```가 7이면서 ```b```는 95인 튜플을 찾는 상황이라고 생각해보자. 만약 기존 처럼 ```a```로만 만들어진 인덱스를 사용하면 어떻게 될까?
+
+<p align="center">   <img src="img/index3.png" alt="mysql" style="width: 80%;"> </p>
+
+위의 그림에서도 확인할 수 있듯이, ```INDEX(a)```만 사용하면 ```a = 7```은 빠르게 찾아도, ```b = 95```에 대한 조회는 full-scan으로 동작하기 때문에 시간이 걸린다. 이를 해결하기 위해서는 ```a```, ```b```를 묶어서 하나의 인덱스로 만들어야 한다.
+
+<br>
+
+```CREATE INDEX(a,b)```로 ```INDEX(a,b)```를 만들었다고 하자.
+
+<p align="center">   <img src="img/index4.png" alt="mysql" style="width: 80%;"> </p>
+
+* 정렬 순서:  ```a```먼저 정렬 후 ```b```정렬 (composite index를 만들때 attribute의 sequence가 중요하다)
+
+이전과는 달리, ```a```에 대한 binary search를 진행해서 ```a = 7```인 범위를 구하고, 그 내에서 다시 ```b```에 대해 binary search를 진행해서 조건에 알맞는 튜플을 선택한다. 
+
+<br>
+
+이 처럼 인덱스를 걸어주는 방식에 따라 query의 성능이 좋아질 수도 있고, 안 좋아질 수 도 있다. 
+
+<br>
+
+### 7-3. ```INDEX```를 확인하는 방법
+
+쿼리에 대해 어떤 인덱스를 쓰는지 확인해보는 방법을 알아보자. 
+
+```mysql
+-- 특정 쿼리의 인덱스 확인해보기
+EXPLAIN -- EXPLAIN 키워드를 이용한다
+SELECT * FROM employees WHERE first_name = 'Leen';
+```
+
+<p align="center">   <img src="img/explain1.png" alt="mysql" style="width: 100%;"> </p>
+
+<br>
+
+이때 사용되는 인덱스는 RDBMS의 optimizer가 선택해준다. 그러면 만약 optimizer가 선택해준 인덱스에 대해 성능이 좋지 않아서 사용자가 직접 인덱스를 선택하고 싶은 경우 어떻게 할까?
+
+```mysql
+-- 1. 권장하는 인덱스를 명시 (USE INDEX)
+SELECT * FROM employees USE INDEX (사용할 인덱스 명) WHERE first_name = 'Leen';
+
+-- 2. 강제로 사용할 인덱스를 명시 (FORCE INDEX)
+SELECT * FROM employees FORCE INDEX (사용할 인덱스 명) WHERE first_name = 'Leen';
+
+-- 3. 인덱스를 제외하고 싶다면 (IGNORE INDEX)
+SELECT * FROM employees IGNORE INDEX (제외할 인덱스 명) WHERE first_name = 'Leen';
+```
+
+* ```FORCE```를 사용하는 경우 웬만한 경우에는 사용자가 명시한 인덱스를 사용하게 된다
+* 인덱스를 사용하지 못하는 경우라면 full-scan으로 동작하게 된다
+
+<br>
+
+### 7-4. 주의 사항
+
+지금까지 알아본 내용만으로 생각하면 인덱스(INDEX)를 만들면 쿼리의 성능이 올라가기 때문에 "인덱스를 마구잡이로 생성하는게 좋지 않을까?"라는 생각이 들 수도 있지만, 인덱스 생성에는 비용이 따른다. 
+
+> 인덱스를 만들 때 마다 원본 테이블에서 해당 인덱스 값들로 만들어진 복사본 테이블이 그만큼 존재하게 되는 것이다. 이렇게 되면 다음과 같은 영향을 끼친다. 
+>
+> 1. 테이블에 write를 수행할 때 마다 인덱스도 변경이 발생한다
+>    * 이 경우 인덱스에 대한 write 수행을 위한 추가적인 overhead가 발생할 가능성이 높다
+> 2. 인덱스를 위한 추가적인 저장 공간이 필요하다
+
+위에서 언급한 내용에 의해서, 불필요한 인덱스를 생성하는 것은 권장되지 않는다.
+
+<br>
+
+### 7-5. Covering Index
+
+Covering Index에 대해 알아보자. 위의 [인덱스 동작 방식]()에서 이용한 예시를 이용하겠다.
+
+<p align="center">   <img src="img/covering_index.png" alt="mysql" style="width: 80%;"> </p>
+
+* 위의 경우 처럼 조회하는 attribute(s)를 인덱스가 모두 커버하면 Covering Index라고 한다
+* Covering Index에 해당하면 조회 성능이 더 빠르다 
+
+<br>
+
+### 7-6. Hash Index
+
+**Hash Index**에 대해 아주 간략히 알아보자. 
+
+* 시간복잡도: O(1)
+* 인덱스 구현을 B-tree가 아닌 hash table을 사용한다
+* 데이터가 늘어남에 따라 hash table의 사이즈를 늘리고 다시 요소들을 redistribute하는 rehashing에 대한 부담이 존재한다
+* 동일한지 동일하지 않은지(equality)에 대한 비교만 가능하다
+* composite index의 경우 전체 attribute에 대한 조회만 가능
+
+<br>
+
+---
+
+## 8) B-tree
+
+
+
+
 
 
 

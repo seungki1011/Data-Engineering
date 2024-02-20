@@ -36,8 +36,12 @@
    * 정규화의 정의
    * 잘못된 구조의 테이블
    * 정규화와 성능
-   * 함수적 종속성(Functional Dependency, FD)
-   * 정규화의 단계
+   * [함수적 종속성(Functional Dependency, FD)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-4-%ED%95%A8%EC%88%98%EC%A0%81-%EC%A2%85%EC%86%8D%EC%84%B1functional-dependency-fd)
+   * [정규화의 단계](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-5-%EC%A0%95%EA%B7%9C%ED%99%94%EC%9D%98-%EB%8B%A8%EA%B3%84)
+     * [1NF](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-5-1-1nf)
+     * [2NF](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-5-2-2nf)
+     * [3NF](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-5-3-3nf)
+     * [BCNF(Boyce-Codd NF)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#7-5-4-bcnfboyce-codd-normal-form)
 8. [반정규화(Denormalization)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(001)%20Relational%20Database.md#8-%EB%B0%98%EC%A0%95%EA%B7%9C%ED%99%94denormalization)
    * 반정규화의 정의
    * 반정규화의 적용
@@ -592,6 +596,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 ### 7-2. 잘못된 구조의 테이블
 
+* 이후에서 사용하는 대부분 예시는 [쉬운코드 - DB 정규화](https://www.youtube.com/watch?v=EdkjkifH-m8&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=23)를 참고해서 작성했다.
+
 테이블 설계를 잘못하는 경우를 살펴보자.
 
 다음은 ```EMPLOYEE_DEPARTMENT```로 사원과 부서를 하나의 테이블로 구성한 경우이다.
@@ -721,7 +727,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 ### 7-5. 정규화의 단계
 
-각 정규화의 단계에 대해서 살펴보자. 해당 부분은 [유튜브 쉬운코드 - DB 정규화](https://www.youtube.com/watch?v=EdkjkifH-m8&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=23)를 참고해서 작성했다.
+각 정규화의 단계에 대해서 살펴보자.
 
 <p align="center">   <img src="img/nf1.webp" alt="database" style="width: 60%;"> </p>
 
@@ -796,7 +802,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 > *제 2 정규화(2NF)*는 모든 Non-prime Attribute들이 모든 키(Key)에 대해 완전 함수적 종속(Fully Functional Dependent) 되어야 한다.
 
-쉽게 말해서 **제 1 정규화(1NF)를 진행한 테이블에 대해 완전 함수 종속을 만족하도록 테이블을 분해하는 것이다.**
+쉽게 말해서 **제1정규화(1NF)를 진행한 테이블에 대해 완전 함수 종속을 만족하도록 테이블을 분해하는 것이다.**
 
 **제 2 정규화(2NF)**를 진행하기에 앞서 1NF 이후의 문제점들을 살펴보자. 
 
@@ -825,7 +831,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 >
 > (non-prime attribute와 non-prime attribute 사이에는 어떠한 FD가 존재하면 안된다.)
 
-쉽게 말해서 **제 2 정규화(2NF)를 진행한 테이블에 대해 이행적 종속성(Transitive Dependency)을 없애도록 테이블을 분해하는 것이다.**
+쉽게 말해서 **제2정규화(2NF)를 진행한 테이블에 대해 이행적 종속성(Transitive Dependency)을 없애도록 테이블을 분해하는 것이다.**
 
 들어가기에 앞서 이행적 종속성(Transitive Dependency)을 복습하고 가자.
 
@@ -837,7 +843,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-**제 3 정규화(3NF)**를 진행하기에 앞서 2NF 이후의 문제점들을 살펴보자. 
+**제3정규화(3NF)**를 진행하기에 앞서 2NF 이후의 문제점들을 살펴보자. 
 
 <p align="center">   <img src="img/after2NF.png" alt="database" style="width: 80%;"> </p>
 
@@ -845,7 +851,7 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 <br>
 
-이제 **제 3 정규화(3NF)**를 진행해보자. 문제가 되었던 ```{emp_id}```→ ```{emp_name}```을 해결하기 위해서 새로운 테이블로 분리해내면 된다. 
+이제 **제3정규화(3NF)**를 진행해보자. 문제가 되었던 ```{emp_id}```→ ```{emp_name}```을 해결하기 위해서 새로운 테이블로 분리해내면 된다. 
 
 <p align="center">   <img src="img/3NF.png" alt="database" style="width: 80%;"> </p>
 
@@ -895,40 +901,11 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-## 요약
-
-
-
-
-
-
-
-<br>
-
----
-
 ## P.S
 
 * 정규화 파트에서 [유튜브 쉬운코드 - DB 정규화](https://www.youtube.com/watch?v=EdkjkifH-m8&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=23)를 많이 참고
-* **SQL 전문가 가이드**는 별로 친절하지 않은 것 같다. 보조 이론서가 필요할 듯..
+* **SQL 전문가 가이드**는 별로 친절하지 않은 것 같다. 보조 이론서가 필요할 듯
+* 이후의 내용(Lock, Transaction, Concurrency Control, etc..)은 [RDBMS II](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003) Relational Database 2.md)에서 다룰 듯
 
 
 
@@ -945,5 +922,3 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 3. [javatpoint - what is rdbms](https://www.javatpoint.com/what-is-rdbms)
 
 4. [algo daily - normalization](https://algodaily.com/lessons/normalization-sql-normal-forms)
-
-   

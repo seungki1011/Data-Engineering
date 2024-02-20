@@ -6,51 +6,54 @@
 
 ## Table of Contents
 
-1. [```MySQL``` 설치]()
+1. [```MySQL``` 설치](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%84%A4%EC%A0%95)
    * [```MySQL``` 설치와 연결](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-1-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%97%B0%EA%B2%B0)
-     * [CLI]()
-     * [GUI]()
-1. 기초 SQL문 I
-   * 데이터베이스 생성 (```CREATE```)
-   * 속성의 자료형 (Attribute Data Types)
-   * 테이블 생성, Constraint 적용
+     * [CLI](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-1-1-cli)
+     * [GUI](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-1-2-gui)
+1. [기초 SQL문 I](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-%EA%B8%B0%EC%B4%88-sql%EB%AC%B8-i)
+   * [데이터베이스 생성 (```CREATE```)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%83%9D%EC%84%B1)
+   * [속성의 자료형 (Attribute Data Types)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-2-attribute-data-types)
+   * [테이블 생성, Constraint 적용](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-3-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%83%9D%EC%84%B1-constraint-%EC%A0%81%EC%9A%A9)
      * 각 테이블 생성 및 설명
      * 테이블 스키마 변경 (```ALTER```)
-   * 테이블에 데이터 추가 / 수정 / 삭제 (```INSERT```/```UPDATE```/```DELETE```)
-   * 데이터 조회 (```SELECT```)
-1. 기초 SQL문 II
-   * Subquery (Nested Query)
+   * [테이블에 데이터 추가 / 수정 / 삭제 (```INSERT```/```UPDATE```/```DELETE```)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-4-%ED%85%8C%EC%9D%B4%EB%B8%94%EC%97%90-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EA%B0%80--%EC%88%98%EC%A0%95--%EC%82%AD%EC%A0%9C)
+   * [데이터 조회 (```SELECT```)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-5-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A1%B0%ED%9A%8C-select)
+1. [기초 SQL문 II](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-%EA%B8%B0%EC%B4%88-sql%EB%AC%B8-ii)
+   * [Subquery (Nested Query)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-subquery-nested-query)
      * subquery
-     * ```IN```, ```EXISTS```
-     * ```ANY```
-     * ```ALL```
-   * ```NULL```과의 비교 연산, Three-valued logic
-   * 조인 (```JOIN```)
-     * Implicit vs Explicit ```JOIN```
-     * ```INNER JOIN```
-     * ```OUTER JOIN```
-     * ```USING```
-     * ```NATURAL JOIN```
-     * ```CROSS JOIN```
-   * ```ORDER BY```
-   * 집계 함수 (Aggregate Function)
-   * ```GROUP BY```
-   * ```HAVING```
-   * 조회, 집계 예시
-1. Stored Function
+     * [```IN```, ```EXISTS```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-2-in-exists)
+     * [```ANY```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-3-any)
+     * [```ALL```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-4-all)
+   * [```NULL```과의 비교 연산, Three-valued logic](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-2-null%EA%B3%BC%EC%9D%98-%EB%B9%84%EA%B5%90-%EC%97%B0%EC%82%B0-three-valued-logic)
+   * [조인 (```JOIN```)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-%EC%A1%B0%EC%9D%B8-join)
+     * [Implicit vs Explicit ```JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-1-implicit-join-vs-explicit-join)
+     * [```INNER JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-2-inner-join)
+     * [```OUTER JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-3-outer-join)
+     * [```USING```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-4-using)
+     * [```NATURAL JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-5-natural-join)
+     * [```CROSS JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-6-cross-join)
+   * [```ORDER BY```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-4-order-by)
+   * [집계 함수 (Aggregate Function)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-5-aggregate-function)
+   * [```GROUP BY```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-6-group-by)
+   * [```HAVING```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-7-having)
+   * [Examples](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-8-%EC%A1%B0%ED%9A%8C-%EC%A7%91%EA%B3%84-%EC%98%88%EC%8B%9C)
+1. [Stored Function](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#4-stored-function)
    * Examples
    * 저장된 Stored Function 파악하기기 
-1. Stored Procedure
+1. [Stored Procedure](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#5-stored-procedure)
    * Examples
    * Stored Function vs Stored Procedure
-1. SQL Trigger
+1. [SQL Trigger](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#6-sql-trigger)
    * Example
    * 주의 사항
-1. 인덱스(Index)
-   * ```INDEX``` 사용법
-   * 인덱스 동작 원리
-   * 주의 사항
-1. B-tree
+1. [인덱스(Index)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-%EC%9D%B8%EB%8D%B1%EC%8A%A4index)
+   * [```INDEX``` 사용법](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-1-index-%EC%82%AC%EC%9A%A9%EB%B2%95)
+   * [인덱스 동작 방식](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-2-%EC%9D%B8%EB%8D%B1%EC%8A%A4-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9D)
+   * [인덱스를 확인하는 방법](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-3-index%EB%A5%BC-%ED%99%95%EC%9D%B8%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)
+   * [주의 사항](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-4-%EC%A3%BC%EC%9D%98-%EC%82%AC%ED%95%AD)
+   * [Covering Index](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-5-covering-index)
+   * [Hash Index](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-6-hash-index)
+1. [B-tree](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#8-b-tree)
 
 
 
@@ -2567,17 +2570,14 @@ Covering Index에 대해 알아보자. 위의 [인덱스 동작 방식]()에서 
 
 
 
-
-
-
-
 <br>
 
 ---
 
 ## P.S.
 
-* 중간에 중복 연산된 부분들이 있어서 테이블 결과가 똑깥지 않을 수 있음
+* 중간에 중복 연산된 부분들이 있어서 테이블 결과가 똑같지 않을 수 있음
+* 기본적인 내용만 다뤄서 더 깊게 공부할 내용은 나중에 따로 정리해야할듯
 
 
 

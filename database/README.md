@@ -120,7 +120,10 @@
 
 ## P.S.
 
-
+* Cache DB 학습
+* Oracle에서는 어떻게 사용하는지 확인해보기
+* NoSQL 학습 
+* OLTP vs OLAP
 
 
 

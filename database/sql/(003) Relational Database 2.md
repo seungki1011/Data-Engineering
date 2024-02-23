@@ -36,8 +36,16 @@
    * Lost Update
    * Snapshot Isolation
 4. Lock
-   * 
-5. Multi Version Concurrency Control (MVCC)
+   * Lock 소개
+   * Exclusive Lock
+   * Shared Lock
+   * 2PL (Two-Phased Locking)
+   * Deadlock
+   * Conservative 2PL
+   * Strict 2PL (S2PL)
+   * Strong Strict 2PL (SS2PL)
+   * 2PL의 한계
+5. MVCC (Multi Version Concurrency Control)
 6. 데이터베이스 분산
 7. DBCP
 
@@ -674,15 +682,51 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 예시를 통해 **Conservative 2PL**에 대해 알아보자.
 
+ <p align="center">   <img src="img/conserv2pl.png" alt="mysql" style="width: 85%;"> </p>
 
+* **Conservative 2PL** : 모든 Lock을 취득한 후에 Transaction을 시작한다
+* Dead-lock Free
+* 실용적이지 않다
 
+<br>
 
+### 4-6. Strict 2PL (S2PL)
 
+예시를 통해 **Strict 2PL**에 대해 알아보자.
 
+ <p align="center">   <img src="img/s2pl.png" alt="mysql" style="width: 85%;"> </p>
 
+* **Strict 2PL(S2PL)** : Write-Lock을 ```Commit/Rollback``` 될 때 반환한다
+* **S2PL**은 Strict Schedule을 보장한다
+* Recoverability를 보장한다
 
+<br>
 
+### 4-7. Strong Strict 2PL(SS2PL)
 
+**Strong Strict 2PL(SS2PL)**은 이전의 S2PL의 강화 버젼이다. 다음은 SS2PL의 특징이다.
+
+> SS2PL은 
+>
+> * SS2PL : Read-Lock/Write-Lock을 모두 ```Commit/Rollback``` 될 때 반환한다
+> * SS2PL은 Strict Schedule을 보장한다
+> * Recoverability를 보장한다
+> * S2PL보다 구현이 쉽다
+> * 상대적으로 Lock을 오래 취득하고 있기 때문에 Lock 취득 대기 시간이 늘어난다 
+
+<br>
+
+### 4-7. 2PL의 한계
+
+2PL방식의 경우 Read Lock-Read Lock를 제외한 경우에는 호환이 되지 않기 때문에 전체 처리량(throughput)이 좋지 않다. (Read-Read를 제외하고는 나머지의 경우에 대해서 한쪽이 블락되는 상황)
+
+이런 Read-Lock와 Write-Lock이 서로 블락하는 현상이라도 해결하고자 MVCC(Multi Version Concurrency Control)를 사용하게 된다. 대부분 RDBMS들은 동시성 제어를 위해서 Lock과 MVCC를 활용한다. 
+
+<br>
+
+---
+
+## 5) MVCC(Multi Version Concurrency Control)
 
 
 

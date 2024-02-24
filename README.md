@@ -2,7 +2,7 @@
 
 ---
 
-## 데이터 엔지니어링(Data Engineering) 소개
+## Data Engineering 소개
 
 
 

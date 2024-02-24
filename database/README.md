@@ -56,8 +56,8 @@
 
 1. [```MySQL``` 설치](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%84%A4%EC%A0%95)
    * [```MySQL``` 설치와 연결](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-1-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%97%B0%EA%B2%B0)
-     * [CLI](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-1-1-cli)
-     * [GUI](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#1-1-2-gui)
+     * CLI
+     * GUI
 1. [기초 SQL문 I](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-%EA%B8%B0%EC%B4%88-sql%EB%AC%B8-i)
    * [데이터베이스 생성 (```CREATE```)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%83%9D%EC%84%B1)
    * [속성의 자료형 (Attribute Data Types)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#2-2-attribute-data-types)
@@ -69,17 +69,17 @@
 1. [기초 SQL문 II](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-%EA%B8%B0%EC%B4%88-sql%EB%AC%B8-ii)
    * [Subquery (Nested Query)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-subquery-nested-query)
      * subquery
-     * [```IN```, ```EXISTS```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-2-in-exists)
-     * [```ANY```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-3-any)
-     * [```ALL```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-1-4-all)
+     * ```IN```, ```EXISTS```
+     * ```ANY```
+     * ```ALL```
    * [```NULL```과의 비교 연산, Three-valued logic](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-2-null%EA%B3%BC%EC%9D%98-%EB%B9%84%EA%B5%90-%EC%97%B0%EC%82%B0-three-valued-logic)
    * [조인 (```JOIN```)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-%EC%A1%B0%EC%9D%B8-join)
-     * [Implicit vs Explicit ```JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-1-implicit-join-vs-explicit-join)
-     * [```INNER JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-2-inner-join)
-     * [```OUTER JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-3-outer-join)
-     * [```USING```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-4-using)
-     * [```NATURAL JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-5-natural-join)
-     * [```CROSS JOIN```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-3-6-cross-join)
+     * Implicit vs Explicit ```JOIN```
+     * ```INNER JOIN```
+     * ```OUTER JOIN```
+     * ```USING```
+     * ```NATURAL JOIN```
+     * ```CROSS JOIN```
    * [```ORDER BY```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-4-order-by)
    * [집계 함수 (Aggregate Function)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-5-aggregate-function)
    * [```GROUP BY```](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#3-6-group-by)
@@ -107,28 +107,44 @@
 
 ### [3) RDBMS II](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md)
 
-1. 트랜잭션 (Transaction)
-   * Transaction 설명
-   * ACID
+1. [트랜잭션 (Transaction)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#1-transaction)
+   * [Transaction 설명](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#1-1-transaction-%EC%84%A4%EB%AA%85)
+   * [ACID](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#1-2-acid)
      * Acidity
      * Consistency
      * Isolation
      * Durability
-2. 동시성 제어 (Concurrency Control)
-   * Schedule, Serializability
+2. [동시성 제어 (Concurrency Control)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-concurrency-control)
+   * [Schedule, Serializability](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-1-schedule-serializability)
      * Transaction Cases
      * Serial Schedule
      * Non-Serial Schedule
-   * Conflict
-   * Conflict Serializability
-   * Recoverability
+   * [Conflict](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-2-conflict)
+   * [Conflict Serializability](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-3-conflict-serializability-protocol)
+   * [Recoverability](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-4-recoverability)
      * Unrecoverable Schedule
      * Recoverable Schedule
      * Cascadeless Schedule
      * Strict Schedule
-3. Isolation Level
-4. Lock
-5. Multi Version Concurrency Control (MVCC)
+3. [Isolation Level](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-isolation-level)
+   * [Dirty Read](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-1-dirty-read)
+   * [Non-repeatable Read](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-2-non-repeatable-read)
+   * [Phantom Read](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-3-phantom-read)
+   * [Isolation Level (SQL Standard)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-4-isolation-level-sql-standard)
+   * [Dirty Write](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-5-dirty-write)
+   * [Lost Update](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-6-lost-update)
+   * [Snapshot Isolation](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-7-snapshot-isolation)
+4. [Lock](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-lock)
+   * [Lock 소개](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-1-lock-%EC%86%8C%EA%B0%9C)
+   * [Exclusive Lock](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-2-exclusive-lock-%EB%B0%B0%ED%83%80%EC%A0%81-lock)
+   * [Shared Lock](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-3-shared-lock-%EA%B3%B5%EC%9C%A0-lock)
+   * [2PL (Two-Phased Locking)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-3-2pl-2-phase-locking)
+     * Deadlock
+     * Conservative 2PL
+     * Strict 2PL (S2PL)
+     * Strong Strict 2PL (SS2PL)
+   * [2PL의 한계](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-7-2pl%EC%9D%98-%ED%95%9C%EA%B3%84)
+5. MVCC (Multi Version Concurrency Control)
 6. 데이터베이스 분산
 7. DBCP
 
@@ -143,7 +159,7 @@
 
 ---
 
-## P.S.
+## Further Reading
 
 * Cache DB 학습
 * Oracle에서는 어떻게 사용하는지 확인해보기

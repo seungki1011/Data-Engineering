@@ -2,8 +2,6 @@
 >
 > [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/) 를 참고 했습니다
 
-<br>
-
 ---
 
 ## Index
@@ -44,8 +42,6 @@
 9. [요약](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#%EC%9A%94%EC%95%BD)
 10. [느낀점](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#%EB%8A%90%EB%82%80-%EC%A0%90)
 
-<br>
-
 ---
 
 ## Requirements
@@ -55,8 +51,6 @@
 * h2database 2.2.224
 
 [포스트에서 작성한 모든 코드](https://github.com/seungki1011/Data-Engineering/tree/main/spring/springdemo/src)
-
-<br>
 
 ---
 
@@ -1502,7 +1496,6 @@ AOP의 동작 및 동작 원리는 나중의 포스트에서 다룰 예정이다
 ## 느낀 점
 
 * 스프링의 모든 요소가 포함되지도 않은 단순한 소개 강의였는데 생소해서 그런지 헷갈리는 내용이 조금 있었다. (특히 Jdbc와 AOP..)
-* 스프링 기본편 학습 예정
 
 <br>
 

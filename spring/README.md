@@ -1,11 +1,16 @@
-> Spring 프레임워크에 대한 기초 및 실습
+> Spring 프레임워크에 대한 기초 및 실습.
 >
+> [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)을 참고 했습니다.
+
+---
+
+## Requirements
 
 ---
 
 ## Index
 
-### [1) Spring Boot 소개](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md)
+### [1) Spring 소개](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md)
 
 1. [Introduction](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#1-introduction)
    * ```Spring```, ```SpringBoot``` 소개
@@ -57,9 +62,13 @@
 
 ---
 
+## Further Reading
+
+* 객체 지향의 사실과 오해
+
+---
+
 ## Reference
 
-
-
-
+1. [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)
 

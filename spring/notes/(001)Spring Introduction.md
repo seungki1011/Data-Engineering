@@ -1,6 +1,6 @@
-> Spring에 대한 간단한 소개 및 실습
+> Spring에 대한 간단한 소개 및 실습.
 >
-> [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/) 를 참고 했습니다
+> [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/) 를 참고 했습니다.
 
 ---
 
@@ -89,7 +89,7 @@
 
 MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프트웨어 디자인 패턴이다. 웹 개발의 많은 경우 이 MVC 패턴을 이용해서 개발된다. (스프링 뿐만 아니라 다른 프레임워크들도 MVC라는 명칭이 아니라도 비슷한 컨셉의 패턴을 이용해서 개발하는 것으로 알고 있다.)
 
-<p align="center">   <img src="img/mvc1.png" alt="MVC Pattern" style="width: 55%;"> </p>
+<p align="center">   <img src="img/mvc1.png" alt="MVC Pattern" style="width: 65%;"> </p>
 
 <p align='center'>https://www.geeksforgeeks.org/mvc-framework-introduction/</p>
 
@@ -150,7 +150,7 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 * ```build.gradle```에서 ```plugins```, ```dependencies```, ```repositories``` 등을 관리할 수 있다
 * ```External Libraries```에서 땡겨온 라이브러리를 확인할 수 있다
 
-<p align="center">   <img src="img/springboot3.png" alt="springboot" style="width: 55%;"> </p>
+<p align="center">   <img src="img/springboot3.png" alt="springboot" style="width: 65%;"> </p>
 
 * ```Dependencies```에서 의존 관계를 계층적으로 확인 가능하다
 
@@ -186,13 +186,13 @@ This is a Static index.html
 
 * 위의 ```index.html```의 경우 그냥 정적 페이지이기 때문에 그냥 단순히 웹서버가 브라우저에 응답으로 넘겨주는 것
 
-<p align="center">   <img src="img/welcomepage1.png" alt="springboot" style="width: 55%;"> </p>
+<p align="center">   <img src="img/welcomepage1.png" alt="springboot" style="width: 65%;"> </p>
 
 * [```thymeleaf```](https://www.thymeleaf.org/)같은 템플릿 엔진을 사용해서 동적인 요소가 들어간 페이지를 만들 수 있다
 
 <br>
 
-이제 컨트롤러(controller)를 만들어보자. 템플릿 엔진을 이용한 동적 페이지를 만들기 위해 웹애플리케이션의 첫 번째 진입점인 컨트롤러 부터 만들어 볼 것이다.
+이제 컨트롤러(controller)를 만들어보자. 템플릿 엔진을 이용한 동적 페이지를 만들기 위해 웹 애플리케이션의 첫 번째 진입점인 컨트롤러 부터 만들어 볼 것이다.
 
 ```HelloController```
 
@@ -243,9 +243,9 @@ public class HelloController {
 4. ```jar``` 파일 실행 : ```java -jar springdemo-0.0.1-SNAPSHOT.jar```
 5. ```localhost:8080```에서 정상 동작하는지 확인
 
-<p align="center">   <img src="img/build1.png" alt="springboot" style="width: 55%;"> </p>
+<p align="center">   <img src="img/build1.png" alt="springboot" style="width: 65%;"> </p>
 
-<p align="center">   <img src="img/build2.png" alt="springboot" style="width: 55%;"> </p>
+<p align="center">   <img src="img/build2.png" alt="springboot" style="width: 65%;"> </p>
 
 
 
@@ -294,7 +294,7 @@ public class MVCController {
 </html>
 ```
 
-<p align="center">   <img src="img/MVC2.png" alt="springboot" style="width: 90%;"> </p>
+<p align="center">   <img src="img/MVC2.png" alt="springboot" style="width: 100%;"> </p>
 
 <p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
 
@@ -302,7 +302,7 @@ public class MVCController {
 
 애플리케이션을 실행시키고 ```/hello-mvc```에 들어가면 Error Page가 뜨는 것을 확인할 수 있다. 그 이유는 URL에서 ```name```으로 넘길 값을 명시하지 않았기 때문이다. URL 뒤에 ```?name=name_value``` 같은 형식으로 파라미터를 넘길 수 있다.
 
- <p align="center">   <img src="img/mvccontroller2.png" alt="springboot" style="width: 55%;"> </p>
+ <p align="center">   <img src="img/mvccontroller2.png" alt="springboot" style="width: 65%;"> </p>
 
 * 참고로 ```?```뒤에 오는 것을 [Query String](https://en.wikipedia.org/wiki/Query_string)이라고 한다.
 
@@ -310,7 +310,7 @@ public class MVCController {
 
 ### 3-3. API
 
-HTML 뷰를 랜더링하기 보다는 구조화 된 데이터를 ```json``` 형식으로 반환을 한다. (```xml```형식도 가능하지만 최근에는 거의 쓰이지 않음)
+**API**의 경우 HTML 뷰를 랜더링하기 보다는 구조화 된 데이터를 ```json``` 형식으로 반환을 한다. (```xml```형식도 가능하지만 최근에는 거의 쓰이지 않음)
 
 ```controller.ApiController```
 
@@ -339,7 +339,7 @@ public class ApiController {
 }
 ```
 
-<p align="center">   <img src="img/api1.png" alt="springboot" style="width: 90%;"> </p>
+<p align="center">   <img src="img/api1.png" alt="springboot" style="width: 100%;"> </p>
 
 <p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
 
@@ -369,7 +369,7 @@ public class ApiController {
 
 ### 4-2. 애플리케이션 계층 구조
 
-<p align="center">   <img src="img/membermanage1.png" alt="springboot" style="width: 75%;"> </p>
+<p align="center">   <img src="img/membermanage1.png" alt="springboot" style="width: 80%;"> </p>
 
 <p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
 
@@ -811,6 +811,8 @@ public class MemberService {
   * ```@Service```가 있아야 컨테이너에 ```MemberService```를 등록 해줌
 * ```MemberService```도 생성자에 ```@Autowired```가 있어야 ```MemberRepository```를 찾아서 넣어줌
 
+<br>
+
 ```repository/MemoryMemberRepository```
 
 ```java
@@ -822,7 +824,7 @@ public class MemoryMemberRepository implements MemberRepository{}
 
 <br>
 
-<p align="center">   <img src="img/springbean1.png" alt="springboot" style="width: 85%;"> </p>
+<p align="center">   <img src="img/springbean1.png" alt="springboot" style="width: 90%;"> </p>
 
 <p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
 
@@ -928,7 +930,7 @@ public class HomeController {
 </html>
 ```
 
- <p align="center">   <img src="img/home1.png" alt="springboot" style="width: 55%;"> </p>
+ <p align="center">   <img src="img/home1.png" alt="springboot" style="width: 65%;"> </p>
 
 * 기존의 ```index.html```이 표시되지 않는 이유는 컨트롤러가 정적 컨텐츠보다 우선 순위가 높기 때문이다
 
@@ -1065,7 +1067,7 @@ public class MemberController {
 
 * 메모리 내에서 처리하고 있기 때문에 서버 재시작 하면 데이터가 전부 날아감 
 
- <p align="center">   <img src="img/membercheck.png" alt="springboot" style="width: 55%;"> </p>
+ <p align="center">   <img src="img/membercheck.png" alt="springboot" style="width: 65%;"> </p>
 
 <br>
 
@@ -1085,13 +1087,12 @@ public class MemberController {
 * 755 권한 주기 : ```chmod 755 h2.sh```
 * ```h2/bin``` 내에서 ```./h2.sh```
 
- <p align="center">   <img src="img/h2console1.png" alt="springboot" style="width: 55%;"> </p>
+ <p align="center">   <img src="img/h2console1.png" alt="springboot" style="width: 65%;"> </p>
 
 * 접속이 안되면 아이피 대신 ```localhost```로 바꿔서 접속
 * 최초의 한번은 ```jdbc:h2/~test```로 Connect (데이터베이스 파일 생성)
 * ```~/test.mv.db``` 파일이 생성된 것을 확인하면 이후부터는 ```jdbc:h2:tcp://localhost/~/test```로 접속
   * (애플리케이션과 웹콘솔에서 동시에 접근하게 되면 오류가 생길 수 있어서 소켓을 통해서 접근)
-
 
 <br>
 
@@ -1107,7 +1108,7 @@ drop table if exists member CASCADE;
 );
 ```
 
- <p align="center">   <img src="img/h2console2.png" alt="springboot" style="width: 55%;"> </p>
+ <p align="center">   <img src="img/h2console2.png" alt="springboot" style="width: 65%;"> </p>
 
 데이터베이스 설정을 완료했으니 JdbcTemplate을 이용해서 기존의 ```MemoryMemberRepository```를 대체할 것이다.
 
@@ -1484,8 +1485,8 @@ AOP의 동작 및 동작 원리는 나중의 포스트에서 다룰 예정이다
 * Spring Boot는 스프링 프로젝트를 쉽게 설정하고 생성하도록 도와주는 스프링 프로젝트 중 하나
 * 대부분 프로젝트는 MVC 패턴으로 개발
 * 테스트 코드 매우 중요(특히 단위 테스트를 잘 짜는 것이 중요!)
-* Spring Bean이 싱글톤(디폴트 스코프)으로 컨테이너에 등록 됨
-  * 이를 통해서 의존성 주입 (뭔가 DI를 위한 글로벌 객체? 같은 느낌인가..)
+* Spring Bean이 싱글톤(Default scope)으로 컨테이너에 등록 됨
+  * 이를 통해서 의존성 주입 (뭔가 DI를 위한 글로벌 객체? 같은 느낌인듯)
 * JdbcTemplate, JPA, 스프링 데이터 JPA의 조합으로 많이 사용
 * AOP는 핵심 관심 사항과 공통 관심 사항을 분리  → 유지 보수 편의성 증가, 공통 관심 사항 편하게 사용 가능 등..
 

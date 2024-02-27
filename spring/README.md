@@ -50,7 +50,7 @@
 
 ---
 
-### [2) Spring 기본 원리]()
+### [2) Spring Core]()
 
 ### [3) Spring MVC]()
 

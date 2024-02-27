@@ -15,10 +15,23 @@
      * DIP
      * 요약
    * OOD와 Spring
-2. Spring 핵심 원리 I
+2. Spring 핵심 원리 I - 예제 생성
    * 프로젝트 생성
-   * 
-3. Spring 핵심 원리 II
+   * 비즈니스 요구 사항과 설계
+   * 회원 도메인 설계
+   * 회원 도메인 개발
+   * 회원 도메인 실행과 테스트
+   * 주문과 할인 도메인 설계
+   * 주문과 할인 도메인 개발
+   * 주문과 할인 도메인 실행과 테스트
+3. Spring 핵심 원리 II - 객체 지향 적용
+   * 새로운 할인 정책 개발
+   * 관심사 분리
+   * AppConfig 리팩토링
+   * 새로운 구조와 할인 정책 적용
+   * SOLID 적용
+   * IoC, DI, 컨테이너
+   * 지금까지 개발한 내용 스프링으로 전환
 4. Spring Container, Bean
 5. Singleton Container
 6. Component Scan
@@ -32,7 +45,8 @@
 
 * Java 17 or 21
 * Spring Boot 3.2.2
-* 향후에 언제든지 바뀔 수 있기 때문에 현재의 스테이블 버전을 사용하면 될 듯 
+
+> 향후에 언제든지 바뀔 수 있기 때문에 현재의 스테이블 버전을 사용하면 될 듯 
 
 ---
 
@@ -190,7 +204,7 @@ public class MemberService {
 
 ---
 
-## 2) Spring 핵심 원리 I
+## 2) Spring 핵심 원리 I - 예제 생성
 
 처음의 예시 프로젝트는 스프링 없이 순순하게 자바만을 사용해서 구현. (프로젝트 생성은 스프링 부트 사용)
 
@@ -481,7 +495,455 @@ public class MemberServiceTest {
 
 이전 설계를 바탕으로 주문과 할인 도메인에 대한 개발을 진행한다.
 
+```discount/DiscountPolicy```
+
+```java
+public interface DiscountPolicy {
+    /**
+     * @return 할인 대상 금액 (호출시 할인 금액을 리턴)
+     */
+    int discount(Member member, int price);
+}
+```
+
+```discount/FixDiscountPolicy```
+
+```java
+public class FixDiscountPolicy implements DiscountPolicy{
+    
+  	private int discountFixAmount = 1000; // 고정 할인값 : 1000원
+  
+    @Override
+    public int discount(Member member, int price) {
+        if (member.getGrade() == Grade.VIP) { // enum은 "==" 사용해도 됨
+            return discountFixAmount;
+        } else {
+            return 0;
+        }
+    }
+}
+```
+
+<br>
 
 
 
+```order/Order```
+
+```java
+public class Order {
+    private Long memberId;
+    private String itemName;
+    private int itemPrice;
+    private int discountPrice;
+
+    public Order(Long memberId, String itemName, int itemPrice, int discountPrice) {
+        this.memberId = memberId;
+        this.itemName = itemName;
+        this.itemPrice = itemPrice;
+        this.discountPrice = discountPrice;
+    }
+
+    // 계산 로직 (최종 가격 계산)
+    public int calculatePrice() {
+        return itemPrice - discountPrice;
+    }
+
+		/**
+		 * Getter and Setter 구현
+		 */
+
+    // 객체 출력시 toString의 결과가 나옴
+    @Override
+    public String toString() {
+        return "Order{" +
+                "memberId=" + memberId +
+                ", itemName='" + itemName + '\'' +
+                ", itemPrice=" + itemPrice +
+                ", discountPrice=" + discountPrice +
+                '}';
+    }
+}
+```
+
+```order/OrderService```
+
+```java
+public interface OrderService {
+    // 주문 생성
+    Order createOrder(Long memberId, String itemName, int itemPrice);
+}
+```
+
+```order/OrderServiceImpl```
+
+```java
+public class OrderServiceImpl implements OrderService{
+    /*
+     * OrderService는 할인에 대한 변경을 건들 필요가 없음!(단일 책임의 원칙)
+     * 할인에 대한 내용은 DiscountPolicy가 담당
+     */
+    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    @Override
+    public Order createOrder(Long memberId, String itemName, int itemPrice) {
+        Member member = memberRepository.findById(memberId);
+        int discountPrice = discountPolicy.discount(member, itemPrice);
+        // 최종 생성되는 주문 반환
+        return new Order(memberId, itemName, itemPrice, discountPrice);
+    }
+}
+```
+
+<br>
+
+---
+
+### 2-8. 주문과 할인 도메인 실행과 테스트
+
+개발한 주문과 할인 도메인에 대한 테스트.
+
+```test/order/OrderServiceTest```
+
+```java
+public class OrderServiceTest {
+
+    MemberService memberService = new MemberServiceImpl();
+    OrderService orderService = new OrderServiceImpl();
+
+    @Test
+    void createOrder() {
+        Long memberId = 1L;
+        Member member = new Member(memberId, "messi", Grade.VIP);
+        memberService.join(member);
+
+        Order order = orderService.createOrder(memberId, "pizza", 18000);
+        Assertions.assertThat(order.getDiscountPrice()).isEqualTo(1000);
+    }
+}
+```
+
+<br>
+
+---
+
+## 3) Spring 핵심 원리 II - 객체 지향 적용
+
+객체 지향의 원리들을 다시 한번 알아보면서, 지금까지 작성했던 코드에 적용해본다.
+
+### 3-1. 기존 예제의 할인 정책 변경
+
+기존의 고정 할인 정책을 정률 할인으로 바꿀려고 함.
+
+* 예) 20000원에 10% 할인 적용 → 2000원 할인
+
+기존의 ```FixDiscountPolicy```를 ```RateDiscountPolicy```로 변경해서 개발하면 됨. (구현체 추가)
+
+```discount/RateDiscountPolicy```
+
+```java
+public class RateDiscountPolicy implements DiscountPolicy{
+
+    private int discountPercent = 10; // 정률 할인 비율 : 10% 할인
+
+    @Override
+    public int discount(Member member, int price) {
+        if (member.getGrade() == Grade.VIP) {
+            return price * discountPercent / 100;
+        } else {
+            return 0;
+        }
+    }
+}
+```
+
+* 인텔리제이 : 오버라이드한 메서드 위에 ```ctrl + shift + t``` 단축키로 테스트 코드를 위한 패키지와 클래스 생성 해줌
+
+<br>
+
+```test/discount/RateDiscountPolicyTest```
+
+```java
+class RateDiscountPolicyTest {
+    RateDiscountPolicy discountPolicy = new RateDiscountPolicy();
+
+    @Test
+    @DisplayName("VIP는 10% 할인 적용")
+    void vip_o() {
+        // given
+        Member member = new Member(1l, "mbappeVip", Grade.VIP);
+        // when
+        int discount = discountPolicy.discount(member, 20000);
+        // then
+        Assertions.assertThat(discount).isEqualTo(2000); // Assertions 스태틱 임포트 권장
+    }
+
+    // 실패하는 경우도 테스트
+    @Test
+    @DisplayName("VIP가 아닌 경우 할인 없음")
+    void vip_x() {
+        // given
+        Member member = new Member(2l, "ronaldoBasic", Grade.BASIC);
+        // when
+        int discount = discountPolicy.discount(member, 20000);
+        // then
+        Assertions.assertThat(discount).isEqualTo(2000);
+    }
+}
+```
+
+<br>
+
+이제 ```RateDiscountPolicy```를 적용해보자.
+
+```order/OrderServiceImpl```
+
+```java
+public class OrderServiceImpl implements OrderService{
+
+    private final MemberRepository memberRepository = new MemoryMemberRepository();
+  
+//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+
+		/**
+		 * 나머지 구현 부분
+		 */
+}
+```
+
+* 할인 정책 변경을 위해서는 클라이언트 코드인 ```OrderServiceImpl```를 고쳐야 한다
+* 지금 상태의 코드는 다형성을 활용해서 인터페이스와 구현 객체를 분리했지만 **OCP, DIP를 준수했다고 보기는 어렵다**
+  * 왜?
+    * DIP : 인터페이스인 ```DiscountPolicy``` 뿐만 아니라, 구현체인 ```FixDiscountPolicy```와 ```RateDiscountPolicy```에도 의존하고 있다
+    * OCP : 현재의 코드에 기능을 확장하려면 결국 클라이언트 코드를 변경해줘야 한다
+
+<br>
+
+<p align="center">   <img src="img/discount1.png" alt="Spring" style="width: 80%;"> </p> 
+
+<p align='center'>OCP 위반</p>
+
+<br>
+ DIP와 OCP 위반을 해결하기 위한 방법은 무엇일까?
+
+* 먼저 DIP 위반은 추상(인터페이스)에만 의존하도록 변경해야 한다
+
+그러면 인터페이스에만 의존하도록 설계를 바꿔보자.
+
+```order/OrderServiceImpl```
+
+```java
+public class OrderServiceImpl implements OrderService{
+
+    private final MemberRepository memberRepository = new MemoryMemberRepository();
+  	
+  	private DiscountPolicy discountPolicy; // 인터페이스에만 의존!
+		// private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    // private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+
+		/**
+		 * 나머지 구현 부분
+		 */
+}
+```
+
+* ```discountPolicy```에 아무것도 할당 되어있지 않기 때문에 ```NullPointerException```
+* 이 문제를 해결하기 위해서는 누군가 클라이언트인 ```OrdserServieImpl```에 ```DiscountPolicy```의 **구현 객체를 대신 생성하고 주입해줘야 함!**
+
+<br>
+
+---
+
+### 3-2. 관심사의 분리
+
+* 관심사를 분리하자! 그런데 관심사를 분리한다는 건 뭔 뜻일까?
+* 구현 객체는 딱 본인의 역할에 집중을 해야한다 → 구현 객체에게 맡겨지지 않은 책임은 다른 곳으로 분리해야 함
+
+책임을 분리하기 위해서 ```AppConfig```라는 클래스를 도입해보자.
+
+```AppConfig```
+
+```java
+public class AppConfig {
+    // 생성자 주입을 통해서 구현체 선택
+    public MemberService memberService() {
+        return new MemberServiceImpl(new MemoryMemberRepository());
+    }
+
+    public OrderService orderService() {
+        return new OrderServiceImpl(
+                new MemoryMemberRepository(), new FixDiscountPolicy()
+        );
+    }
+}
+```
+
+* ```AppConfig```는 애플리케이션의 전체 동작 방식을 설정(구성)하기 위해서, 구현 객체를 생성하고 연결해주는 책임을 가지는 별도의 클래스이다
+* ```AppConfig```는 동작에 필요한 구현 객체를 생성 해줌
+  * ```MemberServiceImpl```
+  * ```MemoryMemberRepository```
+  * ```OrderServiceImpl```
+  * ```FixDiscountPolicy```
+* 생성한 인스턴스의 참조를 생성자를 통해 주입(연결) 해줌
+  * ```MemberServiceImpl```→```MemoryMemberRepository```
+  * ```OrderServiceImpl```→```MemoryMemberRepository```, ```FixDiscountPolicy```
+
+<br>
+
+```member/MemberServiceImpl```
+
+```java
+public class MemberServiceImpl implements MemberService{
+
+		// 오로지 인터페이스에만 의존!
+    private MemberRepository memberRepository;
+
+    // 생성자를 통해서 구현체를 선택할 것이다 (주입)
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+		/**
+		 * 나머지 구현 부분
+		 */
+}
+```
+
+```order/OrderServiceImpl```
+
+```java
+public class OrderServiceImpl implements OrderService{
+		
+  	// 오로지 인터페이스에만 의존!
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+		
+  	// 생성자를 통해 주입
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+  
+		/**
+		 * 나머지 구현 부분
+		 */
+}
+```
+
+* 이제는 어떤 구현 객체를 주입하는지는 오로지 ```AppConfig```가 결정하기 때문에 ```MemberServiceImpl```, ```OrderServiceImpl```은 실행에만 집중하면 된다
+*  객체를 생성하고 연결(주입)하는 책임 그리고 실행하는 책임이 분리되었기 때문에 관심사를 분리했다고 볼 수 있다
+* 이제 추상(인터페이스)에만 의존하기 때문에 DIP를 준수한다 
+
+<br>
+
+<p align="center">   <img src="img/AppConfig2.png" alt="Spring" style="width: 100%;"> </p> 
+
+* 클라이언트인 ```memberServiceImpl``` 입장에서는 의존관계(Dependecy)를 마치 외부에서 주입해주는 것 같다고 해서 DI(Dependency Injection, 의존성 주입)라고 한다
+
+<br>
+
+그럼 ```AppConfig```를 사용하도록 테스트 코드를 수정해보자.
+
+```test/order/OrderServiceTest```
+
+```java
+public class OrderServiceTest {
+
+    MemberService memberService;
+    OrderService orderService;
+
+    // MemberService memberService = new MemberServiceImpl(memberRepository);
+    // OrderService orderService = new OrderServiceImpl(memberRepository, discountPolicy);
+
+    @BeforeEach
+    public void beforeEach() {
+        AppConfig appConfig = new AppConfig();
+        memberService = appConfig.memberService();
+        orderService = appConfig.orderService();
+    }
+
+    @Test
+		/**
+		 * 기존 구현
+		 */
+}
+```
+
+* ```MemberServiceTest```도 동일하게 ```AppConfig```를 사용하도록 변경하면 된다
+
+<br>
+
+이제 ```AppConfig```를 리팩토링 해보자. 현재 ```AppConfig```의 문제점은 역할에 따른 구현이 잘 안보인다는 것이다.
+
+```AppConfig```
+
+ ```java
+ public class AppConfig {
+   
+     public MemberService memberService() {
+         return new MemberServiceImpl(memberRepository());
+     }
+ 
+     // 추후에 변경시 이 부분만 수정하면 됨
+     private MemberRepository memberRepository() {
+         return new MemoryMemberRepository();
+     }
+ 
+     public OrderService orderService() {
+         return new OrderServiceImpl(memberRepository(), discountPolicy());
+     }
+ 
+     // 추후에 변경시 이 부분만 수정하면 됨
+     public DiscountPolicy discountPolicy() {
+         return new FixDiscountPolicy();
+     }
+ 
+ }
+ ```
+
+* 인텔리제이 : ```cmd + option + m``` 으로 메서드 추출
+
+<br>
+
+---
+
+### 3-3. 새로운 구조와 할인 정책 적용
+
+정액 할인 정책(```FixedDiscoutPolicy```)을 정률 할인 정책(```RateDiscountPolicy```)로 변경해보자.
+
+<p align="center">   <img src="img/policychange1.png" alt="Spring" style="width: 80%;"> </p>  
+
+<p align='center'>할인 정책 변경</p>
+
+* 구성 영역만 변경하면 되고, 사용 영역은 전혀 영향을 받지 않는다
+
+<br>
+
+```AppConfig``` 를 수정하자.
+
+```java
+public class AppConfig {
+  
+		/**
+		 * 기존 구현
+		 */
+
+    // 추후에 변경시 이 부분만 수정하면 됨 -> 이제 여기를 수정하면 된다
+    public DiscountPolicy discountPolicy() {
+        // return new FixDiscountPolicy();
+      	return new RateDiscountPolicy(); // FixDiscount-> RateDiscount로 변경
+    }
+}
+```
+
+* 정액 할인 정책(```FixedDiscoutPolicy```)을 정률 할인 정책(```RateDiscountPolicy```)로 변경했다
+* 아주 간단하게 ```AppConfig```의 일부만 수정해서 할인 정책을 변경했다
+  * 사용 영역은 그 어떤 부분도 건들지 않았음!
+
+이제 코드는 OCP와 DIP를 전부 준수하는 코드이다.
+
+<br>
+
+---
 

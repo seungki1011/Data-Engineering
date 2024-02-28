@@ -1,6 +1,8 @@
 > Spring에 대한 간단한 소개 및 실습.
 >
 > [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/) 를 참고 했습니다.
+>
+> 해당 포스트에서 작성한 [모든 코드](https://github.com/seungki1011/Data-Engineering/tree/main/spring/springdemo/src)
 
 ---
 
@@ -49,8 +51,6 @@
 * Java 17 or 21
 * Spring Boot 3.2.2
 * h2database 2.2.224
-
-[포스트에서 작성한 모든 코드](https://github.com/seungki1011/Data-Engineering/tree/main/spring/springdemo/src)
 
 ---
 

@@ -65,6 +65,7 @@
 ## Further Reading
 
 * 객체 지향의 사실과 오해
+* ```BeanDefinition``` - 빈 설정 메타 정보
 
 ---
 

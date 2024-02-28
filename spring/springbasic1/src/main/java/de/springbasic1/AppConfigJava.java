@@ -8,27 +8,27 @@ import de.springbasic1.member.MemberServiceImpl;
 import de.springbasic1.member.MemoryMemberRepository;
 import de.springbasic1.order.OrderService;
 import de.springbasic1.order.OrderServiceImpl;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class AppConfig {
-
-    @Bean
+public class AppConfigJava {
+    // 생성자 주입을 통해서 구현체 선택
+    
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
     }
 
-    @Bean
+    // 추후에 변경시 이 부분만 수정하면 됨
+    private MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
-    @Bean
-    public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
+    // 추후에 변경시 이 부분만 수정하면 됨
+    public DiscountPolicy discountPolicy() {
+        // return new FixDiscountPolicy();
+        return new RateDiscountPolicy(); // FixDiscount-> RateDiscount로 변경
     }
 
-    @Bean
-    public DiscountPolicy discountPolicy() { return new RateDiscountPolicy(); }
 }

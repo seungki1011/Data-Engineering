@@ -3,23 +3,28 @@ package de.springbasic1;
 import de.springbasic1.member.Grade;
 import de.springbasic1.member.Member;
 import de.springbasic1.member.MemberService;
+import de.springbasic1.order.Order;
+import de.springbasic1.order.OrderService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class MemberApp {
+public class OrderApp {
     public static void main(String[] args) {
 
-        // AppConfigJava appConfig = new AppConfigJava();
+        // AppConfig appConfig = new AppConfig();
         // MemberService memberService = appConfig.memberService();
+        // OrderService orderService = appConfig.orderService();
 
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
+        OrderService orderService = applicationContext.getBean("orderService", OrderService.class);
 
-        Member member = new Member(1L, "messi", Grade.VIP);
+        long memberId = 1L;
+        Member member = new Member(memberId, "memberA", Grade.VIP);
         memberService.join(member);
 
-        Member findMember = memberService.findMember(1L);
-        System.out.println("member = "+member.getName());
-        System.out.println("findMember = "+findMember.getName());
+        Order order = orderService.createOrder(memberId, "itemA", 10000);
+
+        System.out.println("order = " + order);
     }
 }

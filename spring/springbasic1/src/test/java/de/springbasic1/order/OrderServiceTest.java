@@ -1,10 +1,9 @@
 package de.springbasic1.order;
 
-import de.springbasic1.AppConfig;
+import de.springbasic1.AppConfigJava;
 import de.springbasic1.member.Grade;
 import de.springbasic1.member.Member;
 import de.springbasic1.member.MemberService;
-import de.springbasic1.member.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ public class OrderServiceTest {
 
     @BeforeEach
     public void beforeEach() {
-        AppConfig appConfig = new AppConfig();
+        AppConfigJava appConfig = new AppConfigJava();
         memberService = appConfig.memberService();
         orderService = appConfig.orderService();
     }

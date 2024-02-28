@@ -1,12 +1,12 @@
 package de.springbasic1.member;
 
-import de.springbasic1.AppConfig;
+import de.springbasic1.AppConfigJava;
 import de.springbasic1.order.Order;
 import de.springbasic1.order.OrderService;
 
 public class OrderApp {
     public static void main(String[] args) {
-        AppConfig appConfig = new AppConfig();
+        AppConfigJava appConfig = new AppConfigJava();
         MemberService memberService = appConfig.memberService();
         OrderService orderService = appConfig.orderService();
 

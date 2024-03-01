@@ -56,7 +56,9 @@
 
 ## 1) Introduction
 
-> 들어가기 전 알아두면 좋을 선행 지식에 대한 간단한 소개
+들어가기 전 알아두면 좋을 선행 지식에 대해 아주 간단하게 알아보자.
+
+<br>
 
 ### 1-1. Spring, Spring Boot 소개
 
@@ -75,6 +77,8 @@
 
 <br>
 
+---
+
 ### 1-2. Gradle
 
 * 빌드 자동화 툴
@@ -84,6 +88,8 @@
 ```Gradle```이 ```Maven```보다 flexible 하고 성능이 좋다. (그냥 ```Gradle```을 사용해서 프로젝트 진행하자) 
 
 <br>
+
+---
 
 ### 1-3. MVC Pattern
 
@@ -127,7 +133,9 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 
 ## 2) Spring Boot Project Configuration
 
-> 스프링 부트를 이용한 프로젝트 생성, 설정 그리고 빌드
+스프링 부트를 이용한 프로젝트 생성, 설정 그리고 빌드하는 방법에 대해서 알아보자.
+
+<br>
 
 ### 2-1. Spring Boot 프로젝트 생성하기
 
@@ -139,6 +147,8 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 * Generate로 프로젝트 생성하고, ```build.gradle``` 파일을 통해서 프로젝트를 오픈
 
 <br>
+
+---
 
 ### 2-2. 정상적으로 실행되는지 확인
 
@@ -156,6 +166,8 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 
 <br>
 
+---
+
 ### 2-3. View 설정하기
 
 아래는 스프링 부트 2.3.1의 공식문서에서 설명한 Welcome Page 설정하는 방법이다.
@@ -165,6 +177,8 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 > Spring Boot supports both static and templated welcome pages. It first looks for an `index.html` file in the configured static content locations. If one is not found, it then looks for an `index` template. If either is found, it is automatically used as the welcome page of the application.
 
 [https://docs.spring.io/spring-boot/docs/3.2.2/reference/html/index.html](https://docs.spring.io/spring-boot/docs/3.2.2/reference/html/index.html)
+
+<br>
 
 위의 설명에서 알 수 있듯이 ```resources/static```에 ```index.html```파일을 위치하면 정적 welcome page로 설정할 수 있다.
 
@@ -234,6 +248,8 @@ public class HelloController {
 
 <br>
 
+---
+
 ### 2-4. 빌드하고 실행
 
 1. ```gradlew```가 존재하는 디렉토리로 이동 : ```cd springdemo```
@@ -247,19 +263,23 @@ public class HelloController {
 
 <p align="center">   <img src="img/build2.png" alt="springboot" style="width: 65%;"> </p>
 
-
+<br>
 
 ---
 
 ## 3) Spring 웹 개발
 
-> 정적 컨텐츠, MVC 그리고 API 방식에 대한 소개
+정적 컨텐츠, MVC 그리고 API 방식에 대해 알아보자.
+
+<br>
 
 ### 3-1. Static Contents
 
 정적 컨텐츠의 경우 그냥 정적 html 자체를 건내주는 방식. 동작 방식은 다음과 같다. 웹 브라우저에서 ```/static.html```로 접근을 할 경우 스프링 부트의 내장 웹서버(디폴트 : 톰캣 서버)에서 ```static```과 매핑된 컨트롤러를 찾는다. 존재하지 않을 경우 ```resources: static/static.html```을 찾아서 넘겨준다. 
 
 <br>
+
+---
 
 ### 3-2. MVC & Template Engine
 
@@ -308,6 +328,8 @@ public class MVCController {
 
 <br>
 
+---
+
 ### 3-3. API
 
 **API**의 경우 HTML 뷰를 랜더링하기 보다는 구조화 된 데이터를 ```json``` 형식으로 반환을 한다. (```xml```형식도 가능하지만 최근에는 거의 쓰이지 않음)
@@ -343,6 +365,8 @@ public class ApiController {
 
 <p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
 
+<br>
+
 * ```@ResponseBody``` 애노테이션이 붙어 있을 경우 http 응답에 데이터를 그대로 넘기는 것으로 판단
 * ```HttpMessageConverter```가 동작하게 된다
   * 이 때 반환이 객체인 경우 ```JsonConverter```가 동작해서 ```json```으로 변환하고 응답으로 준다
@@ -355,7 +379,7 @@ public class ApiController {
 
 ## 4) 회원 관리 기능 개발 I
 
-> 간단한 회원 관리 기능에 대한 백엔드 개발을 다룬다.
+간단한 회원 관리 기능에 대한 백엔드 개발을 해보자.
 
 <br>
 
@@ -366,6 +390,8 @@ public class ApiController {
 * DB는 선정되지 않았다고 가정
 
 <br>
+
+---
 
 ### 4-2. 애플리케이션 계층 구조
 
@@ -381,6 +407,8 @@ public class ApiController {
 
 <br>
 
+---
+
 ### 4-3. 클래스 의존 관계
 
 * DB가 선정되지 않았다고 가정된 상태이기 때문에, 인터페이스로 구현 클래스를 변경할 수 있도록 설계할 것이다
@@ -388,6 +416,8 @@ public class ApiController {
 * ```MemberRepository```를 인터페이스로 만들고, ```MemoryMemberRepository```로 구현
 
 <br>
+
+---
 
 ### 4-4. 회원 저장소 코드
 
@@ -476,6 +506,8 @@ public class MemoryMemberRepository implements MemberRepository{
 
 <br>
 
+---
+
 ### 4-5. 회원 저장소 테스트 코드
 
 * 테스트 코드의 경우, 테스트가 각각 독립적으로 실행되도록 설계해야한다
@@ -554,6 +586,8 @@ class MemoryMemberRepositoryTest {
 
 <br>
 
+---
+
 ### 4-6. 회원 서비스 코드
 
 ```service/MemberService``` : 회원 서비스
@@ -624,6 +658,8 @@ public class MemberService {
 ```
 
 <br>
+
+---
 
 ### 4-7. 회원 서비스 테스트 코드
 
@@ -723,6 +759,8 @@ DI에 관한 내용은 아래에서 그리고 이후의 포스트에서 더 자�
 > 스프링 빈(Spring Bean)을 등록하는 것에는 **컴포넌트 스캔(Component Scan)**과 **Java 코드로 직접 스프링 빈을 등록**하기의 두 가지 방법이 있다.
 >
 > 스프링 빈, 의존성 주입(Dependency Injection) 그리고 위의 두 가지 방법에 대한 간단한 소개를 다룬다.
+
+<br>
 
 ```MemberController```를 추가 해보자. ```MemberController```는 ```MemberService```를 통해서 회원 가입과 조회 등이 가능해야 한다. 이런 경우를 ```MemberController```가 ```MemberService```를 의존한다고 표현한다. 
 
@@ -838,6 +876,8 @@ public class MemoryMemberRepository implements MemberRepository{}
 
 <br>
 
+---
+
 ### 5-2. 자바 코드로 직접 스프링 빈 등록
 
 ```MemberService```, ```MemberRepository```에 ```@Component``` 애노테이션이 붙지 않았을 경우. (```@Autowired```도 지움, ```@Controller```는 유지한다.)
@@ -896,9 +936,15 @@ public class SpringConfig {
 
 ## 6) 회원 관리 기능 개발 II
 
-> 회원 관리 예제에 대한 웹 기능 추가. 컨트롤러를 통해서 회원을 등록하고 조회.
+회원 관리 예제에 대한 웹 기능 추가 그리고 컨트롤러를 통해서 회원을 등록하고 조회하는 기능을 개발해보자.
+
+<br>
 
 ### 6-1. 홈 화면 추가
+
+홈 화면을 추가해보자.
+
+<br>
 
 ```controller/HomeController```
 
@@ -936,11 +982,15 @@ public class HomeController {
 
 <br>
 
+---
+
 ### 6-2. 회원 등록(가입) 기능
 
-기존의 ```MemberController``` 사용.
+회원 등록 기능을 구현하자.
 
-```controller/MemberController```
+<br>
+
+```controller/MemberController``` - 기존의 ```MemberController``` 사용
 
 ```java
 @Controller
@@ -1005,6 +1055,8 @@ public class MemberForm {
 }
 ```
 
+<br>
+
 회원 등록의 동작 과정은 다음과 같다.
 
 1. 회원가입(```/members/new```)으로 들어가면(```GET``` 방식) ```@GetMapping```에 의해 ```createMemberForm.html```이 렌더링
@@ -1015,9 +1067,13 @@ public class MemberForm {
 
 <br>
 
+---
+
 ### 6-3. 회원 조회 기능
 
 기존의 ```MemberController``` 에 조회 기능을 추가하자.
+
+<br>
 
 ```controller/MemberController```
 
@@ -1067,6 +1123,8 @@ public class MemberController {
 
 * 메모리 내에서 처리하고 있기 때문에 서버 재시작 하면 데이터가 전부 날아감 
 
+<br>
+
  <p align="center">   <img src="img/membercheck.png" alt="springboot" style="width: 65%;"> </p>
 
 <br>
@@ -1086,6 +1144,8 @@ public class MemberController {
 * [다운로드 및 설치](https://www.h2database.com/html/main.html)
 * 755 권한 주기 : ```chmod 755 h2.sh```
 * ```h2/bin``` 내에서 ```./h2.sh```
+
+<br>
 
  <p align="center">   <img src="img/h2console1.png" alt="springboot" style="width: 65%;"> </p>
 
@@ -1110,15 +1170,21 @@ drop table if exists member CASCADE;
 
  <p align="center">   <img src="img/h2console2.png" alt="springboot" style="width: 65%;"> </p>
 
+<br>
+
 데이터베이스 설정을 완료했으니 JdbcTemplate을 이용해서 기존의 ```MemoryMemberRepository```를 대체할 것이다.
 
 <br>
+
+---
 
 ### 7-2. 스프링 ```JdbcTemplate``` 사용
 
 JdbcTemplate을 이용해서 레포지토리를 구현할 것이다. JdbcTemplate은 순수 JDBC API의 반복 코드를 대부분 제거해준다. SQL문은 직접 작성해야한다. 
 
 >  아주 옛날에는 순수 JDBC를 이용해서 구현했다. 지금은 JdbcTemplate이나 JPA를 이용한다. 
+
+<br>
 
 먼저 ```build.gradle```에 필요한 라이브러리를 추가해야 한다.
 
@@ -1236,9 +1302,13 @@ public class SpringConfig {
 
 <br>
 
+---
+
 ### 7-3. 스프링 통합 테스트
 
-> 스프링 컨테이너와 DB까지 연결한 통합 테스트
+스프링 컨테이너와 DB까지 연결한 통합 테스트를 해보자.
+
+<br>
 
 ```MemberServiceIntegrationTest``` : 회원 서비스 통합 테스트
 
@@ -1297,6 +1367,8 @@ class MemberServiceIntegrationTest {
 
 <br>
 
+---
+
 ### 7-4. ```JPA``` 사용
 
 > JPA는 Java Persistence API를 뜻함.
@@ -1306,6 +1378,8 @@ class MemberServiceIntegrationTest {
 > JPA를 사용해서 반복적인 작업을 없애고, 개발자들이 비즈니스 로직에 집중할 수 있도록 한다. (개발 생산성 증가)
 >
 > JPA는 구현체를 제공하지 않고 인터페이스이다. (구현은 각 벤더(vendor)가 한다. 일반적으로 Hibernate 사용)
+
+<br>
 
 JPA를 사용해서 회원 레포지토리를 만들면 다음과 같다.(JdbcTemplate을 사용 했을때와 마찬가지로 어떤 느낌으로 사용하는지 감만 잡자)
 
@@ -1489,14 +1563,6 @@ AOP의 동작 및 동작 원리는 나중의 포스트에서 다룰 예정이다
   * 이를 통해서 의존성 주입 (뭔가 DI를 위한 글로벌 객체? 같은 느낌인듯)
 * JdbcTemplate, JPA, 스프링 데이터 JPA의 조합으로 많이 사용
 * AOP는 핵심 관심 사항과 공통 관심 사항을 분리  → 유지 보수 편의성 증가, 공통 관심 사항 편하게 사용 가능 등..
-
-<br>
-
----
-
-## 느낀 점
-
-* 스프링의 모든 요소가 포함되지도 않은 단순한 소개 강의였는데 생소해서 그런지 헷갈리는 내용이 조금 있었다. (특히 Jdbc와 AOP..)
 
 <br>
 

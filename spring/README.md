@@ -50,7 +50,7 @@
 
 ---
 
-### [2) Spring Core]()
+### [2) Spring Core](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(002)Spring%20Core%20-%201.md)
 
 ### [3) Spring MVC]()
 
@@ -66,6 +66,7 @@
 
 * 객체 지향의 사실과 오해
 * ```BeanDefinition``` - 빈 설정 메타 정보
+* ```LomBok``` 라이브러리 사용법
 
 ---
 

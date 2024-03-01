@@ -155,6 +155,7 @@
 ---
 
 * Java 8
+* IntelliJ
 
 <br>
 
@@ -197,44 +198,6 @@
 6. [Wikipedia Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)
 
 7. [점프 투 자바 - 인터페이스](https://wikidocs.net/217)
-
-8. [Tistory Inpa Dev - Java NULL](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EA%B4%B4%EB%A1%AD%ED%9E%88%EB%8A%94-NULL-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
-
-9. [geeksforgeeks - strings in java](https://www.geeksforgeeks.org/strings-in-java/)
-
-10. [geeksforgeeks - compilation execution in java](https://www.geeksforgeeks.org/compilation-execution-java-program/)
-
-11. [geeksforgeeks - typecasting in java](https://www.geeksforgeeks.org/typecasting-in-java/)
-
-12. [geeksforgeeks - multidimensional arrays in java](https://www.geeksforgeeks.org/multidimensional-arrays-in-java/)
-
-13. [geeksforgeeks - difference between oop and pop](https://www.geeksforgeeks.org/difference-between-oop-and-pop/)
-
-14. [geeksforgeeks - java memory management](https://www.geeksforgeeks.org/java-memory-management/)
-
-15. [geeksforgeeks - java collections guide](https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/)
-
-16. [codelatte - java programming basic](https://www.codelatte.io/courses/java_programming_basic/KUYNAB4TEI5KNSJV)
-
-17. [w3schools - java inheritance](https://www.w3schools.com/java/java_inheritance.asp)
-
-18. [javatpoint - super](https://www.javatpoint.com/super-keyword)
-
-19. [helpteaching - high level and low level languages](https://www.helpteaching.com/lessons/1285/high-level-low-level-languages)
-
-20. [baeldung - java foreach and counter](https://www.baeldung.com/java-foreach-counter)
-
-21. [simplilearn - type casting in java](https://www.simplilearn.com/tutorials/java-tutorial/type-casting-in-java)
-
-22. [tcpschool - c array 2dimensional](https://tcpschool.com/c/c_array_twoDimensional)
-
-23. [javacodemonk - java exception class hierarchy](https://www.javacodemonk.com/java-exception-class-hierarchy-92e8224e)
-
-24. [https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html](https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html)
-
-25. [https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html](https://www.iitk.ac.in/esc101/05Aug/tutorial/essential/exceptions/definition.html)
-
-26. https://www.nextree.co.kr/p6960/
 
 27. https://st-lab.tistory.com/243
 

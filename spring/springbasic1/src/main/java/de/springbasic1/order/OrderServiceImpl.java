@@ -3,6 +3,7 @@ package de.springbasic1.order;
 import de.springbasic1.discount.DiscountPolicy;
 import de.springbasic1.member.Member;
 import de.springbasic1.member.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrderServiceImpl implements OrderService{
     /*
@@ -16,13 +17,12 @@ public class OrderServiceImpl implements OrderService{
     private final DiscountPolicy discountPolicy;
 
     // 생성자를 통해 주입
+    @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
 
-//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-//    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {

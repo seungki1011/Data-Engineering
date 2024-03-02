@@ -58,11 +58,11 @@
      * 메서드 주입
    * ```@Autowired``` 옵션 처리
    * 생성자 주입 권장
-   * ```@Autowired fieldName```, ```@Qualifier```, ```@Primary```
+   * ```@Autowired 필드명```, ```@Qualifier```, ```@Primary```
      * 조회되는 빈이 2개 이상인 문제
      * ```@Autowired 필드명``` 매칭
-8. Bean Lifecycle(빈 생명주기)
-9. Bean Scope
+8. Spring Bean Lifecycle Callbacks(빈 생명주기 콜백)
+9. Spring Bean Scope
 
 ---
 
@@ -1157,7 +1157,7 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 * 스프링 컨테이너는 설정 정보를 참고해서 의존관계 주입(DI)
 * 여기서 코드로 스프링 빈을 등록할 때 생성자를 호출하면서 DI도 한꺼번에 처리된다
   * 위의 경우 이해를 돕기 위해 개념적으로 나누어서 설명하고 있다
-* 스프링 컨테이너에서 DI에 관한 내용은 [```@Autowired```]()에서 더 자세하게 다룸
+* 스프링 컨테이너에서 DI에 관한 내용은 [```@Autowired```](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(002)Spring%20Core%20-%201.md#7-%EC%9D%98%EC%A1%B4%EA%B4%80%EA%B3%84-%EC%9E%90%EB%8F%99-%EC%A3%BC%EC%9E%85autowired)에서 더 자세하게 다룸
 
 <br>
 
@@ -1880,7 +1880,7 @@ public class MemoryMemberRepository implements MemberRepository{
 <p align='center'>@ComponentScan</p>
 
 * `@ComponentScan` 은 `@Component` 가 붙은 모든 클래스를 스프링 빈으로 등록한다
-* 스프링 빈의 기본 이름은 클래스명을 사용하되 맨 앞글자만 소문자를 사용한다
+* 스프링 빈의 기본 이름은 클래스명을 사용하되 맨 앞글자만 소문자를 사용하도록 설정된다(스프링이)
   * 예) ```MemberServiceImpl``` 클래스 → ```memberServiceImpl```
 * 빈 이름을 직접 지정하고 싶은 경우 : ```@Component("memberService2")``` 처럼 이름을 부여하면 된다다
 
@@ -2273,7 +2273,7 @@ noBean3 = Optional.empty
 
 ---
 
-### 7-4. ```@Autowired fieldName```, ```@Qualifier```, ```@Primary```
+### 7-4. ```@Autowired 필드명```, ```@Qualifier```, ```@Primary```
 
 #### 7-4-1. 조회되는 빈이 2개 이상인 문제
 
@@ -2293,13 +2293,13 @@ noBean3 = Optional.empty
  public class RateDiscountPolicy implements DiscountPolicy {}
 ```
 
-* ```DiscountPolicy```의 하위 타입인 ```FixDiscountPolicy```, ```RateDiscountPolicy``` 둘다 스프링 빈으로 선언해보자
+* ```DiscountPolicy```의 하위 타입인 ```FixDiscountPolicy```, ```RateDiscountPolicy``` 둘다 스프링 빈으로 선언했다(```@Component```로 등록)
 
 <br>
 
 ```java
  @Autowired
- private DiscountPolicy discountPolicy
+ private DiscountPolicy discountPolicy;
 ```
 
 * 이런식으로 ```@Autowired```를 사용해보면 ```NoUniqueBeanDefinitionException``` 오류가 발생한다
@@ -2307,31 +2307,178 @@ noBean3 = Optional.empty
 
 <br>
 
-문제를 해결하기 위해서 하위타입으로 지정하는 것은 DIP를 위배한다. 또한 이름만 다르고, 완전히 똑같은 타입의 스프링 빈이 2개 있을 때 해결이 안된다. 이 문제를 해결하는 방법을 ```@Autowired fieldName```, ```@Qualifier```, ```@Primary```을 통해 알아보자.
+문제를 해결하기 위해서 하위타입으로 지정하는 것은 DIP를 위배한다. 또한 이름만 다르고, 완전히 똑같은 타입의 스프링 빈이 2개 있을 때 해결이 안된다. 이 문제를 해결하는 방법을 ```@Autowired 필드명```, ```@Qualifier```, ```@Primary```을 통해 알아보자.
 
 <br>
 
-#### 7-4-2. ```@Autowired fieldName```
+#### 7-4-2. ```@Autowired 필드명```
 
 ```@Autowired 필드명``` 매칭에 대하여 알아보자.
 
+```@Autowired```는 타입 매칭을 시도할때 다수의 빈이 존재한다면 필드 이름(파라미터 이름)으로 빈 이름을 추가 매칭한다.
 
+기존 코드
 
+```java
+ @Autowired
+ private DiscountPolicy discountPolicy;
+```
 
+<br>
 
+필드명을 빈 이름으로 변경한 코드
 
+```java
+ @Autowired
+ private DiscountPolicy rateDiscountPolicy;
+```
 
+* 필드명이 ```rateDiscountPolicy```이므로 정상 주입된다
+* ```@Autowired```의 매칭을 정리하지면 : 타입 매칭 → 타입 매칭 결과가 2개 이상인 경우 → 필드명(파라미터명)으로 빈 이름 매칭
 
+<br>
 
+#### 7-4-3. ```@Qualifier```
 
+`@Qualifier` 는 **추가 구분자를 붙여주는 방법**이다. 주입시 **추가적인 방법을 제공**하는 것이지 빈 이름을 변경하는 것은 아니다.
 
+```java
+ @Component
+ @Qualifier("fixDiscountPolicy")
+ public class FixDiscountPolicy implements DiscountPolicy {}
+```
 
+```java
+ @Component
+ @Qualifier("mainDiscountPolicy")
+ public class RateDiscountPolicy implements DiscountPolicy {}
+```
 
+* 빈 등록시 ```@Qualifier```를 붙여준다
 
+<br>
 
+생성자 자동 주입에 ```@Qualifier``` 사용 예시
 
+```java
+ @Autowired
+ public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy
+ discountPolicy) {
+     this.memberRepository = memberRepository;
+     this.discountPolicy = discountPolicy;
+}
+```
 
+수정자 자동 주입에 ```@Qualifier``` 사용 예시
 
+```java
+ @Autowired
+ public DiscountPolicy setDiscountPolicy(@Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+     this.discountPolicy = discountPolicy;
+ }
+```
+
+* ```@Qualifier```로 주입할 때 ```@Qualifier("mainDiscountPolicy")``` 를 못 찾는 경우 → ```mainDiscountPolicy```라는 이름의 스프링 빈을 추가 찾는다
+* ```@Qualifier```는 ```@Qualifier```를 찾는 용도로 사용하는 것을 권장한다
+* ```@Qualifier```는 빈의 수동 등록에도 사용 가능하다
+
+<br>
+
+#### 7-4-4. ```@Primary```
+
+```@Primary```는 우선순위를 지정하는 방법이다. ```@Autowired```시 매칭되는 빈이 여러개이면 ```@Primary```가 우선권을 가진다.
+
+```rateDiscountPolicy```가 우선권을 가지도록 하고 싶으면 다음과 같이 사용하면 된다.
+
+```java
+ @Component
+ @Primary
+ public class RateDiscountPolicy implements DiscountPolicy {}
+```
+
+```java
+ @Component
+ public class FixDiscountPolicy implements DiscountPolicy {}
+```
+
+* ```@Qualifier```의 단점은 해당 스프링 빈과 주입 받는 코드에 ```@Qualifier```를 붙여줘야한다는 점이다 → ```@Primary```를 사용하는 것이 더 단순하다
+
+<br>
+
+>  ```@Qualifier```, ```@Primary```를 사용하는 상황을 한번 알아보자.
+>
+> 메인 데이터베이스의 커넥션을 획득하는 스프링 빈이 있고, 코드에서 특별한 기능으로 가끔 사용하는 서브 데이터베이스의 커넥션을 획득하는 스프링 빈이 존재한다고 가정해보자. 자주 사용하는 메인 데이터베이스의 커넥션을 획득하는 빈에는 ```@Primary```를 붙이고, 서브 데이터베이스 커넥션을 획득하는 빈에는 ```@Qualifier```를 지정해서 사용할 수 있다.
+>
+> 좁은 범위의 선택권을 가지는 ```@Qualifier```가 우선권이 높다.
+>
+> ```@Qualifier```의 타입 체크 문제를 해결하기 위해서 ```@Interface```를 이용해 사용자 정의 애노테이션을 만들 수 있다.
+
+<br>
+
+---
+
+### 7-5. 조회한 빈이 모두 필요한 경우
+
+의도적으로 해당 타입으로 조회한 빈이 모두 다 필요한 경우가 있다. 예를 들면 할인 서비스를 제공하는데, 클라이언트가 할인 종류(정액할인, 정률할인)를 선택할 수 있다고 가정해보자. 스프링을 이용해서 매우 간단하게 구현할 수 있다. 
+
+코드로 살펴보자.
+
+```test/autowired/AllBeanTest```
+
+```java
+public class AllBeanTest {
+    @Test
+    void findALlBean() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class, DiscountService.class);
+
+        DiscountService discountService = ac.getBean(DiscountService.class);
+        Member member = new Member(1L, "Messi", Grade.VIP);
+        int fixDiscountPrice = discountService.discount(member, 20000, "fixDiscountPolicy");
+
+        // fix test
+        Assertions.assertThat(discountService).isInstanceOf(DiscountService.class);
+        Assertions.assertThat(fixDiscountPrice).isEqualTo(1000);
+
+        // rate test
+        int rateDiscountPrice = discountService.discount(member, 30000, "rateDiscountPolicy");
+        Assertions.assertThat(rateDiscountPrice).isEqualTo(3000);
+    }
+		
+    // 기존 OrderService 대신 사용
+    static class DiscountService {
+        private final Map<String, DiscountPolicy> policyMap;
+        private final List<DiscountPolicy> policyList;
+
+        // 생성자 주입
+        @Autowired
+        public DiscountService(Map<String, DiscountPolicy> policyMap, List<DiscountPolicy> policyList) {
+            this.policyMap = policyMap;
+            this.policyList = policyList;
+            System.out.println("policyMap = "+policyMap);
+            System.out.println("policyList = "+policyList);
+        }
+
+        public int discount(Member member, int price, String discountCode) {
+            DiscountPolicy discountPolicy = policyMap.get(discountCode);
+            return discountPolicy.discount(member, price);
+        }
+    }
+}
+```
+
+```
+policyMap = {fixDiscountPolicy=de.springbasic1.discount.FixDiscountPolicy@6f3c660a, rateDiscountPolicy=de.springbasic1.discount.RateDiscountPolicy@74f5ce22}
+policyList = [de.springbasic1.discount.FixDiscountPolicy@6f3c660a, de.springbasic1.discount.RateDiscountPolicy@74f5ce22]
+```
+
+* ```DiscountService```는 ```Map```으로 모든 ```DiscountPolicy```를 주입받는다 (```fixDiscountPolicy```, ```rateDiscountPolicy``` 주입)
+* ```discount()```는 ```discountCode```로 ```fixDiscountPolicy```를 넘겨받으면 ```Map```에서 ```fixDiscountPolicy``` 스프링 빈을 찾아서 실행한다 (```rateDiscountPolicy```도 마찬가지)
+
+<br>
+
+---
+
+## 8) Spring Bean Lifecycle Callbacks
 
 
 

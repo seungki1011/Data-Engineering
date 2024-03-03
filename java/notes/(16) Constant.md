@@ -53,6 +53,8 @@
 * ```final```이 붙은 변수는 재할당 불가
 * 파라미터에 ```final```이 붙을 경우 메서드 내부에서 변경 불가
 
+<br>
+
 [```FinalMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalMain1.java)
 
 ```java
@@ -91,6 +93,8 @@ This is the parameter passed to the method: 500
 * ```static final```이 붙는 경우 전부 대문자를 사용하자(관례)
   * 상수는 전부 대문자
   * 구분은 ```_```
+
+<br>
 
 [```FinalConstructInit.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalConstructInit.java)
 

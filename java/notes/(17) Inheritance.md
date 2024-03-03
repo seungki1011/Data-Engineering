@@ -57,6 +57,8 @@ public class ElectricCar {
 }
 ```
 
+<br>
+
 ```GasCar```
 
 ```java
@@ -69,6 +71,8 @@ public class GasCar {
     }
 }
 ```
+
+<br>
 
 ```ExtendsMain1```
 
@@ -117,6 +121,8 @@ public class ElectricCar extends Car { // ElectricCar가 Car를 상속받는다
 }
 ```
 
+<br>
+
 [```GasCar.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/GasCar.java)
 
 ```java
@@ -126,6 +132,8 @@ public class GasCar extends Car { // GasCar가 Car를 상속받는다
     }
 }
 ```
+
+<br>
 
 [```Car.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/Car.java)
 
@@ -167,7 +175,7 @@ Filling up the car!
 The car is currently moving on ground!
 ```
 
-
+<br>
 
 <p align="center">   <img src="img/Inheritance2.png" alt="Inheritance" style="width: 50%;"> </p>
 
@@ -186,6 +194,8 @@ The car is currently moving on ground!
   * 다중 상속 허용시 발생하는 [다이아몬드 문제](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem) 또는 클래스 계층의 복잡화 같은 문제들 때문
 * 부모 클래스가 부모 클래스를 가지는 multi-level inheritance는 가능하다
 
+<br>
+
 [```Aircraft.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/Aircraft.java)
 
 ```java
@@ -195,6 +205,8 @@ public class Aircraft extends Vehicle{ // Aircraft는 Vehicle 클래스를 상�
     }
 }
 ```
+
+<br>
 
 [```Vehicle.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/Vehicle.java)
 
@@ -208,6 +220,8 @@ public class Vehicle {
 
 * ```Car```클래스도 ```extends```로 ```Vehicle```클래스를 상속 받음
 * ```Aircraft```과 ```Car``` 클래스가 공통으로 지니는 기능을 ```Vehicle``` 클래스에서 상속 받도록 함
+
+<br>
 
 [```ExtendsMain3.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/ExtendsMain3.java)
 
@@ -235,6 +249,8 @@ This aircraft is currently flying!
 This vehicle used the brake!
 This vehicle used the brake!
 ```
+
+<br>
 
 <p align="center">   <img src="img/Inheritance3.png" alt="Inheritance" style="width: 50%;"> </p>
 
@@ -287,6 +303,8 @@ ElectricCar e1 = new ElectricCar();
 * 오버로딩(Overloading)은 메서드 이름이 같고 파라미터들이 다른 메서드를 여러개 정의하는 것 (유의하자)
 * 인텔리제이 단축키 ```ctrl+o```
 
+<br>
+
 [```Aircraft.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/Aircraft.java)
 
 ```java
@@ -300,6 +318,8 @@ public class Aircraft extends Vehicle {
     }
 }
 ```
+
+<br>
 
 [```Jet.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/Jet.java)
 
@@ -328,6 +348,8 @@ public class Vehicle {
     }
 }
 ```
+
+<br>
 
 [```ExtendsMain4.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/ExtendsMain4.java)
 
@@ -371,6 +393,8 @@ This vehicle used the brake!
 
 <p align="center">   <img src="img/protected1.png" alt="Inheritance" style="width: 30%;"> </p>
 
+<br>
+
 [```Parent.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/protected1/parent/Parent.java)
 
 ```java
@@ -406,6 +430,8 @@ public class Parent {
 }
 ```
 
+<br>
+
 [```Child1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/protected1/child/Child1.java)
 
 ```java
@@ -428,6 +454,8 @@ public class Child1 extends Parent {
     }
 }
 ```
+
+<br>
 
 [```ProtectedMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/protected1/ProtectedMain.java)
 
@@ -483,6 +511,8 @@ Private method in the parent package, parent class.
   * 부모와 자식 클래스의 필드명이 같거나 메서드가 오버라이딩 되어 있으면 자식에서 부모의 필드나 메서드를 호출할 수 없음
   * ```super```는 부모 클래스에 대한 참조를 나타냄
 
+<br>
+
 [```Animal.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/super1/Animal.java)
 
 ```java
@@ -495,6 +525,8 @@ public class Animal {
     }
 }
 ```
+
+<br>
 
 [```Dog.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/super1/Dog.java)
 
@@ -525,6 +557,8 @@ public class Dog extends Animal{
     }
 }
 ```
+
+<br>
 
 [```SuperMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/super1/SuperMain1.java)
 
@@ -564,6 +598,8 @@ called bark() : Barking. Bow wow!
 * **자식 클래스의 생성자에서 부모 클래스의 생성자를 반드시 호출해야 됨**
   * 기본 생성자의 경우 ```super()```생략 가능
 
+<br>
+
 [```ClassA.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/ClassA.java)
 
 ```java
@@ -574,6 +610,8 @@ public class ClassA {
     }
 }
 ```
+
+<br>
 
 [```ClassB.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/ClassB.java)
 
@@ -593,6 +631,8 @@ public class ClassB extends ClassA{
     }
 }
 ```
+
+<br>
 
 [```ClassC.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/ClassC.java)
 
@@ -624,6 +664,8 @@ public class ClassC extends ClassB {
 }
 
 ```
+
+<br>
 
 [```SuperMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/SuperMain2.java)
 

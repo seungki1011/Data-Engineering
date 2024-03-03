@@ -67,6 +67,8 @@ public class Data1 {
 }
 ```
 
+<br>
+
 [```DataMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticvariable/DataMain.java)
 
 ```java
@@ -91,6 +93,8 @@ d2 count : 1
 d3 count : 1
 ```
 
+<br>
+
 [```StaticData1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticvariable/StaticData1.java)
 
 ```java
@@ -106,6 +110,8 @@ public class StaticData1 {
     }
 }
 ```
+
+<br>
 
 [```StaticDataMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticvariable/StaticDataMain.java)
 
@@ -149,6 +155,8 @@ d3 count : 3
 * 정적(```static```) 메서드는 ```static```이 붙은 애들만 사용 가능
   * 메서드 내에 인스턴스 변수 사용 불가
 
+<br>
+
 [```StaticMethod1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticmethod/StaticMethod1.java)
 
 ```java
@@ -159,6 +167,8 @@ public class StaticMethod1 {
     }
 }
 ```
+
+<br>
 
 [```StaticMethodMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticmethod/StaticMethodMain.java)
 

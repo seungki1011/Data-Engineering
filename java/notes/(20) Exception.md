@@ -137,6 +137,8 @@ try 블럭의 남은 코드는 실행되지 않는다.
 * ```try``` 블럭 내의 코드에서 예외가 발생 → ```catch```블럭으로 넘어가서 맞는 예외가 있는지 찾음 (남은 ```try```블럭의 코드는 실행하지 않고 넘어간다)   →  맞는 예외가 있는 경우 ```catch``` 블럭의 로직 실행
   * 만약 맞는 예외가 없을 경우 예외 처리에 실패한다
 
+<br>
+
 ```java
         // 4. 예외 처리가 안되는 경우
         try {
@@ -158,6 +160,8 @@ at de.java.exception.ExceptionMain1.main(ExceptionMain1.java:47)
 * 부모 ```exception```을 상위에 배치하면 ```exception```의 우선순위에 의해 해당 상위(부모) ```exception```이 예외를 처리해버릴 수 있음
   * 예시 : 가장 상위에 존재하는 ```Exception```을 제일 높은 ```catch```블럭에 배치하면 해당 ```catch``` 블럭에서 모든 예외가 처리되어서 예외 처리의 의미가 없어진다 (귀찮다면 그냥 저렇게 해도 되겠지만)
 * 아무튼 이런 예외의 우선 순위를 잘 생각해서 ```catch``` 블럭을 배치하자
+
+<br>
 
 [```ExceptionMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/exception/ExceptionMain2.java)
 

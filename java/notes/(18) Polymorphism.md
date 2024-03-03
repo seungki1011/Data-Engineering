@@ -38,6 +38,8 @@
 * 조상타입의 참조변수로 자손타입의 인스턴스를 다룰 수 있는 것이 다형성이라고 볼 수 있음
 * 자식 타입은 부모 타입 참조 불가 (자식 그릇에 부모를 담을 수 없는 걸로 이해하면 편함)
 
+<br>
+
 [```Parent.Java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/Parent.java)
 
 ```java
@@ -128,6 +130,8 @@ c.childMethod();
 
 * 부모 타입이 자식 타입의 기능을 사용하기 위해서 위와 같이 다운캐스팅 결과를 변수에 담아두고 이후에 기능을 사용하면 됨
 
+<br>
+
 [```DownCastMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/DownCastMain1.java)
 
 ```java
@@ -158,6 +162,7 @@ called parentMethod
 * 일시적 다운캐스팅
 * 다운캐스팅 결과를 변수에 담아두는 과정 없이 일시적으로 다운캐스팅을 해서 인스턴스의 하위 계층 클래스의 기능을 사용 가능
 
+<br>
 [```TempCastMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/TempCastMain1.java)
 
 ```java
@@ -188,6 +193,8 @@ public class TempCastMain1 {
 * 업캐스팅과 달리 다운캐스팅은 무조건 명시적으로 캐스팅을 해야하는 이유
   * 업캐스팅과 달리 안전하기 않기 때문!
 * 다운캐스팅을 잘못하는 경우 런타임(Runtime) 오류 발생 가능
+
+<br>
 
 [```DownCastMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/DownCastMain2.java)
 
@@ -266,6 +273,8 @@ public class CastMain2 {
 * 연산 결과는 ```true``` or ```false```
 * 결과가 ```true```인 경우 해당 타입으로 캐스팅(형변환)이 가능하다는 뜻
 * 다운캐스팅 전에 ```instanceof```로 체크해서 사용 
+
+<br>
 
 [```InstanceOfMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/InstanceOfMain1.java)
 
@@ -605,6 +614,8 @@ Moo~
   * **만약에 자식 클래스에서 추상 메서드를 오버라이딩 하지 않을 경우 자식 메서드도 추상 클래스이여야 함**
 * 다른 클래스를 작성하는데 도움을 줄 목적으로 작성된다
 
+<br>
+
 [```Animal.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/abstractclass/Animal.java)
 
 ```java
@@ -728,6 +739,8 @@ Oink~
 * 인터페이스는 부모의 메서드는 구현되지 않고 오로지 자식에서 오버라이딩 해서 구현하기 때문에 다이아몬드 문제가 발생하지 않는다
 * ```implements InterfaceA, InterfaceB``` 처럼 다중 구현 사용
   * 공통된 메서드는 하나만 오버라이딩 하면 됨
+
+<br>
 
 [```Vehicle.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/Vehicle.java)
 

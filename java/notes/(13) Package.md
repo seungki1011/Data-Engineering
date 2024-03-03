@@ -72,6 +72,8 @@ class ImportTest {
 }
 ```
 
+<br>
+
 ### import 사용 o
 
 ```java
@@ -85,9 +87,13 @@ class ImportTest {
 * ```java.lang```패키지의 클래스는 import하지 않아도 사용할 수 있음
 * ```import```문은 패키지문과 클래스 선언의 사이에 선언
 
+<br>
+
 > 1. ```package```
 > 2. ```import```
 > 3. ```class``` 선언
+
+<br>
 
 ### static import
 
@@ -106,7 +112,9 @@ class ImportTest {
   * 예시. ```com.company.myapp```
   * ```(회사, 조직).(제품, 서비스명).(기능적, 기술적 구분)```
   * 예시 ```org.apache.commons.lang```
-* 패키지의 위계(hieararchy)를 구성할때는 보통 큰 분류에서 더 세부적인 분류로
+* 패키지의 위계(hieararchy)를 구성할때는 보통 큰 분류에서 더 세부적인 분류로 간다
+
+<br>
 
 > 위계 구조가 다음과 같다면
 >

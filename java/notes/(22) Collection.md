@@ -277,6 +277,8 @@ Mango
 * ```retainAll()``` : 교집합
 * ```addAll()``` : 합집합
 
+<br>
+
 [```HashSetMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/HashSetMain1.java)
 
 ```java
@@ -438,6 +440,8 @@ public class TreeNode<E> {
   	TreeNode<E> right; // 오른쪽 자식 노드 주소
 }
 ```
+
+<br>
 
 [```TreeSetMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/TreeSetMain1.java)
 
@@ -604,6 +608,8 @@ treeSet.tailSet(6) = [6, 8]
 * ```HashMap```은 동기화 되어있지 않음 (Synchronization x)
 * single-thread에서 더 좋은 성능
 * 하나의 ```null``` key 가능, 복수의 ```null``` value 허용
+
+<br>
 
 [```HashMapMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/HashMapMain.java)
 
@@ -777,6 +783,8 @@ The returned element after pop(): Urgent Task 1
 * 이름이 없는 일회용 클래스
 * 정의와 생성을 동시에 한다
 
+<br>
+
 [```AnonymousClassMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/AnonymousClassMain.java)
 
 ```java
@@ -823,6 +831,8 @@ Greetings from the anonymous class!
   * ```compareTo(T o)``` 메서드 구현
 * 자기 자신과 매개변수 객체 비교
 * [Java docs - ```Comparable```](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html)
+
+<br>
 
 [```ComparableMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/ComparableMain.java)
 

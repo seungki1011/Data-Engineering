@@ -43,6 +43,8 @@
 
 * ```protected```는 [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md#5-protected)에서 추가 설명
 
+<br>
+
 <p align="center">   <img src="img/accessmod1.png" alt="access modifier" style="width: 50%;"> </p>
 
 <p align='center'>자바의 정석 - 기초</p>
@@ -103,6 +105,8 @@ public class Package1Data {
 }
 ```
 
+<br>
+
 [```Package1Main.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/package1/Package1Main.java)
 
 ```java
@@ -143,6 +147,8 @@ package-private(default) String = This is a package-private String(Inner Access)
 private Int = 3
 private String = This is a private String(Inner Access)
 ```
+
+<br>
 
 [```Package2Main.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/package2/Package2Main.java)
 
@@ -190,6 +196,8 @@ private String = This is a private String(Inner Access)
 * 일반적으로 생성자의 접근 제어자는 클래스의 접근 제어자와 일치함
 * 생성자에 접근 제어자를 사용해서 인스턴스의 생성을 제할할 수 있음
 
+<br>
+
 ### Class (접근 제어자의 사용)
 
 * 클래스의 접근 제어자는 ```public```, ```default```만 사용 가능
@@ -211,6 +219,8 @@ private String = This is a private String(Inner Access)
   * 대부분 데이터는 ```private```으로 막아둔다
 * 캡슐화에서 내부에서만 사용하는 기능은 전부 숨긴다
   * 사용자가 필요한 기능만 노출한다
+
+<br>
 
 [```Item.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/practice1/Item.java)
 
@@ -243,6 +253,8 @@ public class Item {
     }
 }
 ```
+
+<br>
 
 [```ShoppingCart.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/practice1/ShoppingCart.java)
 
@@ -280,6 +292,8 @@ public class ShoppingCart {
     }
 }
 ```
+
+<br>
 
 [```ShoppingMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/practice2/ShoppingMain.java)
 
@@ -319,14 +333,6 @@ Name: Pizza, Price: 32500, Quantity: 2
 Name: MakGukSu, Price: 11000, Quantity: 1
 Total Price: 206000
 ```
-
-<br>
-
----
-
-## 4) Further Reading
-
-* Getter and Setter를 사용하는 것이 좋은가?
 
 <br>
 

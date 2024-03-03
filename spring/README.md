@@ -6,6 +6,10 @@
 
 ## Requirements
 
+* Java 17 or 21
+* Spring Boot 3.2.2
+* h2database 2.2.224
+
 ---
 
 ## Index
@@ -56,9 +60,7 @@
 
 ### [4) Jdbc]()
 
-### [5) JPA]()
-
-### [6) Spring 고급]()
+### 
 
 ---
 
@@ -67,6 +69,7 @@
 * 객체 지향의 사실과 오해
 * ```BeanDefinition``` - 빈 설정 메타 정보
 * ```LomBok``` 라이브러리 사용법
+* Dependency Lookup (DL)
 
 ---
 
@@ -79,5 +82,16 @@
 ## Reference
 
 1. [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)
-1. 토비의 스프링
 
+   * [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/)
+   * [스프링 핵심 원리 - 기본편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8#)
+
+1. [https://www.geeksforgeeks.org/mvc-framework-introduction/](https://www.geeksforgeeks.org/mvc-framework-introduction/)
+
+1. [https://docs.spring.io/spring-boot/docs/3.2.2/reference/html/index.html](https://docs.spring.io/spring-boot/docs/3.2.2/reference/html/index.html)
+
+1. [https://en.wikipedia.org/wiki/Query_string](https://en.wikipedia.org/wiki/Query_string)
+
+1. [https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html](https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html)
+
+   

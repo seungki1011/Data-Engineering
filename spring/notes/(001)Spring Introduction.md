@@ -46,14 +46,6 @@
 
 ---
 
-## Requirements
-
-* Java 17 or 21
-* Spring Boot 3.2.2
-* h2database 2.2.224
-
----
-
 ## 1) Introduction
 
 들어가기 전 알아두면 좋을 선행 지식에 대해 아주 간단하게 알아보자.

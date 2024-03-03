@@ -55,8 +55,6 @@
    * [Hash Index](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#7-6-hash-index)
 1. [B-tree](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(002)%20Using%20SQL.md#8-b-tree)
 
-
-
 ---
 
 > MySQL에서 스키마(Schema)와 데이터베이스(Database)는 상호교환적(interchangeably)으로 사용 가능하지만 Oracle Database에서의 스키마는 데이터베이스의 논리적인 구조를 나타내는 용어이다.
@@ -67,8 +65,6 @@
 
 > 해당 ```MySQL ```설치와 연결은 MacOS 로컬 환경 위에서 진행되었습니다.
 
-<br>
-
 ### 1-1. MySQL 설치와 연결
 
 * [MacOS 설치](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/macos-installation.html)
@@ -77,6 +73,8 @@
 ```MySQL```을 설치하고 연결하는 과정은 위의 document에 잘 나와있다.
 
 <br>
+
+---
 
 #### 1-1-1. CLI
 
@@ -130,6 +128,8 @@ mysql --host=localhost --user=root --password
 
 <br>
 
+---
+
 #### 1-1-2. GUI
 
 > MySQL Workbench와 같은 GUI 툴의 사용. (DBeaver 같은 툴을 사용해도 무방하다.)
@@ -148,12 +148,18 @@ MySQL Workbench 설치 후 실행을 하면 다음과 같은 화면을 확인 �
 
 * 기존에 CLI로 만들었던 연결을 확인할 수 있다
 
+<br>
+
 Delete Connection으로 만들어뒀던 열결을 삭제하고 새로 만들어보자. MySQL Connection 옆의 ```+``` 버튼을 누르면 새로운 연결을 만들 수 있다.
+
+<br>
 
 <p align="center">   <img src="img/workbench2.png" alt="mysql" style="width: 70%;"> </p>
 
 * 기존의 CLI로 연결했을 때 설정했던 세부내용과 동일하다
 * ```Connection Name```으로 해당 연결을 특정 지을 수 있는 이름을 부여할 수 있다
+
+<br>
 
 <p align="center">   <img src="img/workbench4.png" alt="mysql" style="width: 70%;"> </p>
 
@@ -234,6 +240,8 @@ DROP DATABASE test_company;
 
 <br>
 
+---
+
 ### 2-2. Attribute Data Types
 
 MySQL에서 속성(Attribute)들이 가질 수 있는 자료형(Data Type)에 대해 알아보자.
@@ -245,6 +253,8 @@ MySQL에서 속성(Attribute)들이 가질 수 있는 자료형(Data Type)에 �
 <p align="center">   <img src="img/mysqldatatypes1.jpg" alt="mysql" style="width: 70%;"> </p>
 
 <p align='center'>https://www.mysqltutorial.org/mysql-basics/mysql-data-types</p>
+
+<br>
 
 MySQL에서는 대략적으로 다음과 같이 데이터를 분류할 수 있다. 
 
@@ -279,6 +289,8 @@ MySQL에서는 대략적으로 다음과 같이 데이터를 분류할 수 있�
 > Data Type의 경우 DBMS간에 사용하는 명칭이 다를 수 있다. 가령 MySQL의 경우 ```DECIMAL```과 ```NUMERIC```을 동일하게 사용한다.
 
 <br>
+
+---
 
 ### 2-3. 테이블 생성, Constraint 적용
 
@@ -353,6 +365,8 @@ CREATE TABLE TEST (
 * 제약을 위반하는 경우 ```CHECK constraint 'age_over_19' is violated```
 * 제약 이름을 생략해서 사용하는 경우  ```CHECK constraint 'test_chk_1' is violated``` 처럼 이름이 직관적이지 않아서 위반한 제약을 파악하기가 상대적으로 어렵다
 
+<br>
+
 > 참고로 ```SHOW CREATE TABLE table_name;```을 통해서 ```table_name```이라는 테이블의 여러가지 정보를 확인할 수 있다.
 
 <br>
@@ -418,6 +432,8 @@ ON DELETE SET NULL; -- 참조값이 삭제되면 NULL로 변경
 > 추가로  테이블 삭제는 ```DROP TABLE table_name;```
 
 <br>
+
+---
 
 ### 2-4. 테이블에 데이터 추가 / 수정 / 삭제
 
@@ -529,6 +545,8 @@ INSERT INTO WORKS_ON VALUES
 
 <br>
 
+---
+
 #### 2-4-2. 수정(```UPDATE```)
 
 테이블의 데이터를 수정해보자. 먼저 ```EMPLOYEE``` 테이블의 ```dept_id```의 ```null```값을 업데이트 해보자.
@@ -611,6 +629,8 @@ WHERE EMPLOYEE.id = WORKS_ON.empl_id and proj_id = 2002;
 
 <br>
 
+---
+
 #### 2-4-3. 삭제(```DELETE```)
 
 테이블의 데이터를 삭제해보자. ```NICOLE```이라는 이름의 사원이 퇴사하는 상황이다. 이 경우 ```EMPLOYEE``` 테이블에서 ```NICOLE```을 삭제해야한다. 또한 ```NICOLE```은 프로젝트 2001과 2003에 참여하고 있다.
@@ -637,6 +657,8 @@ DELETE FROM WORKS_ON WHERE empl_id = 2 AND proj_id <> 2001;
 * ```<>```는 ```!=``` 으로 대체 가능하다 (```<>```는 not equal to 로 생각하면 편하다)
 
 <br>
+
+---
 
 ### 2-5. 데이터 조회 (```SELECT```)
 
@@ -899,7 +921,9 @@ WHERE (dept_id, sex) = (
 
 <br>
 
-#### 3-1-2. ```IN```, ```EXISTS```
+---
+
+#### 3-1-1. ```IN```, ```EXISTS```
 
 이번에는 ```id```가 2인 임직원과 같은 프로젝트에 참여한 임직원들의 ```id```를 조회 해보자. 
 
@@ -1031,7 +1055,9 @@ WHERE NOT EXISTS ( -- 2000년생이 하나라도 없는 경우 TRUE 반환되면
 
 <br>
 
-#### 3-1-3. ```ANY```
+---
+
+#### 3-1-2. ```ANY```
 
 이번에는 ```ANY```라는 키워드를 사용해서 리더보다 높은 연봉을 받는 부서원을 가진 ```leader_id```, ```name```, ```salary``` 그리고 부서명(```DEPARTMENT(name)```)을 조회하자.
 
@@ -1083,7 +1109,9 @@ WHERE d.leader_id = e.id AND e.salary < ANY (
 
 <br>
 
-#### 3-1-4. ```ALL```
+---
+
+#### 3-1-3. ```ALL```
 
 이번에는 ```ALL```이라는 키워드를 사용해서 ```id```가 2인 임직원과 한번도 같은 프로젝트에 참여하지 못한 임직원들의 ```id```, ```name```, ```position```을 조회하자.
 
@@ -1110,6 +1138,8 @@ WHERE e.id = w.empl_id AND w.proj_id != ALL ( -- w.proj.id 가 그 어떤과도 
 * ```v {비교 연산자} ALL (subquery)``` : subquery가 반환한 결과들과 ```v```와의 비교 연산이 모두 ```TRUE```라면 ```TRUE```반환 
 
 <br>
+
+---
 
 ### 3-2. ```NULL```과의 비교 연산, Three-valued logic
 
@@ -1146,6 +1176,8 @@ SQL에서 ```NULL```과 비교연산을 하게 되면 결과는 ```UNKWOWN```이
 
 <br>
 
+---
+
 ### 3-3. 조인 (```JOIN```)
 
 ```JOIN```에 대해서 알아보자. 
@@ -1153,6 +1185,8 @@ SQL에서 ```NULL```과 비교연산을 하게 되면 결과는 ```UNKWOWN```이
 > ```JOIN```은 두 개 이상의 테이블들에 있는 데이터를 한 번에 조회하는 것이다. 쉽게 말해서 여러가지 테이블로 부터 공통의 attribute를 통해서 테이블들을 특정 기준과 조건으로 합치는 것으로 생각하면 편하다.
 >
 > 여러가지 종류의 ```JOIN```이 존재한다. 
+
+<br>
 
 #### 3-3-1. Implicit ```JOIN``` vs Explicit ```JOIN```
 
@@ -1187,6 +1221,8 @@ WHERE e.id = 1;
 * Explicit ```JOIN```의 사용을 권장한다 
 
 <br>
+
+---
 
 #### 3-3-2. ```INNER JOIN```
 
@@ -1228,6 +1264,8 @@ FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.id; -- e.dept_id와 d.i
 * ```JOIN``` condition에서 ```null``` 값을 가지는 튜플은 result 테이블에 포함되지 못한다
 
 <br>
+
+---
 
 #### 3-3-3. ```OUTER JOIN```
 
@@ -1288,9 +1326,7 @@ FROM EMPLOYEE e RIGHT JOIN DEPARTMENT d ON e.dept_id = d.id; -- RIGHT는 DEPARTM
 
 <br>
 
-
-
-<br>
+---
 
 #### 3-3-4. ```USING```
 
@@ -1330,6 +1366,8 @@ FROM EMPLOYEE e INNER JOIN DEPARTMENT d USING (dept_id); -- 중복으로 사용�
 * 결과 테이블에서 해당 attribute는 한번만 표시 된다
 
 <br>
+
+---
 
 #### 3-3-5. ```NATURAL JOIN```
 
@@ -1415,6 +1453,8 @@ FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.dept_id AND e.name = d.
 
 <br>
 
+---
+
 #### 3-3-6. ```CROSS JOIN```
 
 ```CROSS JOIN```에 대해서 알아보자.
@@ -1453,6 +1493,8 @@ FROM EMPLOYEE e CROSS JOIN DEPARTMENT d;
 > * 마찬가지로 ```INNER JOIN```이 ```ON``` 또는 ```USING``` 없이 사용되면 ```CROSS JOIN```으로 동작한다.
 
 <br>
+
+---
 
 ### 3-4. ```ORDER BY```
 
@@ -1538,6 +1580,8 @@ id|name    |birth_date|sex|POSITION |salary   |dept_id|
 
 <br>
 
+---
+
 ### 3-5. Aggregate Function
 
 Aggregate Function에 대해서 알아보자. 
@@ -1595,6 +1639,8 @@ WHERE w.proj_id = 2002;
 
 <br>
 
+---
+
 ### 3-6. ```GROUP BY```
 
 ```GROUP BY```를 이용해서 그룹별로 묶어서 집계하는 방법에 대해 알아보자. 
@@ -1626,6 +1672,8 @@ GROUP BY w.proj_id; -- 기존의 WHERE절에 GROUP BY를 사용해서 w.proj_id 
 
 <br>
 
+---
+
 ### 3-7. ```HAVING```
 
 ```HAVING```에 대해서 알아보자.
@@ -1633,6 +1681,8 @@ GROUP BY w.proj_id; -- 기존의 WHERE절에 GROUP BY를 사용해서 w.proj_id 
 > ```HAVING```은 ```GROUP BY```와 함께 사용해서, 집계 함수(Aggregate Function)의 결과값을 바탕으로 그룹을 필터링하고 싶을 때 사용한다.
 >
 > * ```HAVING``` 절에 필터링할 컨디션을 명시한다
+
+<br>
 
 프로젝트 참여 인원이 5명 이상인 프로젝트들에 대해서 각 프로젝트에 참여한 임직원 수, 최대 ```salary```, 최소 ```salary```, 평균 ```salary```를 집계해보자. 이 말은 이전에 ```GROUP BY```로 그룹핑해서 나온 결과를 기준으로  ```참여인원 >= 5```인 조건으로 필터링해서 결과를 확인하겠다는 말과 일치한다. 
 
@@ -1656,6 +1706,8 @@ HAVING COUNT(*) >= 5; -- 참여인원이 5명 이상인 경우를 조건으로 �
 ```
 
 <br>
+
+---
 
 ### 3-8. 조회, 집계 예시
 
@@ -1719,6 +1771,8 @@ ORDER BY empl_count DESC;
 
 <br>
 
+---
+
 #### 3-8-2. ```GROUP BY``` + ```HAVING``` + subquery
 
 이번에는 회사 전체의 평균 연봉보다 평균 연봉이 적은 부서들의 평균 연봉을 조회하자.
@@ -1744,6 +1798,8 @@ HAVING avg_salary < ( -- 각 부서별로 평균 연봉을 구함 → 부서의 
 ```
 
 <br>
+
+---
 
 #### 3-8-3. ```GROUP BY``` + ```ORDER BY``` + ```HAVING``` + subquery
 
@@ -1864,6 +1920,8 @@ VALUES (id_generator(), 'MINJAE', '1996-11-15', 'M', 'PO', 100000000, 1005);
 
 <br>
 
+---
+
 ### 4-2. Example 2
 
 부서의 ```id```를 파라미터로 받고 해당 부서의 평균 연봉을 알려주는 함수를 작성해보자. (만약 ```DEPARTMENT```의 ```id```가 ```dept_id```라면 다시 ```id```를 사용하도록 스키마 변경)
@@ -1909,6 +1967,8 @@ FROM DEPARTMENT;
 ```
 
 <br>
+
+---
 
 ### 4-3. Example 3
 
@@ -1959,6 +2019,8 @@ FROM EMPLOYEE;
 > * 에러 핸들링, 에러 발생 등의 작업
 
 <br>
+
+---
 
 ### 4-4. 등록된 Stored Function 파악하기
 
@@ -2053,7 +2115,7 @@ SELECT @result;
 * ```IN``` : 값을 전달(입력) 받기 위한 파라미터
 * ```OUT``` : 리턴값을 저장하기 위해 사용하는 파라미터
 
-<br>
+<br>---
 
 ### 5-2. Example 2
 
@@ -2086,6 +2148,8 @@ SELECT @a, @b;
 ```
 
 <br>
+
+---
 
 ### 5-3. Example 3
 
@@ -2121,6 +2185,8 @@ CALL get_dept_avg_salary(); -- 리턴값이 없고, 함수를 그냥 호출하�
 ```
 
 <br>
+
+---
 
 ### 5-4. Example 4
 
@@ -2204,6 +2270,8 @@ CALL change_nickname(1, 'dataengineer95');
 
 <br>
 
+---
+
 ### 5-5. Stored Procedure vs Stored Function
 
 Stored Procedure와 Stored Function을 비교해보자. 
@@ -2222,6 +2290,8 @@ Stored Procedure와 Stored Function을 비교해보자.
 >    * SQL statement에서의 호출 가능
 >    * 트랜잭션은 대부분 사용 불가 (Oracle의 경우 가능)
 >    * 주로 계산, 유틸용으로 사용
+
+<br>
 
 프로시져와 함수의 차이는 위에서 언급한 내용 이외에도 여러가지 차이가 존재하고, 각 RDBMS 마다도 조금씩 다르게 차이난다. 
 
@@ -2289,6 +2359,8 @@ mysql> select * from nickname_logs;
   * ```INSERT```된 튜플
   * ```UPDATE```된 후의 튜플
 
+<br>
+
 위에서 살펴본 것 처럼 ```TRIGGER```는 데이터의 변경 이력(history) 또는 로그(log)를 기록하는데 사용될 수 있다. 
 
 > MySQL에서는 불가능하지만 PostgreSQL이나 다른 RDBMS에서는 동시에 여러 이벤트를 감지하는 트리거를 구현할 수도 있다.
@@ -2329,6 +2401,8 @@ SQL의 인덱스(Index)에 대해 알아보자.
 
 * 총 300024의 row 존재
 * ```PRIMARY KEY``` : ```emp_no```
+
+<br>
 
 여기서 ```first_name```이 ```'Leen'```인 임직원을 조회하는 경우와, ```birth_date```가 ```'1956-11-13'```이고 ```last_name```이 ```'Puoti'```인 임직원을 조회하는 경우가 있다고 하자.
 
@@ -2447,6 +2521,8 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 
 <br>
 
+---
+
 ### 7-2. 인덱스 동작 방식
 
 > B-tree 기반의 인덱스가 동작하는 방식을 아주 간략화해서 설명합니다. 세세한 내용은  B-tree에서 다룰 예정.
@@ -2459,6 +2535,8 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 
 * ```INDEX(a)```는 ```a```에 대해 정렬이 되어 있는 형태로 저장된다
 * pointer는 원본 테이블에 있는 튜플(row)를 가리키는 참조 데이터가 들어가 있다 (row identifier로 표현하기도 한다)
+
+<br>
 
 여기서 ```WHERE a = 7;```을 통해서 ```a```가 7인 튜플을 찾는 상황이라고 생각해보자. 이 때 해당 튜플을 찾는 과정은 다음과 같다.
 
@@ -2483,6 +2561,8 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 
 * 정렬 순서:  ```a```먼저 정렬 후 ```b```정렬 (composite index를 만들때 attribute의 sequence가 중요하다)
 
+<br>
+
 이전과는 달리, ```a```에 대한 binary search를 진행해서 ```a = 7```인 범위를 구하고, 그 내에서 다시 ```b```에 대해 binary search를 진행해서 조건에 알맞는 튜플을 선택한다. 
 
 <br>
@@ -2490,6 +2570,8 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 이 처럼 인덱스를 걸어주는 방식에 따라 query의 성능이 좋아질 수도 있고, 안 좋아질 수 도 있다. 
 
 <br>
+
+---
 
 ### 7-3. ```INDEX```를 확인하는 방법
 
@@ -2523,6 +2605,8 @@ SELECT * FROM employees IGNORE INDEX (제외할 인덱스 명) WHERE first_name 
 
 <br>
 
+---
+
 ### 7-4. 주의 사항
 
 지금까지 알아본 내용만으로 생각하면 인덱스(INDEX)를 만들면 쿼리의 성능이 올라가기 때문에 "인덱스를 마구잡이로 생성하는게 좋지 않을까?"라는 생각이 들 수도 있지만, 인덱스 생성에는 비용이 따른다. 
@@ -2533,9 +2617,13 @@ SELECT * FROM employees IGNORE INDEX (제외할 인덱스 명) WHERE first_name 
 >    * 이 경우 인덱스에 대한 write 수행을 위한 추가적인 overhead가 발생할 가능성이 높다
 > 2. 인덱스를 위한 추가적인 저장 공간이 필요하다
 
+<br>
+
 위에서 언급한 내용에 의해서, 불필요한 인덱스를 생성하는 것은 권장되지 않는다.
 
 <br>
+
+---
 
 ### 7-5. Covering Index
 
@@ -2547,6 +2635,8 @@ Covering Index에 대해 알아보자. 위의 [인덱스 동작 방식]()에서 
 * Covering Index에 해당하면 조회 성능이 더 빠르다 
 
 <br>
+
+---
 
 ### 7-6. Hash Index
 

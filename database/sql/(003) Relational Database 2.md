@@ -2,7 +2,6 @@
 >
 > "[한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)"와 "[인프런 - 쉬운코드 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)"을 많이 참고 했습니다.
 >
-> "[인프런 - 쉬운코드 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)" << 데이터베이스 강의 추천!
 
 ---
 
@@ -60,6 +59,8 @@
 > 트랜잭션(Transaction)은 업무 처리를 위한 논리적인 작업 단위다. 작업의 논리적 단위가 단일 연산이 아닐 수 있다. 즉, 하나의 트랜잭션이 두 개 이상의 업데이트 연산일 수 있다. 은행의 "계좌이체" 트랜잭션을 예로 들면, 하나의 예금 계좌에서 인출하여 다른 예금 계좌에 입금하는 일련의 작업을 하나의 단위로 수행해야 한다. 데이터를 일관성 있게 처리하려면 트랜잭션에 속한 두 개 이상의 업데이트 연산을 동시에 실행할 수 있어야 하는데, 불행히도 이는 불가능한 일이다. 따라서 DBMS는 차선책을 사용한다. 즉, 여러 개의 업데이트 연산이 하나의 작업처럼 전부 처리되거나 아예 하나도 처리되지 않도록(All or Nothing) 동시 실행을 구현한다.
 >
 
+<br>
+
 위에서 언급한 "계좌이체" 예시를 통해 더 자세히 설명하겠다.
 
 ```A```가 ```B```에게 20만원을 이체해주는 상황을 다음 그림을 통해 살펴보자.
@@ -67,6 +68,8 @@
 <p align="center">   <img src="img/transaction2.png" alt="mysql" style="width: 80%;"> </p>
 
 여기서 이체가 성공하기 위해서는 ```A```의 ```balance```에서 20만원 차감을 ```UPDATE```하고, ```B```의 ```balance```에서 20만원 증감을 ```UPDATE```하는 일련의 과정이 전부 성공을 해야한다. 어느 하나의 작업이라도 실패하는 경우, ```A```나 ```B```의 ```balance```에 알맞는 금액이 남지 않기 때문이다. 결국 이체라는 작업은 두 작업 모두 정상 처리 돼야만 성공하는 단일 작업으로 생각할 수 있다. 이 때 이 단일 작업을 Transaction(트랜잭션)이라고 부른다.
+
+<br>
 
 Transaction을 간단히 설명하면 다음과 같다.
 
@@ -182,6 +185,8 @@ mysql> SELECT * FROM account;
 
 <br>
 
+---
+
 ### 1-2. ACID
 
 **A**tomicity **C**onsistency **I**solation **D**urability를 의미하는 **ACID**에 대해 알아보자. 
@@ -202,6 +207,8 @@ mysql> SELECT * FROM account;
 
 <br>
 
+---
+
 #### 1-2-2. Consistency(정합성, 일관성)
 
 이번에 ```A```가 ```B```에게 추가로 100만원을 이체하는 상황이라고 가정하자. 이 경우에는 ```balance```가 0 미만이 될 수 없다는 제약이 있기 때문에 DB가 inconsistent 상태가 된다. 이런 경우 ```Rollback```을 수행해서 다시 consistent 상태로 되돌려야한다. 
@@ -213,6 +220,8 @@ mysql> SELECT * FROM account;
 - 어플리케이션 관점에서 Transaction이 consistent하게 동작하는지 개발자가 확인 해야한다 
 
 <br>
+
+---
 
 #### 1-2-3. Isolation(격리성)
 
@@ -230,6 +239,8 @@ mysql> SELECT * FROM account;
 * 예) 온라인 거래에서 재고 물품이나 계좌 잔액에 대한 테이블을 업데이트하는 과정에서 입금이나 재고 차감에 대한 내용을 다른데서 확인이 가능하면 안됨
 
 <br>
+
+---
 
 #### 1-2-4. Durability(영존성)
 
@@ -250,6 +261,8 @@ Durability가 의미하는 것은 다음과 같다.
 
 > DBMS는 다수의 사용자를 가정한다. 따라서 동시에 작동하는 다중 트랜잭션의 상호 간섭 작용에서 데이터베이스를 보호할 수 있어야 하며, 이를 동시성 제어 (Concurrency Control)라고 한다. 동시성을 제어할 수 있도록 하기 위해 모든 DBMS가 공통적으로 Lock 기능을 제공한다. 여러 사용자가 데이터를 동시에 액세스하는 것처럼 보이지만 내부적으로는 하나씩 실행되도록 트랜잭션을 직렬화(Serialize)하는 것이다. 또한 ```SET TRANSACTION``` 명령어를 이용해 트랜잭션 Isolation level을 조정할 수 있는 기능도 제공한다. DBMS마다 구현 방식이 다르지만 SQL Server를 예로 들면, 기본 트랜잭션 Isolation level인 ```Read Committed``` 상태에선 레코드를 읽고 다음 레코드로 이동하자마자 Shared Lock을 해제하지만, Repeatable Read로 올리면 트랜잭션을 ```Commit```될 때까지 Shared Lock을 유지한다.
 >
+
+<br>
 
 위에서 언급하는 Isolation Level과 Lock에 대한 내용은 추후에 다룰 예정이다. 일단은 동시성 제어가 무엇인지 설명하기 위해, Schedule과 Serializability에 대한 내용부터 다룰 것이다.
 
@@ -294,6 +307,8 @@ Durability가 의미하는 것은 다음과 같다.
 
 * 예) ```Trasnsaction1```에 대한 ```A```의 잔액 ```read``` : ```read(A_balance)``` → ```r1(A)```
 
+<br>
+
 이런식으로 일련의 operation들을 나열해서 다음과 같이 표현할 수 있다. 
 
 * Case 1 : ```r1(A) w1(A) r1(B) w1(B) c1 r2(A) w2(B) c2``` 
@@ -306,6 +321,8 @@ Durability가 의미하는 것은 다음과 같다.
 일련의 operation을 수행하는 방법들은 위의 4가지 케이스 말고도 더 다양하게 존재할 수 있다. 이 operation들을 수행하는 순서를 ```Schedule```이라고 한다. 이 떄 각 ```Transaction```내의 operation들에 대한 순서는 바뀌지 않는다.
 
 * 예) ```Transaction2```의 ```r2(B) w2(B) c2``` 라는 순서 자체는 변하지 않는다
+
+<br>
 
 다음으로 ```Schedule```이 짜여진 형태에 따라 어떻게 분류되는지 알아보자. 
 
@@ -322,6 +339,8 @@ Durability가 의미하는 것은 다음과 같다.
 
 <br>
 
+---
+
 #### 2-1-2. Serial Schedule
 
  <p align="center">   <img src="img/serial2.png" alt="mysql" style="width: 70%;"> </p>
@@ -332,6 +351,8 @@ Durability가 의미하는 것은 다음과 같다.
 
 <br>
 
+---
+
 #### 2-1-2. Non-Serial Schedule
 
  <p align="center">   <img src="img/nonserial1.png" alt="mysql" style="width: 70%;"> </p>
@@ -340,6 +361,8 @@ Durability가 의미하는 것은 다음과 같다.
 * 우리가 앞에서 봤던 Schedule 4 처럼 ```Transaction```이 어떤 형태로 겹쳐져서 실행되나에 따라 이상한 결과(Lost Update)가 나올 수 있다.
 
 <br>
+
+---
 
 ### 2-2. Conflict
 
@@ -390,6 +413,8 @@ Durability가 의미하는 것은 다음과 같다.
 
 <br>
 
+---
+
 ### 2-3. Conflict Serializability Protocol
 
 위에서도 언급했던것 처럼 우리의 목표는```Non Serial Schedule```을 실행할 수 있으면서 이상한 결과는 나오지 않도록 하고 싶었고. 이를 달성하기 위해서 ```Serial Schedule```과 동일한 ```Non Serial Schedule```을 구현하고 싶어했다.
@@ -401,6 +426,8 @@ Durability가 의미하는 것은 다음과 같다.
 > 여러 ```Transaction```을 동시에 실행해도 ```schedule```이 ```conflict serializable```하도록 보장하는 프로토콜(Protocol)을 사용하는 것이다. 이런 프로토콜을 구현하기 위해 각 RDBMS는 Isolation Level, Locking, Concurrency control mechanisms, Conflict detection, etc.. 여러가지 전략들을 사용할 수 있다.
 
 <br>
+
+---
 
 ### 2-4. Recoverability
 
@@ -416,11 +443,15 @@ Recoverability에 대해서 알아보자.
 
 * 위의 경우 ```Commit```된 ```Transaction1```에서 ```Rollback```된 ```Transaction2```에서 ```write``` 했던 230만원을 ```read``` 했다. 즉 유효하지 않은 데이터를 읽어서 작업을 한 것이다.
 
+<br>
+
 ```Schedule```내에서 ```Commit```된 ```Transaction```이 ```Rollback```된 ```Transaction```이 ```write```했던 데이터를 읽었을 경우 이런 ```schedule```을 **Unrecoverable Schedule**이라고 부른다.
 
 **Unrecoverable Schedule**의 경우, ```Rollback```을 해도 이전 상태로 회복이 불가능하기 때문에 이런 ```schedule```은 DBMS가 허용하면 안된다.
 
 <br>
+
+---
 
 #### 2-4-2. Recoverable Schedule
 
@@ -431,11 +462,15 @@ Recoverability에 대해서 알아보자.
 * ```Transaction1```은 ```Transaction2```를 의존하기 떄문에 의존성이 있는 트랜잭션이 먼저 ```Commit``` 되면 안됨
 * ```T2```를 ```Rollback```하는 경우 ```T1```도 ```Rollback```하면 됨
 
+<br>
+
 여기서 **Recoverable Schedule**은 ```schedule``` 내에서 그 어떤 ```Transaction```도 자신이 읽은 데이터를 ```write```한 ```Transaction```이 먼저 ```Commit/Rollback``` 하기 전까지는 ```Commit```하지 않는 ```schedule```을 의미한다.
 
 이런 ```schedule```은 ```Rollback```을 할 때 이전 상태로 온전히 돌아갈 수 있기 때문에 DBMS는 **Recoverable Schedule**만 허용해야 한다.
 
 <br>
+
+---
 
 #### 2-4-3. Cascadeless Schedule
 
@@ -452,6 +487,8 @@ Recoverability에 대해서 알아보자.
 이 처럼 ```schedule``` 내에서 어떠한 ```Transaction```도 ```Commit``` 되지 않은 ```Transaction```들이 ```write```한 데이터는 읽지 않았을 경우, **Cascadless Schedule**이라고 한다. 
 
 <br>
+
+---
 
 #### 2-4-4. Strict Schedule
 
@@ -491,6 +528,8 @@ Recoverability에 대해서 알아보자.
 
 > 다른 트랜잭션에 의해 수정됐지만 아직 ```Commit```되지 않은 데이터를 읽는 것을 말한다. 변경 후 아직 ```Commit```되지 않은 값을 읽었는데 변경을 가한 ```Transaction```이 최종적으로 ```Rollback```된다면 그 값을 읽은 ```Transaction```은 Incosistent 상태에 놓이게 된다.
 
+<br>
+
 고속 버스 좌석 예약 시스템이 있다고 하자. ```A```라는 사람은 좌석을 예약할 것이고, ```B```는 좌석이 몇개 남았는지 확인하는 상황이다. 기존 좌석(seats)은 5개가 있다고 하자. 여기서 ```A```가 좌석 예약을 하는 ```Transaction1```이 실행되서 ```seats```(=5)를 ```read```하고 ```seats```를 4로 ```write```하는 operation을 수행 할 것이다. 이후 ```Transaction2```에서 ```Transaction1```에서 적용한 변화 (```seats = 4```)를 ```read```했는데 ```Transaction1```이 ```Rollback```하는 상황이 닥친 것이다. 그러면 ```seats```는 다시 기존의 5개로 ```Rollback```이 되지만 문제는 ```B```가 이미 ```seats```를 4개로 읽었다는 것이다. 이게 바로 **Dirty Read** 상황이다. (다음 그림으로 확인하면 더 이해가 쉬울 것이다)
 
  <p align="center">   <img src="img/dirtyread1.png" alt="mysql" style="width: 80%;"> </p>
@@ -501,9 +540,13 @@ Recoverability에 대해서 알아보자.
 
 <br>
 
+---
+
 ### 3-2. Non-repeatable Read
 
 > 한 ```Transaction``` 내에서 같은 쿼리를 두 번 수행했는데, 그 사이에 다른  ```Transaction```이 값을 수정 또는 삭제하는 바람에 두 쿼리 결과가 다르게 나타나는 현상을 말한다.
+
+<br>
 
 다음 그림을 살펴보자.
 
@@ -513,9 +556,13 @@ Isolation은 여러 ```Transaction```들이 동시에 실행될 때도 혼자 �
 
 <br>
 
+---
+
 ### 3-3. Phantom Read
 
 > 한 트랜잭션 내에서 같은 쿼리를 두 번 수행했는데, 첫 번째 쿼리에서 없던 유령(Phantom) 튜플(Tuple)이 두 번째 쿼리에서 나타나는 현상을 말한다.
+
+<br>
 
 다음 그림을 살펴보자.
 
@@ -524,6 +571,8 @@ Isolation은 여러 ```Transaction```들이 동시에 실행될 때도 혼자 �
 위의 그림을 살펴보면, ```Transaction2```에서 ```tuple2```의 ```v```값을 수정하는 것으로 인해 ```Transaction1```의 두 번째 ```read```에서 기존에 읽지 않았던 튜플을 읽은 것 (없던 데이터가 생긴 것)을 확인 할 수 있다. 이런 현상을 **Phantom Read**라고 부른다.
 
 <br>
+
+---
 
 ### 3-4. Isolation Level (SQL standard)
 
@@ -555,6 +604,8 @@ SQL 표준에서 정의한 3가지 이상 현상만으로 모든 이상현상을
 
 <br>
 
+---
+
 ### 3-5. Dirty Write
 
 > Dirty Read와 비슷하다.
@@ -568,6 +619,8 @@ SQL 표준에서 정의한 3가지 이상 현상만으로 모든 이상현상을
 위의 경우들 처럼, ```Commit```되지 않은 데이터 위에 ```write```를 하는 것을 **Dirty Write**라고 부른다.
 
 <br>
+
+---
 
 ### 3-6. Lost Update
 
@@ -587,6 +640,8 @@ SQL 표준에서 정의한 3가지 이상 현상만으로 모든 이상현상을
 > 이외에도 여러 이상 현상이 존재하기 때문에 관련 Isolation Level이나 처리방법에 대해서도 한번 찾아보는 것이 좋을 것 같다.
 
 <br>
+
+---
 
 ### 3-7. Snapshot Isolation
 
@@ -623,6 +678,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 <br>
 
+---
+
 ### 4-2. Exclusive Lock (배타적 Lock)
 
 > 배타적(Exclusive) Lock은 데이터를 변경하고자 할 때 사용되며, 트랜잭션이 완료될 때까지 유지된다. 말 그대로 배타적이기 때문에 그 Lock이 해제될 때까지 다른 트랜잭션은 해당 데이터(리소스)에 접근할 수 없다. 변경이 불가능할 뿐만 아니라 읽기도 불가능하다. 반대로, 다른 트랜잭션에 의해 Lock이 설정된 데이터(리소스)는, 그것이 공유 Lock이든 배타적 Lock이든, 배타적 Lock을 동시에 설정할 수 없다.
@@ -634,6 +691,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 * 다른 ```Transaction```이 같은 데이터를 ```read / write```하는 것을 허용하지 않는다
 
 <br>
+
+---
 
 ### 4-3. Shared Lock (공유 Lock)
 
@@ -654,6 +713,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 <br>
 
+---
+
 ### 4-3. 2PL (2-Phase Locking)
 
  <p align="center">   <img src="img/2pl1.png" alt="mysql" style="width: 85%;"> </p>
@@ -665,6 +726,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 이러한 **2PL**은 **serializability**를 보장한다. 그러나 2PL Protocol에서도 특정한 상황에서도 문제가 발생한다. 두 세션이 Lock을 설정한 데이터를 서로 액세스하려고 마주보는 문제인 **Deadlock**에 대해 알아보자.
 
 <br>
+
+---
 
 ### 4-4. Deadlock (교착상태)
 
@@ -678,6 +741,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 <br>
 
+---
+
 ### 4-5. Conservative 2PL
 
 예시를 통해 **Conservative 2PL**에 대해 알아보자.
@@ -690,6 +755,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 <br>
 
+---
+
 ### 4-6. Strict 2PL (S2PL)
 
 예시를 통해 **Strict 2PL**에 대해 알아보자.
@@ -701,6 +768,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 * Recoverability를 보장한다
 
 <br>
+
+---
 
 ### 4-7. Strong Strict 2PL(SS2PL)
 
@@ -716,7 +785,9 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 <br>
 
-### 4-7. 2PL의 한계
+---
+
+### 4-8. 2PL의 한계
 
 2PL방식의 경우 Read Lock-Read Lock를 제외한 경우에는 호환이 되지 않기 때문에 전체 처리량(throughput)이 좋지 않다. (Read-Read를 제외하고는 나머지의 경우에 대해서 한쪽이 블락되는 상황)
 
@@ -751,8 +822,5 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 * [한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)
 * [인프런 쉬운코드 - 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)
 * [https://levelup.gitconnected.com/the-schedule-in-the-dbms-2d8c6f19720d](https://levelup.gitconnected.com/the-schedule-in-the-dbms-2d8c6f19720d)
-
-
-
 
 

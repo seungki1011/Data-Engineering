@@ -41,7 +41,7 @@
    * JPA
 8. [AOP](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#8-aop)
    * AOP 소개
-9. [요약](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#%EC%9A%94%EC%95%BD)
+9. [전체 요약](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#%EC%9A%94%EC%95%BD)
 10. [느낀점](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#%EB%8A%90%EB%82%80-%EC%A0%90)
 
 ---
@@ -1545,7 +1545,7 @@ AOP의 동작 및 동작 원리는 나중의 포스트에서 다룰 예정이다
 
 ---
 
-## 요약 
+## 전체 요약 
 
 * Spring은 Java 개발 편의성을 위한 도구들을 제공하는 프레임워크
 * Spring Boot는 스프링 프로젝트를 쉽게 설정하고 생성하도록 도와주는 스프링 프로젝트 중 하나

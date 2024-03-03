@@ -1048,10 +1048,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 ## P.S
 
 * 정규화 파트에서 [유튜브 쉬운코드 - DB 정규화](https://www.youtube.com/watch?v=EdkjkifH-m8&list=PLcXyemr8ZeoREWGhhZi5FZs6cvymjIBVe&index=23)를 많이 참고
-* **SQL 전문가 가이드**는 별로 친절하지 않은 것 같다. 보조 이론서가 필요할 듯
-* 이후의 내용(Lock, Transaction, Concurrency Control, etc..)은 [RDBMS II](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003) Relational Database 2.md)에서 다룰 듯
-
-
+* **SQL 전문가 가이드**는 별로 친절하지 않은 것 같다(보조 이론서가 필요할 듯)
+* 이후의 내용(Lock, Transaction, Concurrency Control, 등..)은 [RDBMS II](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md)에서 다룰 듯
 
 <br>
 

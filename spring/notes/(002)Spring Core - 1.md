@@ -76,7 +76,7 @@
    * Web Scope
      * 웹 스코프 소개
      * Request Scope
-   * 
+10. 전체 요약
 
 ---
 
@@ -2793,7 +2793,7 @@ close: http://123.456.789.1
 ```
 
 * `prototypeBeanProvider.getObject()` 을 통해서 항상 새로운 프로토타입 빈이 생성된다
-* `ObjectProvider` 의 `getObject()` 를 호출하면 내부에서는 스프링 컨테이너를 통해 해당 빈을 찾아서 반환 한다 (DL)
+* `ObjectProvider` 의 `getObject()` 를 호출하면 내부에서는 스프링 컨테이너를 통해 해당 빈을 찾아서 반환한다 (DL)
 * `ObjectProvider` 는 지금 딱 필요한 DL 정도의 기능만 제공한다
 
 <br>
@@ -2898,16 +2898,155 @@ public class MyLogger {
 
 <br>
 
+```web/LogDemoController```
 
+```java
+@Controller
+// @RequiredArgsConstructor // Lombok 사용 안하는 중
+public class LogDemoController {
 
+    private final LogDemoService logDemoService;
+    private final MyLogger myLogger;
 
+    public LogDemoController(LogDemoService logDemoService, MyLogger myLogger) {
+        this.logDemoService = logDemoService;
+        this.myLogger = myLogger;
+    }
 
+    @RequestMapping("log-demo")
+    @ResponseBody // view 없이 문자 그대로 응답으로 보낼 수 있음
+    // 이 부분의 로직은 보통 컨트롤러 보다 공통 처리가 가능한 스프링 인터셉터나 서블릿 필터같은 곳을 활용하는 것을 권장
+    public String logDemo(HttpServletRequest request) { // 요청 URL을 받음
+        String requestURL = request.getRequestURL().toString();
+        myLogger.setRequestURL(requestURL);
 
+        myLogger.log("controller test");
+        logDemoService.logic("testId");
+        return "OK";
+    }
+}
+```
 
+* ```MyLogger```가 작동하는지 확인하는 테스트용 컨트롤러
+* ```HttpServletRequest```를 통해서 요청 URL을 받음 (```http://localhost:8080/log-demo```)
+* 받은 URL 값을 ```myLogger```에 저장
+* 컨트롤러에서 "controller test"라는 로그를 남긴다
 
+<br>
 
+```web/LogDemoService```
 
+```java
+@Service
+// @RequiredArgsConstructor
+public class LogDemoService {
 
+    private final MyLogger myLogger;
 
+    public LogDemoService(MyLogger myLogger) {
+        this.myLogger = myLogger;
+    }
 
- 
+    public void logic(String id) {
+        myLogger.log("service id = " + id);
+    }
+}
+```
+
+<br>
+
+스프링 애플리케이션을 실행 시켜보면 오류가 발생한다. 그 이유는 스프링 애플리케이션을 실행하는 시점에서 싱글톤 빈은 생성해서 주입이 가능하지만, request 스코프의 빈은 아직 생성되지 않았기 때문이다. (이 빈은 HTTP 요청이 들어와야 생성이 가능하다!)
+
+이 문제를 해결하기 위해서 이전에 학습한 Provider를 활용할 수 있다.
+
+앞서 배운 ```ObjectProvider```를 사용해보자. 
+
+<br>
+
+```web/LogDemoController```
+
+```java
+@Controller
+public class LogDemoController {
+
+    private final LogDemoService logDemoService;
+    private final ObjectProvider<MyLogger> myLoggerProvider; // ObjectProvider 사용 
+
+    public LogDemoController(LogDemoService logDemoService, ObjectProvider<MyLogger> myLoggerProvider) {
+        this.logDemoService = logDemoService;
+        this.myLoggerProvider = myLoggerProvider;
+    }
+
+    @RequestMapping("log-demo")
+    @ResponseBody
+    public String logDemo(HttpServletRequest request) {
+        String requestURL = request.getRequestURL().toString();
+        MyLogger myLogger = myLoggerProvider.getObject(); // 스프링 컨테이너내에서 해당 빈을 찾아서 반환 (DL)
+        myLogger.setRequestURL(requestURL);
+
+        myLogger.log("controller test");
+        logDemoService.logic("testId");
+        return "OK";
+    }
+}
+```
+
+<br>
+
+```web/LogDemoService```
+
+```java
+@Service
+public class LogDemoService {
+
+    private final ObjectProvider<MyLogger> myLoggerProvider;
+
+    public LogDemoService(ObjectProvider<MyLogger>  myLoggerProvider) {
+        this.myLoggerProvider = myLoggerProvider;
+    }
+
+    public void logic(String id) {
+        MyLogger myLogger =  myLoggerProvider.getObject();
+        myLogger.log("service id = " + id);
+    }
+}
+```
+
+* 이제 두번 요청을 해보면 아래와 같은 로그 결과를 확인할 수 있다
+
+```
+[811556ad-59df-4c99-92d4-ea1014018bd6] request scope bean created: de.springbasic1.common.MyLogger@5fbf6e92
+[811556ad-59df-4c99-92d4-ea1014018bd6] [http://localhost:8080/log-demo] (controller test)
+[811556ad-59df-4c99-92d4-ea1014018bd6] [http://localhost:8080/log-demo] (service id = testId)
+[811556ad-59df-4c99-92d4-ea1014018bd6] request scope bean closed: de.springbasic1.common.MyLogger@5fbf6e92
+[bc834e3b-b683-4e71-8489-1669dcd4dea0] request scope bean created: de.springbasic1.common.MyLogger@a551c14
+[bc834e3b-b683-4e71-8489-1669dcd4dea0] [http://localhost:8080/log-demo] (controller test)
+[bc834e3b-b683-4e71-8489-1669dcd4dea0] [http://localhost:8080/log-demo] (service id = testId)
+[bc834e3b-b683-4e71-8489-1669dcd4dea0] request scope bean closed: de.springbasic1.common.MyLogger@a551c14
+```
+
+* `ObjectProvider` 덕분에 `ObjectProvider.getObject()` 를 **호출하는 시점까지 request 스코프 빈의 생성을 지연 시킬 수 있다**
+* `ObjectProvider.getObject()`를 호출하는 시점에는 HTTP 요청이 진행중이르모 request 스코프 빈의 생성이 정상 처리된다
+
+<br>
+
+> Provider를 사용하지 않고 proxyMode를 사용하는 방법도 있다.
+>
+> CGLIB 라이브러리를 이용해서 내 클래스(```MyLogger```)를 상속받은 가짜 프록시 객체를 만들어서 주입해준다. 
+
+<br>
+
+---
+
+## 전체 요약
+
+* 순수히 자바의 다형성 만으로 OCP, DIP를 지키기 힘들다 → 스프링을 사용한다
+* 스프링을 통해 객체를 생성하고 의존관계를 연결해주는 역할을 해주는 DI 컨테이너를 도입 할 수 있다 → 의존관계 주입(DI)를 통해 OCP, DIP 등의 객체지향 설계 원칙을 지킬 수 있다
+* 싱글톤 패턴은 클래스의 인스턴스가 딱 1개 생성되는 디자인 패턴이다
+  * 모든 클라이언트가 공유해서 사용할 수 있는 글로벌 객체의 느낌으로 받아드리면 된다
+* 스프링은 설정 정보가 없어도 자동으로 스프링 빈을 등록하는 컴포넌트 스캔(component scan)이라는 기능을 제공한다
+* 컴포넌트 스캔을 사용하기 위해서는 ```@ComponentScan``` 애노테이션을 붙여주면 된다
+  * ```@Component```라는 애노테이션이 붙은 클래스들을 자동으로 전부 스프링 빈으로 등록해줌
+* ```@Autowired```는 자동으로 의존 관계(의존성)를 주입해준다
+* 스프링을 포함한 대부분의 DI 프레임워크는 생성자 주입을 권장한다
+  * 필요한 경우에 setter 주입을 사용한다

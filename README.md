@@ -34,7 +34,7 @@
 
 1. [자료주와 알고리즘(Data Structure & Algorithm)]()
 2. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)
-3. 네트워크(Network)
+3. 네트워크(Network)와 HTTP
 
 ---
 
@@ -64,3 +64,11 @@
 1. CI/CD 소개
 2. 깃헙 액션(Github Action)
 3. 젠킨스(Jenkins)
+
+---
+
+## Further Reading
+
+* 객체지향의 사실과 오해
+* Clean Coding
+* [Why we're leaving cloud](https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0)

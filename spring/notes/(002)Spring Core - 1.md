@@ -78,12 +78,7 @@
      * Request Scope
 10. [전체 요약](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(002)Spring%20Core%20-%201.md#%EC%A0%84%EC%B2%B4-%EC%9A%94%EC%95%BD)
 
----
 
-## Requirements
-
-* Java 17 or 21
-* Spring Boot 3.2.2
 
 ---
 

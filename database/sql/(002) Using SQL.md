@@ -65,7 +65,7 @@
 
 > 해당 ```MySQL ```설치와 연결은 MacOS 로컬 환경 위에서 진행되었습니다.
 
-### 1-1. MySQL 설치와 연결
+### 1.1. MySQL 설치와 연결
 
 * [MacOS 설치](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/macos-installation.html)
 * [MySQL 서버에 연결](https://dev.mysql.com/doc/refman/8.0/en/connecting.html)
@@ -76,7 +76,7 @@
 
 ---
 
-#### 1-1-1. CLI
+#### 1.1.1 CLI
 
 > CLI를 이용한 ```MySQL```. [여기서](https://dev.mysql.com/doc/refman/8.0/en/mysql-commands.html) 다양한 ```MySQL``` 명령어를 확인할 수 있다.
 
@@ -130,7 +130,7 @@ mysql --host=localhost --user=root --password
 
 ---
 
-#### 1-1-2. GUI
+#### 1.1.2 GUI
 
 > MySQL Workbench와 같은 GUI 툴의 사용. (DBeaver 같은 툴을 사용해도 무방하다.)
 >
@@ -181,7 +181,7 @@ Delete Connection으로 만들어뒀던 열결을 삭제하고 새로 만들어�
 
 <br>
 
-### 2-1. 데이터베이스 생성
+### 2.1. 데이터베이스 생성
 
 데이터베이스(스키마)를 생성해보자. 
 
@@ -242,7 +242,7 @@ DROP DATABASE test_company;
 
 ---
 
-### 2-2. Attribute Data Types
+### 2.2. Attribute Data Types
 
 MySQL에서 속성(Attribute)들이 가질 수 있는 자료형(Data Type)에 대해 알아보자.
 
@@ -292,7 +292,7 @@ MySQL에서는 대략적으로 다음과 같이 데이터를 분류할 수 있�
 
 ---
 
-### 2-3. 테이블 생성, Constraint 적용
+### 2.3. 테이블 생성, Constraint 적용
 
 이제 테이블에 대한 스키마를 대략적으로 정하고 테이블을 생성해보자.
 
@@ -435,13 +435,13 @@ ON DELETE SET NULL; -- 참조값이 삭제되면 NULL로 변경
 
 ---
 
-### 2-4. 테이블에 데이터 추가 / 수정 / 삭제
+### 2.4. 테이블에 데이터 추가 / 수정 / 삭제
 
 > 생성했던 테이블에 데이터를 추가 / 수정 / 삭제하는 과정을 다룬다.
 
 <br>
 
-#### 2-4-1. 추가(```INSERT```)
+#### 2.4.1 추가(```INSERT```)
 
 ```EMPLOYEE``` 테이블에 데이터를 추가해보자. 
 
@@ -547,7 +547,7 @@ INSERT INTO WORKS_ON VALUES
 
 ---
 
-#### 2-4-2. 수정(```UPDATE```)
+#### 2.4.2 수정(```UPDATE```)
 
 테이블의 데이터를 수정해보자. 먼저 ```EMPLOYEE``` 테이블의 ```dept_id```의 ```null```값을 업데이트 해보자.
 
@@ -631,7 +631,7 @@ WHERE EMPLOYEE.id = WORKS_ON.empl_id and proj_id = 2002;
 
 ---
 
-#### 2-4-3. 삭제(```DELETE```)
+#### 2.4.3 삭제(```DELETE```)
 
 테이블의 데이터를 삭제해보자. ```NICOLE```이라는 이름의 사원이 퇴사하는 상황이다. 이 경우 ```EMPLOYEE``` 테이블에서 ```NICOLE```을 삭제해야한다. 또한 ```NICOLE```은 프로젝트 2001과 2003에 참여하고 있다.
 
@@ -660,7 +660,7 @@ DELETE FROM WORKS_ON WHERE empl_id = 2 AND proj_id <> 2001;
 
 ---
 
-### 2-5. 데이터 조회 (```SELECT```)
+### 2.5. 데이터 조회 (```SELECT```)
 
 이번에는 테이블에 존재하는 데이터를 조회하는 방법에 대해서 알아보자. ```EMPLOYEE(id)```가 7인 임직원의 ```name```과 ```position```을 조회해보자.
 
@@ -858,7 +858,7 @@ SELECT * FROM EMPLOYEE WHERE id = 1; -- 원래 attribute의 자리에 * 사용
 
 <br>
 
-### 3-1. Subquery (Nested Query)
+### 3.1. Subquery (Nested Query)
 
 Subquery를 통해서 조금 더 복잡한 쿼리를 작성해보자.
 
@@ -923,7 +923,7 @@ WHERE (dept_id, sex) = (
 
 ---
 
-#### 3-1-1. ```IN```, ```EXISTS```
+#### 3.1.1 ```IN```, ```EXISTS```
 
 이번에는 ```id```가 2인 임직원과 같은 프로젝트에 참여한 임직원들의 ```id```를 조회 해보자. 
 
@@ -1057,7 +1057,7 @@ WHERE NOT EXISTS ( -- 2000년생이 하나라도 없는 경우 TRUE 반환되면
 
 ---
 
-#### 3-1-2. ```ANY```
+#### 3.1.2 ```ANY```
 
 이번에는 ```ANY```라는 키워드를 사용해서 리더보다 높은 연봉을 받는 부서원을 가진 ```leader_id```, ```name```, ```salary``` 그리고 부서명(```DEPARTMENT(name)```)을 조회하자.
 
@@ -1111,7 +1111,7 @@ WHERE d.leader_id = e.id AND e.salary < ANY (
 
 ---
 
-#### 3-1-3. ```ALL```
+#### 3.1.3 ```ALL```
 
 이번에는 ```ALL```이라는 키워드를 사용해서 ```id```가 2인 임직원과 한번도 같은 프로젝트에 참여하지 못한 임직원들의 ```id```, ```name```, ```position```을 조회하자.
 
@@ -1141,7 +1141,7 @@ WHERE e.id = w.empl_id AND w.proj_id != ALL ( -- w.proj.id 가 그 어떤과도 
 
 ---
 
-### 3-2. ```NULL```과의 비교 연산, Three-valued logic
+### 3.2. ```NULL```과의 비교 연산, Three-valued logic
 
 SQL에서 ```NULL```이 가지는 의미가 뭔지 일단 알아보자.
 
@@ -1178,7 +1178,7 @@ SQL에서 ```NULL```과 비교연산을 하게 되면 결과는 ```UNKWOWN```이
 
 ---
 
-### 3-3. 조인 (```JOIN```)
+### 3.3. 조인 (```JOIN```)
 
 ```JOIN```에 대해서 알아보자. 
 
@@ -1188,7 +1188,7 @@ SQL에서 ```NULL```과 비교연산을 하게 되면 결과는 ```UNKWOWN```이
 
 <br>
 
-#### 3-3-1. Implicit ```JOIN``` vs Explicit ```JOIN```
+#### 3.3.1 Implicit ```JOIN``` vs Explicit ```JOIN```
 
 ##### Implicit ```JOIN``` (묵시적)
 
@@ -1224,7 +1224,7 @@ WHERE e.id = 1;
 
 ---
 
-#### 3-3-2. ```INNER JOIN```
+#### 3.3.2 ```INNER JOIN```
 
 ```INNER JOIN```에 대해서 알아보자.
 
@@ -1267,7 +1267,7 @@ FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.id; -- e.dept_id와 d.i
 
 ---
 
-#### 3-3-3. ```OUTER JOIN```
+#### 3.3.3 ```OUTER JOIN```
 
 다양한 ```OUTER JOIN```들에 대해 알아보자.
 
@@ -1328,7 +1328,7 @@ FROM EMPLOYEE e RIGHT JOIN DEPARTMENT d ON e.dept_id = d.id; -- RIGHT는 DEPARTM
 
 ---
 
-#### 3-3-4. ```USING```
+#### 3.3.4 ```USING```
 
 > 들어가기에 앞서 Equi ```JOIN```(동등 조인)에 대해서 설명하겠다.
 >
@@ -1369,7 +1369,7 @@ FROM EMPLOYEE e INNER JOIN DEPARTMENT d USING (dept_id); -- 중복으로 사용�
 
 ---
 
-#### 3-3-5. ```NATURAL JOIN```
+#### 3.3.5 ```NATURAL JOIN```
 
 ```NATURAL JOIN```에 대해서 알아보자. 
 
@@ -1455,7 +1455,7 @@ FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.dept_id AND e.name = d.
 
 ---
 
-#### 3-3-6. ```CROSS JOIN```
+#### 3.3.6 ```CROSS JOIN```
 
 ```CROSS JOIN```에 대해서 알아보자.
 
@@ -1496,7 +1496,7 @@ FROM EMPLOYEE e CROSS JOIN DEPARTMENT d;
 
 ---
 
-### 3-4. ```ORDER BY```
+### 3.4. ```ORDER BY```
 
 정렬을 위한 ```ORDER BY```에 대해서 알아보자.
 
@@ -1582,7 +1582,7 @@ id|name    |birth_date|sex|POSITION |salary   |dept_id|
 
 ---
 
-### 3-5. Aggregate Function
+### 3.5. Aggregate Function
 
 Aggregate Function에 대해서 알아보자. 
 
@@ -1641,7 +1641,7 @@ WHERE w.proj_id = 2002;
 
 ---
 
-### 3-6. ```GROUP BY```
+### 3.6. ```GROUP BY```
 
 ```GROUP BY```를 이용해서 그룹별로 묶어서 집계하는 방법에 대해 알아보자. 
 
@@ -1674,7 +1674,7 @@ GROUP BY w.proj_id; -- 기존의 WHERE절에 GROUP BY를 사용해서 w.proj_id 
 
 ---
 
-### 3-7. ```HAVING```
+### 3.7. ```HAVING```
 
 ```HAVING```에 대해서 알아보자.
 
@@ -1709,13 +1709,13 @@ HAVING COUNT(*) >= 5; -- 참여인원이 5명 이상인 경우를 조건으로 �
 
 ---
 
-### 3-8. 조회, 집계 예시
+### 3.8. 조회, 집계 예시
 
 특정 기준으로 데이터를 조회하고 집계하는 예시들을 살펴보자.
 
 <br>
 
-#### 3-8-1. ```GROUP BY``` + ```ORDER BY```
+#### 3.8.1 ```GROUP BY``` + ```ORDER BY```
 
 각 부서별로 인원수를 인원 수가 많은 순서대로 정렬해서 조회해보자.
 
@@ -1773,7 +1773,7 @@ ORDER BY empl_count DESC;
 
 ---
 
-#### 3-8-2. ```GROUP BY``` + ```HAVING``` + subquery
+#### 3.8.2 ```GROUP BY``` + ```HAVING``` + subquery
 
 이번에는 회사 전체의 평균 연봉보다 평균 연봉이 적은 부서들의 평균 연봉을 조회하자.
 
@@ -1801,7 +1801,7 @@ HAVING avg_salary < ( -- 각 부서별로 평균 연봉을 구함 → 부서의 
 
 ---
 
-#### 3-8-3. ```GROUP BY``` + ```ORDER BY``` + ```HAVING``` + subquery
+#### 3.8.3 ```GROUP BY``` + ```ORDER BY``` + ```HAVING``` + subquery
 
 이번에는 각 프로젝트별로 프로젝트에 참여한 90년대생들의 수와 이들의 평균 연봉을 조회해보자. 
 
@@ -1879,7 +1879,7 @@ Stored Function에 대해 알아보자.
 
 <br>
 
-### 4-1. Example 1
+### 4.1. Example 1
 
 그럼 이제 Stored Function을 사용해보자. 먼저 임직원의 ```id```를 열자리 정수로 랜덤하게 발급하고, 이때 ```id```의 첫자리는 1로 고정하는 함수를 만든다고 하자.
 
@@ -1922,7 +1922,7 @@ VALUES (id_generator(), 'MINJAE', '1996-11-15', 'M', 'PO', 100000000, 1005);
 
 ---
 
-### 4-2. Example 2
+### 4.2. Example 2
 
 부서의 ```id```를 파라미터로 받고 해당 부서의 평균 연봉을 알려주는 함수를 작성해보자. (만약 ```DEPARTMENT```의 ```id```가 ```dept_id```라면 다시 ```id```를 사용하도록 스키마 변경)
 
@@ -1970,7 +1970,7 @@ FROM DEPARTMENT;
 
 ---
 
-### 4-3. Example 3
+### 4.3. Example 3
 
 이번에는 임직원의 연봉이 전체 평균연봉보다 높은지 낮은지 판단하는 함수를 작성해보자.
 
@@ -2022,7 +2022,7 @@ FROM EMPLOYEE;
 
 ---
 
-### 4-4. 등록된 Stored Function 파악하기
+### 4.4. 등록된 Stored Function 파악하기
 
 저장된 Stored Function을 삭제하는 방법 부터 알아보자. 
 
@@ -2081,7 +2081,7 @@ Stored Procedure에 대해서 알아보자.
 
 <br>
 
-### 5-1. Example 1
+### 5.1. Example 1
 
 두 정수의 곱셈 결과를 가져오는 procedure를 작성해보자.
 
@@ -2117,7 +2117,7 @@ SELECT @result;
 
 <br>---
 
-### 5-2. Example 2
+### 5.2. Example 2
 
 두 정수를 서로 바꾸는 procedure를 작성해보자.
 
@@ -2151,7 +2151,7 @@ SELECT @a, @b;
 
 ---
 
-### 5-3. Example 3
+### 5.3. Example 3
 
 각 부서별 평균 연봉을 가져오는 procedure를 작성해보자.  
 
@@ -2188,7 +2188,7 @@ CALL get_dept_avg_salary(); -- 리턴값이 없고, 함수를 그냥 호출하�
 
 ---
 
-### 5-4. Example 4
+### 5.4. Example 4
 
 유저가 프로필 닉네임을 변경하는 경우, 이전 닉네임을 로그에 저장하고 새 닉네임으로 업데이트하는 프로시저를 작성해보자.
 
@@ -2272,7 +2272,7 @@ CALL change_nickname(1, 'dataengineer95');
 
 ---
 
-### 5-5. Stored Procedure vs Stored Function
+### 5.5. Stored Procedure vs Stored Function
 
 Stored Procedure와 Stored Function을 비교해보자. 
 
@@ -2391,7 +2391,7 @@ SQL의 인덱스(Index)에 대해 알아보자.
 
 <br>
 
-### 7-1. ```INDEX``` 사용법
+### 7.1. ```INDEX``` 사용법
 
 먼저 ```employees``` 데이터베이스의 ```employees``` 테이블을 살펴보자.
 
@@ -2523,7 +2523,7 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 
 ---
 
-### 7-2. 인덱스 동작 방식
+### 7.2. 인덱스 동작 방식
 
 > B-tree 기반의 인덱스가 동작하는 방식을 아주 간략화해서 설명합니다. 세세한 내용은  B-tree에서 다룰 예정.
 
@@ -2573,7 +2573,7 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 
 ---
 
-### 7-3. ```INDEX```를 확인하는 방법
+### 7.3. ```INDEX```를 확인하는 방법
 
 쿼리에 대해 어떤 인덱스를 쓰는지 확인해보는 방법을 알아보자. 
 
@@ -2607,7 +2607,7 @@ SELECT * FROM employees IGNORE INDEX (제외할 인덱스 명) WHERE first_name 
 
 ---
 
-### 7-4. 주의 사항
+### 7.4. 주의 사항
 
 지금까지 알아본 내용만으로 생각하면 인덱스(INDEX)를 만들면 쿼리의 성능이 올라가기 때문에 "인덱스를 마구잡이로 생성하는게 좋지 않을까?"라는 생각이 들 수도 있지만, 인덱스 생성에는 비용이 따른다. 
 
@@ -2625,7 +2625,7 @@ SELECT * FROM employees IGNORE INDEX (제외할 인덱스 명) WHERE first_name 
 
 ---
 
-### 7-5. Covering Index
+### 7.5. Covering Index
 
 Covering Index에 대해 알아보자. 위의 [인덱스 동작 방식]()에서 이용한 예시를 이용하겠다.
 
@@ -2638,7 +2638,7 @@ Covering Index에 대해 알아보자. 위의 [인덱스 동작 방식]()에서 
 
 ---
 
-### 7-6. Hash Index
+### 7.6. Hash Index
 
 **Hash Index**에 대해 아주 간략히 알아보자. 
 

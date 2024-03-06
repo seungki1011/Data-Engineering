@@ -55,7 +55,7 @@
 
 1. 컨테이너(Container)의 개념 소개
 2. 도커(Docker)
-3. 쿠버네티스(Kubernetes, K8s)
+3. 쿠버네티스(Kubernetes)
 
 ---
 

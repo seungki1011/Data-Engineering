@@ -84,7 +84,7 @@
 
 ## 1) Object Oriented Design(객체 지향 설계)
 
-### 1-1. SOLID 원칙
+### 1.1. SOLID 원칙
 
 **SOLID**란 객체 지향 설계의 5가지 원칙이다. 각 원칙은 다음과 같다.
 
@@ -96,7 +96,7 @@
 
 <br>
 
-#### 1-1-1. SRP (단일 책임 원칙)
+#### 1.1.1 SRP (단일 책임 원칙)
 
 * **하나의 클래스는 하나의 책임만 가진다**
 * 책임이라는 것은 무엇일까?
@@ -125,7 +125,7 @@ class Shape:
 
 <br>
 
-#### 1-1-2. OCP (개방 폐쇄 원칙)
+#### 1.1.2 OCP (개방 폐쇄 원칙)
 
 * **소프트웨어 요소는 확장에 열려있으나 변경에는 닫혀 있어야 한다**
 * 새로운 기능이나 요소를 추가할 때 기존의 코드 변경 없이 추가가 가능해야 한다 
@@ -158,7 +158,7 @@ public class MemberService {
 
 <br>
 
-#### 1-1-3. LSP (리스코프 치환 원칙)
+#### 1.1.3 LSP (리스코프 치환 원칙)
 
 * 프로그램의 객체는 프로그램의 정확성을 깨드리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다
   * objects of a superclass should be able to be replaced with objects of a subclass without affecting the correctness of the program
@@ -169,7 +169,7 @@ public class MemberService {
 
 <br>
 
-#### 1-1-4. ISP (인터페이스 분리 원칙)
+#### 1.1.4 ISP (인터페이스 분리 원칙)
 
 * 자신이 사용하지 않는 메서드에 의존하지 않는다
   * 쉽게 말해서 클래스는 사용하지 않을 인터페이스는 구현하지 않아야 한다는 원칙이다
@@ -183,7 +183,7 @@ ISP 원칙이라는 것은 결국 인터페이스가 너무 광범위하면 인�
 
 <br>
 
-#### 1-1-5. DIP (의존관계 역전 원칙)
+#### 1.1.5 DIP (의존관계 역전 원칙)
 
 * 추상화에 의존 해야하고, 구체화에 의존하면 안된다 → 의존성 주입은 이 원칙을 따르는 방법 중 하나다
 * 쉽게 이야기해서 구현 클래스에 의존하지 말고 인터페이스에 의존하라는 뜻이다
@@ -206,7 +206,7 @@ public class MemberService {
 
 <br>
 
-#### 1-1-6. 요약
+#### 1.1.6 요약
 
 * 객체 지향의 핵심은 다형성
 * 다형성만 가지고 구현 객체를 변경할 때 클라이언트 코드도 함께 변경된다
@@ -218,7 +218,7 @@ public class MemberService {
 
 ---
 
-### 1-2. OOD와 스프링
+### 1.2. OOD와 스프링
 
 스프링은 결국 의존성 주입(DI)와 DI 컨테이너 등의 기술을 지원해서 **다형성에 OCP, DIP를 가능하게 해준다**. 이를 통해 스프링을 이용하면 클라이언트 코드의 변경 없이 기능 확장이 가능하다. 
 
@@ -240,7 +240,7 @@ public class MemberService {
 
 처음의 예시 프로젝트는 스프링 없이 순순하게 자바만을 사용해서 구현. (프로젝트 생성은 스프링 부트 사용)
 
-### 2-1. 프로젝트 생성
+### 2.1. 프로젝트 생성
 
 [https://start.spring.io/](https://start.spring.io/)에서 프로젝트 생성하기
 
@@ -267,7 +267,7 @@ public class MemberService {
 
 ---
 
-### 2-2. 비즈니스 요구 사항과 설계
+### 2.2. 비즈니스 요구 사항과 설계
 
 예시 프로젝트의 비즈니스 요구 사항이 무엇이고, 대략적인 설계에 대한 내용.
 
@@ -291,7 +291,7 @@ public class MemberService {
 
 ---
 
-### 2-3. 회원 도메인 설계
+### 2.3. 회원 도메인 설계
 
 비즈니스 요구 사항을 들었으니 회원 도메인에 대한 설계를 해보자. 들어가기에 앞서 회원 도메인에 대한 요구사항 다시 한번 살펴보자.
 
@@ -337,7 +337,7 @@ public class MemberService {
 
 ---
 
-### 2-4. 회원 도메인 개발
+### 2.4. 회원 도메인 개발
 
 이전 설계를 바탕으로 회원 도메인에 대한 개발을 시작해보자.
 
@@ -443,7 +443,7 @@ public class MemberServiceImpl implements MemberService{
 
 ---
 
-### 2-5. 회원 도메인 실행과 테스트
+### 2.5. 회원 도메인 실행과 테스트
 
 회원 도메인이 정상적으로 동작하는지 확인해보자.
 
@@ -478,7 +478,7 @@ public class MemberServiceTest {
 
 ---
 
-### 2-6. 주문과 할인 도메인 설계
+### 2.6. 주문과 할인 도메인 설계
 
 주문과 할인 도메인을 설계 해보자. 들어가기에 앞서 주문과 할인 정책에 대한 요구사항을 다시 한번 살펴보자.
 
@@ -523,7 +523,7 @@ public class MemberServiceTest {
 
 ---
 
-### 2-7. 주문과 할인 도메인 개발
+### 2.7. 주문과 할인 도메인 개발
 
 이전 설계를 바탕으로 주문과 할인 도메인에 대한 개발을 진행한다.
 
@@ -631,7 +631,7 @@ public class OrderServiceImpl implements OrderService{
 
 ---
 
-### 2-8. 주문과 할인 도메인 실행과 테스트
+### 2.8. 주문과 할인 도메인 실행과 테스트
 
 개발한 주문과 할인 도메인에 대한 테스트.
 
@@ -663,7 +663,7 @@ public class OrderServiceTest {
 
 객체 지향의 원리들을 다시 한번 알아보면서, 지금까지 작성했던 코드에 적용해본다.
 
-### 3-1. 기존 예제의 할인 정책 변경
+### 3.1. 기존 예제의 할인 정책 변경
 
 기존의 고정 할인 정책을 정률 할인으로 바꿀려고 함.
 
@@ -787,7 +787,7 @@ public class OrderServiceImpl implements OrderService{
 
 ---
 
-### 3-2. 관심사의 분리
+### 3.2. 관심사의 분리
 
 * 관심사를 분리하자! 그런데 관심사를 분리한다는 건 뭔 뜻일까?
 * 구현 객체는 딱 본인의 역할에 집중을 해야한다 → 구현 객체에게 맡겨지지 않은 책임은 다른 곳으로 분리해야 함
@@ -940,7 +940,7 @@ public class OrderServiceTest {
 
 ---
 
-### 3-3. 새로운 구조와 할인 정책 적용
+### 3.3. 새로운 구조와 할인 정책 적용
 
 정액 할인 정책(```FixedDiscoutPolicy```)을 정률 할인 정책(```RateDiscountPolicy```)로 변경해보자.
 
@@ -993,11 +993,11 @@ public class AppConfig {
 
 ---
 
-### 3-4. IoC, DI, 컨테이너
+### 3.4. IoC, DI, 컨테이너
 
 IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 컨테이너(Container)에 대해서 알아보자.
 
-#### 3-4-1. IoC(제어의 역전)
+#### 3.4.1 IoC(제어의 역전)
 
 > 말 그대로 제어의 역전을 의미한다. 프로그래머가 작성한 프로그램이 프레임워크의 [흐름 제어](https://ko.wikipedia.org/wiki/흐름_제어)를 받게 되는 소프트웨어 디자인 패턴을 말한다. 줄여서 **IoC**(Inversion of Control)이라고 부른다. 전통적인 프로그램에서의 흐름은 프로그래머가 작성한 프로그램이 라이브러리의 코드를 호출해 이용한다. 하지만 제어의 역전이 적용된 구조에서는 프레임워크의 코드가 프로그래머가 작성한 코드를 호출한다.
 
@@ -1007,7 +1007,7 @@ IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 
 
 <br>
 
-#### 3-4-2. DI(의존성 주입)
+#### 3.4.2 DI(의존성 주입)
 
 > 의존성 주입은 프로그램 디자인이 [결합도](https://ko.wikipedia.org/wiki/결합도)를 느슨하게 되도록하고 [의존관계 역전 원칙](https://ko.wikipedia.org/wiki/의존관계_역전_원칙)과 단일 책임 원칙(SRP)을 따르도록 클라이언트의 생성에 대한 의존성을 클라이언트의 행위로부터 분리하는 것이다.
 >
@@ -1023,7 +1023,7 @@ IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 
 
 <br>
 
-#### 3-4-3. IoC, DI 컨테이너
+#### 3.4.3 IoC, DI 컨테이너
 
 * 객체를 생성하고 의존관계를 연결해주는 역할을 해주는 것을 **IoC 컨테이너** 또는 **DI 컨테이너**라고 한다
   *  예) ```AppConfig```가 이 역할을 수행 해준다고 볼 수 있다
@@ -1033,7 +1033,7 @@ IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 
 
 ---
 
-### 3-5. 스프링으로 전환하기
+### 3.5. 스프링으로 전환하기
 
 지금까지 순순하게 자바 코드만으로 DI를 적용한 것을 스프링을 이용하는 것으로 전환해보자.
 
@@ -1123,7 +1123,7 @@ public class OrderApp {
 
 스프링 컨테이너와 스프링 빈에 대해서 알아보자.
 
-### 4-1. 스프링 컨테이너
+### 4.1. 스프링 컨테이너
 
 ```java
 ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
@@ -1172,11 +1172,11 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 
 ---
 
-### 4-2. 스프링 빈 조회
+### 4.2. 스프링 빈 조회
 
 이제 스프링 컨테이너에서 데이터를 조회해보자.
 
-#### 4-2-1. 컨테이너에 등록된 모든 빈 확인
+#### 4.2.1 컨테이너에 등록된 모든 빈 확인
 
 컨테이너에 등록된 모든 빈들을 확인해보자.
 
@@ -1244,7 +1244,7 @@ name = discountPolicy object = de.springbasic1.discount.RateDiscountPolicy@12d2c
 
 <br>
 
-#### 4-2-2. 빈 조회하기
+#### 4.2.2 빈 조회하기
 
 스프링 빈을 조회하는 방법들에 대해 알아보자.
 
@@ -1392,7 +1392,7 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 <br>
 
-#### 4-2-3. 상속 관계의 빈 조회
+#### 4.2.3 상속 관계의 빈 조회
 
 * 부모 타입으로 조회하는 경우, 자식 타입도 함께 조회한다
 * 자바 객체의 최고 부모인 ```Object``` 타입으로 조회하면 모든 스프링 빈을 조회한다
@@ -1409,7 +1409,7 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 ---
 
-### 4-3. BeanFactory, ApplicationContext
+### 4.3. BeanFactory, ApplicationContext
 
 ```BeanFactory```와 ```ApplicationContext```에 대하여 알아보자.
 
@@ -1454,7 +1454,7 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 싱글톤(Singleton) 컨테이너에 대해 알아보자.
 
-### 5-1. 스프링 없는 순수한 DI 컨테이너
+### 5.1. 스프링 없는 순수한 DI 컨테이너
 
 싱글톤에 대해 들어가기 전에 스프링 없이 DI 컨테이너를 구현하는 경우의 문제점을 한번 보고 가자.
 
@@ -1470,7 +1470,7 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 ---
 
-### 5-2. 싱글톤 패턴(Singleton Pattern)
+### 5.2. 싱글톤 패턴(Singleton Pattern)
 
 * 싱글톤 패턴은 클래스의 인스턴스가 딱 1개 생성되는 디자인 패턴이다
 * 인스턴스가 2개 이상 생성되지 못하도록 막아야한다 → ```private``` 생성자를 사용해서 외부에서 임의로 ```new```를 사용하지 못하도록 막는다
@@ -1541,7 +1541,7 @@ singletonService2 = de.springbasic1.singleton.SingletonService@6156496
 
 ---
 
-### 5-3. 스프링의 싱글톤 컨테이너
+### 5.3. 스프링의 싱글톤 컨테이너
 
 싱글톤 패턴은 만들어진 객체를 공유해서 효율적으로 사용할 수 있다는 장점을 가지고 있지만 다음과 같은 단점들도 존재한다.
 
@@ -1575,7 +1575,7 @@ singletonService2 = de.springbasic1.singleton.SingletonService@6156496
 
 ---
 
-### 5-4. 싱글톤 방식의 주의점
+### 5.4. 싱글톤 방식의 주의점
 
 싱글톤 방식을 사용할 때의 주의점에 대해서 알아보자.
 
@@ -1678,7 +1678,7 @@ public class StatefulService {
 
 ---
 
-### 5-5. ```@Configuration```
+### 5.5. ```@Configuration```
 
 ```@Configuration```과 싱글톤에 대한 내용을 알아보자.
 
@@ -1776,7 +1776,7 @@ void configurationDeep() {
 
 ## 6) Component Scan
 
-### 6-1. ```@ComponentScan```, ```@Autowired```
+### 6.1. ```@ComponentScan```, ```@Autowired```
 
 컴포넌트 스캔과 의존성 자동 주입에 대한 내용을 알아보자.
 
@@ -1909,7 +1909,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
 ---
 
-### 6-2. ```@ComponentScan```의 탐색 위치와 스캔 대상
+### 6.2. ```@ComponentScan```의 탐색 위치와 스캔 대상
 
 컴포넌트 스캔이 탐색을 시작하는 시작 위치를 지정할 수 있다.
 
@@ -1950,11 +1950,11 @@ public class MemoryMemberRepository implements MemberRepository{
 
 ---
 
-### 6-3. 필터, 중복 등록과 충돌
+### 6.3. 필터, 중복 등록과 충돌
 
 컴포넌트 스캔 대상을 필터링하는 방법과 컴포넌트 스캔에서 같은 빈 이름이 등록되는 경우에 대해서 알아보자.
 
-#### 6-3-1. 필터
+#### 6.3.1 필터
 
 * ```includeFilters``` : 컴포넌트 스캔 대상을 추가로 지정한다
 * ```excludeFilters``` : 컴포넌트 스캔 대상에서 제외할 대상을 지정한다
@@ -2013,7 +2013,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
 <br>
 
-#### 6-3-2. 중복 등록과 충돌
+#### 6.3.2 중복 등록과 충돌
 
 컴포넌트 스캔에서 같은 빈 이름을 등록하는 상황에서 다음의 두 가지 상황을 생각해 볼 수 있다.
 
@@ -2043,7 +2043,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
 의존 관계 주입(의존성 주입, DI)과 ```@Autowired```의 사용법에 대해 알아보자.
 
-### 7-1. DI(의존 관계 주입)
+### 7.1. DI(의존 관계 주입)
 
 의존관계 주입은 크게 4가지 방법이 존재한다.
 
@@ -2054,7 +2054,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
 <br>
 
-#### 7-1-1. 생성자 주입(constructor injection)
+#### 7.1.1 생성자 주입(constructor injection)
 
 생성자 주입은 이름 그대로 생성자를 통해서 의존 관계를 주입 받는 방법이다. 지금까지 우리가 사용해왔던 방법이기도 한다.
 
@@ -2086,7 +2086,7 @@ public class OrderServiceImpl implements OrderService {
 
 <br>
 
-#### 7-1-2. 수정자 주입(setter injection)
+#### 7.1.2 수정자 주입(setter injection)
 
 수정자 주입은 필드의 값을 변경하는 수정자 메서드(setter)를 통해서 의존관계를 주입하는 방법이다.
 
@@ -2123,7 +2123,7 @@ public class OrderServiceImpl implements OrderService {
 
 <br>
 
-#### 7-1-3. 필드 주입(field injection)
+#### 7.1.3 필드 주입(field injection)
 
 이름 그대로 필드에 주입하는 방법이다.
 
@@ -2159,7 +2159,7 @@ void fieldInjectionTest() {
 
 <br>
 
-#### 7-1-4. 메서드 주입(method injection)
+#### 7.1.4 메서드 주입(method injection)
 
 일반 메서드를 통해서 주입하는 방법이다.
 
@@ -2193,7 +2193,7 @@ public class OrderServiceImpl implements OrderService {
 
 ---
 
-### 7-2. ```@Autowired``` 옵션 처리
+### 7.2. ```@Autowired``` 옵션 처리
 
 ```@Autowired``` 의 옵션에 대해서 알아보자.
 
@@ -2247,7 +2247,7 @@ noBean3 = Optional.empty
 
 ---
 
-### 7-3. 생성자 주입 권장
+### 7.3. 생성자 주입 권장
 
 의존관계 주입 방법으로 생성자 주입 방식을 권장하는 이유에 대해서 알아보자.
 
@@ -2282,9 +2282,9 @@ noBean3 = Optional.empty
 
 ---
 
-### 7-4. ```@Autowired 필드명```, ```@Qualifier```, ```@Primary```
+### 7.4. ```@Autowired 필드명```, ```@Qualifier```, ```@Primary```
 
-#### 7-4-1. 조회되는 빈이 2개 이상인 문제
+#### 7.4.1 조회되는 빈이 2개 이상인 문제
 
 ```@Autowired```의 경우 타입으로 조회한다. 이전의 빈 조회에서 학습했듯이, 타입으로 조회시 선택된 빈이 2개 이상일때 문제가 발생한다.
 
@@ -2320,7 +2320,7 @@ noBean3 = Optional.empty
 
 <br>
 
-#### 7-4-2. ```@Autowired 필드명```
+#### 7.4.2 ```@Autowired 필드명```
 
 ```@Autowired 필드명``` 매칭에 대하여 알아보자.
 
@@ -2347,7 +2347,7 @@ noBean3 = Optional.empty
 
 <br>
 
-#### 7-4-3. ```@Qualifier```
+#### 7.4.3 ```@Qualifier```
 
 `@Qualifier` 는 **추가 구분자를 붙여주는 방법**이다. 주입시 **추가적인 방법을 제공**하는 것이지 빈 이름을 변경하는 것은 아니다.
 
@@ -2393,7 +2393,7 @@ noBean3 = Optional.empty
 
 <br>
 
-#### 7-4-4. ```@Primary```
+#### 7.4.4 ```@Primary```
 
 ```@Primary```는 우선순위를 지정하는 방법이다. ```@Autowired```시 매칭되는 빈이 여러개이면 ```@Primary```가 우선권을 가진다.
 
@@ -2426,7 +2426,7 @@ noBean3 = Optional.empty
 
 ---
 
-### 7-5. 조회한 빈이 모두 필요한 경우
+### 7.5. 조회한 빈이 모두 필요한 경우
 
 의도적으로 해당 타입으로 조회한 빈이 모두 다 필요한 경우가 있다. 예를 들면 할인 서비스를 제공하는데, 클라이언트가 할인 종류(정액할인, 정률할인)를 선택할 수 있다고 가정해보자. 스프링을 이용해서 매우 간단하게 구현할 수 있다. 
 
@@ -2491,7 +2491,7 @@ policyList = [de.springbasic1.discount.FixDiscountPolicy@6f3c660a, de.springbasi
 
 빈 생명주기 콜백에 대하여 알아보자.
 
-### 8-1. 빈 생명주기 콜백
+### 8.1. 빈 생명주기 콜백
 
 DBCP(데이터베이스 커넥션 풀), 네트워크 소켓처럼 애플리케이션 시작 시점에 필요한 열결을 미리 해두고, 종료 시점에 열결을 모두 종료하는 작업을 진행하기 위해서는 객체의 초기화와 종료하는 작업이 필요하다. 스프링에서 이런 객체의 초기화와 종료를 어떻게 설정하는지 알아보자.
 
@@ -2592,7 +2592,7 @@ call: null, message = 초기화 연결 메세지
 
 ---
 
-### 8-2. 초기화, 소멸 메서드 지정
+### 8.2. 초기화, 소멸 메서드 지정
 
 설정 정보에 `@Bean(initMethod = "init", destroyMethod = "close")` 처럼 초기화, 소멸 메서드를 지정할 수 있다.
 
@@ -2654,7 +2654,7 @@ close: http://123.456.789.1
 
 ---
 
-### 8-3. ```@PostConstruct```, ```@PreDestroy```
+### 8.3. ```@PostConstruct```, ```@PreDestroy```
 
 ```@PostConstruct```, ```@PreDestroy```를 사용하도록 코드를 수정해보자.
 
@@ -2708,9 +2708,9 @@ close: http://123.456.789.1
 
 ---
 
-### 9-1. Singleton vs Prototype
+### 9.1. Singleton vs Prototype
 
-#### 9-1-1. 싱글톤과 프로토타입 비교
+#### 9.1.1 싱글톤과 프로토타입 비교
 
 
 
@@ -2737,7 +2737,7 @@ close: http://123.456.789.1
 
 <br>
 
-#### 9-1-2. 싱글톤과 프로토타입 함께 사용
+#### 9.1.2 싱글톤과 프로토타입 함께 사용
 
 싱글톤 빈과 프로토타입 빈을 함께 사용하는 경우 문제가 발생할 수 있다. ```clientBean```이라는 싱글톤 빈이 의존관계 주입을 통해서 프로토타입 빈을 주입받아서 사용하는 경우를 살펴보자.
 
@@ -2767,7 +2767,7 @@ close: http://123.456.789.1
 
 ---
 
-### 9-2. Provider
+### 9.2. Provider
 
 지정한 빈을 컨테이터에서 대신 찾아주는 DL(Dependency Lookup)을 제공하는 것이 ```ObjectProvider```이다.
 
@@ -2803,11 +2803,11 @@ close: http://123.456.789.1
 
 ---
 
-### 9-3. Web Scope
+### 9.3. Web Scope
 
 웹 스코프에 대해서 알아보자.
 
-#### 9-3-1. 웹 스코프 소개
+#### 9.3.1 웹 스코프 소개
 
 웹 스코프의 특징은 다음과 같다.
 
@@ -2831,7 +2831,7 @@ close: http://123.456.789.1
 
 <br>
 
-#### 9-3-2. Request Scope
+#### 9.3.2 Request Scope
 
 Request 스코프를 사용하는 예시를 살펴보자.
 

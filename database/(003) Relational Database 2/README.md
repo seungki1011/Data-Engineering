@@ -7,46 +7,49 @@
 
 ## Table of Contents
 
-1. [트랜잭션 (Transaction)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#1-transaction)
-   * [Transaction 설명](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#1-1-transaction-%EC%84%A4%EB%AA%85)
-   * [ACID](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#1-2-acid)
+1. [트랜잭션 (Transaction)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#1-transaction)
+   * [Transaction 설명](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#11-transaction-%EC%84%A4%EB%AA%85)
+   * [ACID](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#12-acid)
      * Acidity
      * Consistency
      * Isolation
      * Durability
-2. [동시성 제어 (Concurrency Control)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-concurrency-control)
-   * [Schedule, Serializability](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-1-schedule-serializability)
+2. [동시성 제어 (Concurrency Control)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#2-concurrency-control)
+   * [Schedule, Serializability](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#21-schedule-serializability)
      * Transaction Cases
      * Serial Schedule
      * Non-Serial Schedule
-   * [Conflict](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-2-conflict)
-   * [Conflict Serializability](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-3-conflict-serializability-protocol)
-   * [Recoverability](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#2-4-recoverability)
+   * [Conflict](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#22-conflict)
+   * [Conflict Serializability](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#23-conflict-serializability-protocol)
+   * [Recoverability](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#24-recoverability)
      * Unrecoverable Schedule
      * Recoverable Schedule
      * Cascadeless Schedule
      * Strict Schedule
-3. [Isolation Level](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-isolation-level)
-   * [Dirty Read](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-1-dirty-read)
-   * [Non-repeatable Read](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-2-non-repeatable-read)
-   * [Phantom Read](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-3-phantom-read)
-   * [Isolation Level (SQL Standard)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-4-isolation-level-sql-standard)
-   * [Dirty Write](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-5-dirty-write)
-   * [Lost Update](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-6-lost-update)
-   * [Snapshot Isolation](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#3-7-snapshot-isolation)
-4. [Lock](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-lock)
-   * [Lock 소개](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-1-lock-%EC%86%8C%EA%B0%9C)
-   * [Exclusive Lock](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-2-exclusive-lock-%EB%B0%B0%ED%83%80%EC%A0%81-lock)
-   * [Shared Lock](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-3-shared-lock-%EA%B3%B5%EC%9C%A0-lock)
-   * [2PL (Two-Phased Locking)](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-3-2pl-2-phase-locking)
+3. [Isolation Level](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#3-isolation-level)
+   * [Dirty Read](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#31-dirty-read)
+   * [Non-repeatable Read](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#32-non-repeatable-read)
+   * [Phantom Read](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#33-phantom-read)
+   * [Isolation Level (SQL Standard)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#34-isolation-level-sql-standard)
+   * [Dirty Write](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#35-dirty-write)
+   * [Lost Update](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#36-lost-update)
+   * [Snapshot Isolation](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#37-snapshot-isolation)
+4. [Lock](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#4-lock)
+   * [Lock 소개](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#41-lock-%EC%86%8C%EA%B0%9C)
+   * [Exclusive Lock](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#42-exclusive-lock-%EB%B0%B0%ED%83%80%EC%A0%81-lock)
+   * [Shared Lock](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#43-shared-lock-%EA%B3%B5%EC%9C%A0-lock)
+   * [2PL (Two-Phased Locking)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#43-2pl-2-phase-locking)
      * Deadlock
      * Conservative 2PL
      * Strict 2PL (S2PL)
      * Strong Strict 2PL (SS2PL)
-   * [2PL의 한계](https://github.com/seungki1011/Data-Engineering/blob/main/database/sql/(003)%20Relational%20Database%202.md#4-7-2pl%EC%9D%98-%ED%95%9C%EA%B3%84)
-5. MVCC (Multi Version Concurrency Control)
-6. 데이터베이스 분산
-7. DBCP
+   * [2PL의 한계](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#48-2pl%EC%9D%98-%ED%95%9C%EA%B3%84)
+5. [MVCC (Multi Version Concurrency Control)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#5-mvccmulti-version-concurrency-control) (추가 예정)
+6. Distributed Database (추가 예정)
+   * 파티셔닝 (Partitioning)
+   * 샤딩 (Sharding)
+   * 레플리케이션 (Replication)
+7. DBCP (Database Connection Pool) (추가 예정)
 
 ---
 
@@ -299,7 +302,7 @@ Durability가 의미하는 것은 다음과 같다.
  <p align="center">   <img src="img/case4.png" alt="mysql" style="width: 70%;"> </p>
 
 * Case 4의 경우 ```B```의 ```balance```를 이미 ```read```한 상황에서 30만원 입금에 대한 ```Transaction2```가 일어난 후, 기존의 ```Transaction1```에서 읽은 ```balance```에 대해서 ```write``` 작업이 실행되면서 기존의 30만원 입금이 사라졌다
-* Case 4의 경우를 Lost Update라고 하며, 뒤의 [Isolation Level]()에서 더 자세히 살펴볼 예정
+* Case 4의 경우를 Lost Update라고 하며, 뒤의 [Isolation Level](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202#3-isolation-level)에서 더 자세히 살펴볼 예정
 
 <br>
 
@@ -803,6 +806,28 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 
 
+<br>
+
+---
+
+## 6) Distributed Database
+
+
+
+
+
+<br>
+
+---
+
+## 7) DBCP(Database Connection Pool)
+
+
+
+
+
+
+
 
 
 <br>
@@ -822,5 +847,4 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 * [한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)
 * [인프런 쉬운코드 - 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)
 * [https://levelup.gitconnected.com/the-schedule-in-the-dbms-2d8c6f19720d](https://levelup.gitconnected.com/the-schedule-in-the-dbms-2d8c6f19720d)
-
 

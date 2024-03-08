@@ -34,7 +34,7 @@
 
 1. [자료주와 알고리즘(Data Structure & Algorithm)]()
 2. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)
-3. 네트워크(Network)와 HTTP
+3. [네트워크(Network)와 HTTP](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http)
 
 ---
 

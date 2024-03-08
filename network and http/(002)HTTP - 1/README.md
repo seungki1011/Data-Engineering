@@ -7,25 +7,31 @@
 ## Table of Contents
 
 1. 웹 통신
-   1. 인터넷
-   2. IP
-   3. TCP, UDP
-   4. DNS
-
-2. URI
-   * URI, URL
+   * 인터넷(Internet)
+   * IP(Internet Protocol)
+   * TCP(Transmission Control Protocol)
+     * TCP 소개
+     * Three way handshake
+     * 데이터 전달 보증, 순서 보장
+   * UDP(User Datagram Protocol)
+   * PORT
+   * DNS(Domain Name System)
+   * URI(Uniform Name Identifier)
+   * 요청의 흐름
 3. HTTP
-   * Stateful, Stateless
-   * 비연결성(Connectionless)
+   * HTTP 소개
+   * Client-Server
+   * Stateless
+   * Connectionless
    * HTTP Message
-4. HTTP 메서드
-   * HTTP API
+4. HTTP Method
+   * HTTP API 설계
    * GET,POST
    * PUT, PATCH, DELETE
    * HTTP 메서드의 속성
-5. HTTP API
-   * 클라이언트에서 서버로 데이터 전송
-   * HTTP API 설계 예시
+   * HTTP 메서드의 활용
+     * 클라이언트 → 서버 데이터 전송
+     * 
 6. HTTP 상태코드
 7. HTTP 헤더
    * HTTP 헤더 소개
@@ -37,8 +43,6 @@
    * 인증
    * 쿠키(Cookie)
 8. 캐시(Cache)
-
-
 
 
 

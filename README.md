@@ -27,6 +27,7 @@
 7. Kafka
 8. Spark
 9. 디자인 패턴(Design Patterns)
+10. 데이터 거버넌스(Data Governance)
 
 ---
 

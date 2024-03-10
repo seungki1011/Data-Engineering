@@ -6,10 +6,10 @@
 
 ## Table of Contents
 
-1. 웹 통신
+1. [웹 통신](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#1-%EC%9B%B9-%ED%86%B5%EC%8B%A0)
    * 인터넷(Internet)
    * IP(Internet Protocol)
-   * TCP(Transmission Control Protocol)
+   * [TCP(Transmission Control Protocol)](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#13-tcptransmission-control-protocol)
      * TCP 소개
      * Three way handshake
      * 데이터 전달 보증, 순서 보장
@@ -18,31 +18,34 @@
    * DNS(Domain Name System)
    * URI(Uniform Name Identifier)
    * 요청의 흐름
-2. HTTP
+2. [HTTP](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#2-http)
    * HTTP 소개
    * Client-Server
-   * Stateless
-   * Connectionless
+   * [Stateless](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#23-stateless)
+   * [Connectionless](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#24-connectionless)
    * HTTP Message
-3. HTTP Method
-   * HTTP API 설계
+3. [HTTP Method](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#3-http-method)
+   * [HTTP API 설계](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#31-http-api-%EC%84%A4%EA%B3%84-%EC%86%8C%EA%B0%9C)
    * GET,POST
    * PUT, PATCH, DELETE
-   * HTTP 메서드의 속성
-   * HTTP 메서드의 활용
+   * [HTTP 메서드의 속성](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#34-http-%EB%A9%94%EC%84%9C%EB%93%9C%EC%9D%98-%EC%86%8D%EC%84%B1)
+     * 안전(Safe)
+     * 멱등성(Idempotency)
+     * 캐시 가능(Cacheable)
+   * [HTTP 메서드의 활용](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#35-http-%EB%A9%94%EC%84%9C%EB%93%9C%EC%9D%98-%ED%99%9C%EC%9A%A9)
      * 클라이언트 → 서버 데이터 전송
      * HTTP API 설계
        * POST - 신규 자원 등록
        * PUT - 신규 자원 등록
        * HTML Form 사용
-4. HTTP Status Code
+4. [HTTP Status Code](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#4-http-status-code)
    * 1xx, 2xx
-   * 3xx
+   * [3xx](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#42-3xxredirection)
      * 3xx - Permanent Redirect
      * 3xx - Temporary Redirect
    * 4xx, 5xx
-5. HTTP Header
-   * HTTP 헤더 소개
+5. [HTTP Header](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#5-http-header)
+   * [HTTP 헤더 소개](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#51-http-%ED%97%A4%EB%8D%94-%EC%86%8C%EA%B0%9C)
    * Representation Header(표현 헤더)
    * Content Negotiation(콘텐츠 협상)
    * 전송 방식
@@ -50,15 +53,15 @@
      * 일반 정보
      * 특별 정보
      * 인증 정보
-6. 쿠키(Cookie)
-   * 쿠키 소개
+6. [쿠키(Cookie)](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#6-cookie-header)
+   * [쿠키 소개](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#61-%EC%BF%A0%ED%82%A4-%EC%86%8C%EA%B0%9C)
    * Cookie - Expiration
    * Cookie - Domain
    * Cookie - Path
    * Cookie - Secure
-7. Cache Header
-   * 캐시 소개
-   * Cache Validation(`Last-Modified`, `If-Modified-Since`)
+7. [캐시(Cache)](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#7-cache-header)
+   * [캐시 소개](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#71-%EC%BA%90%EC%8B%9C-%EC%86%8C%EA%B0%9C)
+   * [Cache Validation(`Last-Modified`, `If-Modified-Since`)](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#72-cache-validationlast-modified-if-modified-since)
    * Cache Validation(`ETag`)
    * `Cache-Control`
 
@@ -619,7 +622,7 @@ Host: www.google.com
   * ```start-line = request-line / status-line```
   * 요청 메세지의 경우 ```request-line```
   *  ```request-line = method 공백 request-target 공백 HTTP-version CRLF```
-  * HTTP 메서드(뒤의 [HTTP Method]() 섹션에서 더 자세히 알아볼 예정)
+  * HTTP 메서드(뒤의 [HTTP Method](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#3-http-method) 섹션에서 더 자세히 알아볼 예정)
     * GET, POST, PUT, DELETE...
     * 서버가 수행해야 할 동작을 지정한다
       * GET : 리소스 조회
@@ -664,7 +667,7 @@ Content-Length: 3423
   * HTTP 헤더의 용도는 HTTP 전송에 필요한 모든 부가정보를 제공하기 위함
     * 예) 메세지 바디의 내용, 크기, 압축, 인증, 요청 클라이언트 정보, 캐시 관리 정보, 등...
   * 필요시 임의의 헤더 추가 가능
-  * 뒤의 [HTTP Header]() 섹션에서 더 자세히 다룰 예정
+  * 뒤의 [HTTP Header](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#5-http-header) 섹션에서 더 자세히 다룰 예정
 
 <br>
 
@@ -911,7 +914,7 @@ HTTP 메서드의 속성에 대해서 알아보자.
 * **실제로는** ```GET```, ```HEAD``` **정도만 캐시로 사용한다**
   * 캐시를 사용하기 위해서 
   * ```POST```, ```PATCH```는 본문 내용까지 캐시 키로 고려해야한다 → 구현이 쉽지 않다다
-* 캐시에 대한 것은 뒤의 HTTP 헤더의 [캐시 섹션]()에서 더 자세히 다룰 예정
+* 캐시에 대한 것은 뒤의 HTTP 헤더의 [캐시 섹션](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#7-cache-header)에서 더 자세히 다룰 예정
 
 <br>
 
@@ -996,7 +999,7 @@ HTTP 메서드는 어떤식으로 활용되는지, 다음의 경우에 대해서
 
 HTTP API 설계 예시를 통해 HTTP 메서드 활용을 알아보자.
 
-이전의 [HHTP API 설계 소개]()에서 사용한 예시를 그대로 사용해보자. 회원 관리 시스템의 API를 설계하는 것이다.
+이전의 [HTTP API 설계 소개](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http/(002)HTTP%20-%201#31-http-api-%EC%84%A4%EA%B3%84-%EC%86%8C%EA%B0%9C)에서 사용한 예시를 그대로 사용해보자. 회원 관리 시스템의 API를 설계하는 것이다.
 
 * 회원 목록 조회 /members → ```GET```
 * 회원 조회 /members/{id} → ```GET```

@@ -21,13 +21,14 @@
 1. [데이터베이스(Database)](https://github.com/seungki1011/Data-Engineering/tree/main/database)
 2. [AWS]()
 3. Hadoop
-4. Hbase
-5. Hive
-6. Airflow
-7. Kafka
-8. Spark
-9. 디자인 패턴(Design Patterns)
-10. 데이터 거버넌스(Data Governance)
+   * HDFS
+   * MapReduce
+   * Hbase
+   * Hive
+4. Airflow
+5. Kafka
+6. Spark
+8. Data Governance
 
 ---
 
@@ -54,7 +55,7 @@
 
 ## Containerization
 
-1. 컨테이너(Container)의 개념 소개
+1. 컨테이너(Container) 소개
 2. 도커(Docker)
 3. 쿠버네티스(Kubernetes)
 
@@ -73,3 +74,4 @@
 * 객체지향의 사실과 오해
 * Clean Coding
 * [Why we're leaving cloud](https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0)
+

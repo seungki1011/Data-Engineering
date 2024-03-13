@@ -142,9 +142,8 @@
 * 객체 지향의 사실과 오해
 * AOP
 * ```BeanDefinition``` - 빈 설정 메타 정보
-* ```LomBok``` 라이브러리 사용법
+* ~```Lombok``` 라이브러리 사용법~
 * Dependency Lookup (DL)
-* Proxy
 
 ---
 

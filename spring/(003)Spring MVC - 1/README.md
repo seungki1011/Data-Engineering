@@ -299,8 +299,7 @@ MVC 패턴은 기존에 하나의 영역으로 처리하던 것을 컨트롤러(
 
 ```java
 public interface ControllerV1 {
-     void process(HttpServletRequest request, HttpServletResponse response)
- throws ServletException, IOException;
+     void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
  }
 ```
 
@@ -375,9 +374,591 @@ dispatcher.forward(request, response);
 
 <br>
 
-중복되는 부분을 분리하기 위해서 별도로 뷰를 처리하는 객체를 만들어보자.
+중복되는 부분을 분리하기 위해서 별도로 뷰를 처리하는 객체 `MyView`를 만들고, 기존 컨트롤러들이 `MyView`를 반환하도록 컨트롤러들을 수정해보자.
 
-뷰를 처리하기 위해 `MyView`를 만들고, 기존의 컨트롤러들을 수정해보자.
+이를 위해서 기존 컨트롤러 인터페이스의 구현이 `MyView`를 반환하도록 수정해야 한다.
+
+`ControllerV2`
+
+```java
+public interface ControllerV2 {
+    MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+}
+```
+
+<br>
+
+`MyView`에서는 `render()`를 통해서 `forward`로직을 수행해서 JSP가 실행된다.
+
+<br>
+
+그림으로 구조를 살펴보면 다음과 같다.
+
+<p align="center">   <img src="img/controllerv2.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>View seperation + Front Controller V2</p>
+
+* `ControllerV2`를 구현한 컨트롤러들을 살펴보면, 복잡하게 뷰로 이동하던 로직들의 중복이 제거되었다
+* 프론트 컨트롤러의 도입으로 `MyView` 객체의 `render()` 를 호출하는 부분을 모두 일관되게 처리할 수 있다
+* 각각의 컨트롤러는 `MyView` 객체를 생성만 해서 반환하면 된다
+
+<br>
+
+---
+
+### 2.5 Model 도입
+
+Model을 도입해보자.
+
+* 서블릿 종속성 제거
+  * 컨틀로러 입장에서 `HttpServletRequest`, `HttpServletResponse`는 필요하지 않다
+  * 요청 파라미터의 정보는 `Map`으로 대신 넘기도록 하면 지금 구조에서 컨트롤러가 서블릿 기술을 몰라도 동작 가능
+  * `request` 개체를 모델로 사용하는 대신, 별도의 모델 객체를 만들어서 반환하면 된다
+* 뷰 이름 중복 제거
+  * 컨트롤러에서 지정하는 뷰 이름에 중복이 있다
+  * 컨트롤러는 뷰의 논리 이름을 반환하고, 실제 물리 위치의 이름은 프론트 컨트롤러에서 처리하도록 하자 → 향후 뷰의 폴더 위치가 함께 이동해도 프론트 컨트롤러만 수정하면 된다 (논리 이름 : 의미를 나타내는 이름)
+    * `/WEB-INF/views/new-form.jsp` → 논리 이름 : `new-form`
+    *  `/WEB-INF/views/save-result.jsp` → 논리 이름 : `save-result`
+    * `/WEB-INF/views/members.jsp` → 논리 이름 : `members`
+
+<br>
+
+<p align="center">   <img src="img/servletdependency.png" alt="spring MVC" style="width: 90%;"> </p>
+
+<p align='center'>MemberSaveControllerV2</p>
+
+<br>
+
+지금까지 컨트롤러에서 서블릿에 종속적인 `HttpServletRequest`를 사용했다. 그리고 Model도 `request.setAttribute()` 를 통해 데이터를 저장하고 뷰에 전달했다.
+
+서블릿의 종속성을 제거하기 위해 Model을 직접 만들고, 추가로 View 이름까지 전달하는 객체를 만들어야한다. (이번 버전에서는 컨트롤러에서 HttpServletRequest를 사용할 수 없다. 따라서 직접 `request.setAttribute()` 를 호출할 수 도 없다. 따라서 Model이 별도로 필요.)
+
+이를 위해서 `ModelView`를 만든다.
+
+<br>
+
+`ModelView`
+
+```java
+public class ModelView {
+     private String viewName;
+  
+     private Map<String, Object> model = new HashMap<>();
+     
+  	 public ModelView(String viewName) { this.viewName = viewName; }
+  
+     public String getViewName() { return viewName; }
+  
+     public void setViewName(String viewName) { this.viewName = viewName; }
+  
+     public Map<String, Object> getModel() { return model; }
+  
+     public void setModel(Map<String, Object> model) { this.model = model; }	 
+}
+```
+
+* 뷰의 이름과 뷰를 렌더링할 때 필요한 model 객체를 가지고 있다
+* model은 단순히 map으로 되어 있으므로 컨트롤러에서 뷰에 필요한 데이터를 key, value로 넣어주면 된다
+
+<br>
+
+```ControllerV3```
+
+```java
+public interface ControllerV3 {
+     ModelView process(Map<String, String> paramMap);
+}
+```
+
+* `HttpServletRequest`가 제공하는 파라미터는 프론트 컨트롤러가 `paramMap`에 담아서 호출해주면 된다
+* 응답 결과로 뷰 이름과 뷰에 전달할 Model 데이터를 포함하는 `ModelView` 객체를 반환하면 된다
+
+<br>
+
+`FrontControllerV3`
+
+```java
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, 		IOException {
+
+        String requestURI = request.getRequestURI();
+
+        ControllerV3 controller = controllerMap.get(requestURI);
+        if (controller == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        Map<String, String> paramMap = createParamMap(request);
+        ModelView mv = controller.process(paramMap);
+
+        String viewName = mv.getViewName();
+        MyView view = viewResolver(viewName);
+
+        view.render(mv.getModel(), request, response);
+    }
+
+    private MyView viewResolver(String viewName) {
+        return new MyView("/WEB-INF/views/" + viewName + ".jsp");
+    }
+
+    private Map<String, String> createParamMap(HttpServletRequest request) {
+        Map<String, String> paramMap = new HashMap<>();
+        request.getParameterNames().asIterator()
+                .forEachRemaining(paramName -> paramMap.put(paramName, request.getParameter(paramName)));
+        return paramMap;
+    }
+```
+
+* `view.render(mv.getModel(), request, response)`의 동작을 위해서 `MyView`에 필요한 메서드를 추가해야 한다
+
+
+
+<br>
+
+그림으로 살펴보자.
+
+<p align="center">   <img src="img/frontcontrollerv3.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>Servlet Dependency elimination + Front Controller V3</p>
+
+* `view.render(mv.getModel(), request, response)`
+  * 뷰 객체를 통해서 HTML 화면을 렌더링 한다
+  * 뷰 객체의 `render()` 는 모델 정보도 함께 받는다
+  * JSP는 `request.getAttribute()` 로 데이터를 조회하기 때문에, 모델의 데이터를 꺼내서`request.setAttribute()` 로 담아둔다
+  * JSP로 `forward` 해서 JSP를 렌더링 한다
+
+<br>
+
+---
+
+### 2.6 사용성 개선
+
+지금까지 구현한 컨트롤러의 개선 방법. 사용성이 더 편리하도록 개선해보자.
+
+* 지금의 구조에서 컨트롤러가 `ModelView`를 반환하지 않고 `ViewName`만 반환하도록 한다
+
+```Java
+public interface ControllerV4 {
+  String process(Map<String, String> paramMap, Map<String, Object> model);
+ }
+```
+
+* model 객체는 파라미터로 전달해서 컨트롤러에서 그냥 사용하면 된다
+* 결과로 뷰의 이름(`ViewName`)만 반환해주면 된다
+
+<br>
+
+```java
+@WebServlet(name = "frontControllerServletV4", urlPatterns = "/front-controller/v4/*")
+public class FrontControllerServletV4 extends HttpServlet {
+  /** 기존 구현 */
+  
+  Map<String, String> paramMap = createParamMap(request);
+  Map<String, Object> model = new HashMap<>(); //추가
+  
+  String viewName = controller.process(paramMap, model);
+  
+  // 컨트롤러가 직접 뷰의 논리 이름을 반환하기 때문에 이 값을 그대로 사용해서 실제 물리 경로 찾을 수 있음
+  MyView view = viewResolver(viewName);
+  view.render(model, request, response);
+  
+  /** 기존 구현 */
+}
+```
+
+* `Map<String, Object> model = new HashMap<>();` 
+  * 모델 객체를 프론트 컨트롤러에서 생성해서 넘겨준다
+  * 컨트롤러에서 모델 객체에 값을 담으면 여기에 그대로 담긴다
+
+<br>
+
+그림으로 살펴보자.
+
+<p align="center">   <img src="img/controllerv4.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>Controller V3 사용성 개선</p>
+
+<br>
+
+---
+
+### 2.7 Adapter
+
+우리가 기존의 `ControllerV3` 방식으로도 개발을 하고, 개선된 컨트롤러 방식으로도 개발을 하고 싶으면 어떻게 할까? 현재의 코드로는 한가지 방식의 컨트롤러 인터페이스만 사용가능하다. 이를 해결하기 위해서 어댑터(Adapter)를 도입해보자.
+
+> 어댑터 패턴(Adapter Pattern) : 기존의 request들이 compatible 하도록 중간에 바꿔주는 어댑터를 도입하는 패턴을 어댑터 패턴이라고 한다
+
+<br>
+
+어댑터를 도입한 구조를 그림으로 살펴보면 다음과 같다.
+
+<p align="center">   <img src="img/controllerv5_1.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>Adapter 도입</p>
+
+* **핸들러 어댑터**: 중간에 어댑터 역할을 하는 어댑터(Adapter)가 추가되었는데 이름이 핸들러 어댑터이다. 여기서 어댑터 역할을 해주는 덕분에 다양한 종류의 컨트롤러를 호출할 수 있다.
+  * 어댑터는 실제 컨트롤러를 호출하고, 그 결과로 `ModelView`를 반환해야 한다 (이제부터 어댑터를 통해서 컨트롤러 호출)
+  * 컨트롤러가 `ModelView`를 반환하지 못하면, 어댑터가 `ModelView`를 직접 생성해서라도 반환해야 한다
+
+
+
+* **핸들러**: 컨트롤러의 이름을 더 넓은 범위인 핸들러로 변경했다. 그 이유는 이제 어댑터가 있기 때문에 꼭 컨트롤러의 개념 뿐만 아니라 어떠한 것이든 해당하는 종류의 어댑터만 있으면 다 처리할 수 있기 때문이다.
+
+<br>
+
+<p align="center">   <img src="img/controllerv5_2.png" alt="spring MVC" style="width: 100%;"> </p>
+
+* 결론적으로 어댑터를 이용하면 프레임워크를 더 유연하고 확장성 있게 설계할 수 있다.
+
+<br>
+
+---
+
+## 3) Spring MVC
+
+### 3.1 Spring MVC 구조
+
+우리가 이전까지 구성했던 프레임워크와 스프링 MVC를 비교해보면 구성요소가 같다는 것을 확인할 수 있다. 명칭은 다음과 같이 대응된다.
+
+* `FrontController` → `DispatcherServlet`
+* `handlerMappingMap` → `HandlerMapping`
+* `MyHandlerAdapter` → `HandlerAdapter`
+* `ModelView` → `ModelAndView`
+* `viewResolver` → `ViewResolver`
+* `MyView` → `View`
+
+<br>
+
+<p align="center">   <img src="img/springmvc.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>Spring MVC</p>
+
+* `DispatcherServlet` : 스프링 MVC의 프론트 컨트롤러
+  * `HttpServlet`을 상속 받아서 사용하고, 서블릿으로 동작한다
+  * 스프링 부트는 `DispatcherServlet`을 서블릿으로 자동 등록하면서 모든 경로(`urlPatterns="/"`)에 대해 매핑한다
+* `DispatcherServlet` 호출 → `HttpServlet`이 제공하는 `service()` 호출 → `FrameworkServlet.service()`를 시작으로 여러 메서드 호출 → 그 중에서 제일 중요한 것은 `DispatcherServlet.doDispatch()`의 호출이다
+
+<br>
+
+ `DispatcherServlet.doDispatch()`의 코드를 살펴보자.(예외처리와 인터셉터 기능은 전부 제외했다)
+
+```java
+ protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+     
+     HttpServletRequest processedRequest = request;
+     HandlerExecutionChain mappedHandler = null;
+     ModelAndView mv = null;
+   
+		 // 1. 핸들러 조회
+		 mappedHandler = getHandler(processedRequest); 
+     if (mappedHandler == null) {
+         noHandlerFound(processedRequest, response);
+		 		 return; 
+     }
+		
+     // 2. 핸들러 어댑터 조회 - 핸들러를 처리할 수 있는 어댑터
+		 HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+   
+		 // 3. 핸들러 어댑터 실행 -> 4. 핸들러 어댑터를 통해 핸들러 실행 -> 5. ModelAndView 반환 
+     mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+   
+     processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+ }
+
+ private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,  HandlerExecutionChain mappedHandler, ModelAndView mv, Exception exception) throws Exception {
+   	 
+   	 // 뷰 렌더링 호출
+     render(mv, request, response);
+ }
+
+ protected void render(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws  Exception {
+   
+     View view;
+     String viewName = mv.getViewName();
+		 
+     // 6. 뷰 리졸버를 통해서 뷰 찾기, 7. View 반환
+     view = resolveViewName(viewName, mv.getModelInternal(), locale, request);
+		 
+     // 8. 뷰 렌더링
+     view.render(mv.getModelInternal(), request, response);
+ }
+```
+
+<br>
+
+---
+
+#### 3.1.1 `HandlerMapping`, `HandlerAdapter`
+
+ `HandlerMapping`, `HandlerAdapter`를 더 자세히 살펴보자.
+
+과거에 주로 사용했던 스프링이 제공하는 컨트롤러를 이용해서 이해해보자.
+
+```java
+ public interface Controller {
+   	 // 과거에 사용했던 컨트롤러
+     ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse
+ 		 response) throws Exception;
+ }
+```
+
+<br>
+
+이 컨트롤러 인터페이스를 이용해서 컨트롤러를 구현해보자.
+
+```java
+ @Component("/springmvc/old-controller")
+ public class OldController implements Controller {
+   
+     @Override
+     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws 	        Exception {
+         System.out.println("OldController.handleRequest");
+         return null;
+		 } 
+ }
+```
+
+* `/springmvc/old-controller`이라는 이름으로 스프링 빈 등록
+* 빈의 이름으로 URL 매핑할 예정
+
+<br>
+
+http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController.handleRequest`의 출력을 확인 할 수 있다.
+
+그럼 이 컨트롤러의 호출 방법을 살펴보자.
+
+* `HandlerMapping`(핸들러 매핑)
+  * 핸들러 매핑에서 이 컨트롤러를 찾을 수 있어야 한다
+  * 예) 스프링 빈의 이름으로 핸들러를 찾을 수 있는 핸들러 매핑이 필요하다 → `/springmvc/old-controller`으로 핸들러를 찾을 수 있는 매핑 필요
+* `HandlerAdapter`(핸들어 어댑터)
+  * 핸들러 매핑을 통해서 찾은 핸들러를 실행할 수 있는 핸들러 어댑터가 필요하다
+  * 예) `Controller` 인터페이스를 실행할 수 있는 핸들러 어댑터를 찾고 실행해야 한다
+
+<br>
+
+스프링은 필요한 핸들러 매핑과 어댑터를 대부분 구현해두었다. 스프링 부트는 자동으로 여러가지 `HandlerMapping`과  `HandlerAdapter`를 등록해둔다.
+
+* `HandlerMapping`
+  0. `RequestMappingHandlerMapping` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
+  1. `BeanNameUrlHanlderMapping` : 스프링 빈의 이름으로 핸들러를 찾는다 (위의 예시에서 사용)
+* `HandlerAdapter`
+  0. `RequestMappingHandlerAdapter` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
+  1. `HttpRequestHandlerAdapter` : `HttpRequestHandler` 처리
+  2. `SimpleControllerHandlerAdapter` : `Controller` 인터페이스 처리(애노테이션X, 과거에 사용, 위의 예시에서 사용) 
+
+<br>
+
+개발할 때는 대부분 `@RequestMapping` 사용.
+
+<br>
+
+---
+
+#### 3.1.2 `ViewResolver`
+
+뷰 리졸버에 대해서 자세히 알아보자.
+
+`View`를 사용할 수 있도록 위에서 구현한 `OldController`에 다음 코드를 추가해보자 `return new ModelAndView("new-form");`. 그러나 `springmvc/old-controller`에 들어가보면 에러 페이지가 나오는 것을 확인 할 수 있다. 이를 해결하기 위해서 다음 코드를 추가해보자.
+
+`application.properties`
+
+```java
+ spring.mvc.view.prefix=/WEB-INF/views/
+ spring.mvc.view.suffix=.jsp
+```
+
+* 스프링 부트는 `InternalResourceViewResolver` 라는 뷰 리졸버를 자동으로 등록한다
+* `application.properties` 에 등록한 `spring.mvc.view.prefix` , `spring.mvc.view.suffix` 설정 정보를 사용해서 등록한다
+
+<br>
+
+스프링 부트가 자동으로 등록하는 `ViewResolver`를 몇 가지 알아보자.
+
+1. `BeanNameViewResolver` : 빈 이름으로 뷰를 찾아서 반환한다
+2. `InternalResourceViewResolver` : JSP를 처리할 수 있는 뷰를 반환한다
+
+<br>
+
+동작 과정을 한번 살펴보자.
+
+1. 핸들러 어댑터 호출
+   * 핸들러 어댑터를 통해 `new-form`이라는 뷰의 논리 이름을 획득한다
+2. `ViewResolver` 호출
+   * `new-form`이라는 뷰 이름으로 `viewResolver`를 순서대로 호출한다
+   * `BeanNameViewResolver`는 `new-form`이라는 이름의 스프링 빈으로 등록된 뷰를 찾지만 없다
+   * `InternalResourceViewResolver`가 호출
+3. `InternalResourceViewResolver`
+   * `InternalResourceView` 반환
+4. `InternalResourceView` 
+   * `InternalResourceView` 는 JSP처럼 포워드 `forward()` 를 호출해서 처리할 수 있는 경우에 사용한다
+5. `view.render()` 
+   * `view.render()` 가 호출되고 `InternalResourceView` 는 `forward()` 를 사용해서 JSP를 실행한다
+
+<br>
+
+* 다른 뷰는 실제 뷰를 렌더링하지만, JSP의 경우 `forward()` 통해서 해당 JSP로 이동(실행)해야 렌더링이 된다. JSP를 제외한 나머지 뷰 템플릿들은 `forward()` 과정 없이 바로 렌더링 된다.
+* Thymeleaf 뷰 템플릿을 사용하면 `ThymeleafViewResolver` 를 등록해야 한다. 최근에는 라이브러리만 추가하면 스프링 부트가 이런 작업도 모두자동화해준다.
+
+<br>
+
+---
+
+### 3.2 Spring MVC 사용해보기
+
+이전의 회원 등록 애플리케이션을 스프링 MVC를 이용해서 구현해보자.
+
+들어가기에 앞서, 스프링이 제공하는 컨트롤러는 애노테이션 기반으로 동작해서, 매우 실용적이다.
+
+<br>
+
+`SpringMemberControllerV2`
+
+```java
+ /**
+	* 클래스 단위 -> 메서드 단위
+	* @RequestMapping 클래스 레벨과 메서드 레벨 조합 
+	*/
+
+ @Controller
+ @RequestMapping("/springmvc/v2/members") // 매핑 URL의 중복을 제거
+ public class SpringMemberControllerV2 {
+   
+     private MemberRepository memberRepository = MemberRepository.getInstance();
+     
+     @RequestMapping("/new-form")
+     public ModelAndView newForm() {
+         return new ModelAndView("new-form");
+		 }
+   	 
+     // 위의 @RequestMapping("/springmvc/v2/members")를 통해서 "/springmvc/v2/members" + "/save"으로 사용
+	   @RequestMapping("/save")
+     public ModelAndView save(HttpServletRequest request, HttpServletResponse response) {
+         
+         String username = request.getParameter("username");
+         int age = Integer.parseInt(request.getParameter("age"));
+         
+         Member member = new Member(username, age);
+         memberRepository.save(member);
+         
+         ModelAndView mav = new ModelAndView("save-result");
+         mav.addObject("member", member); // Model 데이터 추가
+         
+         return mav;
+     }
+   	 
+     // "/springmvc/v2/members" 자체가 URL
+     @RequestMapping
+     public ModelAndView members() {
+         
+         List<Member> members = memberRepository.findAll();
+         
+         ModelAndView mav = new ModelAndView("members");
+         mav.addObject("members", members); 
+         
+         return mav;
+} 
+```
+
+* `@Controller`
+  * 스프링이 자동으로 스프링 빈으로 등록한다. (내부에 `@Component` 애노테이션이 있어서 컴포넌트 스캔의 대상이 됨)
+  * 스프링 MVC에서 애노테이션 기반 컨트롤러로 인식한다
+* `@RequestMapping`
+  * 요청 정보를 매핑한다
+  * 해당 URL이 호출되면 이 메서드가 호출된다
+  * 애노테이션을 기반으로 동작하기 때문에, 메서드의 이름은 임의로 지으면 된다
+* `ModelAndView`
+  * 모델과 뷰 정보를 담아서 반환
+* 기존에는 분리되어 있던 컨트롤러 클래스들을 하나로 통합했다
+* 클래스 레벨의 `@RequestMapping`를 이용해서 URL의 중복을 제거 할 수 있다
+  * 예) 클래스 레벨 : `@RequestMapping("/springmvc/v2/members")` + 메서드 레벨 : `@RequestMapping("/new-form")`
+
+<br>
+
+> 기존에는 스프링 빈 중에 클래스 레벨에 `@RequestMapping`이 붙어 있었으면 `RequestMappiongHandlerMapping`이 매핑정보로 인식 했지만, **스프링 3.0 부터 클래스 레벨에 `@RequestMapping`이 붙어 있는 스프링 빈이어도 스프링 컨트롤러로 인식하지 않는다. 무조건 `@Controller`가 붙어 있어야 스프링 컨트롤러로 인식한다.**
+
+<br>
+
+---
+
+### 3.3 사용성 개선
+
+지금까지 만들었던 스프링 MVC 컨트롤러의 사용성을 개선해보자.
+
+개선하고 싶은 부분은 다음과 같다.
+
+* `ViewName`을 직접 반환하도록 하고 싶다(뷰의 논리 이름 반환)
+* Model 파라미터를 받고 싶다
+* HTTP 요청 파라미터를 직접 받고 싶다
+* `@RequestMapping` 으로 URL만 매칭하는 것이 아니라, HTTP 메서드도 구분하고 싶다
+
+<br>
+
+개선한 코드를 살펴보자.
+
+`SpringMemberControllerV3`
+
+```java
+ /**
+  * Model 도입
+  * ViewName 직접 반환
+  * @RequestParam 사용
+  * @RequestMapping -> @GetMapping, @PostMapping
+  */
+
+ @Controller
+ @RequestMapping("/springmvc/v3/members")
+ public class SpringMemberControllerV3 {
+     private MemberRepository memberRepository = MemberRepository.getInstance();
+     
+     // @RequestMapping(value = "/new-form", method = RequestMethod.GET)
+     @GetMapping("/new-form")
+     public String newForm() {
+         return "new-form";
+     }
+     
+     // @RequestMapping(value = "/save", method = RequestMethod.POST)
+     @PostMapping("/save")
+     public String save(
+             @RequestParam("username") String username,
+             @RequestParam("age") int age,
+             Model model) {
+         Member member = new Member(username, age);
+         memberRepository.save(member);
+         model.addAttribute("member", member);
+         return "save-result";
+     }
+     
+     @GetMapping
+     public String members(Model model) {
+         List<Member> members = memberRepository.findAll();
+         model.addAttribute("members", members);
+         return "members";
+		 } 
+ }
+```
+
+* `ModelAndView`로 반환해도 되고, 뷰 이름으로 그냥 반환해도 된다
+* 기존의 `HttpServletRequest request, HttpServletResponse response`를 파라미터를 직접 받도록 할 수 있다
+  * 스프링은 HTTP 요청 파라미터를 `@RequestParam` 으로 받을 수 있다
+  * `@RequestParam("username")` 은 `request.getParameter("username")` 와 거의 같은 코드라 생각하면 된다
+  * 그냥 Model 파라미터를 받고 `model.addAttribute("member", member)` 을 사용해도 된다
+* `@RequestMapping` 은 URL만 매칭하는 것이 아니라, HTTP Method도 함께 구분할 수 있도록 할 수 있다
+  * 예) 처음에는 `@RequestMapping("/new-form")` → `@RequestMapping(value = "/new-form", method = RequestMethod.GET)` → `@GetMapping("/new-form")`
+  * 위에서 볼 수 있듯이, `@GetMapping`, `@PostMapping` 등 으로 더 편리하게 사용할 수 있다
+  * `GET`, `POST` 외에도 `PUT`, `DELETE`, `PATCH` 등의 애노테이션도 전부 구현되어 있다
+
+<br>
+
+---
+
+## 4) Spring MVC 기능 살펴보기
+
+### 4.1 Logging
+
+로깅에 대해서 알아보자.
+
+
 
 
 
@@ -403,5 +984,7 @@ dispatcher.forward(request, response);
 
 ## Reference
 
+1. [스프링 MVC - 백엔드 웹 개발 핵심 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1)
+1. [쉬운 코드 - 스레드 풀](https://www.youtube.com/watch?v=B4Of4UgLfWc)
 1. [https://community.fs.com/article/application-server-guide-a-detailed-perspective.html](https://community.fs.com/article/application-server-guide-a-detailed-perspective.html)
-1. [쉬운 코드 - 쓰레드 풀](https://www.youtube.com/watch?v=B4Of4UgLfWc)
+1. [https://www.geeksforgeeks.org/spring-mvc-framework/](https://www.geeksforgeeks.org/spring-mvc-framework/)

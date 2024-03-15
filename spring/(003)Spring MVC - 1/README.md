@@ -2,6 +2,8 @@
 >
 > [스프링 MVC - 백엔드 웹 개발 핵심 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1), [쉬운 코드 - 유튜브 채널](https://www.youtube.com/@ez.), 등을 보고 정리한 포스트 입니다.
 
+> * 만약 빌드 옵션을 `IntelliJ IDEA`으로 선택했고, 스프링 부트 3.2 이상이면 는 `Java compiler` 필드에 `-parameters` 옵션을 넣어주자 (`IllegalArgumentException` 방지) 
+
 ---
 
 ## Index
@@ -952,15 +954,561 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
 
 ---
 
-## 4) Spring MVC 기능 살펴보기
+## 4) Spring MVC - 1(기능 살펴보기)
 
 ### 4.1 Logging
 
 로깅에 대해서 알아보자.
 
+`System.out.ln()`으로 콘솔에 출력하는 것보자, 별도의 로깅 라이브러리를 사용해서 로그를 출력하는 것이 더 좋다.
 
+> 스프링 부트를 사용하면 로깅 라이브러리(`spring-boot-starter-logging`)가 함께 포함된다.
+>
+> `spring-boot-starter-logging`는 기본적으로 다음 로길 라이브러리를 사용한다.
+>
+> * [SLF4J](http://www.slf4j.org) : 다양한 로그 라이브러리들을 통합해서 인터페이스로 제공
+> * [Logback](http://logback.qos.ch) : SLF4J를 구현한 구현체로 생각하면 편하다
+>   * 실무에서는 기본적으로 제공하는 Logback을 대부분 사용
 
+<br>
 
+`LogTestController`
+
+```java
+// @Slf4j
+@RestController // 문자를 반환은 문자 그대로 반환(뷰 이름으로 반환 x)
+public class LogTestController {
+  	// @Slf4j 사용시 생략 가능
+    // LogTestController.class 대신에 getClass() 사용가능
+    private final Logger log = LoggerFactory.getLogger(LogTestController.class);
+		
+    @GetMapping("/log-test")
+    public String logTest() {
+        String name = "Spring";
+
+        // 운영 서버에 무조건 남기 때문에 좋지 않다
+        System.out.println("name = "+name);
+
+        // 1. 로그 레벨 별로 정해서 출력할 수 있다
+        log.trace("trace log = {}", name); // {}는 name으로 치환됨
+        log.debug("debug log = {}", name);
+
+        log.info("info log = {}", name);
+        log.warn("warn log = {}", name);
+        log.error("error log = {}", name);
+
+        return "OK";
+    }
+}
+```
+
+```
+name = Spring
+2024-03-14T23:18:46.748+09:00  INFO 47413 --- [springmvc2] [nio-8080-exec-1] de.springmvc2.basic.LogTestController    : info log = Spring
+2024-03-14T23:18:46.749+09:00  WARN 47413 --- [springmvc2] [nio-8080-exec-1] de.springmvc2.basic.LogTestController    : warn log = Spring
+2024-03-14T23:18:46.749+09:00 ERROR 47413 --- [springmvc2] [nio-8080-exec-1] de.springmvc2.basic.LogTestController    : error log = Spring
+```
+
+* `@RestController`
+  * `@Controller` 는 반환 값이 `String` 이면 뷰 이름으로 인식된다. 그래서 뷰를 찾고 뷰가 랜더링 된다.
+  * `@RestController` 는 반환 값으로 뷰를 찾는 것이 아니라, HTTP 메시지 바디에 바로 입력한다.
+    * 실행 결과로 그냥 스트링을 받을 수 있다
+* 로그 포맷 : `time` `log_level` `process_id` `thread_name` `class_name` `log_message`
+* 콘솔에서 `trace`와 `debug` 로그를 확인할 수 없다 → 로그 레벨 설정을 변경하면 볼 수 있다
+  * LEVEL: `TRACE > DEBUG > INFO > WARN > ERROR`
+  * 개발 서버는 `debug` 출력
+  * 운영 서버는` info` 출력
+* `@Slf4j`(Lombok)를 사용하면 `private final Logger log = LoggerFactory.getLogger(LogTestController.class);`를 생략할 수 있다
+* `log.debug("data="+data)` 방식으로 사용하면 안된다
+  * 로그 출력 레벨을 info로 설정해도 해당 코드에 있는 "data="+data가 실제 실행이 되어 버린다. 결과적으로 문자 더하기 연산이 발생한다.
+
+<br>
+
+로그 레벨 설정은 `application.properties`에서 다음과 같이 설정 할 수 있다.
+
+```java
+// 전체 로그 레벨 설정(기본 info), (info, warn, error만 출력)
+logging.level.root=info
+  
+// de.springmvc2 패키지와 그 하위의 로그 레벨 설정
+logging.level.de.springmvc2=debug
+```
+
+<br>
+
+> 로그 사용의 장점
+>
+> * 쓰레드 정보, 클래스 이름 같은 부가 정보를 함께 볼 수 있고, 출력 모양을 조정할 수 있다.
+> * 로그 레벨에 따라 개발 서버에서는 모든 로그를 출력하고, 운영서버에서는 출력하지 않는 등 로그를 상황에 맞게 조절할 수 있다.
+> * 시스템 아웃 콘솔에만 출력하는 것이 아니라, 파일이나 네트워크 등, 로그를 별도의 위치에 남길 수 있다. 특히 파 일로 남길 때는 일별, 특정 용량에따라 로그를 분할하는 것도 가능하다.
+> * 성능도 일반 `System.ou`t보다 좋다. (내부 버퍼링, 멀티 쓰레드 등등) 그래서 실무에서는 꼭 로그를 사용해야 한다.
+
+<br>
+
+---
+
+### 4.2 `MappingController`(요청 매핑)
+
+요청 매핑하는 여러 방법에 대해 알아보자.
+
+`MappingController`
+
+```java
+@Slf4j
+@RestController
+public class MappingController {
+
+    /**
+     * 1.
+     * Spring Boot 3.0 부터는 /hello-basic 과 /hello-basic/은 다르게 취급 ("/"유지)
+     * {"/hello-basic", "/hello-basic2"} 으로 다중 URL 설정 가능
+     * GET 메서드 허용
+     */
+    @RequestMapping(value = {"/hello-basic", "/hello-basic2"}, method = RequestMethod.GET)
+    public String helloBasic() {
+        log.info("hello basic");
+        return "OK";
+    }
+
+    /**
+     * 2.
+     * 축약 애노테이션 사용
+     * GET 메서드 허용
+     */
+    @GetMapping("/mapping-get-v2")
+    public String mappingGetV2() {
+        log.info("mapping-get-v2");
+        return "OK";
+    }
+
+    /**
+     * 3. PathVariable(경로 변수) 사용
+     * 변수명이 같으면 생략 가능
+     * @PathVariable("userId") String userId -> @PathVariable String userId
+     */
+    @GetMapping("/mapping/{userId}")
+    public String mappingPath(@PathVariable("userId") String data) {
+        log.info("mappingPath userId = {} ", data);
+        return "OK";
+    }
+
+    /**
+     * 4. PathVariable 다중 사용
+     */
+    @GetMapping("/mapping/users/{userId}/orders/{orderId}")
+    public String mappingPath(@PathVariable String userId, @PathVariable Long orderId) {
+        log.info("mappingPath userId = {}, orderId = {}", userId, orderId);
+        return "OK";
+    }
+
+    /**
+     * 5. Content-Type 헤더 기반 추가 매핑(consumes)
+     * consumes : 컨틀로러가 받아들이는 미디어 타입
+     * consumes = "application/json"
+     * consumes = "!application/json"
+     * consumes = "application/*"
+     * consumes = "*\/*"
+     * application/json 대신 MediaType.APPLICATION_JSON_VALUE 사용 권장
+     */
+    // content-type이 application/json인 경우에만 호출
+    @PostMapping(value = "/mapping-consume", consumes = "application/json")
+    public String mappingConsumes() {
+        log.info("mappingConsumes");
+        return "OK";
+    }
+
+    /**
+     * 6. Accept 헤더 기반 추가 매핑(produces)
+     * produces : 컨트롤러가 만들어내는 미디어 타입
+     * produces = "application/json"
+     * produces = "!application/json"
+     * produces = "application/*"
+     * produces = "*\/*"
+     */
+    @PostMapping(value = "/mapping-produce", consumes = "application/json")
+    public String mappingProduces() {
+        log.info("mappingProduces");
+        return "OK";
+    }
+}
+```
+
+* `@RequestMapping` 은 URL 경로를 템플릿화 할 수 있는데, `@PathVariable` 을 사용하면 매칭되는 부분을 편리하게 조회할 수 있다
+
+<br>
+
+이전에도 사용한 회원 관리 애플리케이션의 HTTP API를 만든다고 가정하고, 매핑을 어떻게 하는지 알아보자. (데이터 넘어가는 부분은 제외)
+
+* 회원 관리 API
+  * 회원 목록 조회: `GET` `/users`
+  * 회원 등록:        `POST` `/users`
+  * 회원 조회:        `GET` `/users/{userId}`
+  * 회원 수정:        `PATCH` `/users/{userId}`
+  * 회원 삭제:        `DELETE` `/users/{userId}`
+
+<br>
+
+`MappingClassController`
+
+```java
+@RestController
+@RequestMapping("/mapping/users")
+public class MappingClassController {
+
+    @GetMapping // URL을 클래스 레벨의 @RequestMapping("/mapping/users") 이용 (메서드 레벨의 정보와 조합해서 사용)
+    public String user() {
+        return "get users";
+    }
+
+    @PostMapping
+    public String addUser() {
+        return "post users";
+    }
+
+    @GetMapping("/{userId}")
+    public String findUser(@PathVariable String userId) {
+        return "get userId = "+ userId;
+    }
+
+    @PatchMapping("/{userId}")
+    public String updateUser(@PathVariable String userId) {
+        return "update userId = "+ userId;
+    }
+
+    @DeleteMapping("/{userId}")
+    public String deleteUser(@PathVariable String userId) {
+        return "delete userId = "+ userId;
+    }
+}
+```
+
+<br>
+
+---
+
+### 4.3 HTTP Header 조회
+
+HTTP 헤더 정보를 조회하는 방법에 대해 알아보자.
+
+<br>
+
+`RequestHeaderController`
+
+```java
+@Slf4j
+@RestController
+public class RequestHeaderController {
+
+    @RequestMapping("/headers")
+    public String headers(HttpServletRequest request,
+                          HttpServletResponse response,
+                          HttpMethod httpMethod,
+                          Locale locale,
+                          @RequestHeader MultiValueMap<String, String> headerMap,
+                          @RequestHeader("host") String host, // 헤더를 개별로 조회하고 싶을 때
+                          @CookieValue(value = "myCookie", required = false) String cookie) {
+
+        log.info("request={}", request);
+        log.info("response={}", response);
+        log.info("httpMethod={}", httpMethod);
+        log.info("locale={}", locale);
+        log.info("headerMap={}", headerMap);
+        log.info("header host={}", host);
+        log.info("myCookie={}", cookie);
+
+        return "OK";
+    }
+}
+```
+
+* `@RequestHeader MultiValueMap<String, String> headerMap` 
+  * 모든 HTTP 헤더를 `MultiValueMap` 형식으로 조회한다
+  * `MultiValueMap` : `Map`과 유사하지만, 하나의 키에 여러 값을 받을 수 있다
+    * `value`들은 배열 형태로 저장된다
+* `@RequestHeader("host") String host`
+  * 특정 HTTP 헤더를 조회한다
+  * `required` : 필수 값 여부
+  * `defaultValue` : 기본 값
+* `@CookieValue(value = "myCookie", required = false) String cookie`
+  * 특정 쿠키 조회
+  * `required` : 필수 값 여부
+  * `defaultValue` : 기본 값
+
+<br>
+
+---
+
+### 4.4 HTTP Request Parameter
+
+HTTP 요청 메세지를 통해서 클라이언트에서 서버로 데이터를 전달하는 방법에 대해 알아보자.
+
+들어가기에 앞서, 클라이언트에서 서버로 요청 데이터를 전달할 때 주로 사용하는 3가지 방법을 되짚어보자.
+
+* `GET` - 쿼리 파라미터
+  * `/url?username=hello&age=99`
+  * 메세지 본문 없이, URL의 쿼리 스트링에 데이터를 포함해서 전달하는 방식
+  * 검색, 필터, 정렬, 페이징 등에 많이 사용한다
+* `POST` - HTML Form
+  * `content-type: application/x-www-form-urlencoded` 
+  * 메세지 본문에 쿼리 스트링 형태로 전달을 한다
+  * 회원 가입, 상품 주문, HTML 폼 등에 사용
+* `POST`, `PUT`, `PATCH` - HTTP 메세지 본문에 데이터를 직접 담아서 요청
+  * HTTP API에 주로 사용
+  * 데이터 형식은 주로 JSON을 사용
+
+<br>
+
+---
+
+#### 4.4.1 `@RequestParam`
+
+스프링이 제공하는 `@RequestParam`을 사용하면 요청 파라미터를 편리하게 사용할 수 있다.
+
+<br>
+
+`RequestParamController`
+
+```java
+@Slf4j
+@Controller
+public class RequestParamController {
+
+    // 1. request.getParameter()
+    @RequestMapping("/request-param-v1")
+    public void requestParamV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        int age = Integer.parseInt(request.getParameter("age"));
+        log.info("username = {}, age = {} ", username, age);
+
+        response.getWriter().write("ok");
+    }
+
+    // 2. @RequestParam()
+    @ResponseBody // 반환 스트링을 그대로 응답 메세지에 넣고 반환, @RestController 대신에 사용 가능
+    @RequestMapping("/request-param-v2")
+    public String requestParamV2(
+            // @RequestParam String username : 파라미터명과 변수명을 같게 하면 생략 가능
+            @RequestParam("username") String memberName,
+            @RequestParam("age") int memberAge
+    ) {
+        log.info("username = {}, age = {} ", memberName, memberAge);
+        return "ok";
+    }
+
+    // 3. @RequestParam() 개선
+    // Strint, int, Integer 같은 단순 타입이면 @RequestParam도 생략 가능
+    @ResponseBody
+    @RequestMapping("/request-param-v3")
+    public String requestParamV3(String username, int age) {
+        log.info("username = {}, age = {} ", username, age);
+        return "ok";
+    }
+
+    // 4. @RequestParam - required
+    // 파라미터 필수 여부
+    // "/request-param-required?username= " -> 빈문자로 통과한다!
+    @ResponseBody
+    @RequestMapping("/request-param-required")
+    public String requestParamRequired(
+            // required = true가 디폴트
+            // required = true : 파라미터가 무조건 있어야 함
+            @RequestParam(required = true) String username,
+            // required = false : 파라미터가 없어도 가능
+            // int를 사용하고 파라미터 값이 없으면 int에 null이 입력되기 때문에 예외 발생 -> Integer를 사용해야 한다
+            @RequestParam(required = false) int age) { // 500 예외 발생
+        log.info("username = {}, age = {} ", username, age);
+        return "ok";
+    }
+
+    // 4. @RequestParam - defaultValue
+    // 기본값 설정 - 빈 문자의 경우에도 기본값이 적용된다
+    @ResponseBody
+    @RequestMapping("/request-param-default")
+    public String requestParamDefault(
+            // defaultValue를 사용하면 사실 required는 필요가 없음(값이 없으면 무조건 기본값으로 설정되기 때문에)
+            @RequestParam(required = true, defaultValue = "guest") String username,
+            @RequestParam(required = false, defaultValue = "-1") Integer age) {
+        log.info("username = {}, age = {} ", username, age);
+        return "ok";
+    }
+
+    // 5. @RequestParam - 파라미터를 Map으로 조회하기
+    // Map(key=value)
+    // MultiValueMap(key=[value1,value2,..])
+    @ResponseBody
+    @RequestMapping("/request-param-map")
+    public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
+        log.info("username = {}, age = {} ", paramMap.get("username"), paramMap.get("age"));
+        return "ok";
+    }
+}
+```
+
+<br>
+
+---
+
+#### 4.4.2 `@ModelAttribute`
+
+개발을 하게되면 다음과 같이 요청 파라미터를 받아서 필요한 객체를 만들고 그 객체에 값을 넣어주어야 한다.
+
+```java
+ @RequestParam String username;
+ @RequestParam int age;
+ 
+ HelloData data = new HelloData();
+ data.setUsername(username);
+ data.setAge(age);
+```
+
+<br>
+
+스프링은 위의 과정을 `@ModelAttribute`라는 기능을 통해 자동화 시킬 수 있다.
+
+<br>
+
+요청 파라미터를 바인딩 받을 객체 `HelloData`
+
+`HelloData`
+
+```java
+@Data
+public class HelloData {
+    private String username;
+    private int age;
+}
+```
+
+* `@Data`(Lombok) : `@Getter`, `@Setter` , `@ToString` , `@EqualsAndHashCode` , `@RequiredArgsConstructor` 자동 적용
+
+<br>
+
+```java
+    // 1. @ModelAttribute 사용
+    // model.addAttribute(helloData) 도 함께 자동 적용
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData helloData) { // @ModelAttribute를 생략 가능
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        return "ok";
+    }
+```
+
+* `HelloData` 객체가 생성되고, 요청 파라미터의 값도 모두 들어가 있다
+* `@ModelAttribute` 동작
+  * `@ModelAttribute`가 있으면 `HelloData` 객체 생성
+  * 요청 파라미터의 이름으로 `HelloData` 객체의 프로퍼티를 찾는다
+  * 해당 프로퍼티의 setter를 호출해서 파라미터의 값을 입력(바인딩)한다
+  * 예) 파라미터 이름이 `username` 이면 `setUsername()` 메서드를 찾아서 호출하면서 값을 입력한다
+* `@ModelAttribute`를 생략 가능하다 → `@RequestParam`과 마찬가지로 생략하는 것은 별로일듯
+
+<br>
+
+---
+
+### 4.5 HTTP Request Message
+
+HTTP 요청 메세지로 데이터를 전달하는 것을 알아보기 전에 이전에 알아본 내용을 되짚어보자.
+
+* `POST`, `PUT`, `PATCH` - HTTP 메세지 본문에 데이터를 직접 담아서 요청
+  * HTTP API에 주로 사용
+  * 데이터 형식은 주로 JSON을 사용
+
+<br>
+
+요청 파라미터와 다르게, HTTP 메시지 바디를 통해 데이터가 직접 넘어오는 경우는 `@RequestParam` , `@ModelAttribute` 를 사용할 수 없다.
+
+<br>
+
+---
+
+#### 4.5.1 Text 전달
+
+`RequestBodyStringController`
+
+```java
+@Slf4j
+@Controller
+public class RequestBodyStringController {
+    /**
+     * 1.
+     * Stream은 바이트코드이기 때문에, 문자로 받을 때는 인코당 방법을 설정해야 한다
+     */
+    @PostMapping("/request-body-string-v1")
+    public void requestBodyStringV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletInputStream inputStream = request.getInputStream();
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("messageBody = {}", messageBody);
+        response.getWriter().write("ok");
+    }
+
+    /**
+     * 2. 코드 더 단순화
+     * InputStream(Reader), OutputStream(Writer) 등을 지원
+     */
+    @PostMapping("/request-body-string-v2")
+    public void requestBodyStringV2(InputStream inputStream, Writer responseWriter) throws IOException {
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+        log.info("messageBody = {}", messageBody);
+        responseWriter.write("ok");
+    }
+
+    /**
+     * 3. HttpEntity 사용
+     * HttpEntity: HTTP header, body 정보를 편리하게 조회
+     * - 메시지 바디 정보를 직접 조회(@RequestParam X, @ModelAttribute X)
+     * - 요청 파라미터를 조회하는 기능과 관계 없음
+     * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+     *
+     * 응답에서도 HttpEntity 사용 가능
+     * - 메시지 바디 정보 직접 반환
+     * - view 조회 X
+     * - 헤더 정보 포함 가능
+     * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+     */
+    @PostMapping("request-body-string-v3")
+    public HttpEntity<String> requestBodyStringV3(HttpEntity<String> httpEntity) {
+        String messageBody = httpEntity.getBody();
+        log.info("messageBody = {}", messageBody);
+        return new HttpEntity<>("ok");
+    }
+
+    /**
+     * 4. @RequestBody 사용
+     *
+     * @RequestBody
+     * - 메시지 바디 정보를 직접 조회(@RequestParam X, @ModelAttribute X)
+     * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+     *
+     * @ResponseBody
+     * - 메시지 바디 정보 직접 반환
+     * - view 조회 X
+     * - HttpMessageConverter 사용 -> StringHttpMessageConverter 적용
+     */
+    @ResponseBody
+    @PostMapping("/request-body-string-v4")
+    public String requestBodyStringV4(@RequestBody String messageBody) {
+        log.info("messageBody={}", messageBody);
+        return "ok";
+    }
+}
+```
+
+* `@RequestBody`
+  * `@RequestBody` 를 사용하면 HTTP 메시지 바디 정보를 편리하게 조회할 수 있다
+  * 헤더 정보가 필요하다면 `HttpEntity` 를 사용하거나 `@RequestHeader` 를 사용하면 된다
+  * 이렇게 메시지 바디를 직접 조회하는 기능은 요청 파라미터를 조회하는 `@RequestParam` , `@ModelAttribute` 와 전혀 관계가 없다
+    * `HttpMessageConverter`가 동작함
+* `@ResponseBody` 
+  * `@ResponseBody` 를 사용하면 응답 결과를 HTTP 메시지 바디에 직접 담아서 전달할 수 있다
+  * view 조회 x
+
+<br>
+
+---
+
+#### 4.5.2 JSON 전달
 
 
 

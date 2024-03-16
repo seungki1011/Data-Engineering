@@ -258,7 +258,7 @@ SSR VS CSR의 특징을 정리해보자.
 
 MVC 패턴은 기존에 하나의 영역으로 처리하던 것을 컨트롤러(Controller), 뷰(View), 모델(Model)의 3개 영역으로 분리하는 디자인 패턴이다. 웹 애플리케이션의 많은 경우 이 MVC 패턴을 이용한다.
 
-<p align="center">   <img src="img/mvc2.png" alt="spring MVC" style="width: 100%;"> </p>
+<p align="center">   <img src="img/mvc3.png" alt="spring MVC" style="width: 100%;"> </p>
 
 <p align='center'>MVC Pattern</p>
 
@@ -1921,7 +1921,7 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
 * `@ResponseBody` 의 경우도 컨트롤러의 반환 값을 이용한다
   * 응답의 경우 `@ResponseBody` 와 `HttpEntity` 를 처리하는 `ReturnValueHandler` 가 있다
   * 여기에서 HTTP 메시지 컨버터를 호출해서 응답 결과를 만든다
-* `@RequestBody` 또는 `@ResponseBiody` → `RequestResponseBodyMethodProcessor()` 사용
+* `@RequestBody` 또는 `@ResponseBody` → `RequestResponseBodyMethodProcessor()` 사용
 * `HttpEntity` → `HttpEntityMethodProcessor()` 사용
 
 <br>

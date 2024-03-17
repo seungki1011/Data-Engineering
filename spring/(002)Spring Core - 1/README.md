@@ -96,6 +96,8 @@
 
 <br>
 
+---
+
 #### 1.1.1 SRP (단일 책임 원칙)
 
 * **하나의 클래스는 하나의 책임만 가진다**
@@ -125,6 +127,8 @@ class Shape:
 
 <br>
 
+---
+
 #### 1.1.2 OCP (개방 폐쇄 원칙)
 
 * **소프트웨어 요소는 확장에 열려있으나 변경에는 닫혀 있어야 한다**
@@ -135,6 +139,8 @@ class Shape:
 * 역할과 구현의 분리를 생각하면 된다 (물론 이것만으로 OCP를 지켰다고 볼 수는 없다)
   * 예) 역할 : 도형 / 구현 : 원, 사각형, 삼각형 등
   * 역할과 구현의 분리를 위해서 인터페이스를 안정적으로 잘 설계하는 것이 중요하다
+
+<br>
 
 이전의 [Spring 소개](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md)에서의 [회원 관리 기능 예제](https://github.com/seungki1011/Data-Engineering/blob/main/spring/notes/(001)Spring%20Introduction.md#4-%ED%9A%8C%EC%9B%90-%EA%B4%80%EB%A6%AC-%EA%B8%B0%EB%8A%A5-%EA%B0%9C%EB%B0%9C-i)에서 레포지토리의 인터페이스를 바탕으로 클래스를 구현해서 갈아 끼우듯이 사용한 것을 떠올려보자. 
 
@@ -158,6 +164,8 @@ public class MemberService {
 
 <br>
 
+---
+
 #### 1.1.3 LSP (리스코프 치환 원칙)
 
 * 프로그램의 객체는 프로그램의 정확성을 깨드리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다
@@ -169,6 +177,8 @@ public class MemberService {
 
 <br>
 
+---
+
 #### 1.1.4 ISP (인터페이스 분리 원칙)
 
 * 자신이 사용하지 않는 메서드에 의존하지 않는다
@@ -179,9 +189,13 @@ public class MemberService {
   * 인터페이스를 분리하면 정비 인터페이스 자체가 변해도 운전자 클라이언트에 영향을 주지 않음
 * 분리하면 인터페이스가 명확해지고, 대체 가능성이 높아진다
 
+<br>
+
 ISP 원칙이라는 것은 결국 인터페이스가 너무 광범위하면 인터페이스를 구현하는 클래스들이 사용하지도 않을 메서드를 오버라이딩 해야하는 상황이 발생한다. 이를 방지하기 위해서 인터페이스는 지나치게 많은 기능을 구현하면 안되고, 인터페이스를 사용하는 객체 기준으로 적당히 분리되어야 한다.
 
 <br>
+
+---
 
 #### 1.1.5 DIP (의존관계 역전 원칙)
 
@@ -189,6 +203,8 @@ ISP 원칙이라는 것은 결국 인터페이스가 너무 광범위하면 인�
 * 쉽게 이야기해서 구현 클래스에 의존하지 말고 인터페이스에 의존하라는 뜻이다
   * 클라이언트가 인터페이스에 의존해야 유연하게 구현체를 변경할 수 있다
 * 역할과 구현에서 "역할"을 바라보고 의존해야 한다는 것 
+
+<br>
 
 이전의 **OCP**에서 사용한 예시를 가져와보자.
 
@@ -206,11 +222,15 @@ public class MemberService {
 
 <br>
 
+---
+
 #### 1.1.6 요약
 
 * 객체 지향의 핵심은 다형성
 * 다형성만 가지고 구현 객체를 변경할 때 클라이언트 코드도 함께 변경된다
 * **다형성만으로 OCP, DIP 원칙을 지킬 수 없다** 
+
+<br>
 
 다형성외에 추가적으로 필요한 요소를 스프링에서 찾아보자.
 
@@ -222,10 +242,14 @@ public class MemberService {
 
 스프링은 결국 의존성 주입(DI)와 DI 컨테이너 등의 기술을 지원해서 **다형성에 OCP, DIP를 가능하게 해준다**. 이를 통해 스프링을 이용하면 클라이언트 코드의 변경 없이 기능 확장이 가능하다. 
 
+<br>
+
 스프링이 나오게 된 배경은 결국 다음과 같다.
 
 * 순수하게 자바로만 OCP, DIP 원칙을 통해 개발을 하면 너무 어려움(할 일이 너무 많음)
 * 스프링 없이 OCP, DIP를 구현하려고 하면 결국에는 스프링 프레임워크(정확하게는 DI 컨테이너의 개념)를 만들어서 개발을 하게 되는 방향성으로 흘러감
+
+<br>
 
 > 실무에서의 고민
 >
@@ -277,6 +301,9 @@ public class MemberService {
    * 회원 가입과 조회가 가능하다
    * 회원 등급에는 일반과 VIP 등급이 존재한다
    * 회원 데이터를 위해 자체 DB를 구축할 수 있고, 외부 시스템을 사용할 수도 있다 (미정)
+
+
+
 2. 주문과 할인 정책
    * 회원은 상품 주문이 가능하다
    * 회원 등급에 따라 할인 정책이 다르게 적용될 수 있다
@@ -284,6 +311,8 @@ public class MemberService {
    * 할인 정책은 변경 가능성이 높다
      * 회사의 기본 할인 정책은 정해지지 않았다 (미정)
      * 서비스 개시 전 까지 고민하고, 최악의 경우 할인 적용이 없을 수도 있다 (미정)
+
+<br>
 
 일단 인터페이스를 만들어서 구현체를 언제든지 변경할 수 있는 객체 지향적 설계를 시도하기도 한다.
 
@@ -300,6 +329,8 @@ public class MemberService {
   * 회원 등급에는 일반과 VIP 등급이 존재한다
   * 회원 데이터를 위해 자체 DB를 구축할 수 있고, 외부 시스템을 사용할 수도 있다 (미정)
 
+<br>
+
 이제 회원 도메인에 대한 설계를 해보자.
 
 <p align="center">   <img src="img/memberdomain1.png" alt="Spring" style="width: 80%;"> </p>
@@ -309,7 +340,13 @@ public class MemberService {
 * 클라이언트가 회원 서비스를 호출한다, 이때 회원 서비스는 다음의 두 가지 기능을 제공해주는 레이어다
   * 회원 가입
   * 회원 조회
+
+
+
 * 회원 저장소 인터페이스를 만들 것이다
+
+
+
 * 회원 저장소 인터페이스의 구현체는 다음의 3가지 구현체를 만들 것
   * 메모리 회원 저장소 : 로컬 내의 메모리에 데이터를 저장하는 저장소 (오로지 개발용)
   * DB 회원 저장소
@@ -340,6 +377,8 @@ public class MemberService {
 ### 2.4. 회원 도메인 개발
 
 이전 설계를 바탕으로 회원 도메인에 대한 개발을 시작해보자.
+
+<br>
 
 ```member/Grade```
 
@@ -447,6 +486,8 @@ public class MemberServiceImpl implements MemberService{
 
 회원 도메인이 정상적으로 동작하는지 확인해보자.
 
+<br>
+
 ```test/member/MemberServiceTest```
 
 ```java
@@ -472,6 +513,8 @@ public class MemberServiceTest {
 * given, when, then 으로 테스트 코드를 짜는 것은 공식이 아님!
   * 상황에 따라서 적용하는 일종의 가이드 처럼 생각하는게 편함
 
+<br>
+
 지금까지 개발한 회원 도메인에서 문제가 존재함. ```MemberServiceImpl```에서 추상화(```MemberRepository```)에도 의존하고 구현체(```MemoryMemberRepository```)에도 의존하고 있음. 즉 DIP를 위반하고 있다. 
 
 <br>
@@ -490,6 +533,8 @@ public class MemberServiceTest {
     * 회사의 기본 할인 정책은 정해지지 않았다 (미정)
     * 서비스 오픈 전 까지 고민하고, 최악의 경우 할인 적용이 없을 수도 있다 (미정)
 
+<br>
+
 이제 주문과 할인 도메인에 대한 설계를 해보자.
 
 <p align="center">   <img src="img/orderdomain.png" alt="Spring" style="width: 80%;"> </p>
@@ -499,8 +544,14 @@ public class MemberServiceTest {
 * **주문 생성** : 클라이언트는 주문 서비스에 주문 생성을 요청할 수 있다
   * 간단한 예제를 위해서 그냥 상품의 정보 자체를 넘김
   * 실제로 개발할 때는 아이템이라는 객체를 만들어서  사용함
+
+
+
 * **회원 조회** : 할인을 위해서는 회원 등급이 필요하기 때문에 주문 서비스는 회원 저장소에서 회원을 조회한다
   * 회원 정보에서 등급과 같은 정보를 조회 
+
+
+
 * **할인 적용** : 주문 서비스는 회원 등급에 따른 할인 여부를 할인 정책에 위임한다 
 * **주문 결과 반환** : 주문 서비스는 할인 결과를 포함한 주문 결과를 반환한다
 * 간단한 예시를 위해 주문 데이터를 DB에 저장하는 과정은 생략 
@@ -663,11 +714,15 @@ public class OrderServiceTest {
 
 객체 지향의 원리들을 다시 한번 알아보면서, 지금까지 작성했던 코드에 적용해본다.
 
+<br>
+
 ### 3.1. 기존 예제의 할인 정책 변경
 
 기존의 고정 할인 정책을 정률 할인으로 바꿀려고 함.
 
 * 예) 20000원에 10% 할인 적용 → 2000원 할인
+
+<br>
 
 기존의 ```FixDiscountPolicy```를 ```RateDiscountPolicy```로 변경해서 개발하면 됨. (구현체 추가)
 
@@ -761,6 +816,8 @@ public class OrderServiceImpl implements OrderService{
 
 * 먼저 DIP 위반은 추상(인터페이스)에만 의존하도록 변경해야 한다
 
+<br>
+
 그러면 인터페이스에만 의존하도록 설계를 바꿔보자.
 
 ```order/OrderServiceImpl```
@@ -792,6 +849,8 @@ public class OrderServiceImpl implements OrderService{
 * 관심사를 분리하자! 그런데 관심사를 분리한다는 건 뭔 뜻일까?
 * 구현 객체는 딱 본인의 역할에 집중을 해야한다 → 구현 객체에게 맡겨지지 않은 책임은 다른 곳으로 분리해야 함
 
+<br>
+
 책임을 분리하기 위해서 ```AppConfig```라는 클래스를 도입해보자.
 
 ```AppConfig```
@@ -812,11 +871,17 @@ public class AppConfig {
 ```
 
 * ```AppConfig```는 애플리케이션의 전체 동작 방식을 설정(구성)하기 위해서, 구현 객체를 생성하고 연결해주는 책임을 가지는 별도의 클래스이다
+
+<br>
+
 * ```AppConfig```는 동작에 필요한 구현 객체를 생성 해줌
   * ```MemberServiceImpl```
   * ```MemoryMemberRepository```
   * ```OrderServiceImpl```
   * ```FixDiscountPolicy```
+
+<br>
+
 * 생성한 인스턴스의 참조를 생성자를 통해 주입(연결) 해줌
   * ```MemberServiceImpl```→```MemoryMemberRepository```
   * ```OrderServiceImpl```→```MemoryMemberRepository```, ```FixDiscountPolicy```
@@ -973,6 +1038,8 @@ public class AppConfig {
 * 아주 간단하게 ```AppConfig```의 일부만 수정해서 할인 정책을 변경했다
   * 사용 영역은 그 어떤 부분도 건들지 않았음!
 
+<br>
+
 이제 코드는 OCP와 DIP를 전부 준수하는 코드이다.
 
 > 지금까지의 코드는 SRP, DIP, OCP를 적용했다
@@ -982,8 +1049,14 @@ public class AppConfig {
 >   * ```AppConfig```를 통해서 관심사를 분리
 >   * ```AppConfig```는 구현 객체를 생성하고 연결해주는 책임을 가짐
 >   * 클라이언트는 실행하는 책임만 가짐
+>
+> <br>
+>
 > * DIP
 >   * ```AppConfig```가 구현체를 생성하고 클라이언트 코드에 주입해주기 때문에, 클라이언트 코드는 추상(인터페이스)만 의존한다
+>
+> <br>
+>
 > * OCP
 >   * 다형성을 사용하면서 DIP도 준수
 >   * 사용 영역과 구성 영역(```AppConfig```)으로 나눔
@@ -997,6 +1070,8 @@ public class AppConfig {
 
 IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 컨테이너(Container)에 대해서 알아보자.
 
+<br>
+
 #### 3.4.1 IoC(제어의 역전)
 
 > 말 그대로 제어의 역전을 의미한다. 프로그래머가 작성한 프로그램이 프레임워크의 [흐름 제어](https://ko.wikipedia.org/wiki/흐름_제어)를 받게 되는 소프트웨어 디자인 패턴을 말한다. 줄여서 **IoC**(Inversion of Control)이라고 부른다. 전통적인 프로그램에서의 흐름은 프로그래머가 작성한 프로그램이 라이브러리의 코드를 호출해 이용한다. 하지만 제어의 역전이 적용된 구조에서는 프레임워크의 코드가 프로그래머가 작성한 코드를 호출한다.
@@ -1007,26 +1082,44 @@ IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 
 
 <br>
 
+---
+
 #### 3.4.2 DI(의존성 주입)
 
 > 의존성 주입은 프로그램 디자인이 [결합도](https://ko.wikipedia.org/wiki/결합도)를 느슨하게 되도록하고 [의존관계 역전 원칙](https://ko.wikipedia.org/wiki/의존관계_역전_원칙)과 단일 책임 원칙(SRP)을 따르도록 클라이언트의 생성에 대한 의존성을 클라이언트의 행위로부터 분리하는 것이다.
 >
 > 의존성 주입의 의도는 객체의 생성과 사용의 관심을 분리하는 것이다.
 
+<br>
+
 * 의존관계는 정적인 클래스의 의존관계와. 실행 시점에 결정되는 동적인 객체(인스턴스)의 의존관계를 분리해서 생각해야 한다
+
+
+
 * **정적인 클래스 의존관계** : 클래스가 사용하는 ```import``` 코드만 보고 의존관계를 판단할 수 있다
   * 예) ```OrderServiceImpl```은 ```MemberRepository```, ```DiscountPolicy```에 의존하는 것을 알 수 있다
   * 이 의존관계 만으로는 실제 어떤 객체가 주입될지는 모른다 
+
+
+
 * **동적인 객체(인스턴스) 의존관계** : 애플리케이션의 실행 시점(runtime)에 실제 생성된 객체의 참조가 연결된 의존 관계
   * 실행이 되어야 ```MemoryMemberRepository```, ```RateDiscountPolicy```를 의존한다는 것을 알 수 있다
+
+
+
 * **애플리케이션 실행 시점(runtime)에 외부에서 실제 구현 객체를 생성하고 클라이언트에 전당해서 클라이언트와 서버의 실제 의존관계가 연결되는 것을 의존관계 주입(Dependency Injection)**이라고 한다
 
 <br>
+
+---
 
 #### 3.4.3 IoC, DI 컨테이너
 
 * 객체를 생성하고 의존관계를 연결해주는 역할을 해주는 것을 **IoC 컨테이너** 또는 **DI 컨테이너**라고 한다
   *  예) ```AppConfig```가 이 역할을 수행 해준다고 볼 수 있다
+
+
+
 * 최근에는 DI 컨테이너로 주로 불리며(의존 관계 주입에 초점을 맞춤), 오브젝트 팩토리라고 부르기도 한다
 
 <br>
@@ -1066,6 +1159,9 @@ public class AppConfig {
 * ```@Configuration``` : 스프링 컨테이너에 설정에 관한 메타 데이터 제공
   * 한 개 이상의 ```@Bean```을 정의
   * 쉽게 말해서 스프링 컨테이너는 ```@Configuration```이 붙은 클래스를 설정 정보로 이용한다
+
+
+
 * ```@Bean``` : 스프링 컨테이너는 ```@Bean```이 붙은 메서드를 호출해서 반환된 객체를 전부 스프링 컨테이너에 등록
   * 스프링 컨테이너에서 빈(Bean)을 관리
 
@@ -1132,7 +1228,13 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 * 스프링 컨테이너 생성
 * ```ApplicationContext``` : 스프링의 컨테이너를 나타내는 인터페이스
   * 빈의 수명주기, 의존관계, 설정 등을 관리
+
+
+
 * ```AnnotationConfigApplicationContext``` : ```@Configuration```을 이용해서 스프링 컨테이너에 설정을 제공해주고 싶을 때 사용하는 ```ApplicationContext```의 구현체
+
+
+
 * ```AppConfig.class```를 넘겨줘서 해당 설정을 사용한다 
 
 > 스프링 컨테이너는 ```BeanFactory```와 ```ApplicationContext```를 구분해서 이야기 한다.
@@ -1175,6 +1277,8 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 ### 4.2. 스프링 빈 조회
 
 이제 스프링 컨테이너에서 데이터를 조회해보자.
+
+<br>
 
 #### 4.2.1 컨테이너에 등록된 모든 빈 확인
 
@@ -1243,6 +1347,8 @@ name = discountPolicy object = de.springbasic1.discount.RateDiscountPolicy@12d2c
 * ```ROLE_INFRASTRUCTURE``` : 스프링 내부에서 사용하는 빈
 
 <br>
+
+---
 
 #### 4.2.2 빈 조회하기
 
@@ -1392,6 +1498,8 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 <br>
 
+---
+
 #### 4.2.3 상속 관계의 빈 조회
 
 * 부모 타입으로 조회하는 경우, 자식 타입도 함께 조회한다
@@ -1423,6 +1531,9 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
      * ```getBean()``` 제공
    * 지금까지 사용해왔던 대부분의 기능을 ```BeanFactory```가 제공했음
    * Lazy-loading : 빈 사용의 요청을 받았을 때 빈을 로딩
+
+
+
 2. ```ApplicationContext```
    * ```BeanFactory```의 기능을 모두 상속받아서 제공한다
    * ```ApplicationContext```의 경우 빈을 관리하고 조회하는 기능을 포함해서 수 많은 부가기능을 제공한다
@@ -1439,6 +1550,9 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 > * ```ApplicationContext``` 는 ```BeanFactory```가 제공하는 기능을 포함해서 편리한 부가 기능을 지원한다
 > * 대부분의 경우 ```ApplicationContext```를 사용한다
 > * ```BeanFactory```, ```ApplicationContext```를 스프링 컨테이너라 부른다
+>
+> 
+>
 > * 스프링 컨테이너는 우리가 자바 코드로 설정 정보를 넘겼던 방법 외에도, XML 형식을 포함한 여러가지 형식의 설정 정보를 받아드릴 수 있다
 >   * ```AnnotationConfigApplicationContext``` : 우리가 사용했던 ```AppConfig.class```
 >   * XML을 이용하는 경우 ```GenericXmlApplicationContext```
@@ -1454,6 +1568,8 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 싱글톤(Singleton) 컨테이너에 대해 알아보자.
 
+<br>
+
 ### 5.1. 스프링 없는 순수한 DI 컨테이너
 
 싱글톤에 대해 들어가기 전에 스프링 없이 DI 컨테이너를 구현하는 경우의 문제점을 한번 보고 가자.
@@ -1464,6 +1580,9 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 * 스프링이 없는 순수한 DI 컨테이너의 경우 요청을 할 때 마다 객체를 새로 생성한다
   * 1000개의 요청이 있으면 1000개의 객체가 생성된다 → 메모리 낭비가 심하다!
+
+
+
 * 해당 객체가 딱 1개만 생성되도록 하고, 공유하도록 설계하면 어떨까? → 이것이 **싱글톤(Singleton)** 패턴
 
 <br>
@@ -1474,6 +1593,8 @@ beansOfType = {memberRepository1=de.springbasic1.member.MemoryMemberRepository@d
 
 * 싱글톤 패턴은 클래스의 인스턴스가 딱 1개 생성되는 디자인 패턴이다
 * 인스턴스가 2개 이상 생성되지 못하도록 막아야한다 → ```private``` 생성자를 사용해서 외부에서 임의로 ```new```를 사용하지 못하도록 막는다
+
+<br>
 
 코드로 한번 살펴보자.
 
@@ -1557,8 +1678,14 @@ singletonService2 = de.springbasic1.singleton.SingletonService@6156496
 스프링 컨테이너는 이런 싱글톤 패턴의 문제점들을 해결하면서, 객체 인스턴스를 싱글톤으로 관리한다. (스프링 빈이 싱글톤으로 관리된다.)
 
 * 스프링 컨테이너는 객체 인스턴스를 싱글톤으로 관리한다
+
+
+
 * 스프링 컨테이너가 싱글톤 컨테이너의 역할을 한다
   * 싱글톤 객체를 생성하고 관리하는 기능을 싱글톤 레지스트리라고 한다
+
+
+
 * 스프링 컨테이너의 이러한 기능 덕분에 싱글턴 패턴의 단점들을 해결하면서 객체를 싱글톤으로 유지할 수 있다
   * 싱글톤 패턴을 위한 지저분한 코드 불필요
   * DIP, OCP, ```private``` 생성자로 부터 자유롭게 싱글톤 사용
@@ -1580,6 +1707,9 @@ singletonService2 = de.springbasic1.singleton.SingletonService@6156496
 싱글톤 방식을 사용할 때의 주의점에 대해서 알아보자.
 
 * 싱글톤 패턴을 사용하든, 싱글톤 컨테이너 방식을 사용하든, 객체 인스턴스를 하나만 생성해서 공유하는 싱글톤 방식은 여러 클라이언트가 하나의 같은 객체 인스턴스를 공유하기 때문에 **싱글톤 객체는 상태를 유지(stateful)하게 설계하면 안된다**
+
+
+
 * **무상태(stateless)하게  설계해야 한다**
   * 특정 클라이언트에 의존적인 필드가 있으면 안된다
   * 틀정 클라이언트가 값을 변경할 수 있는 필드가 있으면 안된다
@@ -1588,9 +1718,15 @@ singletonService2 = de.springbasic1.singleton.SingletonService@6156496
     * ```ThreadLocal``` 
       *  thread-local 변수를 제공해주는 클래스
       * 간단히 말하자면 각 쓰레드에 로컬한 변수를 만들 수 있도록 해준다
+
+
+
 * Stateless하다는 것을 쉽게 설명하자면 다음과 같다
   * 싱글톤으로 생성된 하나의 인스턴스를 어떤 직원이라고 생각하자. 이 직원이 "stateless" 하다는 것은 하나의 작업에서 다음 작업으로 옮겨갈 때 아무것도 기억하지 않는다는 뜻이다. 즉, 새로운 작업을 할 때 마다 마치 새로고침 당한것 처럼 이전 작업에 대한 기록이나 기억이 없는 것이다.
   * 이런 stateless 상태의 장점은 서로 다른 요청들에 대한 혼란 없이 간단하고 안전하게 요청을 수행할 수 있다는 것이다
+
+
+
 * **스프링 빈의 필드에 공유 값을 성정하면 큰 장애가 발생 할 수 있다!**
 
 <br>
@@ -1715,6 +1851,8 @@ public class AppConfig {
 
 위에서 볼 수 있듯이 2개의 ```MemoryMemberRepository```가 생성되면서 싱글톤이 깨지는 것 보인다. 그러면 정말로 싱글톤이 깨진 것일까? 결론적으로 말하자면 아니다. 이전에도 설명했듯이 스프링 컨테이너는 싱글톤을 보장해준다. 코드로 확인해보면 ```memberRepository``` 인스턴스는 모두 같은 인스턴스가 공유되어 사용된다. 실제로 확인해보면 ```memberRepository()```의 호출은 단 한번만 호출된다. 
 
+<br>
+
 > ```memberRepository()```는 다음과 같이 3번 호출되어야 할 것 처럼 보인다.
 >
 > 1. 스프링 컨테이너가 스프링 빈에 등록하기 위해 @Bean이 붙어있는 ```memberRepository()``` 호출
@@ -1759,6 +1897,8 @@ void configurationDeep() {
 * CGLIB가 동작하는 과정은 아마도 다음과 같을 것이다
   * ```memoryMemberRepository```가 이미 스프링 컨테이너에 등록되었다면? → 스프링 컨테이너에서 찾아서 반환
   * 스프링 컨테이너에 없다면? → 기존 로직을 호출해서 ```memoryMemberRepository```를 생성하고 스프링 컨테이너에 등록
+
+<br>
 
 이 처럼 동작하기 때문에 싱글톤이 보장되는 것이다.
 
@@ -1889,8 +2029,14 @@ public class MemoryMemberRepository implements MemberRepository{
 <p align='center'>@ComponentScan</p>
 
 * `@ComponentScan` 은 `@Component` 가 붙은 모든 클래스를 스프링 빈으로 등록한다
+
+
+
 * 스프링 빈의 기본 이름은 클래스명을 사용하되 맨 앞글자만 소문자를 사용하도록 설정된다(스프링이)
   * 예) ```MemberServiceImpl``` 클래스 → ```memberServiceImpl```
+
+
+
 * 빈 이름을 직접 지정하고 싶은 경우 : ```@Component("memberService2")``` 처럼 이름을 부여하면 된다다
 
 <br>
@@ -1900,6 +2046,9 @@ public class MemoryMemberRepository implements MemberRepository{
 <p align='center'>@Autowired</p>
 
 * 생성자에 `@Autowired` 를 지정하면, 스프링 컨테이너가 자동으로 해당 스프링 빈을 찾아서 주입한다
+
+
+
 * 이때 기본 조회 전략은 타입이 같은 빈을 찾아서 주입한다
   * 예)  ```MemberRepository```과 같은 타입을 찾아서 주입 → ```memoryMemberRepository```
   * ```getBean(MemberRepository.class)```와 동일하다고 이해하면 됨
@@ -1935,10 +2084,19 @@ public class MemoryMemberRepository implements MemberRepository{
 * ```@Component``` 
 * ```@Configuration``` : 스프링의 설정 정보
   * 스프링 설정 정보를 인식하고, 스프링 빈이 싱글톤으로 유지하도록 처리를 해준다
+
+
+
 * ```@Controller``` : MVC 컨트롤러에 사용
   * MVC 컨트롤러로 인식한다
+
+
+
 * ```@Service``` : 비즈니스 로직(서비스 레이어)에 사용
   * 특별한 처리는 없지만, 핵심 비즈니스 로직이 존재한다는 것을 파악하는데 도움이 된다다
+
+
+
 * ```@Repository``` : 데이터 접근 계층에서 사용
   * 스프링 데이터 접근 계층으로 인식하고, 데이터 계층의 예외를 스프링 예외로 변환해준다
 
@@ -2022,6 +2180,8 @@ public class MemoryMemberRepository implements MemberRepository{
    * 컴포넌트 스캔에 의해 자동으로 스프링 빈이 등록될 때, 그 이름이 서로 같은 경우 스프링은 오류를 방생시킨다
    * ```ConflictBeanDefinitionException``` 발생
 
+
+
 2. 수동 빈 등록 vs 자동 빈 등록
 
    * 수동으로 등록한 빈과 자동으로 등록된 빈이 충돌하는 경우 수동 빈이 등록 우선권을 가진다 (수동 빈이 자동 빈을 오버라이딩한다)
@@ -2043,6 +2203,8 @@ public class MemoryMemberRepository implements MemberRepository{
 
 의존 관계 주입(의존성 주입, DI)과 ```@Autowired```의 사용법에 대해 알아보자.
 
+<br>
+
 ### 7.1. DI(의존 관계 주입)
 
 의존관계 주입은 크게 4가지 방법이 존재한다.
@@ -2053,6 +2215,8 @@ public class MemoryMemberRepository implements MemberRepository{
 4. 메서드 주입
 
 <br>
+
+---
 
 #### 7.1.1 생성자 주입(constructor injection)
 
@@ -2085,6 +2249,8 @@ public class OrderServiceImpl implements OrderService {
 * **생성자가 딱 1개만 존재하면** ```@Autowired```**를 생략해도 자동 주입 된다!** (스프링 빈에만 해당)
 
 <br>
+
+---
 
 #### 7.1.2 수정자 주입(setter injection)
 
@@ -2123,6 +2289,8 @@ public class OrderServiceImpl implements OrderService {
 
 <br>
 
+---
+
 #### 7.1.3 필드 주입(field injection)
 
 이름 그대로 필드에 주입하는 방법이다.
@@ -2158,6 +2326,8 @@ void fieldInjectionTest() {
 * 외부에서 변경이 불가능 하다
 
 <br>
+
+---
 
 #### 7.1.4 메서드 주입(method injection)
 
@@ -2320,6 +2490,8 @@ noBean3 = Optional.empty
 
 <br>
 
+---
+
 #### 7.4.2 ```@Autowired 필드명```
 
 ```@Autowired 필드명``` 매칭에 대하여 알아보자.
@@ -2346,6 +2518,8 @@ noBean3 = Optional.empty
 * ```@Autowired```의 매칭을 정리하지면 : 타입 매칭 → 타입 매칭 결과가 2개 이상인 경우 → 필드명(파라미터명)으로 빈 이름 매칭
 
 <br>
+
+---
 
 #### 7.4.3 ```@Qualifier```
 
@@ -2392,6 +2566,8 @@ noBean3 = Optional.empty
 * ```@Qualifier```는 빈의 수동 등록에도 사용 가능하다
 
 <br>
+
+---
 
 #### 7.4.4 ```@Primary```
 
@@ -2490,6 +2666,8 @@ policyList = [de.springbasic1.discount.FixDiscountPolicy@6f3c660a, de.springbasi
 ## 8) Spring Bean Lifecycle Callbacks
 
 빈 생명주기 콜백에 대하여 알아보자.
+
+<br>
 
 ### 8.1. 빈 생명주기 콜백
 
@@ -2696,9 +2874,15 @@ close: http://123.456.789.1
 * Singleton(싱글톤) 
   * 디폴트 스코프
   * 스프링 컨테이너의 시작과 종료까지 유지되는 가장 넓은 스코프
+
+
+
 * Prototype(프로토타입)
   * 스프링 컨테이너가 프르토타입 빈의 생성, 의존관계 주입, 초기화까지만 처리한다
   * ```@Predestroy```같은 소멸 메서드는 호출되지 않는다
+
+
+
 * 웹 관련 스코프들
   * request
   * session
@@ -2730,8 +2914,14 @@ close: http://123.456.789.1
   1. 프로토타입 스코프의 빈을 스프링 컨테이너에 요청한다
   2. 스프링 컨테이너는 이 시점에 프로토타입 빈을 생성하고, 필요한 의존관계를 주입한다
   3. 스프링 컨테이너는 생성한 프로토타입 빈을 클라이언트에게 반환한다
+
+
+
 * 스프링 컨테이너는 프로토타입 빈 생성 ,의존관계 주입, 초기화까지만 처리한다
 * ```@Predestroy```같은 소멸 메서드는 호출되지 않는다
+
+
+
 * 프로토타입 빈은 프로토타입 빈을 조회한 클라이언트가 관리해야한다
   * 예) 종료 메서드에 대한 호출도 클라이언트가 해야한다
 
@@ -2749,10 +2939,19 @@ close: http://123.456.789.1
   * ```clientBean```은 의존관계 자동 주입을 사용하고, 주입 시점에 스프링 컨테이너에 프로토타입 빈을 요청한다
   * 스프링 컨테이너는 프로토타입 빈을 생성해서 ```clientBean```에 반환한다
   * 생성과 반환 시점에서 프르토타입 빈의 ```count```필드는 0이다
+
+
+
 * ```clientBean```은 프로토타입 빈을 내부 필드에 보관
+
+
+
 * 클라이언트 A가 ```clientBean```을 스프링 컨테이너에 요청해서 받는다
   * ```clientBean.logic()``` 호출
   * 프로토타입 빈의 ```addCount()```가 호출되면서 프로토타입 빈의 ```count```가 증가 (0 → 1)
+
+
+
 * 클라이언트 B가 ```clientBean```을 스프링 컨테이너에 요청해서 받는다. 이때 ```clientBean```은 싱글톤이기 때문에 항상 같은 ```clientBean```이 반환된다
   * ```clientBean.logic()``` 호출
   * 프로토타입 빈의 ```addCount()```가 호출되면서 프로토타입 빈의 ```count```가 증가 (1 → 2)
@@ -2822,10 +3021,19 @@ close: http://123.456.789.1
   * HTTP 요청 하나가 들어오고 나갈 때 까지 유지되는 스코프
   * 각각의 HTTP 요청에 별도의 빈 인스턴스가 생성되고 관리된다
   * 데이터를 개별 요청마다 다르게 관리하고 싶을 떄 사용할 수 있다
+
+
+
 * **session**
   * HTTP 세션과 동일한 생명주기를 가지는 스코프
+
+
+
 * **application**
   * ```ServletContext```와 동일한 생명주기를 가지는 스코프
+
+
+
 * **websocket**
   * 웹 소켓과 종일한 생명주기를 가지는 스코프
 

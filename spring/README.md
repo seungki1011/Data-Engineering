@@ -125,11 +125,47 @@
      * Request Scope
 10. [전체 요약](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(002)Spring%20Core%20-%201#%EC%A0%84%EC%B2%B4-%EC%9A%94%EC%95%BD)
 
-
-
 ---
 
 ### [3) Spring MVC](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201)
+
+1. [Web Application](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#1-web-application)
+   * Web Server, Was
+   * Thread Pool
+   * AJAX
+   * SSR(서버 사이드 렌더링), CSR(클라이언트 사이드 렌더링)
+2. [MVC(Model View Controller)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#2-mvcmodel-view-controller)
+   * MVC 소개
+   * Front Controller
+   * Front Controller 도입
+   * View 분리
+   * Model 도입
+   * 사용성 개선
+   * Adapter 도입
+3. [Spring MVC](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#3-spring-mvc)
+   * Spring MVC 구조
+     * `HandlerMapping`, `HandlerAdapter`
+     * `ViewResolver`
+   * Spring MVC 사용해보기
+   * 사용성 개선
+4. [Spring MVC - 1(기능 살펴보기)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#4-spring-mvc---1%EA%B8%B0%EB%8A%A5-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
+   * Logging
+   * `MappingController`(요청 매핑)
+   * HTTP Header 조회
+   * HTTP Request Parameter
+     * `@RequestParam`
+     * `@ModelAttribute`
+   * HTTP Request Message
+     * Text 전달
+     * JSON 전달
+   * HTTP Response
+     * Static Resource 제공
+     * View Template 사용
+     * HTTP 메세지 사용(메세지 바디에 직접 입력)
+   * `HttpMessageConverter`
+   * `RequestMappingHandlerAdapter`
+
+---
 
 ### [4) Jdbc]()
 
@@ -142,7 +178,7 @@
 * 객체 지향의 사실과 오해
 * AOP
 * ```BeanDefinition``` - 빈 설정 메타 정보
-* ~```Lombok``` 라이브러리 사용법~
+* ~~```Lombok``` 라이브러리 사용법~~ 
 * Dependency Lookup (DL)
 
 ---

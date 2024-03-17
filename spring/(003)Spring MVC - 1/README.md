@@ -8,12 +8,12 @@
 
 ## Index
 
-1. [Web Application]()
+1. [Web Application](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#1-web-application)
    * Web Server, Was
    * Thread Pool
    * AJAX
    * SSR(서버 사이드 렌더링), CSR(클라이언트 사이드 렌더링)
-2. [MVC(Model View Controller)]()
+2. [MVC(Model View Controller)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#2-mvcmodel-view-controller)
    * MVC 소개
    * Front Controller
    * Front Controller 도입
@@ -21,13 +21,13 @@
    * Model 도입
    * 사용성 개선
    * Adapter 도입
-3. [Spring MVC]()
+3. [Spring MVC](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#3-spring-mvc)
    * Spring MVC 구조
      * `HandlerMapping`, `HandlerAdapter`
      * `ViewResolver`
    * Spring MVC 사용해보기
    * 사용성 개선
-4. [Spring MVC - 1(기능 살펴보기)]()
+4. [Spring MVC - 1(기능 살펴보기)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#4-spring-mvc---1%EA%B8%B0%EB%8A%A5-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
    * Logging
    * `MappingController`(요청 매핑)
    * HTTP Header 조회
@@ -64,6 +64,9 @@
   * **대부분 정적 콘텐츠 제공**
   * 대부분의 웹서버는 멀티스레딩을 지원하지 않는다
   * 예) Nginx, Apache
+
+
+
 * **웹 애플리케이션 서버(WAS)**
   * **프로그램 코드를 실행해서 애플리케이션 로직(비즈니스 로직)을 처리**
   * 웹 서버에 사용되는 프로토콜 외에도 추가 통신 프로토콜을 사용하여 다른 소프트웨어 구성 요소와 통신
@@ -168,7 +171,7 @@ WAS의 주요 튜닝 포인트는 최대 스레드(max thread)이다.
 
 이상적인 최대 스레드 수는 작업 형태, 서버 성능, 아키텍쳐에 따라 달라질 수 있기 때문에 경험적으로 찾아야한다. 큐 사이즈에 제한이 없으면 요청이 무한히 쌓이는 위험 요인(메모리 고갈)이 될 수 있으니, 가능한 큐 사이즈를 확인해보는 것도 중요하다.
 
-결론적으로 실제 서비스와 유사하게 성능 테스트를 해보자. (툴 : Apache ab, nGrinder 등) 
+테스트는 실제 서비스와 유사하게 성능 테스트를 해보자. (툴 : Apache ab, nGrinder 등) 
 
 <br>
 
@@ -228,6 +231,9 @@ SSR VS CSR의 특징을 정리해보자.
   * 모든 데이터가 담긴 HTML을 브라우저로 전달하기 때문에 SEO에 유리
   * SSR을 사용하더라도, JS를 사용해서 화면 일부를 동적으로 변경 가능
   * 관련 기술 : JSP, 타임리프(템플릿 엔진)
+
+
+
 * CSR
   * 초기 로딩 이후의 구동 속도가 빠름
     * SSR에 비해 초기 로딩 속도가 느림
@@ -266,8 +272,14 @@ MVC 패턴은 기존에 하나의 영역으로 처리하던 것을 컨트롤러(
   * 컨틀로러에 비즈니스 로직을 둘 수도 있지만, 이 경우 컨트롤러가 너무 많은 역할을 담당한다
   * **비즈니스 로직을 서비스 레이어라는 계층을 별도로 만들어서 처리하는 경우가 많다**
   * 컨트롤러는 비즈니스 로직이 있는 서비스를 호출하는 역할
+
+
+
 * **모델(Model)**: 뷰에 출력할 데이터를 담아둔다
   * 뷰는 비즈니스 로직이나 데이터 접근을 몰라도 됨
+
+
+
 * **뷰(View)** : 모델에 담겨있는 데이터를 이용해 화면을 그린다(대부분 HTML 생성을 말한다)
 
 <br>
@@ -295,6 +307,9 @@ MVC 패턴은 기존에 하나의 영역으로 처리하던 것을 컨트롤러(
   * 프론트 컨트롤러가 요청에 맞는 컨트롤러를 찾아서 호출한다
   * 프론트 컨트롤러를 제외한 나머지 컨트롤러는 서블릿을 사용하지 않아도 된다
     * 서블릿을 만들었던 이유는 싱글톤으로 관리되는 서블릿을 통해 요청을 받고 응답을 생성하기 위함이였음 → 이제는 프론트 컨틀롤러 서블릿을 통해 요청을 다 받으면 됨 → 나머지 컨틀로러는 서블릿을 사용하지 않아도 됨
+
+
+
 * 스프링 웹 MVC의 `DispatcherServlet`이 프론트 컨트롤러 패턴으로 구현되어 있음
 
 <br>
@@ -437,6 +452,9 @@ Model을 도입해보자.
   * 컨틀로러 입장에서 `HttpServletRequest`, `HttpServletResponse`는 필요하지 않다
   * 요청 파라미터의 정보는 `Map`으로 대신 넘기도록 하면 지금 구조에서 컨트롤러가 서블릿 기술을 몰라도 동작 가능
   * `request` 개체를 모델로 사용하는 대신, 별도의 모델 객체를 만들어서 반환하면 된다
+
+
+
 * 뷰 이름 중복 제거
   * 컨트롤러에서 지정하는 뷰 이름에 중복이 있다
   * 컨트롤러는 뷰의 논리 이름을 반환하고, 실제 물리 위치의 이름은 프론트 컨트롤러에서 처리하도록 하자 → 향후 뷰의 폴더 위치가 함께 이동해도 프론트 컨트롤러만 수정하면 된다 (논리 이름 : 의미를 나타내는 이름)
@@ -660,6 +678,9 @@ public class FrontControllerServletV4 extends HttpServlet {
 * `DispatcherServlet` : 스프링 MVC의 프론트 컨트롤러
   * `HttpServlet`을 상속 받아서 사용하고, 서블릿으로 동작한다
   * 스프링 부트는 `DispatcherServlet`을 서블릿으로 자동 등록하면서 모든 경로(`urlPatterns="/"`)에 대해 매핑한다
+
+
+
 * `DispatcherServlet` 호출 → `HttpServlet`이 제공하는 `service()` 호출 → `FrameworkServlet.service()`를 시작으로 여러 메서드 호출 → 그 중에서 제일 중요한 것은 `DispatcherServlet.doDispatch()`의 호출이다
 
 <br>
@@ -765,6 +786,9 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
 * `HandlerMapping`
   0. `RequestMappingHandlerMapping` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
   1. `BeanNameUrlHanlderMapping` : 스프링 빈의 이름으로 핸들러를 찾는다 (위의 예시에서 사용)
+
+
+
 * `HandlerAdapter`
   0. `RequestMappingHandlerAdapter` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
   1. `HttpRequestHandlerAdapter` : `HttpRequestHandler` 처리
@@ -886,12 +910,21 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
 * `@Controller`
   * 스프링이 자동으로 스프링 빈으로 등록한다. (내부에 `@Component` 애노테이션이 있어서 컴포넌트 스캔의 대상이 됨)
   * 스프링 MVC에서 애노테이션 기반 컨트롤러로 인식한다
+
+
+
 * `@RequestMapping`
   * 요청 정보를 매핑한다
   * 해당 URL이 호출되면 이 메서드가 호출된다
   * 애노테이션을 기반으로 동작하기 때문에, 메서드의 이름은 임의로 지으면 된다
+
+
+
 * `ModelAndView`
   * 모델과 뷰 정보를 담아서 반환
+
+
+
 * 기존에는 분리되어 있던 컨트롤러 클래스들을 하나로 통합했다
 * 클래스 레벨의 `@RequestMapping`를 이용해서 URL의 중복을 제거 할 수 있다
   * 예) 클래스 레벨 : `@RequestMapping("/springmvc/v2/members")` + 메서드 레벨 : `@RequestMapping("/new-form")`
@@ -966,6 +999,9 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
   * 스프링은 HTTP 요청 파라미터를 `@RequestParam` 으로 받을 수 있다
   * `@RequestParam("username")` 은 `request.getParameter("username")` 와 거의 같은 코드라 생각하면 된다
   * 그냥 Model 파라미터를 받고 `model.addAttribute("member", member)` 을 사용해도 된다
+
+
+
 * `@RequestMapping` 은 URL만 매칭하는 것이 아니라, HTTP Method도 함께 구분할 수 있도록 할 수 있다
   * 예) 처음에는 `@RequestMapping("/new-form")` → `@RequestMapping(value = "/new-form", method = RequestMethod.GET)` → `@GetMapping("/new-form")`
   * 위에서 볼 수 있듯이, `@GetMapping`, `@PostMapping` 등 으로 더 편리하게 사용할 수 있다
@@ -1034,12 +1070,24 @@ name = Spring
   * `@Controller` 는 반환 값이 `String` 이면 뷰 이름으로 인식된다. 그래서 뷰를 찾고 뷰가 랜더링 된다.
   * `@RestController` 는 반환 값으로 뷰를 찾는 것이 아니라, HTTP 메시지 바디에 바로 입력한다.
     * 실행 결과로 그냥 스트링을 받을 수 있다
+
+
+
 * 로그 포맷 : `time` `log_level` `process_id` `thread_name` `class_name` `log_message`
+
+
+
 * 콘솔에서 `trace`와 `debug` 로그를 확인할 수 없다 → 로그 레벨 설정을 변경하면 볼 수 있다
   * LEVEL: `TRACE > DEBUG > INFO > WARN > ERROR`
   * 개발 서버는 `debug` 출력
   * 운영 서버는` info` 출력
+
+
+
 * `@Slf4j`(Lombok)를 사용하면 `private final Logger log = LoggerFactory.getLogger(LogTestController.class);`를 생략할 수 있다
+
+
+
 * `log.debug("data="+data)` 방식으로 사용하면 안된다
   * 로그 출력 레벨을 info로 설정해도 해당 코드에 있는 "data="+data가 실제 실행이 되어 버린다. 결과적으로 문자 더하기 연산이 발생한다.
 
@@ -1246,10 +1294,16 @@ public class RequestHeaderController {
   * 모든 HTTP 헤더를 `MultiValueMap` 형식으로 조회한다
   * `MultiValueMap` : `Map`과 유사하지만, 하나의 키에 여러 값을 받을 수 있다
     * `value`들은 배열 형태로 저장된다
+
+
+
 * `@RequestHeader("host") String host`
   * 특정 HTTP 헤더를 조회한다
   * `required` : 필수 값 여부
   * `defaultValue` : 기본 값
+
+
+
 * `@CookieValue(value = "myCookie", required = false) String cookie`
   * 특정 쿠키 조회
   * `required` : 필수 값 여부
@@ -1269,10 +1323,16 @@ HTTP 요청 메세지를 통해서 클라이언트에서 서버로 데이터를 
   * `/url?username=hello&age=99`
   * 메세지 본문 없이, URL의 쿼리 스트링에 데이터를 포함해서 전달하는 방식
   * 검색, 필터, 정렬, 페이징 등에 많이 사용한다
+
+
+
 * `POST` - HTML Form
   * `content-type: application/x-www-form-urlencoded` 
   * 메세지 본문에 쿼리 스트링 형태로 전달을 한다
   * 회원 가입, 상품 주문, HTML 폼 등에 사용
+
+
+
 * `POST`, `PUT`, `PATCH` - HTTP 메세지 본문에 데이터를 직접 담아서 요청
   * HTTP API에 주로 사용
   * 데이터 형식은 주로 JSON을 사용
@@ -1416,12 +1476,24 @@ public class HelloData {
 ```
 
 * `HelloData` 객체가 생성되고, 요청 파라미터의 값도 모두 들어가 있다
+
 * `@ModelAttribute` 동작
+
   * `@ModelAttribute`가 있으면 `HelloData` 객체 생성
   * 요청 파라미터의 이름으로 `HelloData` 객체의 프로퍼티를 찾는다
   * 해당 프로퍼티의 setter를 호출해서 파라미터의 값을 입력(바인딩)한다
   * 예) 파라미터 이름이 `username` 이면 `setUsername()` 메서드를 찾아서 호출하면서 값을 입력한다
-* `@ModelAttribute`를 생략 가능하다 → `@RequestParam`과 마찬가지로 생략하는 것은 별로일듯
+
+  
+
+* `@ModelAttribute`가 하는 일 정리
+
+  * 요청 파라미터 처리 : `HelloData` 객체 생성 → 요청 파라미터의 값을 프로퍼티 접근법(setXxx)으로 입력해준다
+  * `Model`추가 : 모델에 `@ModelAttribute`로 지정한 객체를 자동으로 넣어준다 → `model.addAttribute` 생략 가능
+
+
+
+* `@ModelAttribute`를 생략 가능하다 → `@RequestParam`과 마찬가지로 생략하는 것은 권장하지 않음
 
 <br>
 
@@ -1521,6 +1593,9 @@ public class RequestBodyStringController {
   * 헤더 정보가 필요하다면 `HttpEntity` 를 사용하거나 `@RequestHeader` 를 사용하면 된다
   * 이렇게 메시지 바디를 직접 조회하는 기능은 요청 파라미터를 조회하는 `@RequestParam` , `@ModelAttribute` 와 전혀 관계가 없다
     * `HttpMessageConverter`가 동작함
+
+
+
 * `@ResponseBody` 
   * `@ResponseBody` 를 사용하면 응답 결과를 HTTP 메시지 바디에 직접 담아서 전달할 수 있다
   * view 조회 x
@@ -1853,10 +1928,16 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
   * 클래스 타입: `byte[]` , 미디어타입: `*/*` 
   * 요청 예) `@RequestBody byte[] data`
   * 응답 예) `@ResponseBody return byte[]` 쓰기 미디어타입 `application/octet-stream`
+
+
+
 * `StringHttpMessageConverter` : `String` 문자로 데이터를 처리한다.
   * 클래스 타입: `String` , 미디어타입: `*/*`
   * 요청 예) `@RequestBody String data`
   * 응답 예) `@ResponseBody return "ok"` 쓰기 미디어타입 `text/plain`
+
+
+
 * `MappingJackson2HttpMessageConverter` : `application/json`
   * 클래스 타입: 객체 또는 `HashMap` , 미디어타입 `application/json` 관련
   * 요청 예) `@RequestBody HelloData data`
@@ -1908,6 +1989,9 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
   * 이렇게 파라미터를 유연하게 처리할 수 있는 이유가 바로 `ArgumentResolver` 덕분
   * 애노테이션 기반 컨트롤러를 처리하는 `RequestMappingHandlerAdapter` 는 바로 이 `ArgumentResolver` 를 호출해서 컨트롤러(핸들러)가 필요로 하는 다양한 파라미터의 값(객체)을 생성한다
   * 파리미터의 값이 모두 준비되면 컨트롤러를 호출하면서 값을 넘겨준다
+
+
+
 * `ReturnValueHandler`
   * `HandlerMethodReturnValueHandler` 를 줄여서 `ReturnValueHandler` 라 부른다
   * `ArgumentResolver` 와 비슷한데, 이것은 응답 값을 변환하고 처리한다
@@ -1918,25 +2002,21 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
 * HTTP 메시지 컨버터를 사용하는 `@RequestBody` 도 컨트롤러가 필요로 하는 파라미터의 값에 사용된다
   * 요청의 경우 `@RequestBody` 를 처리하는 `ArgumentResolver` 가 있고, `HttpEntity` 를 처리하는 `ArgumentResolver` 가 있다
   * `ArgumentResolver` 들이 HTTP 메시지 컨버터를 사용해서 필요한 객체를 생성 하는 것이다
+
+
+
 * `@ResponseBody` 의 경우도 컨트롤러의 반환 값을 이용한다
   * 응답의 경우 `@ResponseBody` 와 `HttpEntity` 를 처리하는 `ReturnValueHandler` 가 있다
   * 여기에서 HTTP 메시지 컨버터를 호출해서 응답 결과를 만든다
+
+
+
 * `@RequestBody` 또는 `@ResponseBody` → `RequestResponseBodyMethodProcessor()` 사용
 * `HttpEntity` → `HttpEntityMethodProcessor()` 사용
 
 <br>
 
 ---
-
-
-
-
-
-
-
-
-
-
 
 
 

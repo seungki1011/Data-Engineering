@@ -30,9 +30,9 @@
 15. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism)
 16. [예외 처리(Exception Handling)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception)
 17. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time)
-18. [```Collection```](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collections)
+18. [```Collection```](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection)
 19. [제네릭스(Generics)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics)
-20. [Enum](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum)
+20. [열거형(Enum)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum)
 21. [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Stream)
 22. [쓰레드(Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(022)%20Thread)
 23. [JVM](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20JVM)
@@ -68,6 +68,7 @@
 * ```DecimalFormat```
 * ```SimpleDateFormat```
 * ```Collections```
+* Java Serializable
 
 <br>
 

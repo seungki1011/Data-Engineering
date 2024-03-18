@@ -16,7 +16,7 @@
    * [조건문(Conditional)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#4-%EC%A1%B0%EA%B1%B4%EB%AC%B8conditional)
    * [반복문(Loop)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#5--%EB%B0%98%EB%B3%B5%EB%AC%B8loop)
 3. [배열(Array)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(003)%20Array)
-3. [형변환(Type Casting)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(004)%20Typecasting)
+4. [형변환(Type Casting)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(004)%20Typecasting)
 5. [메서드(Method)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(005)%20Method)
 6. [클래스(Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(006)%20Class)
 7. [참조형(Reference Type)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(007)%20Reference%20Type)
@@ -32,9 +32,10 @@
 17. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time)
 18. [```Collection```](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collections)
 19. [제네릭스(Generics)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics)
-20. [쓰레드(Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Thread)
-21. [스트림(Stream)]()
-22. [JVM]()
+20. [Enum](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum)
+21. [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Stream)
+22. [쓰레드(Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(022)%20Thread)
+23. [JVM](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20JVM)
 
 
 

@@ -1,6 +1,6 @@
 package de.java.generics;
 
-public class GenericsMain1 {
+public class GenericsMain {
     public static void main(String[] args) {
 
     }

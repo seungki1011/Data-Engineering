@@ -96,7 +96,7 @@ ArrayList<MyClass> myList = new ArrayList<MyClass>(); // T -> MyClass
 
 ---
 
-### 1.4 Generic Class
+### 1.4 제네릭 클래스(Generic Class)
 
 [```GenericClassMain.java```]()
 
@@ -180,9 +180,41 @@ Box value: This is a string!
 
 ---
 
-## 2) 
+## 2) `HashMap<K,V>`
 
+<br>
 
+```java
+public class HashMapGenerics {
+    public static void main(String[] args) {
+
+        HashMap<String, Person> hashMap = new HashMap<>(); // 타입 지정 생략 가능
+        hashMap.put("personA", new Person("ksk", "male", 28));
+        hashMap.put("personB", new Person("messi", "male", 40));
+
+        System.out.println(hashMap.get("personA"));
+        System.out.println(hashMap.get("personA").name);
+
+        System.out.println("------------------------");
+
+        Person person = hashMap.get("personB");
+        System.out.println(person);
+        System.out.println(person.name);
+    }
+}
+```
+
+```
+de.java.generics.Person@2a139a55
+ksk
+------------------------
+de.java.generics.Person@15db9742
+messi
+```
+
+* 여러개의 타입 변수가 필요한 경우, `','`를 구분자로 선언
+
+<br>
 
 
 
@@ -196,21 +228,32 @@ Box value: This is a string!
 
 ---
 
-## 3) Constraint Generic
+## 3) 제네릭 제약(Generic Constraints)
 
+### 3.1 제한된 제네릭 클래스
 
-
-<br>
-
-### 3-1) ```extends```
-
-
+* `extends`를 이용해서 대입할 수 있는 타입을 제한할 수 있다
 
 <br>
 
-### 3-2) ```super```
+```java
+class Person2<T extends Parent>{ // Parent의 자손 타입만 지정 가능
+    ArrayList<T> list = new ArrayList<>();
+}
 
+class Person3<T extends Parent & MyInterface>{ // & MyInterface로 MyInterface 인터페이스를 구현한 클래스로 제한 가능
+    ArrayList<T> list = new ArrayList<>();
+}
+```
 
+```java
+    Person2<Parent> p1 = new Person2<Parent>();
+    Person2<Child> p2 = new Person2<Child>(); // Child는 Parent의 자손이기 때문에 가능
+```
+
+* 인터페이스의 경우에도 `extends`를 사용한다
+* `<T extends Parent & MyInterface>` : `Parent`의 자손 타입이면서, `MyInterface` 인터페이스를 구현한 타입으로 제한
+  * 만약 `Parent`가 이 `MyInterface`를 구현한 클래스라면 사실 필요가 없음
 
 
 
@@ -220,27 +263,133 @@ Box value: This is a string!
 
 ---
 
-## 4) Wildcard
+### 3.2 제네릭스의 제약
+
+위의 `Box` 클래스를 다시 사용해보자.
+
+```java
+class Box<T> { // 타입 파라미터 'T'로 설정
+    private T value;
+		
+  	// static T value; // static 멤버에 타입 변수 사용 불가
+  
+    public Box(T value) {
+        this.value = value;
+    }
+
+    // Getter and Setter
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+
+    // value의 type을 출력하는 메서드
+    public void printValueType() {
+        System.out.println("Type of value: "+value.getClass().getName());
+    }
+}
+```
+
+```java
+public class GenericConstraintTest {
+    public static void main(String[] args) {
+
+        // 1. 타입 변수에 대입은 인스턴스 별로 다르게 가능하다
+      	Box<Integer> integerBox = new Box<>(100); // Integer 객체만 저장 가능
+        Box<String> stringBox = new Box<>("My name is stringBox"); // String 객체만 저장가능
+
+        System.out.println(integerBox.getValue());
+        System.out.println(integerBox.getValue().getClass());
+        System.out.println("-------------------------");
+        System.out.println(stringBox.getValue());
+        System.out.println(stringBox.getValue().getClass());
+
+    }
+}
+```
+
+```
+100
+class java.lang.Integer
+-------------------------
+My name is stringBox
+class java.lang.String
+```
+
+* 타입 변수에 대입은 인스턴스 별로 다르게 가능하다
+* `static` 멤버에 타입 변수 사용 불가 → `static`이라는 것은 모든 인스턴스에 공통으로 사용가능하다는 것
 
 
 
+* 배열을 생성할 때 타입 변수 사용불가 → `T[] toArray() { T[] tmpArr = new T[itemArr.length] };` 불가
+  * `new` 다음에 `T` 불가
 
 
 
+* 타입 변수로 배열 선언은 가능하다 → `T[] itemArr;` 가능
 
+<br>
 
+---
 
+## 4) 와일드카드(Wildcard, `<?>`)
 
+와일드 카드에 대해서 알아보자.
 
+```java
+ArrayList<? extends Product> list = new ArrayList<Tv>(); // 가능
+ArrayList<? extends Product> list = new ArrayList<Computer>(); // 가능
 
+ArrayList<Product> list = new ArrayList<Tv>(); // 불가능, 대입 타입의 불일치
+```
 
+* 대입 타입이 무조건 일치해야한다는 제약을 벗어나기 위해서 와일드 카드 사용
+* 와일드 카드로 하나의 참조 변수로 대입된 타입이 다른 객체를 참조 가능해진다
 
+<br>
 
+> `<? extends T>` : 와일드 카드의 상한 제한. `T`와 그 자손들만 가능(가장 많이 사용) - upperbounded wildcard
+>
+> `<? super T>` : 와일드 카드의 하한 제한. `T`와 그 조상들만 가능 - lowerbounded wildcard
+>
+> `<?>` : 제한 없음. 모든 타입이 가능하다.
 
+<br>
+
+---
+
+## 5) 제네릭 메서드(Generic Method)
+
+```java
+static <T> void sort(List<T>, list, Comparator<? super T> o){...}
+```
+
+* 제네릭 타입이 선언된 메서드를 제네릭 메서드라고 한다 (타입 변수는 메서드 내에서만 유효하다)
+
+<br>
+
+```java
+class Box<T> {
+  
+  // 생략...
+  
+  static <T> void sort(List<T>, list, Comparator<? super T> o){ // 메서드의 T는 클래스의 T와 서로 별개의 타입 변수이다
+    // 제네릭 메서드의 T는 메서드 내에서만 스코프를 가진다
+    // 생략...
+  }
+ 
+}
+```
+
+* 클래스의 타입 매개변수 `<T>`와 메서드의 타입 매개변수 `<T>`는 별개이다
+
+<br>
 
 ## Reference
 
 ---
 
 1. [자바의 정석-기초편](https://www.youtube.com/user/MasterNKS)
-1. [패스트 캠퍼스 - 한번에 끝내는 데이터 엔지니어링](https://fastcampus.co.kr/data_online_engineering)

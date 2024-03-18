@@ -1,4 +1,6 @@
 > Java 기본 개념 및 문법
+>
+> [인프런 - 실전 자바 로드맵(김영한)](https://www.inflearn.com/roadmaps/744)과 [자바의 정석](https://www.youtube.com/watch?v=QcXLiwZPnJQ&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=135)을 참고했습니다
 
 ## Index
 

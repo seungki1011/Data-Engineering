@@ -126,13 +126,13 @@
     * 열거형을 사용하는 이유
 21. [내부 클래스(Inner Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Inner%20Class)
 22. [Object, String Class](https://github.com/seungki1011/Data-Engineering/tree/main/java/(022)%20Object%2C%20String%20Class)
-23. [Lambda](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Lambda)
+23. [쓰레드(Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread)
+24. [Lambda](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda)
     * 람다식(Lambda expression)
     * 함수형 인터페이스(functional interface)
     * 메서드 참조(method reference)
     * 람다의 단점
-24. [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Stream)
-25. [쓰레드(Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Thread)
+25. [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream)
 26. [JVM](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20JVM)
 
 

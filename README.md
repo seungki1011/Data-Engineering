@@ -71,6 +71,7 @@
 
 ## Further Reading
 
+* 빅데이터를 지탱하는 기술
 * 객체지향의 사실과 오해
 * Clean Coding
 * [Why we're leaving cloud](https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0)

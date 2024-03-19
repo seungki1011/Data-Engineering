@@ -171,7 +171,7 @@ The car is currently moving on ground!
 
 * **Java는 단일 상속만을 허용한다**
   * Java는 다중 상속(multiple inheritance)을 허용하지 않음
-  * Java는 [인터페이스(interface)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(18)%20Polymorphism.md#7-interface)를 사용해서 다중 상속과 비슷한 것을 사용 가능
+  * Java는 [인터페이스(interface)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#7-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4interface)를 사용해서 다중 상속과 비슷한 것을 사용 가능
   * 다중 상속 허용시 발생하는 [다이아몬드 문제](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem) 또는 클래스 계층의 복잡화 같은 문제들 때문
 
 

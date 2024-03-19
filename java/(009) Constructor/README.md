@@ -15,8 +15,8 @@
 
 
 
-* [접근 제어자(access modifier)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)를 명시하지 않으면 생성자는 기본적으로 ```package-private```이 됨(같은 패키지 내에서만 접근 가능)
-  * [접근 제어자](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(14)%20Access%20Modifier.md)에서 추가 설명
+* [접근 제어자(access modifier)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(011)%20Access%20Modifier)를 명시하지 않으면 생성자는 기본적으로 ```package-private```이 됨(같은 패키지 내에서만 접근 가능)
+  * 접근 제어자에서 추가 설명
 
 <br>
 
@@ -162,7 +162,7 @@ Car car = new Car(); // 기본 생성자 호출
 
 ## 5) 생성자 오버로딩(Constructor Overloading_
 
-* 생성자를 추가해서 [오버로딩]() 가능
+* 생성자를 추가해서 [오버로딩](https://github.com/seungki1011/Data-Engineering/tree/main/java/(005)%20Method#4-%EC%98%A4%EB%B2%84%EB%A1%9C%EB%94%A9overloading) 가능
 
 <br>
 

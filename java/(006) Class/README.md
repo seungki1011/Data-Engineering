@@ -1,7 +1,7 @@
 ## 1) Class & Instance
 
 * 클래스
-* [클래스는 첫글자 대문자, Camel Case](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#2-java-convention)
+* [클래스는 첫글자 대문자, Camel Case](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#2-java-convention)
 * 하나의 소스파일에는 둘 이상의 ```public class```가 존재해선 안됨
 
 

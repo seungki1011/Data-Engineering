@@ -85,7 +85,7 @@ class ImportTest {
 
 ## 3) 패키지 관례(Package Convention)
 
-* [자바 관례 참고](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#2-java-convention)
+* [자바 관례 참고](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#2-java-convention)
 * 관례라는 것은 무조건 지켜야 하는 것은 아님
 * **패키지 이름은 모두 소문자**
 

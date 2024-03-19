@@ -3,7 +3,7 @@
 * 정적
   * 정적 메서드 (static method)
   * 정적 변수 (static variable)
-* [Java Memory Structure]()
+* [Java Memory Structure](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#3-java-memory-structure)
 
 <br>
 

@@ -1,6 +1,6 @@
 ## 1) Primitive vs Reference
 
-* [기본형(Primitive Type) vs 참조형(Reference Type)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#primitive-type)
+* [기본형(Primitive Type) vs 참조형(Reference Type)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#1-variables)
 
 
 

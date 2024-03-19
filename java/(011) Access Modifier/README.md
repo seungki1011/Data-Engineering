@@ -16,7 +16,7 @@
 
 * 접근 제어자는 속성과 기능을 어느 범위로 외부로부터 숨길 것인지 설정하기 위해서 사용
 
-* ```protected```는 [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md#5-protected)에서 추가 설명
+* ```protected```는 [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance)에서 추가 설명
 
 <br>
 
@@ -195,7 +195,7 @@ private String = This is a private String(Inner Access)
 
 ## 3) 캡슐화(Encapsulation)
 
-* [캡슐화](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md#5-encapsulation)
+* [캡슐화](https://github.com/seungki1011/Data-Engineering/tree/main/java/(011)%20Access%20Modifier#3-%EC%BA%A1%EC%8A%90%ED%99%94encapsulation)
   * Recap: 캡슐화는 속성(data)과 기능(method)을 하나로 묶고, 외부에 꼭 필요한 기능만 노출하는 것 (나머지는 알약 처럼 내부에 숨기는 것)
 
 

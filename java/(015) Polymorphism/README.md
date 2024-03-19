@@ -199,7 +199,7 @@ Exception in thread "main" java.lang.ClassCastException: de.java.polymorphism.Pa
 
 
 
-* 다운캐스팅이 업캐스팅 보다 위험한 이유는 업캐스팅에서 객체 생성시 해당 탑의 상위 부모 타입까지 모두 함께 생성됨([참고](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md#3-java-inheritance-memory-allocation))
+* 다운캐스팅이 업캐스팅 보다 위험한 이유는 업캐스팅에서 객체 생성시 해당 탑의 상위 부모 타입까지 모두 함께 생성됨([참고](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#3-java-inheritance-memory-allocation))
   * 업캐스팅은 메모리 상에 부모 클래스에 대한 인스턴스가 모두 존재하기 때문에 안전함
   * 다운캐스팅의 경우 인스턴스에 존재하지 않는 하위 타입으로 다운캐스팅하는 겨우 문제 발생 가능 (자식 타입은 생성 되지 않기 때문에)
 

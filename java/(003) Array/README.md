@@ -1,7 +1,7 @@
 ## 1) 배열(Array)
 
 * 배열
-* 배열은 [참조 자료형](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(2)%20Variables.md#reference-type)
+* 배열은 [참조 자료형](https://github.com/seungki1011/Data-Engineering/tree/main/java/(007)%20Reference%20Type)
 * 동일 자료형의 데이터를 연속된 메모리 공간에 저장
 
 

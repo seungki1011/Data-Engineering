@@ -4,7 +4,7 @@
 * 메서드명은 동사로
 * 코드의 용이한 모듈화, 재사용성 증가 등으로 유지보수가 쉬워짐
 * 메서드는 보통 멤버변수와 더불어서 클래스(class)의 속성 중 하나
-* [캡슐화(encapsulation)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(11)%20OOP.md#5-encapsulation)에 대한 내용 공부 할 것
+* [캡슐화(encapsulation)](https://github.com/seungki1011/Data-Engineering/blob/main/java/(011)%20Access%20Modifier/README.md#3-%EC%BA%A1%EC%8A%90%ED%99%94encapsulation)에 대한 내용 공부 할 것
 * 메서드 호출을 하면 파라미터에 인수(argument) 대입
 * 값을 반환 하지 않는 경우 반환 타입 ```void```
 

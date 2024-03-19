@@ -12,5 +12,6 @@ public class MethodRefTest {
         fruitList.forEach(x -> System.out.println(x));
         System.out.println("--2. 메서드 참조 사용--");
         fruitList.forEach(System.out::println);
+
     }
 }

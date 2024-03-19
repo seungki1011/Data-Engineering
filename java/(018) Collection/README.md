@@ -792,9 +792,8 @@ The returned element after pop(): Urgent Task 1
 
 ---
 
-## 8) Anonymous Class
+## 8) 익명클래스(Anonymous Class)
 
-* 익명 클래스
 * 이름이 없는 일회용 클래스
 * 정의와 생성을 동시에 한다
 

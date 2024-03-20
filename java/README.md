@@ -4,9 +4,9 @@
 
 <br>
 
-## Index
-
 ---
+
+## Index
 
 1. [자바 소개(Java Introduction)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction)
 2. [Basic Syntax](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax)
@@ -135,11 +135,9 @@
 25. [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream)
 26. [JVM](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20JVM)
 
-
+---
 
 ## Requirements
-
----
 
 * Java 8^
 * IntelliJ
@@ -149,8 +147,6 @@
 ---
 
 ## P.S.
-
----
 
 * 모든 다이어그램은 UML 표준을 준수하지 않았습니다
 * 전부 작성 후 교차 검증 예정

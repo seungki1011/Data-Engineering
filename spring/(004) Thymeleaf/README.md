@@ -26,6 +26,38 @@
 
 <br>
 
+### 2.0 `th:href`, `th:onclick`
+
+#### 2.0.1 `th:href`
+
+```html
+<link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+```
+
+* `th:href="@{/css/bootstrap.min.css}"`
+  * `href="value1"` 을 `th:href="value2"` 의 값으로 변경한다
+  * 타임리프 뷰 템플릿을 거치게 되면 원래 값을 `th:xxx` 값으로 변경한다. 만약 값이 없다면 새로 생성한다.
+  * HTML을 그대로 볼 때는 `href` 속성이 사용되고, 뷰 템플릿을 거치면 `th:href`의 값이 `href`로 대체되면서 동적으로 변경할 수 있다
+  * 대부분의 HTML 속성을 `th:xxx` 로 변경할 수 있다
+
+
+
+* **URL 링크 표현식** :  `th:href="@{/css/bootstrap.min.css}"`
+  * `@{...}` : 타임리프는 URL 링크를 사용하는 경우 `@{...}` 를 사용한다. 이것을 URL 링크 표현식이라 한다.
+  * URL 링크 표현식을 사용하면 서블릿 컨텍스트를 자동으로 포함한다
+
+<br>
+
+---
+
+#### 2.0.2 `th:onclick`
+
+누르면 해당 URL로 이동하도록 처리하는 것에 타임리프를 적용하면 다음과 같다
+
+* `onclick="location.href='addForm.html'"` → `th:onclick="|location.href='@{/basic/items/add}'|"`
+
+<br>
+
 ---
 
 ### 2.1 `text`, `utext`
@@ -1087,5 +1119,244 @@ public class TemplateController {
 
 ## 3) 타임리프 - 스프링
 
+타임리프는 스프링 없이도 동작하지만, 스프링과 통합을 위한 다양한 기능을 편리하게 제공한다.
 
+타임리프 스프링 통합 메뉴얼 : [https://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html](https://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html)
+
+다음은 스프링 통합으로 추가되는 기능들이다.
+
+* 스프링 EL 문법 통합
+* `${@myBean.doSomething()}` 처럼 스프링 빈 호출 지원
+* 편리한 폼 관리를 위한 추가 속성
+* 펌 컴포넌트 기능
+  * 체크박스, 라디오 버튼, 리스트 등을 편리하게 사용할 수 있는 기능 지원
+* 스프링의 메세지, 국제화 기능의 편리한 통합
+* 스프링의 검증, 오류 처리 통합
+* 스프링의 ConversionService 통합
+
+<br>
+
+`build.gradle`에 다음한 줄을 추가하면 Gradle은 타임리프와 관련 된 라이브러리를 다운로드 받고, 스프링 부트는 타임리프와 관련된 설정용 스프링 빈을 자동으로 등록해준다.
+
+```groovy
+implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+```
+
+* 스프링 부트가 제공하는 타임리프 설정 : [https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-templating](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-templating)
+
+<br>
+
+---
+
+### 3.1 입력 Form 처리
+
+타임리프가 제공하는 입력 폼 기능을 적용해서 폼 기능을 적용하지 않은 폼 코드를 개선해보자.
+
+사용할 기능에 대한 설명부터 보자.
+
+* `th:object` : 사용할 객체를 지정한다
+
+
+
+* `*{...}` : 선택 변수 식
+  *  `th:object`에서 선택한 객체에 접근한다
+
+
+
+* `th:field`
+  * HTML 태그의 `id` , `name` , `value` 속성을 자동으로 처리해준다
+
+<br>
+
+```java
+    @GetMapping("/add")
+    public String addForm(Model model) {
+        model.addAttribute("item", new Item());
+        return "form/addForm";
+    }
+```
+
+* `th:object` 를 적용하려면 먼저 해당 오브젝트 정보를 넘겨주어야 한다
+* 등록 폼이기 때문에 데이터가 비어있는 빈 오브젝트를 만들어서 뷰에 전달한다
+
+<br>
+
+```html
+<form action="item.html" th:action th:object="${item}" method="post">
+	<div>
+  	<label for="itemName">상품명</label>
+    <input type="text" id="itemName" th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요">
+  </div>
+  <div>
+    <label for="price">가격</label>
+    <input type="text" id="price" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요">
+  </div>
+  <div>
+    <label for="quantity">수량</label>
+    <input type="text" id="quantity" th:field="*{quantity}" class="form-control" placeholder="수량을 입력하세요">
+  </div>
+```
+
+* `th:object="${item}"` : `<form>` 에서 사용할 객체를 지정한다
+
+
+
+* `th:field="*{itemName}"`
+  * `*{itemName}`이라는 선택 변수 식을 사용했는데, `${item.itemName}`과 같다
+  * 선택 변수 식( `*{...}` )을 적용할 수 있는 이유는 앞서 `th:object` 로 `item` 을 선택했기 때문이다
+
+
+
+* `th:field` 는 `id` , `name` , `value` 속성을 모두 자동으로 만들어준다
+  * `id` : `th:field` 에서 지정한 변수 이름과 같다. `id="itemName"`
+    * `id` 속성을 제거해도 `th:field` 가 자동으로 만들어준다(위 예제에서는 그냥 추가해서 사용함)
+  * `name` : `th:field` 에서 지정한 변수 이름과 같다. `name="itemName"`
+  * `value` : `th:field` 에서 지정한 변수의 값을 사용한다. `value=""`
+
+<br>
+
+```html
+// 1. 렌더링 전
+ <input type="text" id="itemName" th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요">
+
+// 2. 렌더링 후
+<input type="text" id="itemName" class="form-control" placeholder="이름을 입력하세요" name="itemName" value="">
+```
+
+<br>
+
+---
+
+### 3.2 단일 체크박스
+
+타임리프가 지원하는 기능으로 단일 체크박스를 만들어보자.
+
+```html
+ <!-- single checkbox -->
+<div>판매 여부</div> <div>
+     <div class="form-check">
+         <input type="checkbox" id="open" th:field="*{open}" class="form-check-input">
+				 <label for="open" class="form-check-label">판매 오픈</label>
+     </div>
+ </div>
+```
+
+<br>
+
+레더링 후의 결과를 살펴보자
+
+```html
+<!-- single checkbox -->
+<div>판매 여부</div> <div>
+     <div class="form-check">
+         <input type="checkbox" id="open" class="form-check-input" name="open" value="true">
+				 <input type="hidden" name="_open" value="on"/>
+				 <label for="open" class="form-check-label">판매 오픈</label>
+     </div>
+</div>
+```
+
+* 보면 히든필드 `<input type="hidden" name="_open" value="on"/>` 가 자동으로 생성 되어있는 것을 확인 할 수 있다
+
+<br>
+
+> 히든필드를 사용하는 이유
+>
+> 타임리프를 사용하지 않고 체크박스를 구현하는 경우, 체크박스의 체크를 해제하고 폼을 전송하는 경우 `open`이라는 필드 자체가 서버로 전송되지 않는 것을 확인할 수 있다. 이런 경우 `item.open`은 `null`이 된다. `null`이 오는 상황에 대한 처리를 서버에서 구현을 했다면 상관이 없겠지만, 그렇지 않은 경우 문제들이 발생할 수 있다. 이를 해결하기 위해서, 히든필드를 하나 만들고 체크박스 이름 앞에 `_`를 붙여서 전송하면 체크를 해제하고 폼을 보내는 경우에도 인식할 수 있다. 
+>
+> 체크 해제를 인식하기 위한 히든 필드 : `<input type="hidden" name="_open" value="on"/>`
+>
+> 체크를 해제해서 폼을 보내는 경우, `open`은 전송되지 않지만, 히든 필드의 `_open`은 전송된다. 이 경우 스프링 MVC는 체크를 해제했다고 판단한다.
+>
+> 체크를 해제하지 않고 보내는 경우 `open`에 값이 있는 것을 확인하고 사용한다. `_open`은 무시된다.
+
+<br>
+
+다시 돌아와서 타임리프를 사용하는 경우 굳이 히든필드를 일일이 넣어줄 필요없이 자동으로 생성된다.
+
+실행 로그를 확인해보면 다음과 같다. (로그 : `log.info("item.open={}", item.getOpen());`)
+
+```
+FormItemController        : item.open=true //체크 박스를 선택하는 경우
+FormItemController        : item.open=false //체크 박스를 선택하지 않는 경우
+```
+
+* 이제 체크를 해제해도 `null`이 아니라 `false`로 온다
+
+<br>
+
+상품 상세 페이지 처럼 정보만 확인하는 페이지에서는 체크박스나 라디오 같은 요소를 비활성화 시키고 싶은 경우 `disabled`을 추가하면 된다.
+
+```html
+<input type="checkbox" id="open" class="form-check-input" disabled name="open" value="true" checked="checked"> <!-- disabled 추가 -->
+```
+
+<br>
+
+---
+
+### 3.3 멀티 체크박스
+
+다중으로 체크박스를 추가해서 여러개를 선택할 수 있도록 해보자.
+
+폼 컨트롤러에 `@ModelAttribute`를 추가해서 사용해보자.
+
+```java
+@ModelAttribute("regions")
+public Map<String, String> regions() {
+	Map<String, String> regions = new LinkedHashMap<>(); 
+  regions.put("SEOUL", "서울");
+	regions.put("BUSAN", "부산");
+	regions.put("JEJU", "제주");
+	return regions;
+}
+```
+
+* 등록 폼, 상세화면, 수정 폼에서 모두 서울, 부산, 제주라는 체크 박스를 반복해서 보여주어야 한다. 이렇게 하려면 각각의 컨트롤러에서`model.addAttribute(...)`을 사용해서 체크 박스를 구성하는 데이터를 반복해서 넣어주어야 한다
+* `@ModelAttribute` 는 이렇게 컨트롤러에 있는 별도의 메서드에 적용할 수 있다
+* 이렇게하면 해당 컨트롤러를 요청할 때 `regions` 에서 반환한 값이 자동으로 모델( `model` )에 담기게 된다
+* 이 방법이 효율적인 방법이라는 것은 아니다
+
+<br>
+
+```html
+<!-- multi checkbox -->
+<div>
+	<div>등록 지역</div>
+	<div th:each="region : ${regions}" class="form-check form-check-inline">
+		<input type="checkbox" th:field="*{regions}" th:value="${region.key}" class="form-check-input">
+		<label th:for="${#ids.prev('regions')}" th:text="${region.value}" class="form-check-label">서울</label>
+  </div>
+</div>
+```
+
+* `th:for="${#ids.prev('regions')}"`
+  * 멀티 체크박스는 같은 이름의 여러 체크박스를 만들 수 있다
+  * 문제는 이렇게 반복해서 HTML 태그를 생성할 때, 생성된 HTML 태그 속성에서 `name` 은 같아도 되지만, `id` 는 모두 달라야 한다
+  * 타임리프는 체크박스를 `each` 루프 안에서 반복해서 만들 때 임의로 `1` ,`2` ,`3` 숫자를 뒤에 붙여준다
+
+<br>
+
+결과
+
+```html
+<input type="checkbox" value="SEOUL" class="form-check-input" id="regions1" name="regions">
+
+<input type="checkbox" value="BUSAN" class="form-check-input" id="regions2" name="regions">
+
+<input type="checkbox" value="JEJU" class="form-check-input" id="regions3" name="regions">
+```
+
+<br>
+
+---
+
+## 4) etc
+
+* 라디오 버튼이나, 선택 리스트도 체크박스와 비슷하게 사용할 수 있다
+
+
+
+* HTTP 요청 메세지를 서버에서 보고 싶으면 `application.properties`에 다음 설정을 추가하자
+  * `logging.level.org.apache.coyote.http11=trace`
 

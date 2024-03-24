@@ -1,3 +1,36 @@
+## Index
+
+1. [타임리프(Thymeleaf) 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#1-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84thymeleaf-%EC%86%8C%EA%B0%9C)
+2. [타임리프의 기본 기능](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#2-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B8%B0%EB%8A%A5)
+   * [`th:href`, `th:onclick`](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#20-thhref-thonclick)
+   * [`text`, `utext`](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#21-text-utext)
+   * [SpringEL](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#22-springel)
+     * 변수 표현식 사용해보기
+     * 타임리프 지역 변수
+   * [기본 객체](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#23-%EA%B8%B0%EB%B3%B8-%EA%B0%9D%EC%B2%B4)
+   * [유틸리티 객체](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#24-%EC%9C%A0%ED%8B%B8%EB%A6%AC%ED%8B%B0-%EA%B0%9D%EC%B2%B4)
+   * [URL 링크](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#25-url-%EB%A7%81%ED%81%AC-%EC%A4%91%EC%9A%94)
+   * [리터럴 대체](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#26-%EB%A6%AC%ED%84%B0%EB%9F%B4-%EB%8C%80%EC%B2%B4)
+   * [연산](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#27-%EC%97%B0%EC%82%B0)
+   * [속성값 설정](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#28-%EC%86%8D%EC%84%B1%EA%B0%92-%EC%84%A4%EC%A0%95)
+   * [반복(Loop)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#29-%EB%B0%98%EB%B3%B5loop)
+   * [조건부](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#210-%EC%A1%B0%EA%B1%B4%EB%B6%80)
+   * [주석](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#211-%EC%A3%BC%EC%84%9D)
+   * [`th:block`](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#212-thblock)
+   * [자바스크립트 인라인](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#213-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9D%B8%EB%9D%BC%EC%9D%B8)
+   * [템플릿 조각, 레이아웃(template fragment, layout)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#2132-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9D%B8%EB%9D%BC%EC%9D%B8-each)
+     * 템플릿 조각
+     * 레이아웃
+     * 레이아웃을 `<html>` 전체로 확장
+3. [타임리프 - 스프링](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#3-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84---%EC%8A%A4%ED%94%84%EB%A7%81)
+   * [입력 Form 처리](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#31-%EC%9E%85%EB%A0%A5-form-%EC%B2%98%EB%A6%AC)
+   * [단일 체크박스](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#32-%EB%8B%A8%EC%9D%BC-%EC%B2%B4%ED%81%AC%EB%B0%95%EC%8A%A4)
+   * [멀티 체크박스](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf#33-%EB%A9%80%ED%8B%B0-%EC%B2%B4%ED%81%AC%EB%B0%95%EC%8A%A4)
+
+
+
+---
+
 ## 1) 타임리프(Thymeleaf) 소개
 
 타임리프 공식 문서 : [https://www.thymeleaf.org/documentation.html](https://www.thymeleaf.org/documentation.html)
@@ -755,7 +788,7 @@ public class BasicController {
 
 ---
 
-### 2.12 `<th:block>`
+### 2.12 `th:block`
 
 타임리프 블록에 대해서 알아보자.
 
@@ -1349,14 +1382,11 @@ public Map<String, String> regions() {
 
 <br>
 
----
-
-## 4) etc
-
-* 라디오 버튼이나, 선택 리스트도 체크박스와 비슷하게 사용할 수 있다
 
 
-
-* HTTP 요청 메세지를 서버에서 보고 싶으면 `application.properties`에 다음 설정을 추가하자
-  * `logging.level.org.apache.coyote.http11=trace`
-
+> * 라디오 버튼이나, 선택 리스트도 체크박스와 비슷하게 사용할 수 있다
+>
+> 
+>
+> * HTTP 요청 메세지를 서버에서 보고 싶으면 `application.properties`에 다음 설정을 추가하자
+>   * `logging.level.org.apache.coyote.http11=trace`

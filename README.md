@@ -1,6 +1,6 @@
 > 데이터 엔지니어링 기술 스택 연습
 >
-> 공부 내용 기록을 위한 레포입니다.
+> 공부 내용 기록을 위한 레포
 
 ---
 
@@ -50,6 +50,11 @@
 ## Backend
 
 1. [스프링 프레임워크(Spring)](https://github.com/seungki1011/Data-Engineering/tree/main/spring)
+   * 스프링 소개
+   * 스프링 동작 원리
+   * Spring MVC
+   * Thymeleaf
+   * JDBC
 
 ---
 
@@ -74,5 +79,7 @@
 * 빅데이터를 지탱하는 기술
 * 객체지향의 사실과 오해
 * Clean Coding
+* Fundamentals of Data Engineering
+* Designing Data-Intensive Applications
 * [Why we're leaving cloud](https://world.hey.com/dhh/why-we-re-leaving-the-cloud-654b47e0)
 

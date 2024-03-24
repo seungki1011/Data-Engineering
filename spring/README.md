@@ -9,6 +9,7 @@
 * Java 17 or 21
 * Spring Boot 3.2.2
 * h2database 2.2.224
+* [Lombok 적용법](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(006)Lombok)
 
 ---
 

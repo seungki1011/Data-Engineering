@@ -2,7 +2,7 @@
 >
 > [스프링 MVC - 백엔드 웹 개발 핵심 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1), [쉬운 코드 - 유튜브 채널](https://www.youtube.com/@ez.), 등을 보고 정리한 포스트 입니다.
 
-> * 만약 빌드 옵션을 `IntelliJ IDEA`으로 선택했고, 스프링 부트 3.2 이상이면 는 `Java compiler` 필드에 `-parameters` 옵션을 넣어주자 (`IllegalArgumentException` 방지) 
+> * 만약 빌드 옵션을 `IntelliJ IDEA`으로 선택했고, 스프링 부트 3.2 이상이면 `Java compiler` 필드에 `-parameters` 옵션을 넣어주자 (`IllegalArgumentException` 방지) 
 
 ---
 
@@ -27,7 +27,7 @@
      * `ViewResolver`
    * Spring MVC 사용해보기
    * 사용성 개선
-4. [Spring MVC - 1(기능 살펴보기)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#4-spring-mvc---1%EA%B8%B0%EB%8A%A5-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
+4. [Spring MVC - 기능 살펴보기](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#4-spring-mvc---1%EA%B8%B0%EB%8A%A5-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
    * Logging
    * `MappingController`(요청 매핑)
    * HTTP Header 조회
@@ -43,16 +43,25 @@
      * HTTP 메세지 사용(메세지 바디에 직접 입력)
    * `HttpMessageConverter`
    * `RequestMappingHandlerAdapter`
-5. 스프링 메세지. 국제화 (Message, Internationalization)
+5. [Spring 메세지, 국제화 (Message, Internationalization)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#5-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%A9%94%EC%84%B8%EC%A7%80-%EA%B5%AD%EC%A0%9C%ED%99%94-messages-internationalization)
+   * [메세지, 국제화 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#51-%EB%A9%94%EC%84%B8%EC%A7%80-%EA%B5%AD%EC%A0%9C%ED%99%94-%EC%86%8C%EA%B0%9C)
+     * 메세지
+     * 국제화
+   * [메세지 적용하기](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#52-%EB%A9%94%EC%84%B8%EC%A7%80-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0)
+     * 메세지 소스(`MessageSource`) 설정
+     * 타임리프 메세지 적용
+   * [국제화 적용하기](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#53-%EA%B5%AD%EC%A0%9C%ED%99%94-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0)
+6. [검증(Validation)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#6-%EA%B2%80%EC%A6%9Dvalidation)
+   * [검증 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#61-%EA%B2%80%EC%A6%9D-%EC%86%8C%EA%B0%9C)
+   * [`BindingResult`](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#62-bindingresult)
+   * [오류 코드, 메세지 처리](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#63-%EC%98%A4%EB%A5%98-%EC%BD%94%EB%93%9C-%EB%A9%94%EC%84%B8%EC%A7%80-%EC%B2%98%EB%A6%AC)
+     * `errors.properties`
+     * `rejectValue()`, `reject()`
+     * `MessageCodesResolver`
+     * 스프링이 직접 만든 오류 메세지 처리
+   * [Validator 분리](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#64-validator-%EB%B6%84%EB%A6%AC)
+7. [Bean 검증(Validation)]()
    * 
-
-
-
-
-
-
-
-
 
 
 
@@ -1028,7 +1037,11 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
 
 ---
 
-## 4) Spring MVC - 1(기능 살펴보기)
+## 4) Spring MVC - 기능 살펴보기
+
+로깅에 대해서 알아보고, Spring MVC의 기본적인 기능들을 살펴보자
+
+<br>
 
 ### 4.1 Logging
 
@@ -2106,7 +2119,7 @@ item.itemName=Item Name
 
 웹 애플리케이션에 메세지를 적용해보자.
 
-#### 5.2.1 메세지 소스 설정
+#### 5.2.1 메세지 소스(`MessageSource`) 설정
 
 **메세지 관리 기능을 사용하기 위해서는 스프링이 제공하는 `MessageSource` 를 스프링 빈으로 등록**하면 된다. `MessageSource` 는 인터페이스이다. 따라서 구현체인 `ResourceBundleMessageSource` 를 스프링 빈으로 등록하면 된다. 그러나 우리가 직접할 필요는 없다. 왜냐하면 **스프링 부트를 사용하는 경우  `MessageSource` 를 자동으로 스프링 빈으로 등록**해주기 때문이다.
 

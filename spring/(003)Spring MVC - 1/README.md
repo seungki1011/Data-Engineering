@@ -60,7 +60,7 @@
      * `MessageCodesResolver`
      * 스프링이 직접 만든 오류 메세지 처리
    * [Validator 분리](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#64-validator-%EB%B6%84%EB%A6%AC)
-7. [Bean 검증(Validation)]()
+7. [Bean Validation]()
    * 
 
 
@@ -2864,6 +2864,12 @@ public class ItemValidator implements Validator {
 이렇게 검증 로직을 `ItemValidator`으로 분리해내면, 컨트롤러의 코드는 다음과 같이 줄일 수 있다.
 
 ```java
+ @InitBinder
+ public void init(WebDataBinder dataBinder) {
+     log.info("init binder {}", dataBinder);
+     dataBinder.addValidators(itemValidator); // 검증기 추가
+ }
+
  @PostMapping("/add")
  public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult,  RedirectAttributes redirectAttributes) { // @Validated가 추가됨
    
@@ -2907,6 +2913,659 @@ public boolean supports(Class<?> clazz) {
 <br>
 
 ---
+
+## 7) Bean Validation
+
+### 7.1 Bean Validation 사용해보기
+
+Bean Validation을 어떻게 코드로 사용하는지 알아보자.
+
+사용하기 위해서는 먼저 다음 의존관계를 추가한다.
+
+`build.gradle`
+
+```groovy
+implementation 'org.springframework.boot:spring-boot-starter-validation'
+```
+
+<br>
+
+이제 `Item`에 Bean validation 애노테이션을 적용해보자.
+
+```java
+@Data
+ public class Item {
+     
+     private Long id;
+     
+     @NotBlank
+     private String itemName;
+     
+     @NotNull
+     @Range(min = 1000, max = 1000000)
+     private Integer price;
+     
+     @NotNull
+     @Max(9999)
+     private Integer quantity;
+     
+   	 public Item() {
+     }
+   
+   	 public Item(String itemName, Integer price, Integer quantity) {
+         this.itemName = itemName;
+         this.price = price;
+         this.quantity = quantity;
+     }
+}
+```
+
+* `@NotBlank` : 빈값 + 공백만 있는 경우를 허용하지 않는다
+* `@NotNull` : `null`을 허용하지 않는다
+* `@Range(min = 1000, max = 1000000)` : 범위 안의 값이어야 한다
+* `@Max(9999)` : 최대 9999까지만 허용한다
+
+<br>
+
+기존의 컨트롤러에 추가했던 `ItemValidator`를 제거하자.
+
+```java
+ // ---------------이 부분 제거---------------
+ private final ItemValidator itemValidator;
+ 
+ @InitBinder
+ public void init(WebDataBinder dataBinder) {
+     log.info("init binder {}", dataBinder);
+     dataBinder.addValidators(itemValidator);
+ }
+ // ----------------------------------------
+```
+
+<br>
+
+실행을 하면 애노테이션 기반의 Bean Validation이 정상적으로 동작하는 것을 확인할 수 있다. 그러면 스프링 MVC는 어떻게 Bean Validator를 사용하는 것일까? 
+
+우리가 처음에 추가했던 `'org.springframework.boot:spring-boot-starter-validation'` 라이브러리를 기억해보자. 스프링 부트가 `spring-boot-starter-validation`라이브러리를 넣으면 자동으로 Bean Validator를 인지하고 스프링에 통합한다. 이때 스프링 부트는 자동으로 `LocalValidtorFactoryBean`을 그로벌 Validator로 등록한다. 이 Validator는 `@NotNull` 같은 애노테이션을 보고 검증을 수행한다.
+
+이런 글로벌 Validator가 적용되어 있기 때문에, `@Validated`만 적용하면 Bean Validation이 동작하는 것이다. 검증 오류가 발생하면, `FieldError` , `ObjectError` 를 생성해서 `BindingResult` 에 담아준다.
+
+<br>
+
+---
+
+### 7.2 Bean Validation 검증 순서
+
+검증 순서는 다음과 같다.
+
+1. `@ModelAttribute` 각각의 필드에 타입 변환을 시도한다
+   * 만약 성공하면 다음 과정(Validator 적용)
+   * 실패하는 경우 `typeMismatch`로 `FieldError` 추가
+
+
+
+2. Validator를 적용한다
+   * 바인딩에 성공한 필드만 Bean Validation이 적용된다(일단 모델 객체에 바인딩 받는 값이 정상으로 들어와야 검증도 의미가 있다)
+
+<br>
+
+---
+
+### 7.3 에러 코드 수정
+
+만약 Bean Validation이 기본으로 제공하는 오류 메시지를 변경하고 싶으면 어떻게 하면 될까? 일단 Bean Validation에서는 검증 오류 코드가 애노테이션 이름으로 등록된다.
+
+예를 들어 `NotBlank` 라는 오류 코드를 기반으로 `MessageCodesResolver`를 통해 다음과 같이 다양한 메시지 코드가 순서대로 생성된다.
+
+`@NotBlank`
+
+* NotBlank.item.itemName
+* NotBlank.itemName
+* NotBlank.java.lang.String
+* NotBlank
+
+<br>
+
+오류 메세지를 변경, 설정하기 위해서 우리가 이전에 했던 것 처럼 `errors.properties`에 오류 메세지를 등록할 수 있다.
+
+```
+#Bean Validation 추가 
+
+NotBlank={0} 공백X 
+Range={0}, {2} ~ {1} 허용 
+Max={0}, 최대 {1}
+```
+
+<br>
+
+Bean Validation이 메세지를 찾는 순서는 다음과 같다. (`@NotBlank(message = "공백은 입력할 수 없습니다.")`를 예시로)
+
+* 생성된 메시지 코드 순서대로 `messageSource` 에서 메시지 찾기
+* 애노테이션의 `message` 속성 사용 → `@NotBlank(message = "공백은 입력할 수 없습니다.")`
+* 라이브러리가 제공하는 디폴트 값 사용 → "공백일 수 없습니다."
+
+<br>
+
+---
+
+### 7.4 Bean Validation `ObjectError`
+
+Bean Validation에서 특정 필드(`FieldError`)가 아닌 해당 오브젝트 관련 오류(`ObjectError`)는 어떻게 처리할 수 있을까?
+
+이 경우에는 `@ScriptAssert()`를 사용할 수 있다.
+
+```java
+ @Data
+ @ScriptAssert(lang = "javascript", script = "_this.price * _this.quantity >= 10000")
+ public class Item {
+     //...
+ }
+```
+
+<br>
+
+그러나 실제 사용해보면 제약이 많고 복잡하다. 또한, 개발하다보면 검증 기능이 해당 객체의 범위를 넘어서는 경우들도 등장하는데, 그런 경우 대응이 어렵다. 권장하는 방법은 오브젝트 오류(글로벌 오류)의 경우, 오브젝트 오 류 관련 부분만 직접 자바 코드로 작성하는 것을 권장한다.
+
+```java
+//특정 필드 예외가 아닌 전체 예외
+if (item.getPrice() != null && item.getQuantity() != null) {
+  
+    int resultPrice = item.getPrice() * item.getQuantity();
+    
+    if (resultPrice < 10000) {
+        errors.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+    }
+}
+```
+
+* 우리가 이전에 컨트롤러에 직접 검증 로직을 구현했던 것 처럼 사용하면 된다.
+
+<br>
+
+---
+
+### 7.5 Bean Validation의 한계와 `groups`
+
+이렇게 편한 Bean Validation에도 한계가 존재한다. 
+
+데이터를 등록할 때와 수정할 때의 검증 요구사항이 다른 경우 어떻게 해야할까? 가령 등록과 다르게 수정시에는 `quantity`를 무제한으로 수정 가능하고, `id` 값은 필수라는 검증이 있어야한다고 하자. 그리고 요구 사항에 맞게 Bean Validation을 위한 애노테이션을 다음과 같이 수정해보자.
+
+```java
+@Data
+public class Item {
+  
+		 @NotNull // 수정 요구사항 추가
+     private Long id;
+  
+     @NotBlank
+     private String itemName;
+  
+     @NotNull
+     @Range(min = 1000, max = 1000000)
+     private Integer price;
+     
+     @NotNull
+     //@Max(9999) // 수정 요구사항 추가 
+     private Integer quantity;
+     
+     //...
+}
+```
+
+* 이 경우에는 수정 요구 사항을 맞추더라도, 이제는 등록의 검증에 문제가 생겨버린다
+
+<br>
+
+이런 문제를 해결하기 위해서 동일한 모델 객체를 등록할 때와 수정할 때 각각 다르게 검증하는 방법을 `groups`라는 기능을 통해 해결할 수 있다.
+
+`groups`의 사용법은 간단하다. 코드로 살펴보자.
+
+<br>
+
+저장용 `groups`을 위한 인터페이스 생성
+
+```java
+public interface SaveCheck {
+}
+```
+
+수정용 `groups`을 위한 인터페이스  생성
+
+```java
+public interface UpdateCheck {
+}
+```
+
+<br>
+
+`Item`에 `groups` 적용
+
+```java
+ @Data
+ public class Item {
+     
+     @NotNull(groups = UpdateCheck.class) //수정시에만 적용 
+     private Long id;
+     
+     @NotBlank(groups = {SaveCheck.class, UpdateCheck.class}) // 수정, 등록 둘다 적용
+     private String itemName;
+     
+     @NotNull(groups = {SaveCheck.class, UpdateCheck.class})
+     @Range(min = 1000, max = 1000000, groups = {SaveCheck.class, UpdateCheck.class})
+		 private Integer price;
+     
+     @NotNull(groups = {SaveCheck.class, UpdateCheck.class}) 
+     @Max(value = 9999, groups = SaveCheck.class) //등록시에만 적용 
+     private Integer quantity;
+   
+     public Item() {
+     }
+   
+     public Item(String itemName, Integer price, Integer quantity) {
+         this.itemName = itemName;
+         this.price = price;
+         this.quantity = quantity;
+         }
+ }
+```
+
+* `groups` 기능을 사용해서 등록과 수정시에 각각 다른 검증 로직을 적용할 수 있다
+* 사실 `groups` 기능은 실무에서 잘 사용하지 않는다. 그 이유는 주로 등록용 폼 객체와 수정용 폼 객체를 분리해서 사용하기 때문이다
+
+<br>
+
+---
+
+### 7.6 등록, 수정 Form 객체의 분리
+
+등록용 폼 객체와 수정용 폼 객체를 분리해보자.
+
+실무에서는 `groups` 를 잘 사용하지 않는데, 그 이유는 등록시 폼에서 전달하는 데이터가 `Item` 도메인 객체와 딱 맞지 않기 때문이다. 실무에서는 회원 등록시 회원과 관련된 데이터만 전달받는 것이 아니라, 약관정보도 추가로 받는 등, `Item` 과 관계없는 수 많은 부가 데이터가 넘어온다. 
+
+그래서 `Item` 을 직접 전달받는 것이 아니라, 복잡한 폼의 데이터를 컨트롤러까지 전달할 별도의 객체를 만들어서 전달한다. 
+
+예를 들면 `ItemSaveForm`이라는 폼을 전달받는 전용 객체를 만들어서 `@ModelAttribute`로 사용한다. 이것을 통해 컨트롤러에서 폼 데이터를 전달 받고, 이후 컨트롤러에서 필요한 데이터를 사용해서 `Item` 을 생성한다.
+
+과정을 살펴보자면 다음과 같다.
+
+* `HTML Form → ItemSaveForm → Controller → Item 생성 → Repository`
+
+<br>
+
+이제 `Item`에서 검증은 사용하지 않기 때문에 검증 코드(검증 애노테이션들)를 제거하자.
+
+```java
+@Data
+public class Item {
+   
+    private Long id;
+    private String itemName;
+    private Integer price;
+    private Integer quantity;
+     
+    // ...
+}
+```
+
+<br>
+
+이제 각 폼에 대한 객체를 만들자.
+
+`ItemSaveForm` (`Item` 등록용 폼에서 사용할 객체)
+
+```java
+ @Data
+ public class ItemSaveForm {
+     // Item을 등록할 때는 id가 필요하지 않음
+    
+     @NotBlank
+     private String itemName;
+     
+     @NotNull
+     @Range(min = 1000, max = 1000000)
+     private Integer price;
+     
+     @NotNull
+     @Max(value = 9999)
+     private Integer quantity;
+     
+ }
+```
+
+<br>
+
+`ItemUpdateForm` (`Item` 수정용 폼에서 사용할 객체)
+
+```java
+ @Data
+ public class ItemUpdateForm {
+     // 수정에는 id가 필수로 필요
+     @NotNull
+     private Long id;
+     
+     @NotBlank
+     private String itemName;
+     
+     @NotNull
+     @Range(min = 1000, max = 1000000)
+     private Integer price;
+     
+     //수정에서는 수량은 자유롭게 변경할 수 있다. 
+     private Integer quantity;
+     
+ }
+```
+
+<br>
+
+컨트롤러는 다음과 같이 수정하면 된다.
+
+```java
+@PostMapping("/add")
+public String addItem(@Validated @ModelAttribute("item") ItemSaveForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+    //특정 필드 예외가 아닌 전체 예외
+    if (form.getPrice() != null && form.getQuantity() != null) {
+        int resultPrice = form.getPrice() * form.getQuantity();
+        
+        if (resultPrice < 10000) {
+            bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+						} 
+        }
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "validation/v4/addForm";
+            }
+       
+        //성공 로직
+        Item item = new Item(); // 아이템 생성
+  
+        item.setItemName(form.getItemName()); 
+        item.setPrice(form.getPrice()); 
+        item.setQuantity(form.getQuantity());
+  
+        Item savedItem = itemRepository.save(item);
+  
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+  
+        return "redirect:/validation/v4/items/{itemId}";
+}
+
+
+
+@PostMapping("/{itemId}/edit")
+public String edit(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateForm form, BindingResult bindingResult) {
+  
+    //특정 필드 예외가 아닌 전체 예외
+    if (form.getPrice() != null && form.getQuantity() != null) {
+        int resultPrice = form.getPrice() * form.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+        } 
+    }
+    if (bindingResult.hasErrors()) {
+        log.info("errors={}", bindingResult);
+        return "validation/v4/editForm";
+    }
+    
+    Item itemParam = new Item();
+        
+    itemParam.setItemName(form.getItemName());
+    itemParam.setPrice(form.getPrice());
+    itemParam.setQuantity(form.getQuantity());
+    
+    itemRepository.update(itemId, itemParam);
+        
+    return "redirect:/validation/v4/items/{itemId}";
+}
+```
+
+* 이제 `Item` 대신에 `ItemSaveform` 또는 `ItemUpdateform`을 전달 받는다
+* `@Validated`로 검증을 수행하고, `BindingResult`로 검증 결과를 받는다
+
+
+
+* 현재의 예시에서는 `@ModelAttribute("item")` 에 `item`을 넣어주고 있다
+  * 이렇게 하지 않으면  `ItemSaveForm`의 경우 규칙에 의해 `itemSaveForm`이라는 이름으로 MVC Model에 담기게 된다(`ItemUpdateForm`도 마찬가지로)
+  * 만약 그렇게 하는 경우  `th:object`의 이름도 `item`에서 `itemSaveForm`로 전부 수정해야 한다
+  * 처음 부터 다시 개발한다면 `item`을 사용하지 않고 그냥 나누어서 사용하는 것이 좋을 수도 있다
+
+<br>
+
+---
+
+### 7.7 `@RequestBody`에 `@Validated` 적용
+
+지금까지 Bean Validation 하면서 다룬 `@ModelAttribute`는 HTTP 요청 파라미터(URL 쿼리 스트링, POST Form)를 다룰 때 사용한다.
+
+반면에 `@RequestBody`는 HTTP Body의 데이터를 객체로 변환할 때 사용한다. 주로 API JSON 요청을 다룰 때 사용한다.
+
+API 요청의 경우 3가지 케이스를 나누어서 생각해야한다.
+
+* 성공 요청 : 정상적으로 성공
+* 실패 요청 : JSON을 객체로 생성하는 것 자체가 실패
+* 검증 오류 요청 : JSON을 객체로 생성하는 것은 성공했지만, 검증에서 실패함
+
+<br>
+
+코드로 한번 살펴보자. 먼저 API 요청을 위한 컨트롤러를 만들어보자.
+
+```java
+ @Slf4j
+ @RestController
+ @RequestMapping("/validation/api/items")
+ public class ValidationItemApiController {
+     @PostMapping("/add")
+     public Object addItem(@RequestBody @Validated ItemSaveForm form, BindingResult bindingResult) { 			            log.info("API 컨트롤러 호출");
+			 
+         if (bindingResult.hasErrors()) {
+			 	     log.info("검증 오류 발생 errors={}", bindingResult); return bindingResult.getAllErrors();
+			   }
+				 
+         log.info("성공 로직 실행");
+         return form;
+      }
+ }
+```
+
+<br>
+
+JSON 객체로 변환에 실패하는 경우를 생각해보자. 가령 `price` 필드에 숫자가 아닌 문자를 보내면 `HttpMessageConverter`에서 요청 JSON을 `ItemSaveForm` 객체로 생성하는데 실패한다. 이 경우는 `ItemSaveForm` 객체를 만들지 못하기 때문에 컨트롤러 자체가 호출되지 않고 그 전에 예외가 발생한다. Validator도 실행되지 않는다.
+
+**POSTMAN으로 요청 보내기**
+
+```
+POST http://localhost:8080/validation/api/items/add
+{"itemName":"hello", "price":"A", "quantity": 10}
+```
+
+<br>
+
+**실패 요청 결과**
+
+```
+{
+     "timestamp": "2021-04-20T00:00:00.000+00:00",
+     "status": 400,
+     "error": "Bad Request",
+     "message": "",
+     "path": "/validation/api/items/add"
+}
+```
+
+**실패 로그**
+
+```
+.w.s.m.s.DefaultHandlerExceptionResolver : Resolved
+[org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.lang.Integer` from String "A": not a valid Integer value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.lang.Integer` from String "A": not a valid Integer value
+```
+
+<br>
+
+`HttpMessageConverter`는 성공하지만 검증(Validator)에서 오류가 발생하는 경우는 살펴보자. `quantuty`에서 수량 제한 보다 많은 양인 10000을 보내는 경우이다.
+
+**POSTMAN으로 요청 보내기**
+
+```
+POST http://localhost:8080/validation/api/items/add
+{"itemName":"hello", "price":1000, "quantity": 10000}
+```
+
+<br>
+
+**실패 요청 결과**
+
+```
+[
+	{
+		"codes": [
+    	"Max.itemSaveForm.quantity",
+    	"Max.quantity",
+    	"Max.java.lang.Integer",
+    	"Max"
+		],
+		"arguments": [
+  		{
+				"codes": [
+         	"itemSaveForm.quantity",
+					"quantity"
+        ],
+        "arguments": null,
+        "defaultMessage": "quantity",
+        "code": "quantity"
+			},
+			9999
+	],
+	"defaultMessage": "9999 이하여야 합니다", 
+	"objectName": "itemSaveForm", 
+	"field": "quantity",
+  "rejectedValue": 10000, 
+  "bindingFailure": false,
+  "code": "Max"
+  }
+]
+```
+
+* `return bindingResult.getAllErrors();` 는 `ObjectError` 와 `FieldError` 를 반환한다
+* 스프링이 이 객체를 JSON으로 변환해서 클라이언트에 전달
+* 여기서는 예시로 보여주기 위해서 검증 오류 객체들을 그대로 반환함
+* 실제 개발할 때는 이 객체들을 그대로 사용하지 말고, 필요한 데이터만 뽑아서 별도의 API 스펙을 정의하고 그에 맞는 객체를 만들어서 반환한다
+
+<br>
+
+`@RequestBody`에서의 `HttpMessageConverter` 는 `@ModelAttribute`와 다르게 각각의 필드 단위로 적용되는 것이 아니라, 전체 객체 단위로 적용된다. 
+
+쉽게 말해서 `@RequestBody` 는 `HttpMessageConverter` 단계에서 JSON 데이터를 객체로 변경하지 못하면 이후 단계 자체가 진행되지 않고 예외가 발생한다. 컨트롤러도 호출되지 않고, Validator도 적용할 수 없다.
+
+<br>
+
+---
+
+## 8) 쿠키, 세션 (Cookie, Session)
+
+### 8.1 로그인을 위한 요구 사항
+
+* 홈 화면 - 로그인 전
+  * 회원 가입
+  * 로그인
+* 홈 화면 - 로그인 후
+  * 환영 메세지("xx님 안녕하세요!")
+  * 상품 관리
+  * 로그아웃
+* 보안
+  * 로그인 사용자만 상춤에 접근, 관리 가능
+  * 비 로그인 사용자가 상품 관리 접근 시 로그인 화면으로 이동
+
+<br>
+
+<p align="center">   <img src="img/login1.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>로그인 요구 사항</p>
+
+<br>
+
+---
+
+### 8.2 화면, 기능 구현하기
+
+#### 8.2.1 홈 화면
+
+`HomeController`에서 홈 화면으로 가도록 설정 한다.
+
+```java
+@Slf4j
+@Controller
+public class HomeController {
+
+    @GetMapping("/")
+    public String home() {
+        return "home";
+    }
+}
+```
+
+* `templates/home.html`을 만들어준다
+
+<br>
+
+대략적으로 다음과 같이 생김.
+
+```html
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>홈 화면</h2> </div>
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg" type="button"
+                    th:onclick="|location.href='@{/members/add}'|">
+                회원 가입
+            </button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-dark btn-lg"
+                    onclick="location.href='items.html'"
+                    th:onclick="|location.href='@{/login}'|" type="button">
+                로그인
+            </button>
+        </div>
+    </div>
+    <hr class="my-4">
+</div> <!-- /container -->
+</body>
+```
+
+<br>
+
+---
+
+#### 8.2.2 회원 가입
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

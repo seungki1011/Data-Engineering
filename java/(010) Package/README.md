@@ -1,10 +1,10 @@
 ## Table of Contents
 
-1. 패키지(Package)
-2. `import`
+1. [패키지(Package)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(010)%20Package#1-package)
+2. [`import`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(010)%20Package#2-import)
    * `import`
    * `static` `import` 
-3. 패키지 관례
+3. [패키지 관례](https://github.com/seungki1011/Data-Engineering/tree/main/java/(010)%20Package#3-%ED%8C%A8%ED%82%A4%EC%A7%80-%EA%B4%80%EB%A1%80package-convention)
 
 ---
 

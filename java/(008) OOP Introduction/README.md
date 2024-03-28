@@ -1,9 +1,9 @@
 ## Table of Contents
 
-1. OOP vs POP
-2. 인스턴스 메서드(Instance Method)
-3. `static` 메서드(Static Method)
-4. 캡슐화 (Encapsulation)
+1. [OOP vs POP](https://github.com/seungki1011/Data-Engineering/tree/main/java/(008)%20OOP%20Introduction#1-oop-vs-pop)
+2. [인스턴스 메서드(Instance Method)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(008)%20OOP%20Introduction#2-instance-method)
+3. [`static` 메서드(Static Method)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(008)%20OOP%20Introduction#3-static-method)
+4. [캡슐화 (Encapsulation)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(008)%20OOP%20Introduction#4-encapsulation)
 
 ---
 

@@ -1,20 +1,20 @@
 ## Table of Contents
 
-1. `Collection` 프레임워크
-2. `Collection`
-3. `Iterator`
-4. `List`
+1. [`Collection` 프레임워크](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#1-collection-framework)
+2. [`Collection`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#2-collection)
+3. [`Iterator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#3-iterator)
+4. [`List`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#4-list)
    * `ArrayList`
    * `LinkedList`
-5. `Set`
+5. [`Set`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#5-set)
    * `HashSet`
    * `TreeSet`
-6. `Map`
+6. [`Map`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#6-map)
    * `HashMap`
-7. `Stack`, `Queue`, `ArrayDeque`
+7. [`Stack`, `Queue`, `ArrayDeque`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#7-stack-queue-arraydeque)
    * `ArrayDeque`
-8. 익명 클래스(anonymous class)
-9. `Comparable`, `Comparator`
+8. [익명 클래스(anonymous class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#8-%EC%9D%B5%EB%AA%85%ED%81%B4%EB%9E%98%EC%8A%A4anonymous-class)
+9. [`Comparable`, `Comparator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#9-comparable--comparator)
    * `Comparable`
    * `Comparator`
 

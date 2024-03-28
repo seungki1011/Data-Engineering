@@ -1,9 +1,9 @@
 ## Table of Contents
 
-1. Primitive vs Reference
-2. 참조형에 대입
-3. `null`
-4. NullPointerException (NPE)
+1. [Primitive vs Reference](https://github.com/seungki1011/Data-Engineering/tree/main/java/(007)%20Reference%20Type#1-primitive-vs-reference)
+2. [참조형에 대입](https://github.com/seungki1011/Data-Engineering/tree/main/java/(007)%20Reference%20Type#2-%EC%B0%B8%EC%A1%B0%ED%98%95-%EB%8C%80%EC%9E%85)
+3. [`null`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(007)%20Reference%20Type#3-null)
+4. [NullPointerException (NPE)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(007)%20Reference%20Type#4-nullpointerexception)
 
 ---
 

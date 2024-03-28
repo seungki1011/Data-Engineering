@@ -4,12 +4,12 @@
    * `Thread` 클래스 상속
    * `Runnable` 인터페이스 구현
    * 스레드 사용해보기
-2. 메인 스레드
-3. 스레드의 I/O Blocking
-4. 스레드 그룹(Thread Group)
-5. 데몬 스레드(Daemon Thread)
-6. 스레드 상태(Thread State)
-7. 스레드의 동기화(synchronized)
+2. [메인 스레드](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#2-%EB%A9%94%EC%9D%B8-%EC%8A%A4%EB%A0%88%EB%93%9Cmain-thread)
+3. [스레드의 I/O Blocking](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#3-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-io-blocking)
+4. [스레드 그룹(Thread Group)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#4-%EC%8A%A4%EB%A0%88%EB%93%9C-%EA%B7%B8%EB%A3%B9thread-group)
+5. [데몬 스레드(Daemon Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#5-%EB%8D%B0%EB%AA%AC-%EC%8A%A4%EB%A0%88%EB%93%9Cdaemon-thread)
+6. [스레드 상태(Thread State)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#6-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%83%81%ED%83%9Cthread-state)
+7. [스레드의 동기화(synchronized)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#7-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EB%8F%99%EA%B8%B0%ED%99%94-synchronized)
 
 ---
 

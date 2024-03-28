@@ -1,3 +1,22 @@
+## Table of Contents
+
+1. [Variables](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#1-variables)
+   * 원시형(Primitive Type)
+   * 참조형(Reference Type)
+2. [자바 관례(Java Convention)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#2-java-convention)
+3. [연산자(Operators)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#3-%EC%97%B0%EC%82%B0%EC%9E%90operators)
+4. [조건문(Conditional Statement)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#4-%EC%A1%B0%EA%B1%B4%EB%AC%B8conditional)
+   * `if`, `else-if`
+   * `switch`
+   * 삼항 연산자
+5. [반복문(Loop Statement)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#5--%EB%B0%98%EB%B3%B5%EB%AC%B8loop)
+   * `while`
+   * `do-while`
+   * `for`
+   * `for-each`
+
+---
+
 ## 1) Variables
 
 자바의 변수에 대해서 알아보자

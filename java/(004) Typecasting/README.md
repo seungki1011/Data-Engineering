@@ -1,8 +1,8 @@
 ## Table of Contents
 
-1. 자동 형변환
-2. 명시적 형변환
-3. 계산시 형변환
+1. [자동 형변환](https://github.com/seungki1011/Data-Engineering/tree/main/java/(004)%20Typecasting#11-%EC%9E%90%EB%8F%99-%ED%98%95%EB%B3%80%ED%99%98widening-type-casting)
+2. [명시적 형변환](https://github.com/seungki1011/Data-Engineering/tree/main/java/(004)%20Typecasting#12-%EB%AA%85%EC%8B%9C%EC%A0%81-%ED%98%95%EB%B3%80%ED%99%98narrow-type-casting)
+3. [계산시 형변환](https://github.com/seungki1011/Data-Engineering/tree/main/java/(004)%20Typecasting#13-%EA%B3%84%EC%82%B0%EC%8B%9C-%ED%98%95%EB%B3%80%ED%99%98)
 
 ---
 

@@ -1,18 +1,18 @@
 ## Table of Contents
 
-1. Exception, Error
-2. Exception Handling
-3. `e`(Exception Variable)
-4. Multi Catch
-5. `throw`
-6. Checked, Unchecked Exception
-7. `throws`
+1. [Exception, Error](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#1-exception-error)
+2. [Exception Handling](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#2-exception-handling)
+3. [`e`(Exception Variable)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#3-exception-variable)
+4. [Multi Catch](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#4-multi-catch)
+5. [`throw`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#5-throw)
+6. [Checked, Unchecked Exception](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#6-checked-unchecked-exception)
+7. [`throws`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#7-throws)
    * `throws` 소개
    * `throws`가 처리되는 과정
    * 예외 되던지기
-8. `try-catch-finally`
-9. `try-catch-resource`
-10. 사용자 정의 예외(User Defined Exception)
+8. [`try-catch-finally`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#8-try-catch-finally)
+9. [`try-catch-resource`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#9-try-with-resource)
+10. [사용자 정의 예외(User Defined Exception)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#10-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EC%9D%98-%EC%98%88%EC%99%B8user-defined-exception)
 
 ---
 
@@ -369,8 +369,7 @@ e.getMessage : Exception was made(This is the message)
   * ```RuntimeException```과 자손
   * Runtime에서 확인 가능
 
-
-<p align="center">   <img src="img/exception2.webp" alt="checked vs unchecked" style="width: 60%;"> </p>
+<p align="center">   <img src="img/exception2.webp" alt="checked vs unchecked" style="width: 90%;"> </p>
 
 <p align='center'>https://medium.com/javarevisited/checked-and-unchecked-exceptions-in-java-19166e68b66f</p>
 
@@ -435,7 +434,7 @@ Exception is made in method2
 Handled Exception in main
 ```
 
-<p align="center">   <img src="img/throws1.png" alt="throws" style="width: 80%;"> </p>
+<p align="center">   <img src="img/throws1.png" alt="throws" style="width: 100%;"> </p>
 
 * ```main```에서 ```method1``` 호출 → ```method1```에서 ```method2``` 호출 → ```method2```에서 예외 발생 → ```method2```에서 발생한 예외를 호출자로 던짐(이 경우 ```method1```) → ```method1```에서 예외를 호출자로 던짐(이 경우 ```main```)
   * ```main```에서 ```try-catch```로 예외 처리를 함

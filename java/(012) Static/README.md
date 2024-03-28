@@ -1,11 +1,11 @@
 ## Table of Contents
 
-1. `static`
-2. 정적 변수(Static variable)
+1. [`static`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(012)%20Static#1-static)
+2. [정적 변수(Static variable)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(012)%20Static#2-%EC%A0%95%EC%A0%81-%EB%B3%80%EC%88%98static-variable)
    * 정적 변수 소개
    * `static` 사용 vs `static` 사용하지 않기
-3. 정적 메서드(Static Method)
-4. 정적 임포트(Static Import)
+3. [정적 메서드(Static Method)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(012)%20Static#3-%EC%A0%95%EC%A0%81-%EB%A9%94%EC%84%9C%EB%93%9Cstatic-method)
+4. [정적 임포트(Static Import)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(012)%20Static#4-static-import)
 
 ---
 

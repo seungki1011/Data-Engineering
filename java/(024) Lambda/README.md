@@ -1,10 +1,10 @@
 ## Table of Contents
 
-1. 람다 표현식(Lambda Expression)
+1. [람다 표현식(Lambda Expression)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#1-%EB%9E%8C%EB%8B%A4-%ED%91%9C%ED%98%84%EC%8B%9Dlambda-expression)
    * 람다식 소개
-2. 함수형 인터페이스(Functional Interface)
-3. 메서드 참조(Method Reference)
-4. 람다의 단점
+2. [함수형 인터페이스(Functional Interface)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#2-%ED%95%A8%EC%88%98%ED%98%95-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4functional-interface)
+3. [메서드 참조(Method Reference)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#3-%EB%A9%94%EC%84%9C%EB%93%9C-%EC%B0%B8%EC%A1%B0method-reference)
+4. [람다의 단점](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#4-%EB%9E%8C%EB%8B%A4%EC%9D%98-%EB%8B%A8%EC%A0%90)
 
 ---
 

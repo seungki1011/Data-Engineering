@@ -1,8 +1,8 @@
 ## Table of Contents
 
-1. 배열(Array)
-2. 배열 사용하기
-3. 2차원 배열(2D Array)
+1. [배열(Array)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(003)%20Array#1-%EB%B0%B0%EC%97%B4array)
+2. [배열 사용하기](https://github.com/seungki1011/Data-Engineering/tree/main/java/(003)%20Array#2-%EB%B0%B0%EC%97%B4-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0)
+3. [2차원 배열(2D Array)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(003)%20Array#3-2%EC%B0%A8%EC%9B%90-%EB%B0%B0%EC%97%B42d-array)
 
 ---
 

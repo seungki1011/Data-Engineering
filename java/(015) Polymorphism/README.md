@@ -1,18 +1,18 @@
 ## Table of Contents
 
-1. 다형성(Polymorphism)
-2. 형변환(Casting)
+1. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#1-%EB%8B%A4%ED%98%95%EC%84%B1polymorphism)
+2. [형변환(Casting)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#2-%ED%98%95%EB%B3%80%ED%99%98casting)
    * 다운캐스팅(Downcasting)
      * 일시적 다운캐스팅
      * 다운 캐스팅시 주의점
    * 업캐스팅(Upcasting)
-3. `instanceof`
-4. Method Overriding
-5. 다형성의 활용
+3. [`instanceof`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#3-instanceof)
+4. [Method Overriding](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#4-method-overriding)
+5. [다형성의 활용](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#5-%EB%8B%A4%ED%98%95%EC%84%B1%EC%9D%98-%ED%99%9C%EC%9A%A9)
    * 다형성 사용하기
    * 한계
-6. 추상 클래스(abstract class)
-7. 인터페이스(interface)
+6. [추상 클래스(abstract class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#6-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4abstract-class)
+7. [인터페이스(interface)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#7-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4interface)
    * 인터페이스 소개
    * 인터페이스를 통한 다중구현
 

@@ -1,8 +1,8 @@
 ## Table of Contents
 
-1. Class, Instance
+1. [Class, Instance](https://github.com/seungki1011/Data-Engineering/tree/main/java/(006)%20Class#1-class--instance)
    * 클래스 작성, 인스턴스 생성
-2. 객체 배열(Array of Objects)
+2. [객체 배열(Array of Objects)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(006)%20Class#2-array-of-instances)
 
 ---
 
@@ -85,7 +85,7 @@ Name: Jane, Age: 22, Points: 80000
 
 <br>
 
-<p align="center">   <img src="img/instancemem.gif" alt="instance memory" style="width: 80%;"> </p>
+<p align="center">   <img src="img/instancemem.gif" alt="instance memory" style="width: 90%;"> </p>
 
 <p align='center'>https://www.cs.emory.edu/~cheung/Courses/170/Syllabus/10/scope.html</p>
 

@@ -1,10 +1,10 @@
 ## Table of Contents
 
-1. 메서드 소개
-2. `static` 메서드
-3. 인스턴스 메서드(Instance Method)
-4. 오버로딩(Overloading)
-5. 오버라이딩(Overriding)
+1. [메서드 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(005)%20Method#1-%EB%A9%94%EC%84%9C%EB%93%9Cmethod)
+2. [`static` 메서드](https://github.com/seungki1011/Data-Engineering/tree/main/java/(005)%20Method#2-static-method)
+3. [인스턴스 메서드(Instance Method)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(005)%20Method#3-instance-method)
+4. [오버로딩(Overloading)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(005)%20Method#4-%EC%98%A4%EB%B2%84%EB%A1%9C%EB%94%A9overloading)
+5. [오버라이딩(Overriding)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(005)%20Method#5-%EC%98%A4%EB%B2%84%EB%9D%BC%EC%9D%B4%EB%94%A9overriding)
 
 ---
 
@@ -133,4 +133,4 @@ long add(int a, int b) {return (long)(a+b);}
 ## 5) 오버라이딩(Overriding)
 
 * 조상 클래스로 부터 상속 받 메서드의 내용 상속받는 클래스에 맞게 변경하는 것(덮어쓰는 것)
-* [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/blob/main/java/notes/(17)%20Inheritance.md)에서 추가 설명
+* [상속(inheritance)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#4-method-overriding)에서 추가 설명

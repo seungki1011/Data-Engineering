@@ -1,12 +1,10 @@
 ## Table of Contents
 
-1. 열거형(`enum`)
+1. [열거형(`enum`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum#1-%EC%97%B4%EA%B1%B0%ED%98%95enum)
    * `enum` 소개
    * `enum` 사용하기
    * 열거형에 멤버 추가하기
-2. 열거형을 사용하는 이유
-
-
+2. [열거형을 사용하는 이유](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum#2-%EC%97%B4%EA%B1%B0%ED%98%95%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0)
 
 ---
 

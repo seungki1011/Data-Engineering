@@ -1,16 +1,16 @@
 ## Table of Contents
 
-1. Generics
+1. [Generics](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#1-generics)
    * 제네릭스 소개
    * 제네릭스 사용해보기
    * 타입 변수
    * 제네릭 클래스(Generic Class)
-2. `HashMap<K, V>`
-3. 제네릭 제약(Generic Constraints)
+2. [`HashMap<K, V>`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#2-hashmapkv)
+3. [제네릭 제약(Generic Constraints)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#3-%EC%A0%9C%EB%84%A4%EB%A6%AD-%EC%A0%9C%EC%95%BDgeneric-constraints)
    * 제한된 제네릭 클래스
    * 제네릭스의 제약
-4. 와일드 카드(Wildcard, `<?>`)
-5. 제네릭 메서드(Generic Method)
+4. [와일드 카드(Wildcard, `<?>`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#4-%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9Cwildcard-)
+5. [제네릭 메서드(Generic Method)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#5-%EC%A0%9C%EB%84%A4%EB%A6%AD-%EB%A9%94%EC%84%9C%EB%93%9Cgeneric-method)
 
 ---
 

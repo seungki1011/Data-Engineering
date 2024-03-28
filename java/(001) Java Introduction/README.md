@@ -1,14 +1,14 @@
 ## Table of Contents
 
-1. Programming Language
+1. [Programming Language](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#1-programming-language)
    * 고급 언어
    * Translator
-2. 자바 동작 방식(How Java Works)
-3. 자바 메모리 구조(Java Memory Structure)
+2. [자바 동작 방식(How Java Works)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#2-%EC%9E%90%EB%B0%94-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9Dhow-java-works)
+3. [자바 메모리 구조(Java Memory Structure)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#3-java-memory-structure)
    * 메서드 영역(Method Area)
    * 스택 영역(Stack Area)
    * 힙 영역(Heap Area)
-4. JVM, JDK, JRE
+4. [JVM, JDK, JRE](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#4-jvm-jdk-jre)
    * JDK
    * JRE
    * JVM

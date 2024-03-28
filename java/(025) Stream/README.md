@@ -1,26 +1,26 @@
 ## Table of Contents
 
-1. 스트림(Stream)
+1. [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#1-%EC%8A%A4%ED%8A%B8%EB%A6%BCstream)
    * 스트림 소개
    * 스트림의 특징
      * 읽기만 함(read-only)
      * 한번만 사용(use only once), 지연 연산(lazy evaluation)
      * 병렬 스트림(parallel stream)
      * 기본형 스트림(primitive stream)
-2. 스트림 생성
+2. [스트림 생성](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#2-%EC%8A%A4%ED%8A%B8%EB%A6%BC-%EC%83%9D%EC%84%B1)
    * 컬렉션
    * 배열
    * 난수, 특정 범위의 정수
    * `iterate()`, `generate()`
    * `Files`, `empty()`
-3. 중간 연산(Intermediate Opertation)
+3. [중간 연산(Intermediate Opertation)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#3-%EC%A4%91%EA%B0%84-%EC%97%B0%EC%82%B0intermediate-operation)
    * `skip()`, `limit()`
    * `filter()`, `distinct()`
    * `sorted()`
    * `map()`, `flatMap()`
    * `peek()`
-4. `Optional<T>`
-5. 최종 연산(Terminal Opertation)
+4. [`Optional<T>`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#4-optionalt)
+5. [최종 연산(Terminal Opertation)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#5-%EC%B5%9C%EC%A2%85-%EC%97%B0%EC%82%B0terminal-operation)
    * `forEach()`
    * `xxxMatch()`
    * `findxxx()`

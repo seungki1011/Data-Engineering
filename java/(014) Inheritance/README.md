@@ -1,15 +1,15 @@
 ## Table of Contents
 
-1. 상속(Inheritance)
+1. [상속(Inheritance)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#1-%EC%83%81%EC%86%8Dinheritance)
    * 상속 소개
    * 상속하지 않는 경우
    * 상속하는 경우
-2. 단일 상속(Single Inheritance)
-3. Java 상속의 메모리 할당 구조
-4. Method Overriding
-5. `protected`
-6. `super`
-7. `super()`
+2. [단일 상속(Single Inheritance)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#2-%EB%8B%A8%EC%9D%BC-%EC%83%81%EC%86%8Dsingle-inheritance)
+3. [Java 상속의 메모리 할당 구조](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#3-java-%EC%83%81%EC%86%8D%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%95%A0%EB%8B%B9-%EA%B5%AC%EC%A1%B0)
+4. [Method Overriding](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#4-method-overriding)
+5. [`protected`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#5-protected)
+6. [`super`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#6-super)
+7. [`super()`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(014)%20Inheritance#7-super)
 
 ---
 

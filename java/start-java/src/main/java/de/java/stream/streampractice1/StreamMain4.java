@@ -1,4 +1,4 @@
-package de.java.stream;
+package de.java.stream.streampractice1;
 
 import org.apache.commons.lang3.tuple.Pair;
 

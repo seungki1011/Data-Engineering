@@ -1,4 +1,19 @@
-## 1) Date
+## Table of Contents
+
+1. `Date`
+2. `Calendar`
+3. `java.time` package
+   * `LocalDate`
+   * `LocalTime`
+   * `LocalDateTime`
+   * `ZonedDateTime`
+4. Period, Duration
+5. Instant
+6. Formatter
+
+---
+
+## 1) `Date`
 
 * 날짜와 시간을 다루기 위한 클래스
 
@@ -316,7 +331,7 @@ LocalDateTime.now().getMonth() = JANUARY
 
 ---
 
-### 3-4) ```ZonedDateTime```
+### 3.4 ```ZonedDateTime```
 
 * 타임존을 적용한 ```DateTime```
 

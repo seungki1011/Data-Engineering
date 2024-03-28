@@ -1,3 +1,12 @@
+## Table of Contents
+
+1. OOP vs POP
+2. 인스턴스 메서드(Instance Method)
+3. `static` 메서드(Static Method)
+4. 캡슐화 (Encapsulation)
+
+---
+
 ## 1) OOP vs POP
 
 * 객체 지향 프로그래밍(Object-Oriented-Programming)
@@ -91,66 +100,7 @@ Current value = 3
 
 ---
 
-## 4) OOP Example
-
-* 객체 지향 프로그래밍은 객체의 설계에 집중 해야함
-
-<br>
-
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/Account.java)
-
-```java
-public class Account {
-    int balance;
-
-    void checkStatus(){
-        System.out.println("Current Balance: "+balance);
-    }
-    void deposit(int amount){
-        System.out.println("(deposit) +"+amount);
-        balance += amount;
-    }
-    void withdraw(int amount){
-        if (balance >= amount){
-            System.out.println("(withdraw) -"+amount);
-            balance -= amount;
-        } else {
-            System.out.println("Insufficient Balance!");
-            System.out.println("Current Balance: "+balance+", Withdraw Amount: "+amount);
-        }
-    }
-}
-```
-
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/oop2.java)
-
-```java
-public class oop2 {
-    public static void main(String[] args) {
-        Account account = new Account();
-        account.checkStatus();
-        account.deposit(5000);
-        account.withdraw(2000);
-        account.checkStatus();
-        account.withdraw(4000);
-    }
-}
-```
-
-```
-Current Balance: 0
-(deposit) +5000
-(withdraw) -2000
-Current Balance: 3000
-Insufficient Balance!
-Current Balance: 3000, Withdraw Amount: 4000
-```
-
-<br>
-
----
-
-## 5) Encapsulation
+## 4) Encapsulation
 
 * 캡슐화
 * 속성과 기능을 묶어서 필요한 기능을 메소드를 통해 외부에 제공하는 것

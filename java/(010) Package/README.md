@@ -1,3 +1,13 @@
+## Table of Contents
+
+1. 패키지(Package)
+2. `import`
+   * `import`
+   * `static` `import` 
+3. 패키지 관례
+
+---
+
 ## 1) Package
 
 * 패키지
@@ -77,7 +87,7 @@ class ImportTest {
 
 ### 2.2 static import
 
-* ```static```메소드 사용시 클래스명 없이 바로 사용 가능
+* ```static``` 임포트 사용시 클래스명 없이 바로 사용 가능
 
 <br>
 

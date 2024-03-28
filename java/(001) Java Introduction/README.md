@@ -1,6 +1,23 @@
+## Table of Contents
+
+1. Programming Language
+   * 고급 언어
+   * Translator
+2. 자바 동작 방식(How Java Works)
+3. 자바 메모리 구조(Java Memory Structure)
+   * 메서드 영역(Method Area)
+   * 스택 영역(Stack Area)
+   * 힙 영역(Heap Area)
+4. JVM, JDK, JRE
+   * JDK
+   * JRE
+   * JVM
+
+---
+
 ## 1) Programming Language
 
-### 1.1 High Level Language
+### 1.1 고급언어(High Level Language)
 
 * 많은 경우 고급 프로그래밍 언어는 고급언어 > 어셈블리어 > 기계어 > 하드웨어로 추상화 됨
 
@@ -41,7 +58,7 @@
 
 ---
 
-## 2) How Java Works
+## 2) 자바 동작 방식(How Java Works)
 
 * Java의 경우 compiling과 interpretation 둘다 사용한다
 * [참고](https://www.geeksforgeeks.org/compilation-execution-java-program/)

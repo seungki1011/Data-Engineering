@@ -1,3 +1,11 @@
+## Table of Contents
+
+1. 자동 형변환
+2. 명시적 형변환
+3. 계산시 형변환
+
+---
+
 ## 1) Typecasting
 
 * 형변환

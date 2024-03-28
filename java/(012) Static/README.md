@@ -1,3 +1,14 @@
+## Table of Contents
+
+1. `static`
+2. 정적 변수(Static variable)
+   * 정적 변수 소개
+   * `static` 사용 vs `static` 사용하지 않기
+3. 정적 메서드(Static Method)
+4. 정적 임포트(Static Import)
+
+---
+
 ## 1) Static
 
 * 정적
@@ -25,7 +36,7 @@
 
 
 
-* 공용으로 사용하기 위해 클래스에서 특별히 관리하는 녀석으로 생각하면 편함
+* **공용으로 사용하기 위해 클래스에서 특별히 관리하는 녀석**으로 생각하면 편함
 
 <br>
 

@@ -1,3 +1,13 @@
+## Table of Contents
+
+1. 람다 표현식(Lambda Expression)
+   * 람다식 소개
+2. 함수형 인터페이스(Functional Interface)
+3. 메서드 참조(Method Reference)
+4. 람다의 단점
+
+---
+
 ## 1) 람다 표현식(Lambda Expression)
 
 > 자바는 Java8(JDK1.8) 부터 함수형 언어들이 가지는 몇 가지 기능을 추가시켰다. 람다 표현식을 포함해서, 뒤에서 다룰 `stream`, `optional` 등이 여기에 해당한다.

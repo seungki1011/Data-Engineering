@@ -1,12 +1,23 @@
 ## Table of Contents
 
-
-
-
-
-
-
-
+1. [`Object` 클래스]()
+   * `java.lang` 패키지
+   * `Object` 클래스 소개
+   * `Object` 배열
+   * `toString()`
+   * `equals()`
+2. [`String` 클래스]()
+   * `String` 클래스 소개
+   * `String` 객체 비교
+   * `String`은 불변 객체
+   * `String` 메서드
+     * 문자열 정보 조회
+     * 문자열 비교
+     * 문자열 검색
+     * 문자열 조작 및 변환
+     * 문자열 분할 및 조합
+     * 기타
+   * `StringBuilder`
 
 ---
 
@@ -416,7 +427,7 @@ public final class String {
 
 `String` 객체 끼리 비교할 때는 `==`가 아닌 `equals()`로 비교를 해야한다.
 
-이전의 [`equals()`]()에서 한번 다뤘던 예시를 다시보자.
+이전의 `equals()`에서 한번 다뤘던 예시를 다시보자.
 
 <br>
 
@@ -475,7 +486,7 @@ public class EqualsTest {
 
 ### 2.3 `String`은 불변 객체
 
-`String`은 [불변 객체(immutable object)]()이다. 생성 이후에 절대로 내부의 값을 변경할 수 없다.
+`String`은 [불변 객체(immutable object)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(027)%20Immutable%20Object#2-%EB%B6%88%EB%B3%80-%EA%B0%9D%EC%B2%B4immutable-object)이다. 생성 이후에 절대로 내부의 값을 변경할 수 없다.
 
 * `private final byte[] value;`
 * 불변이기 때문에, `String` 값을 다루는 메서드들은 전부 반환값이 있다
@@ -818,37 +829,43 @@ str = olleH
 ```
 
 * `toString()`을 이용해서 `StringBuilder`의 결과를 사용해서 `String`을 생성해서 반환할 수 있다
+
+
+
 * `StringBuilder`는 가변이기 때문에, 하나의 `StringBuilder` 객체 안에서 문자열을 추가, 삭제, 수정 등을 계속 할 수 있다
   * 가변이기 때문에 변경을 할 때 마다 객체를 생성하지 않는다
-  * 가변이기 때문에 [사이드 이펙트]()를 조심해야 한다 
+  * 가변이기 때문에 [사이드 이펙트](https://github.com/seungki1011/Data-Engineering/tree/main/java/(027)%20Immutable%20Object#12-%EC%82%AC%EC%9D%B4%EB%93%9C-%EC%9D%B4%ED%8E%99%ED%8A%B8side-effect)를 조심해야 한다 
 
 
 
+* `StringBuilder`는 문자열을 변경하는 동안만 사용하고, 문자열 변경이 끝나면 안전한 `String`(불변 객체)으로 변환하는 것이 좋다 
 
 
 
+* 메서드 호출의 결과로 자기 자신의 참조값을 반환하면, 반환된 참조값을 사용해서 메서드 호출을 계속 이어갈 수 있다
+  * 코드를 보면 `.`을 찍고 메서드를 계속 연결해서 사용한다, 이것이 메서드 체이닝이다
+  * 메서드 체이닝이 가능한 이유는 자기 자신의 참조값을 반환하기 때문이다, 이 참조값에 `.`을 통해 메서드를 다시 호출할 수 있는 것이다
 
+<br>
 
+> `StringBuffer`
+>
+> `StringBuilder` 와 똑같은 기능을 수행하는 `StringBuffer` 클래스도 있다
+>
+> * `StringBuffer`
+>   * 스레드 안전하다(Thread-Safe) : 멀티 스레드가 충돌 없이 버퍼의 내용을 변경하는 것이 가능하도록 synchronized 메서드들을 제공
+>   * 이런 동기화로 인한 오버헤드(Overhead)로 인해 보통 `StringBuilder` 보다 느리다
+>   * 멀티 스레드(Multi-Thread) 환경에서 같은 `StringBuffer` 객체를 접근하고 변경을 가해야하는 경우 사용된다
+>
+> 
+>
+> * `StringBuilder`
+>   * 스레드 안전하지 않다
+>   * 보통 `StringBuffer` 보다 성능이 빠르다
+>   * 스레드 안전을 고려하지 않아도 되는 싱글 스레드 환경에서 많이 사용한다
+>   * 성능이 중요한 경우 `StringBuilder` 사용
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<br>
 
 ---
 

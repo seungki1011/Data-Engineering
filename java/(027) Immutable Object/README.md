@@ -1,9 +1,9 @@
 ## Table of Contents
 
-1. [공유]()
+1. [공유](https://github.com/seungki1011/Data-Engineering/tree/main/java/(027)%20Immutable%20Object#1-%EA%B3%B5%EC%9C%A0)
    * 기본형과 참조형의 공유
    * 사이드 이펙트(Side-effect)
-2. [불변 객체(Immutable Object)]()
+2. [불변 객체(Immutable Object)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(027)%20Immutable%20Object#2-%EB%B6%88%EB%B3%80-%EA%B0%9D%EC%B2%B4immutable-object)
    * 불변 객체 소개
    * 불변 객체에서 값 변경
    * 불변이 중요한 이유

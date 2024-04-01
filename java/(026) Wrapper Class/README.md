@@ -1,12 +1,12 @@
 ## Table of Contents
 
-1. 기본형(Primitive Type)의 한계
-2. 자바 래퍼 클래스(Wrapper Class)
+1. [기본형(Primitive Type)의 한계](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20Wrapper%20Class#1-%EA%B8%B0%EB%B3%B8%ED%98%95primitive-type%EC%9D%98-%ED%95%9C%EA%B3%84)
+2. [자바 래퍼 클래스(Wrapper Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20Wrapper%20Class#2-%EC%9E%90%EB%B0%94-%EB%9E%98%ED%8D%BC-%ED%81%B4%EB%9E%98%EC%8A%A4wrapper-class)
    * 래퍼 클래스 소개
    * 오토박싱(Auto-boxing)
    * 래퍼 클래스의 메서드
    * 래퍼 클래스의 성능
-3. `System`, `Math`, `Random` 클래스
+3. [`System`, `Math`, `Random` 클래스](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20Wrapper%20Class#3-system-math-random-%ED%81%B4%EB%9E%98%EC%8A%A4)
    * `System` 클래스
    * `Math` 클래스
    * `Random` 클래스

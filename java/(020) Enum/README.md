@@ -1,9 +1,9 @@
 ## Table of Contents
 
-1. [타입 안정성(Type-safety)]()
+1. [타입 안정성(Type-safety)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum#1-%ED%83%80%EC%9E%85-%EC%95%88%EC%A0%95%EC%84%B1type-safety)
    * `String`은 타입 안정성이 떨어진다
    * 타입 안전 열거형 패턴(Type-safe Enum Pattern)
-2. [열거형(`enum`)]()
+2. [열거형(`enum`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum#2-%EC%97%B4%EA%B1%B0%ED%98%95enum)
    * `enum` 사용
    * `Enum` 클래스 메서드
    * 열거형을 이용한 리펙토링

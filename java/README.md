@@ -101,19 +101,19 @@
     * `super`
     * `super()`
 15. [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism)
-    * 다형성(Polymorphism)
-    * 형변환(Casting)
+    * [다형성(Polymorphism)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#1-%EB%8B%A4%ED%98%95%EC%84%B1polymorphism)
+    * [형변환(Casting)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#2-%ED%98%95%EB%B3%80%ED%99%98casting)
       * 다운캐스팅(Downcasting)
         * 일시적 다운캐스팅
         * 다운 캐스팅시 주의점
       * 업캐스팅(Upcasting)
-    * `instanceof`
-    * Method Overriding
-    * 다형성의 활용
+    * [`instanceof`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#3-instanceof)
+    * [Method Overriding](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#4-method-overriding)
+    * [다형성의 활용](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#5-%EB%8B%A4%ED%98%95%EC%84%B1%EC%9D%98-%ED%99%9C%EC%9A%A9)
       * 다형성 사용하기
       * 한계
-    * 추상 클래스(abstract class)
-    * 인터페이스(interface)
+    * [추상 클래스(abstract class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#6-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4abstract-class)
+    * [인터페이스(interface)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(015)%20Polymorphism#7-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4interface)
       * 인터페이스 소개
       * 인터페이스를 통한 다중구현
 16. [불변(Immutable)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(027)%20Immutable%20Object)
@@ -144,13 +144,26 @@
         * 기타
       * [`StringBuilder`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(022)%20Object%2C%20String%20Class#25-stringbuilder)
 18. [래퍼 클래스(Wrapper Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20Wrapper%20Class)
+    * [기본형(Primitive Type)의 한계](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20Wrapper%20Class#1-%EA%B8%B0%EB%B3%B8%ED%98%95primitive-type%EC%9D%98-%ED%95%9C%EA%B3%84)
+    * [자바 래퍼 클래스(Wrapper Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20Wrapper%20Class#2-%EC%9E%90%EB%B0%94-%EB%9E%98%ED%8D%BC-%ED%81%B4%EB%9E%98%EC%8A%A4wrapper-class)
+      * 래퍼 클래스 소개
+      * 오토박싱(Auto-boxing)
+      * 래퍼 클래스의 메서드
+      * 래퍼 클래스의 성능
+    * [`System`, `Math`, `Random` 클래스](https://github.com/seungki1011/Data-Engineering/tree/main/java/(026)%20Wrapper%20Class#3-system-math-random-%ED%81%B4%EB%9E%98%EC%8A%A4)
+      * `System` 클래스
+      * `Math` 클래스
+      * `Random` 클래스
 19. [열거형(Enum)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum)
-    * 열거형(`enum`)
-      * `enum` 소개
-      * `enum` 사용하기
-      * 열거형에 멤버 추가하기
-    * 열거형을 사용하는 이유
-20. [내부 클래스(Inner Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Inner%20Class)
+    * [타입 안정성(Type-safety)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum#1-%ED%83%80%EC%9E%85-%EC%95%88%EC%A0%95%EC%84%B1type-safety)
+      * `String`은 타입 안정성이 떨어진다
+      * 타입 안전 열거형 패턴(Type-safe Enum Pattern)
+    * [열거형(`enum`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(020)%20Enum#2-%EC%97%B4%EA%B1%B0%ED%98%95enum)
+      * `enum` 사용
+      * `Enum` 클래스 메서드
+      * 열거형을 이용한 리펙토링
+      * 열거형 정리
+20. [내부, 중첩, 익명 클래스(Inner, Nested, Anonymous Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Inner%20Class)
 21. [예외 처리(Exception Handling)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception)
     * Exception, Error
     * Exception Handling
@@ -205,42 +218,44 @@
     * 와일드 카드(Wildcard, `<?>`)
     * 제네릭 메서드(Generic Method)
 25. [스레드(Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread)
-    * 스레드 소개
-      * `Thread` 클래스
-      * `Runnable` 인터페이스
-    * 메인 스레드
-    * 스레드의 I/O Blocking
-    * 스레드 그룹(Thread Group)
-    * 데몬 스레드(Daemon Thread)
-    * 스레드 상태(Thread State)
-    * 스레드의 동기화(synchronized)
+    * [스레드(Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread)
+      * `Thread` 클래스 상속
+      * `Runnable` 인터페이스 구현
+      * 스레드 사용해보기
+    * [메인 스레드](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#2-%EB%A9%94%EC%9D%B8-%EC%8A%A4%EB%A0%88%EB%93%9Cmain-thread)
+    * [스레드의 I/O Blocking](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#3-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-io-blocking)
+    * [스레드 그룹(Thread Group)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#4-%EC%8A%A4%EB%A0%88%EB%93%9C-%EA%B7%B8%EB%A3%B9thread-group)
+    * [데몬 스레드(Daemon Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#5-%EB%8D%B0%EB%AA%AC-%EC%8A%A4%EB%A0%88%EB%93%9Cdaemon-thread)
+    * [스레드 상태(Thread State)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#6-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%83%81%ED%83%9Cthread-state)
+    * [스레드의 동기화(synchronized)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#7-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EB%8F%99%EA%B8%B0%ED%99%94-synchronized)
 26. [Lambda](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda)
-    * 람다식(Lambda expression)
-    * 함수형 인터페이스(functional interface)
-    * 메서드 참조(method reference)
-    * 람다의 단점
+    * [람다 표현식(Lambda Expression)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#1-%EB%9E%8C%EB%8B%A4-%ED%91%9C%ED%98%84%EC%8B%9Dlambda-expression)
+      * 람다식 소개
+    * [함수형 인터페이스(Functional Interface)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#2-%ED%95%A8%EC%88%98%ED%98%95-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4functional-interface)
+    * [메서드 참조(Method Reference)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#3-%EB%A9%94%EC%84%9C%EB%93%9C-%EC%B0%B8%EC%A1%B0method-reference)
+    * [람다의 단점](https://github.com/seungki1011/Data-Engineering/tree/main/java/(024)%20Lambda#4-%EB%9E%8C%EB%8B%A4%EC%9D%98-%EB%8B%A8%EC%A0%90)
 27. [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream)
-    * 스트림(Stream)
+    * [스트림(Stream)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#1-%EC%8A%A4%ED%8A%B8%EB%A6%BCstream)
       * 스트림 소개
       * 스트림의 특징
         * 읽기만 함(read-only)
         * 한번만 사용(use only once), 지연 연산(lazy evaluation)
         * 병렬 스트림(parallel stream)
         * 기본형 스트림(primitive stream)
-    * 스트림 생성
+    * [스트림 생성](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#2-%EC%8A%A4%ED%8A%B8%EB%A6%BC-%EC%83%9D%EC%84%B1)
       * 컬렉션
       * 배열
       * 난수, 특정 범위의 정수
       * `iterate()`, `generate()`
       * `Files`, `empty()`
-    * 중간 연산(Intermediate Opertation)
+    * [중간 연산(Intermediate Opertation)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#3-%EC%A4%91%EA%B0%84-%EC%97%B0%EC%82%B0intermediate-operation)
       * `skip()`, `limit()`
       * `filter()`, `distinct()`
       * `sorted()`
       * `map()`, `flatMap()`
       * `peek()`
-    * `Optional<T>`
-    * 최종 연산(Terminal Opertation)
+    * [`Optional<T>`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#4-optionalt)
+    * [최종 연산(Terminal Opertation)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(025)%20Stream#5-%EC%B5%9C%EC%A2%85-%EC%97%B0%EC%82%B0terminal-operation)
       * `forEach()`
       * `xxxMatch()`
       * `findxxx()`

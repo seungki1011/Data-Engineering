@@ -163,7 +163,7 @@
       * `Enum` 클래스 메서드
       * 열거형을 이용한 리펙토링
       * 열거형 정리
-20. [내부, 중첩, 익명 클래스(Inner, Nested, Anonymous Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Inner%20Class)
+20. [중첩 클래스(Nested Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Inner%20Class)
 21. [예외 처리(Exception Handling)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception)
     * Exception, Error
     * Exception Handling
@@ -178,17 +178,33 @@
     * `try-catch-finally`
     * `try-catch-resource`
     * 사용자 정의 예외(User Defined Exception)
-22. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time)
-    * `Date`
-    * `Calendar`
-    * `java.time` package
+22. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#table-of-contents)
+    * [날짜와 시간 라이브러리](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#1-%EB%82%A0%EC%A7%9C%EC%99%80-%EC%8B%9C%EA%B0%84-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC)
+      * 날짜와 시간의 계산
+      * [날짜와 시간 라이브러리 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#12-%EB%82%A0%EC%A7%9C%EC%99%80-%EC%8B%9C%EA%B0%84-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C)
+        * `java.util.Date`
+        * `java.util.Calendar`
+        * `java.time`
+    * [`java.time` 패키지](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#2-javatime-%ED%8C%A8%ED%82%A4%EC%A7%80)
       * `LocalDate`
       * `LocalTime`
-      * `LocalDateTime`
-      * `ZonedDateTime`
-    * Period, Duration
-    * Instant
-    * Formatter
+      * [`LocalDateTime`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#23-localdatetime)
+      * [`ZonedDateTime`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#24-zoneddatetime)
+        * `ZoneId`
+        * `ZonedDateTime`
+      * `OffsetDateTime`
+      * [`Period`, `Duration`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#26-period-duration)
+      * [`Instant`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#27-instant)
+    * [ `TemporalAccessor`, `TemporalAmount`, `ChronoUnit`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#3-temporalaccessor-temporalamount-chronounit)
+      *  `TemporalAccessor`, `TemporalAmount`
+      * [`ChronoUnit`, `ChronoField`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#32-chronounit-chronofield)
+        * `ChronoUnit`
+        * `ChronoField`
+    * [날짜와 시간 조회, 조작하기](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#4-%EB%82%A0%EC%A7%9C%EC%99%80-%EC%8B%9C%EA%B0%84-%EC%A1%B0%ED%9A%8C-%EC%A1%B0%EC%9E%91%ED%95%98%EA%B8%B0)
+      * 조회하기
+      * 조작하기
+      * `with()`
+    * [`Formatter`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#5-formatter)
 23. [```Collection```](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection)
     * 컬렉션 프레임워크
     * `Collection`

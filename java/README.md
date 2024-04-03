@@ -206,21 +206,22 @@
       * `with()`
     * [`Formatter`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#5-formatter)
 23. [```Collection```](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection)
-    * 컬렉션 프레임워크
-    * `Collection`
-    * `Iterator`
-    * `List`
+    * [`Collection` 프레임워크](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#1-collection-framework)
+    * [`Collection`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#2-collection)
+    * [`Iterator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#3-iterator)
+    * [`List`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#4-list)
       * `ArrayList`
       * `LinkedList`
-    * `Set`
+    * [`Set`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#5-set)
       * `HashSet`
       * `TreeSet`
-    * `Map`
+    * [`Map`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#6-map)
       * `HashMap`
-    * `Stack`, `Queue`, `ArrayDeque`
+    * [`Stack`, `Queue`, `ArrayDeque`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#7-stack-queue-arraydeque)
       * `ArrayDeque`
-    * 익명 클래스(anonymous class)
-    * `Comparable`, `Comparator`
+    * [`Comparable`, `Comparator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#9-comparable--comparator)
+      * `Comparable`
+      * `Comparator`
 24. [제네릭스(Generics)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics)
     * Generics
       * 제네릭스 소개
@@ -306,7 +307,7 @@
 * ```DecimalFormat```
 * ```SimpleDateFormat```
 * ```Collections```
-* Java Serializable
+* `Serializable`
 * `java.util.function`
 
 <br>

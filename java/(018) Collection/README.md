@@ -13,12 +13,9 @@
    * `HashMap`
 7. [`Stack`, `Queue`, `ArrayDeque`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#7-stack-queue-arraydeque)
    * `ArrayDeque`
-8. [익명 클래스(anonymous class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#8-%EC%9D%B5%EB%AA%85%ED%81%B4%EB%9E%98%EC%8A%A4anonymous-class)
 9. [`Comparable`, `Comparator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#9-comparable--comparator)
    * `Comparable`
    * `Comparator`
-
-
 
 ---
 
@@ -816,46 +813,7 @@ The returned element after pop(): Urgent Task 1
 
 ---
 
-## 8) 익명클래스(Anonymous Class)
-
-* 이름이 없는 일회용 클래스
-* 정의와 생성을 동시에 한다
-
-<br>
-
-[```AnonymousClassMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/AnonymousClassMain.java)
-
-```java
-interface Greeting {
-    void greet();
-}
-
-public class AnonymousClassMain {
-    public static void main(String[] args) {
-        // 익명 클래스 정의와 생성 (Greeting 인터페이스 구현)
-        // 클래스의 인스턴스를 참조할 수 있는 참조 변수를 사용
-        // 클래스 그 자체는 이름이 없음
-        Greeting anonymousGreeting = new Greeting() {
-            @Override
-            public void greet() {
-                System.out.println("Greetings from the anonymous class!");
-            }
-        };
-        // 익명 클래스의 메서드 호출
-        anonymousGreeting.greet();
-    }
-}
-```
-
-```
-Greetings from the anonymous class!
-```
-
-<br>
-
----
-
-## 9) ```Comparable``` & ```Comparator```
+## 8) ```Comparable``` & ```Comparator```
 
 * 객체를 비교하기 위해서 사용(정렬 기준을 제시)
 * ```sort()``` 디폴트는 오름차순
@@ -863,7 +821,7 @@ Greetings from the anonymous class!
 
 <br>
 
-### 9.1 ```Comparable```
+### 8.1 ```Comparable```
 
 * ```Comparable``` 인터페이스
   * ```compareTo(T o)``` 메서드 구현
@@ -961,7 +919,7 @@ Fruit{name='Orange', quantity=2}
 
 ---
 
-### 9.2 ```Comparator```
+### 8.2 ```Comparator```
 
 * ```Comparator``` 인터페이스
   * ```compare(T o1, T o2)``` 메서드 구현

@@ -149,7 +149,7 @@ class MyThread2 implements Runnable {
 
 
 
-<p align="center">   <img src="img/threadstack.gif" alt="Inheritance" style="width: 80%;"> </p>
+<p align="center">   <img src="img/threadstack.png" alt="Inheritance" style="width: 80%;"> </p>
 
 <p align='center'>https://medium.com/@Ravjan/java-threads-part-1-basics-5a131943979d</p>
 

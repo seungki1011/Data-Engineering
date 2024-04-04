@@ -55,23 +55,25 @@ class Outer {
 
 ```java
 class Outer {
-   	
+
     private int memberVar;
-   
+
     // 내부 클래스 - 인스턴스 변수와 같은 위치에 선언
-  	class Inner {
-		//... 
+    class Inner {
+        //... 
     }
-    
-		public void process() { 
+
+    public void process() {
         // 지역 변수
-				int lcoalVar = 0; 
-      	
-      	// 지역 클래스 - 지역 변수와 같은 위치에 선언
-    		class Local {...}
-      
+        int lcoalVar = 0;
+
+        // 지역 클래스 - 지역 변수와 같은 위치에 선언
+        class Local {
+          //...
+        }
+
         Local local = new Local();
-		} 
+    }
 }
 ```
 

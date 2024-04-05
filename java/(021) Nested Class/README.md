@@ -784,20 +784,20 @@ public interface Process {
 
   * ```java
     Process dice = new Process() {
-    		@Override
-    		public void run() {
-    				int randomValue = new Random().nextInt(6) + 1;
-    				System.out.println("주시위 = " + randomValue);
-    		}
+      @Override
+    	public void run() {
+    			int randomValue = new Random().nextInt(6) + 1;
+    			System.out.println("주시위 = " + randomValue);
+    	}
     };
     
     Process sum = new Process() {
-    		@Override
-    		public void run() {
-    				for (int i = 0; i < 3; i++) {
-    						System.out.println("i = " + i);
-    				}
-    		}
+    	@Override
+    	public void run() {
+    			for (int i = 0; i < 3; i++) {
+    					System.out.println("i = " + i);
+    			}
+    	}
     };
     ```
 

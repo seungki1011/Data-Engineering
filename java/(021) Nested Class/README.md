@@ -1,6 +1,22 @@
 ## Table of Contents
 
-
+1. [중첩 클래스(Nested Class)]()
+   * 중첩 클래스 소개
+2. [정적 중첩 클래스(Static Nested Class)]()
+   * [정적 중첩 클래스 소개]()
+   * [정적 중첩 클래스를 사용하는 경우]()
+3. [내부 클래스(Inner Class)]()
+   * [내부 클래스 소개]()
+   * [내부 클래스를 사용하는 경우]()
+4. [지역 클래스(Local Class)]()
+   * [지역 클래스 소개]()
+   * [지역 클래스 예시]()
+   * [지역 변수 캡쳐(Variable Capture)]()
+     * 지역 변수 캡쳐 동작 과정
+     * effectively final
+5. [익명 클래스(Anonymous Class)]()
+   * [익명 클래스 소개]()
+   * [익명 클래스를 사용하는 경우]()
 
 ---
 
@@ -104,9 +120,9 @@ class Outer {
 
 ---
 
-### 1.2 정적 중첩 클래스(Static Nested Class)
+## 2) 정적 중첩 클래스(Static Nested Class)
 
-#### 1.2.1 정적 중첩 클래스 예시
+### 2.1 정적 중첩 클래스 소개
 
 정적 중첩 클래스에 대해서 알아보자.
 
@@ -201,7 +217,7 @@ public class NestedOuterMain {
 
 ---
 
-#### 1.2.2 정적 중첩 클래스를 사용하는 경우
+### 2.2 정적 중첩 클래스를 사용하는 경우
 
 그럼면 정적 중첩 클래스를 활용하는 경우에 대해서 알아보자.
 
@@ -221,9 +237,9 @@ public class NestedOuterMain {
 
 ---
 
-### 1.3 내부 클래스(Inner Class)
+## 3) 내부 클래스(Inner Class)
 
-#### 1.3.1 내부 클래스 예시
+### 3.1 내부 클래스 소개
 
 내부 클래스에 대해서 알아보자. 
 
@@ -301,7 +317,7 @@ public class InnerOuterMain {
 
 ---
 
-#### 1.3.2 내부 클래스 사용하는 경우
+### 3.2 내부 클래스를 사용하는 경우
 
 내부 클래스를 어떻게 활용하는지 알아보자.
 
@@ -320,6 +336,7 @@ public class CarMain {
 
 * 리펙토링 전
   * `Engine` 클래스는 `Car` 클래스에서만 사용된다
+  * `new Engine(this)` : `Engine` 인스턴스를 생성할 때 `Car` 자기 자신의 인스턴스를 넘겨줘야 함
   * 엔진을 시작하기 위해서 차의 충전 레벨과 모델명이 필요함
     * `Car` 인스턴스의 참조를 생성자에 보관
     * 충전 레벨과, 모델명 확인을 위한 메서드 필요 → 이 메서들은 엔진에서만 사용하고, 다른 곳에서는 사용하지 않는다
@@ -340,61 +357,479 @@ public class CarMain {
 
 <br>
 
+## 4) 지역 클래스(Local Class)
+
+### 4.1 지역 클래스 소개
+
+지역 클래스(Local Class)는 내부 클래스의 종류 중 하나이다. 따라서 내부 클래스의 특징을 그대로 가지고 있다.
+
+<br>
+
+<p align="center">   <img src="img/local1.png" alt="nested" style="width: 70%;"> </p>
+
+<p align='center'>지역 클래스는 내부 클래스</p>
+
+*  지역 클래스는 내부 클래스이므로, 바깥 클래스의 멤버 변수에 직접 접근이 가능하다
+* 지역 클래스는 지역 변수와 같이 코드 블럭 안에서 정의된다
+
+<br>
+
+```java
+class Outer {
+
+    public void process() { 
+      
+        // 지역 변수 - 지역 클래스가 접근 가능
+        int localVar = 0; 
+        
+        // 지역 클래스
+        class Local {
+            //..    
+        }
+      
+        Local local = new Local();
+    } 
+}
+```
+
+* 지역 클래스는 지역 변수처럼 코드 블럭 안에 클래스를 선언한다
+* 지역 클래스는 지역 변수에 접근할 수 있음
+
+<br>
+
 ---
 
-### 1.4 지역 클래스(Local Class)
+### 4.2 지역 클래스 예시
+
+예시를 통해 더 자세히 알아보자.
+
+<br>
+
+```java
+public class LocalOuterV2 {
+
+    private int outInstanceVar = 3; // 바깥 클래스의 인스턴스 멤버 변수에 접근 가능
+
+    public void process(int paramVar) { // 지역 클래스는 자신이 속한 코드 블럭의 매개변수에 접근 가능
+
+        int localVar = 1; // 지역 클래스는 자신이 속한 코드 블럭의 지역 변수에 접근 가능
+				
+      	// 지역 클래스 - 지역 클래스도 내부 클래스이다
+        class LocalPrinter implements Printer { // 인터페이스 구현 가능
+          
+            int value = 0; // 자기 자신의 멤버 변수에 당연히 접근 가능
+
+            @Override
+            public void print() {
+                System.out.println("value=" + value);
+                System.out.println("localVar=" + localVar);
+                System.out.println("paramVar=" + paramVar);
+                System.out.println("outInstanceVar=" + outInstanceVar);
+            }
+        }
+
+        LocalPrinter printer = new LocalPrinter();
+        printer.print();
+    }
+
+    public static void main(String[] args) {
+        LocalOuterV2 localOuter = new LocalOuterV2();
+        localOuter.process(2);
+    }
+}
+```
 
 
 
+<p align="center">   <img src="img/local2.png" alt="nested" style="width: 100%;"> </p>
 
+* 지역 변수는 내부 클래스의 한 종류이기 때문에, 내부 클래스가 가지는 특징을 전부 가진다
+* 매개 변수도 지역 변수의 한 종류이다
+* 내부 클래스를 포함한 중첩 클래스들도 일반 클래스 처럼 인터페이스를 구현하거나, 클래스를 상속할 수 있다
 
-
-
-
-
-
-
-
-
-
-
-
+<br>
 
 ---
 
-## 8) 익명클래스(Anonymous Class)
+### 4.3 지역 변수 캡쳐(Variable Capture)
 
+#### 4.3.1 지역 변수 캡쳐 동작 과정
+
+지역 변수 캡쳐에 대해서 알아보자.
+
+들어가기에 앞서 변수의 생명주기를 다시 한번 되짚어보고 가자.
+
+* 클래스 변수(`static` 변수)
+  * 메서드 영역(method area)에 존재
+  * 클래스 정보를 읽어 들이는 순간부터 프로그램 종료까지 생존한다
+
+
+
+* 인스턴스 변수(멤버 변수)
+  * 힙 영역(heap area)에 존재
+  * 본인이 소속된 인스턴스가 GC 되지 전까지 생존한다
+
+
+
+* 지역 변수
+  * 스택 영역의 스택 프레임 안에 존재한다
+  * 메서드 호출이 되면서 생성이 되고, 메서드가 종료되면 스택 프레임이 제거 되면서 지역 변수도 제거된다
+  * 대다수의 경우 클래스 변수, 인스턴스 변수에 비해 생존 주기가 아주 짧다
+
+<br>
+
+이제 지역 변수 캡쳐가 어떤 내용인지 예시를 통해서 한번 알아보자.
+
+<br>
+
+```java
+public class LocalOuter {
+    private int outInstanceVar = 3;
+
+    public Printer process(int paramVar) {
+
+        int localVar = 1;
+
+        class LocalPrinter implements Printer {
+
+            int value = 0;
+
+            @Override
+            public void print() {
+                System.out.println("value=" + value);
+
+                System.out.println("localVar=" + localVar);
+                System.out.println("paramVar=" + paramVar);
+                System.out.println("outInstanceVar=" + outInstanceVar);
+            }
+        }
+
+        LocalPrinter printer = new LocalPrinter();
+        return printer;
+    }
+
+    public static void main(String[] args) {
+        LocalOuter localOuter = new LocalOuter();
+        Printer printer = localOuter.process(2);
+
+        printer.print();
+
+        System.out.println("필드 확인");
+        Field[] fields = printer.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            System.out.println("field = " + field);
+        }
+    }
+}
+```
+
+* 코드를 보면 대략적으로 다음의 순서로 코드가 실행된다
+
+1. `main()` 스택 프레임이 올라감
+
+2. `LocalOuter localOuter = new LocalOuter();` : `LocalOuter` 클래스의 인스턴스 생성 (바깥 클래스 인스턴스 생성)
+
+3. `process()` 스택 프레임이 올라감
+
+4. `LocalPrinter printer = new LocalPrinter();` : 지역 클래스 인스턴스를 생성
+
+5. `return printer;` : 해당 지역 클래스 인스턴스 반환
+
+6. `process()` 스택 프레임 종료 (스택 프레임 제거)
+
+7. `print()` 스택 프레임 올라감
+
+   * ```java
+     @Override
+     public void print() {
+         System.out.println("value=" + value);
+     	  System.out.println("localVar=" + localVar);
+     	  System.out.println("paramVar=" + paramVar);
+     	  System.out.println("outInstanceVar=" + outInstanceVar);
+     }
+     ```
+
+<br>
+
+<p align="center">   <img src="img/vc3.png" alt="nested" style="width: 100%;"> </p>
+
+<br>
+
+<p align="center">   <img src="img/vc4.png" alt="nested" style="width: 100%;"> </p>
+
+<br>
+
+여기서 우리는 이상함을 느껴야한다. `print()` 스택 프레임 올라가고 메서드를 실행하면서 분명히, `localVar`과 `paramVar`를 사용한다(값이 정상적으로 출력된다). 그러나 이미 `process()` 스택 프레임이 제거되면서 `localVar`과 `paramVar`는 사라진 뒤다. 그러면 `print()`는 어떻게 두 지역변수를 사용하는 것일까?
+
+여기서 자바는 **변수 캡쳐(Variable Capture)라는 것을 사용**한다. 실제로 일어나는 과정을 다음 그림으로 알아보자.
+
+<br>
+
+<p align="center">   <img src="img/lvc3.png" alt="nested" style="width: 100%;"> </p>
+
+* `LocalPrinter`(지역 클래스) 인스턴스 생성 시도
+  * 지역 클래스의 인스턴스를 생성할 때 지역 클래스가 접근하는 지역 변수를 확인한다
+  * `print()` 에서 `paramVar`, `localVar`에 접근하는 것을 확인
+
+
+
+* 지역 클래스가 사용하는 지역 변수를 복사한다
+  * `paramVar`, `localVar`를 복사한다 (캡쳐 한다!)
+
+
+
+* 복사한 지역 변수를 지역 클래스의 인스턴스에 포함한다
+* 인스턴스의 생성을 완료한다
+
+<br>
+
+<p align="center">   <img src="img/lvc4.png" alt="nested" style="width: 100%;"> </p>
+
+* 이제 캡쳐한 지역 변수를 지역 클래스 인스턴스를 통해서 접근할 수 있다
+* 정리하자면 `paramVar`, `localVar`를 스택 영역의 지역 변수에 접근하는 것이 아니라, 지역 클래스 인스턴스에 있는 캡쳐한 변수에 접근한다 (어차피 스택 프레임이 제거 되면서 스택 영역의 변수는 접근하지도 못함)
+* 결론적으로 변수 캡쳐를 통해서 지역 변수와 지역 클래스를 통해 생성한 인스턴스의 생명주기가 다른 문제를 해결한다
+
+<br>
+
+---
+
+#### 4.3.2 effectively `final`
+
+지역 클래스가 접근하는 지역 변수는 절대로 중간에 값이 변하면 안된다. 따라서 `final`로 선언하거나, 사실상(effectively) `final`이어야 함.
+
+> 사실상 `final`이라는 것은 지역 변수에 `final` 키워드를 사용하지 않았지만, 값을 변경하지 않은 지역 변수를 뜻한다.
+>
+> 어차피 지역 클래스가 접근하는 지역 변수에 자바 컴파일러는 `final`을 강제한다. 지역 변수의 값을 변경하려고 시도하면 컴파일 오류가 뜸.
+
+<br>
+
+지역 클래스가 접근하는 지역 변수는 왜 중간에 값이 바뀌면 안되는지 알아보자.
+
+<br>
+
+<p align="center">   <img src="img/ef1.png" alt="nested" style="width: 90%;"> </p>
+
+* 캡쳐 변수의 값을 변경하면 안되는 이유
+  * 지역 변수의 값을 변경하면 인스턴스에 캡처한 변수의 값도 변경해야 한다
+  * 반대로 인스턴스에 있는 캡처 변수의 값을 변경하면 해당 지역 변수의 값도 다시 변경해야 한다
+  * 개발자 입장에서 예상하지 못한 곳에서 값이 변경될 수 있기 때문에 디버깅을 어렵게 한다
+  * 지역 변수의 값과 인스턴스에 있는 캡처 변수의 값을 서로 동기화해야 함
+    * 멀티 쓰레드 상황에서 이를 구현하기는 어려움 (Thread safety)
+
+
+
+* **정리하자면, 그냥 지역 클래스가 접근하는 지역 변수의 값은 변경하면 안된다!**
+
+<br>
+
+---
+
+## 5) 익명클래스(Anonymous Class)
+
+### 5.1 익명 클래스 소개
+
+* 지역 클래스의 특별한 종류 중 하나
 * 이름이 없는 일회용 클래스
 * 정의와 생성을 동시에 한다
 
 <br>
 
-[```AnonymousClassMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/AnonymousClassMain.java)
+우리가 사용했던 이전 예시를 익명 클래스로 만들어보자.
+
+<br>
 
 ```java
-interface Greeting {
-    void greet();
-}
+public class AnonymousOuter {
 
-public class AnonymousClassMain {
-    public static void main(String[] args) {
-        // 익명 클래스 정의와 생성 (Greeting 인터페이스 구현)
-        // 클래스의 인스턴스를 참조할 수 있는 참조 변수를 사용
-        // 클래스 그 자체는 이름이 없음
-        Greeting anonymousGreeting = new Greeting() {
+    private int outInstanceVar = 3;
+
+    public void process(int paramVar) {
+
+        int localVar = 1;
+      
+				// 익명 클래스 정의와 생성 (Printer 인터페이스를 구현)
+      	// 클래스의 인스턴스를 참조할 수 있는 참조 변수를 사용
+        Printer printer = new Printer() { // 익명이라는 말 그대로 이름이 없음
+            int value = 0;
+
             @Override
-            public void greet() {
-                System.out.println("Greetings from the anonymous class!");
+            public void print() {
+                System.out.println("value=" + value);
+                System.out.println("localVar=" + localVar);
+                System.out.println("paramVar=" + paramVar);
+                System.out.println("outInstanceVar=" + outInstanceVar);
             }
         };
-        // 익명 클래스의 메서드 호출
-        anonymousGreeting.greet();
+
+        printer.print();
+        System.out.println("printer.class=" + printer.getClass());
+    }
+
+    public static void main(String[] args) {
+        AnonymousOuter main = new AnonymousOuter();
+        main.process(2);
+    }
+}
+```
+
+<p align="center">   <img src="img/ac1.png" alt="nested" style="width: 100%;"> </p>
+
+* 익명 클래스는 클래스의 본문(body)을 정의하면서 동시에 생성
+* 익명 클래스는 부모 클래스를 상속 받거나, 또는 인터페이스를 구현해야 한다
+  * 무조건 상위 클래스 또는 인터페이스 필요
+* 익명 클래스는 말 그대로 이름이 없음
+
+<br>
+
+---
+
+### 5.2 익명 클래스를 사용하는 경우
+
+익명 클래스를 활용해보자.
+
+<br>
+
+다음과 두 개의 메서드가 실행되는 코드가 있다고 해보자.
+
+```java
+public class BeforeRefactorMain {
+    public static void helloDice() {
+        System.out.println("프로그램 시작");
+
+        //코드 조각 시작
+        int randomValue = new Random().nextInt(6) + 1;
+        System.out.println("주시위 = " + randomValue);
+        //코드 조각 종료
+
+        System.out.println("프로그램 종료");
+    }
+
+    public static void helloSum() {
+        System.out.println("프로그램 시작");
+
+        //코드 조각 시작
+        for (int i = 0; i < 3; i++) {
+            System.out.println("i = " + i);
+        }
+        //코드 조각 종료
+
+        System.out.println("프로그램 종료");
+    }
+
+    public static void main(String[] args) {
+        helloDice();
+        helloSum();
     }
 }
 ```
 
 ```
-Greetings from the anonymous class!
+프로그램 시작
+주시위 = 3
+프로그램 종료
+프로그램 시작
+i = 0
+i = 1
+i = 2
+프로그램 종료
 ```
 
+* 하나의 메서드에서 실행할 수 있도록 익명 클래스를 활용 해보자
+
+
+
+* 코드를 분석해보자
+  * 프로그램 시작, 종료를 출력하는 부분은 변하지 않음
+  * 코드 조각의 시작과 종료까지 하는 부분은 변하는 부분이다
+  * 하나의 메서드로 리팩토링 하기 위해서는 변하는 코드 조각 부분을 메서드가 전달 받아야한다
+
+
+
+이제 외부에서 코드를 전달 받기 위해서 익명 클래스로 리펙토링 하는 과정을 다음 그림으로 살펴보자. 
+
 <br>
+
+```java
+public interface Process {
+    void run();
+}
+```
+
+<p align="center">   <img src="img/ac2.png" alt="nested" style="width: 100%;"> </p>
+
+* 외부에서 코드 조각을 전달하기 위해서 인스턴스를 전달하고, 인스턴스에 있는 메서드를 호출하면 된다
+
+
+
+* `Dice`, `Sum` 클래스는 `Process` 인터페이스를 구현하고, `run()` 메서드를 구현한다
+  * 전달할 코드를 `run()`에 구현하면 된다
+
+
+
+* 위의 예시에서는 지역 클래스를 사용했지만, 인스턴스를 전달하는 방식 자체는 그냥 외부에 클래스를 만들어서 사용하는 것도 가능하다
+
+
+
+* `hello(Process process)` : `process` 매개변수를 통해서 인스턴스를 전달할 수 있다
+  * 예) `hello(dice)`, `hello(sum)`
+  * 전달한 인스턴스의 `run()` 메서드를 호출하면서, 필요한 코드를 실행할 수 있다
+
+
+
+* 위의 예시에서 지역 클래스로 리펙토링한 코드를 다시 익명 클래스를 이용하도록 리팩토링하고 있다
+
+  * 이때 익명 클래스의 참조값을 `hello()`에 바로 전달해서 사용하고 있다
+
+  * 만약 바로 전달하지 않고 익명 클래스를 사용한다면 다음과 같이 사용했을 것이다
+
+  * ```java
+    Process dice = new Process() {
+    		@Override
+    		public void run() {
+    				int randomValue = new Random().nextInt(6) + 1;
+    				System.out.println("주시위 = " + randomValue);
+    		}
+    };
+    
+    Process sum = new Process() {
+    		@Override
+    		public void run() {
+    				for (int i = 0; i < 3; i++) {
+    						System.out.println("i = " + i);
+    				}
+    		}
+    };
+    ```
+
+<br>
+
+> 만약 위의 예시를 람다(Lambda)를 사용하도록 리팩토링 한다면?
+>
+> ```java
+> hello(() -> {
+>     int randomValue = new Random().nextInt(6) + 1;
+>     System.out.println("주시위 = " + randomValue);
+> });
+> 
+> hello(() -> {
+>     for (int i = 0; i < 3; i++) {
+>         System.out.println("i = " + i);
+>     }
+> });
+> ```
+>
+> * 클래스나 인스턴스를 정의하지 않고, 메서드(함수)의 코드 블럭을 직접 전달해서 사용
+
+<br>
+
+**익명 클래스를 사용하는 경우**
+
+* 클래스를 별도로 정의하지 않고도 인터페이스나 추상 클래스를 즉석에서 구현할 수 있어 코드가 더 간결해진다
+* 지역 클래스가 일회성으로 사용되는 경우나 간단한 구현을 제공할 때 사용한다
+
+<br>
+
+**익명 클래스를 사용하기 힘든 경우**
+
+* 익명 클래스는 단 한 번만 인스턴스 생성이 가능하다
+  * 만약 여러번 생성이 필요하다면 익명 클래스 사용 불가

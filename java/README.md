@@ -163,7 +163,7 @@
       * `Enum` 클래스 메서드
       * 열거형을 이용한 리펙토링
       * 열거형 정리
-20. [중첩 클래스(Nested Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Inner%20Class)
+20. [중첩 클래스(Nested Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Nested%20Class)
     * [중첩 클래스(Nested Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Nested%20Class#1-%EC%A4%91%EC%B2%A9-%ED%81%B4%EB%9E%98%EC%8A%A4nested-class)
       * 중첩 클래스 소개
     * [정적 중첩 클래스(Static Nested Class)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Nested%20Class#2-%EC%A0%95%EC%A0%81-%EC%A4%91%EC%B2%A9-%ED%81%B4%EB%9E%98%EC%8A%A4static-nested-class)

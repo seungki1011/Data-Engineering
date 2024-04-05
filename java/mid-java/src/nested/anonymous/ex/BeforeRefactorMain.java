@@ -2,8 +2,7 @@ package nested.anonymous.ex;
 
 import java.util.Random;
 
-public class Ex1Main {
-
+public class BeforeRefactorMain {
     public static void helloDice() {
         System.out.println("프로그램 시작");
 
@@ -31,5 +30,5 @@ public class Ex1Main {
         helloDice();
         helloSum();
     }
-
 }
+

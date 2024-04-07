@@ -746,20 +746,22 @@ public interface AutoCloseable {
 
 코드를 통해 더 자세히 알아보자.
 
+코드는 뒤에서 다룰 [언체크 예외 사용 예시]() 코드의 일부이다.
+
 ```java
-public class NetworkClientV implements AutoCloseable { // AutoCloseable 구현
+public class NetworkClient implements AutoCloseable { // AutoCloseable 구현
 
     private final String address;
     public boolean connectError;
     public boolean sendError;
 
-    public NetworkClientV(String address) {
+    public NetworkClient(String address) {
         this.address = address;
     }
 
     public void connect() {
         if (connectError) {
-            throw new ConnectExceptionV4(address, address + " 서버 연결 실패");
+            throw new ConnectException(address, address + " 서버 연결 실패");
         }
         //연결 성공
         System.out.println(address + " 서버 연결 성공");
@@ -767,7 +769,7 @@ public class NetworkClientV implements AutoCloseable { // AutoCloseable 구현
 
     public void send(String data) {
         if (sendError) {
-            throw new SendExceptionV4(data, address + " 서버에 데이터 전송 실패: " + data);
+            throw new SendException(data, address + " 서버에 데이터 전송 실패: " + data);
             //throw new RuntimeException("ex");
         }
         //전송 성공
@@ -926,9 +928,11 @@ Writing data to Data2.txt!
 
 ---
 
-### 9.2 언체크 예외(Unchecked Exception, 런타임 예외)의 활용
+### 9.2 언체크 예외(Unchecked Exception, 런타임 예외)의 사용
 
-그러면 언체크 예외를 사용해서 어떤식으로 예외를 처리할까?
+#### 9.2.1 언체크 예외 사용 방법
+
+그러면 언체크 예외를 사용해서 어떤식으로 예외를 해결할까?
 
 다음 그림을 살펴보자.
 
@@ -949,31 +953,187 @@ Writing data to Data2.txt!
 
 
 
-* 처리할 수 없는 예외들을 중간 여러곳에서 나누어서 처리하는 것 보다, 예외를 공통으로 처리할 수 있는 레이어를 만들어서 한 곳에서 해결하는 것이 좋다
+* 처리할 수 없는 예외들을 중간 여러곳에서 나누어서 처리하는 것 보다, 예외를 공통으로 처리할 수 있는 장소를 만들어서 한 곳에서 해결하는 것이 좋다
   * 해결할 수 없는 예외들이기 때문에, 고객들에게는 시스템에 문제가 발생했다고 메세지를 보여주거나 오류 페이지를 보여주면 됨
   * 개발자의 경우, 빠르게 문제를 파악할 수 있도록 오류에 대한 로그를 남기면 됨
   * 위와 같은 부분들은 공통 처리가 가능함
 
 <br>
 
-코드를 통해서 더 자세히 알아보자.
+---
+
+#### 9.2.2 언체크 예외 예시
+
+예시를 통해서 더 자세히 알아보자.
+
+<br>
+
+<p align="center">   <img src="img/uncheck2.png" alt="checked vs unchecked" style="width: 80%;"> </p>
+
+* 사용할 예외들은 `RuntimeException`의 자손
+* 쉽게 말해서 사용할 예외들이 언체크 예외임
 
 <br>
 
 ```java
+public class NetworkClientException extends RuntimeException { // 언체크 예외(런타임 예외)
+    public NetworkClientException(String message) {
+        super(message);
+    }
+}
 ```
 
+* `NetWorkClientException`은 `RuntimeException` 상속
 
+```java
+public class ConnectException extends NetworkClientException {
+    private final String address;
 
+    public ConnectException(String address, String message) {
+        super(message);
+        this.address = address;
+    }
 
+    public String getAddress() {
+        return address;
+    }
+}
+```
 
+```java
+public class SendException extends NetworkClientException {
 
+    private final String sendData;
 
+    public SendException(String sendData, String message) {
+        super(message);
+        this.sendData = sendData;
+    }
 
+    public String getSendData() {
+        return sendData;
+    }
+}
+```
 
+```java
+public class NetworkClient implements AutoCloseable {
 
+    private final String address;
+    public boolean connectError;
+    public boolean sendError;
 
+    public NetworkClient(String address) {
+        this.address = address;
+    }
 
+    public void connect() {
+        if (connectError) {
+            throw new ConnectException(address, address + " 서버 연결 실패");
+        }
+        //연결 성공
+        System.out.println(address + " 서버 연결 성공");
+    }
+
+    public void send(String data) {
+        if (sendError) {
+            throw new SendException(data, address + " 서버에 데이터 전송 실패: " + data);
+            //throw new RuntimeException("ex");
+        }
+        //전송 성공
+        System.out.println(address + " 서버에 데이터 전송: " + data);
+    }
+
+    public void disconnect() {
+        System.out.println(address + " 서버 연결 해제");
+    }
+
+    public void initError(String data) {
+        if (data.contains("error1")) {
+            connectError = true;
+        }
+        if (data.contains("error2")) {
+            sendError = true;
+        }
+    }
+
+    @Override
+    public void close() {
+        System.out.println("NetworkClient.close");
+        disconnect();
+    }
+}
+```
+
+* 언체크 예외이므로 `throws`를 사용할 필요 없다
+
+```java
+public class NetworkService {
+
+    public void sendMessage(String data) {
+        String address = "http://example.com";
+
+        try (NetworkClient client = new NetworkClient(address)) {
+            client.initError(data); //추가
+            client.connect();
+            client.send(data);
+        } catch (Exception e) {
+            System.out.println("[예외 확인]: " + e.getMessage());
+            throw e;
+        }
+    }
+}
+```
+
+* `NetworkService`는  `ConnectException` , `SendException` 을 잡아도 해당 예외들을 해결할 수 없기 때문에 예외를 던진다
+* 언체크 예외이므로 `throws`를 사용할 필요 없다
+* 해결할 수 없는 예외들은 공통으로 처리할 수 있는 곳에서 처리한다
+
+```java
+public class Main {
+
+    public static void main(String[] args) {
+        NetworkService networkService = new NetworkService();
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("전송할 문자: ");
+            String input = scanner.nextLine();
+            if (input.equals("exit")) {
+                break;
+            }
+
+            try {
+                networkService.sendMessage(input); // sendMessage()를 try로 감싸서 사용
+            } catch (Exception e) {
+                exceptionHandler(e); // exceptionHandler()에서 공통 예외 처리를 한다
+            }
+            System.out.println();
+        }
+        System.out.println("프로그램을 정상 종료합니다.");
+    }
+
+    // 공통 예외 처리
+    private static void exceptionHandler(Exception e) {
+        // 공통 처리
+        System.out.println("사용자 메시지: 죄송합니다. 알 수 없는 문제가 발생했습니다.");
+        System.out.println("==개발자용 디버깅 메시지==");
+        e.printStackTrace(System.out); // 스택 트레이스 출력
+        // e.printStackTrace();
+
+        // 필요하면 예외 별로 별도의 추가 처리 가능
+        if (e instanceof SendException sendEx) {
+            System.out.println("[전송 오류] 전송 데이터: " + sendEx.getSendData());
+        }
+    }
+}
+
+```
+
+* 위에서는 `println`을 사용했지만, 애플리케이션을 개발할때는 로깅 
+* 필요하면 `instanceof` 와 같이 예외 객체의 타입을 확인해서 별도의 추가 처리도 가능
+
+<br>
 
 ---
 

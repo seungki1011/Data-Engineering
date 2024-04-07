@@ -1,18 +1,31 @@
 ## Table of Contents
 
-1. [Exception, Error](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#1-exception-error)
-2. [Exception Handling](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#2-exception-handling)
-3. [`e`(Exception Variable)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#3-exception-variable)
-4. [Multi Catch](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#4-multi-catch)
-5. [`throw`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#5-throw)
-6. [Checked, Unchecked Exception](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#6-checked-unchecked-exception)
-7. [`throws`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#7-throws)
-   * `throws` 소개
-   * `throws`가 처리되는 과정
-   * 예외 되던지기
-8. [`try-catch-finally`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#8-try-catch-finally)
-9. [`try-catch-resource`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#9-try-with-resource)
-10. [사용자 정의 예외(User Defined Exception)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#10-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EC%9D%98-%EC%98%88%EC%99%B8user-defined-exception)
+1. [예외, 에러(Exception, Error)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#1-%EC%98%88%EC%99%B8-%EC%97%90%EB%9F%ACexception-error)
+   * [예외(Exception) 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#11-%EC%98%88%EC%99%B8exception-%EC%86%8C%EA%B0%9C)
+   * [예외 기본 규칙](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#11-%EC%98%88%EC%99%B8-%EA%B8%B0%EB%B3%B8-%EA%B7%9C%EC%B9%99)
+2. [예외 발생시키기(`throw`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#2-%EC%98%88%EC%99%B8-%EB%B0%9C%EC%83%9D%EC%8B%9C%ED%82%A4%EA%B8%B0throw)
+3. [예외 처리하기(`try-catch`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#3-%EC%98%88%EC%99%B8-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0try-catch)
+   * [`try-catch` 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#31-try-catch-%EC%86%8C%EA%B0%9C)
+   * [예외 세분화](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#32-%EC%98%88%EC%99%B8-%EC%84%B8%EB%B6%84%ED%99%94)
+   * 멀티 `catch`(`|`)
+4. [예외 객체 참조 변수(Exception Variable)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#4-%EC%98%88%EC%99%B8-%EA%B0%9D%EC%B2%B4-%EC%B0%B8%EC%A1%B0-%EB%B3%80%EC%88%98exception-variable)
+5. [예외 던지기(`throws`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#5-%EC%98%88%EC%99%B8-%EB%8D%98%EC%A7%80%EA%B8%B0throws)
+   * [`throws` 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#51-throws-%EC%86%8C%EA%B0%9C)
+   * [`throws`가 처리되는 과정](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#52-throws%EA%B0%80-%EC%B2%98%EB%A6%AC%EB%90%98%EB%8A%94-%EA%B3%BC%EC%A0%95)
+6. [Checked, Unchecked Exception](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#6-checked-unchecked-%EC%98%88%EC%99%B8)
+   * [체크, 언체크 예외 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#61-%EC%B2%B4%ED%81%AC-%EC%96%B8%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8-%EC%86%8C%EA%B0%9C)
+   * [체크 예외(Checked Exception)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#62-%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8checked-exception)
+   * [언체크 예외(Unchecked Exception, 런타임 예외)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#63-%EC%96%B8%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8unchecked-exception-%EB%9F%B0%ED%83%80%EC%9E%84-%EC%98%88%EC%99%B8)
+7. [`try-catch-finally`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#7-try-catch-finally)
+8. [`try-with-resource`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#8-try-with-resource)
+   * [`try-with-resource` 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#81-try-with-resource-%EC%86%8C%EA%B0%9C)
+   * [사용 예시 1](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#82-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%8B%9C-1)
+   * [사용 예시 2](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#83-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%8B%9C-2)
+9. [체크 예외를 잘 사용하지 않는 이유](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#9-%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8%EB%A5%BC-%EC%9E%98-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EC%95%8A%EB%8A%94-%EC%9D%B4%EC%9C%A0)
+   * [체크 예외(Checked Exception)의 단점](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#91-%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8checked-exception%EC%9D%98-%EB%8B%A8%EC%A0%90)
+   * [언체크 예외(Uncheck Exception)의 사용](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#92-%EC%96%B8%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8unchecked-exception-%EB%9F%B0%ED%83%80%EC%9E%84-%EC%98%88%EC%99%B8%EC%9D%98-%EC%82%AC%EC%9A%A9)
+     * 언체크 예외 사용 방안
+     * 언체크 예외 사용 예시
 
 ---
 
@@ -475,7 +488,7 @@ java.lang.ArithmeticException: / by zero
 
 
 * ```throws```가 붙은 메서드는 반드시 ```try``` 블럭내에 호출되어야 함
-* 이전 [예외의 기본 규칙]()에서 예외를 던지는 것을 기억하자
+* 이전 [예외의 기본 규칙](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#11-%EC%98%88%EC%99%B8-%EA%B8%B0%EB%B3%B8-%EA%B7%9C%EC%B9%99)에서 예외를 던지는 것을 기억하자
 
 <br>
 
@@ -499,7 +512,7 @@ void method() throws ExceptionA, ExceptionB {
 
 ### 5.2 `throws`가 처리되는 과정
 
-이전의 [예외의 기본 규칙]()에서 설명했던 과정을 다른 예시로 한번 더 살펴보자.
+이전의 [예외의 기본 규칙](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#11-%EC%98%88%EC%99%B8-%EA%B8%B0%EB%B3%B8-%EA%B7%9C%EC%B9%99)에서 설명했던 과정을 다른 예시로 한번 더 살펴보자.
 
 <br>
 
@@ -574,7 +587,7 @@ Handled Exception in main
 
 ### 6.2 체크 예외(Checked Exception)
 
-체크 예외에서 예외를 던지는 과정을 다시 한번 더 살펴보자. (이전의 [예외 기본 규칙](), [`throws`가 처리되는 과정]()과 내용이 상당수 겹칠 수 있다)
+체크 예외에서 예외를 던지는 과정을 다시 한번 더 살펴보자. (이전의 [예외 기본 규칙](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#11-%EC%98%88%EC%99%B8-%EA%B8%B0%EB%B3%B8-%EA%B7%9C%EC%B9%99), [`throws`가 처리되는 과정](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#52-throws%EA%B0%80-%EC%B2%98%EB%A6%AC%EB%90%98%EB%8A%94-%EA%B3%BC%EC%A0%95)과 내용이 상당수 겹칠 수 있다)
 
 <br>
 
@@ -746,7 +759,7 @@ public interface AutoCloseable {
 
 코드를 통해 더 자세히 알아보자.
 
-코드는 뒤에서 다룰 [언체크 예외 사용 예시]() 코드의 일부이다.
+코드는 뒤에서 다룰 [언체크 예외 사용 예시](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#922-%EC%96%B8%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8-%EC%98%88%EC%8B%9C) 코드의 일부이다.
 
 ```java
 public class NetworkClient implements AutoCloseable { // AutoCloseable 구현
@@ -1140,7 +1153,6 @@ public class Main {
 ## Further Reading
 
 * 트랜잭션 내의 예외 처리
-* 연결된 예외 (chained exception)
 
 <br>
 

@@ -1,6 +1,12 @@
 > Java 기본 개념 및 문법
 >
-> [인프런 - 실전 자바 로드맵(김영한)](https://www.inflearn.com/roadmaps/744)과 [자바의 정석](https://www.youtube.com/watch?v=QcXLiwZPnJQ&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=135), 기타(구글링, 유튜브)를 참고했습니다.
+> 참고 강의 및 자료
+>
+> * [인프런 - 실전 자바 로드맵(김영한)](https://www.inflearn.com/roadmaps/744)
+> *  [자바의 정석](https://www.youtube.com/watch?v=QcXLiwZPnJQ&list=PLW2UjW795-f6xWA2_MUhEVgPauhGl3xIp&index=135)
+> * [생활 코딩 자바](https://www.youtube.com/watch?v=-dPXqgWQBGE&list=PLuHgQVnccGMAIluRRVsC1e79ri-dwnBmR)
+>
+> * 기타(블로그, 유튜브)
 >
 > 포스트의 폴더 번호와 인덱스 번호는 일치하지 않습니다.
 
@@ -182,19 +188,32 @@
       * [익명 클래스 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Nested%20Class#51-%EC%9D%B5%EB%AA%85-%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%86%8C%EA%B0%9C)
       * [익명 클래스를 사용하는 경우](https://github.com/seungki1011/Data-Engineering/tree/main/java/(021)%20Nested%20Class#52-%EC%9D%B5%EB%AA%85-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B2%BD%EC%9A%B0)
 21. [예외 처리(Exception Handling)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception)
-    * Exception, Error
-    * Exception Handling
-    * `e`(Exception Variable)
-    * Multi Catch
-    * `throw`
-    * Checked, Unchecked Exception
-    * `throws`
-      * `throws` 소개
-      * `throws`가 처리되는 과정
-      * 예외 되던지기
-    * `try-catch-finally`
-    * `try-catch-resource`
-    * 사용자 정의 예외(User Defined Exception)
+    * [예외, 에러(Exception, Error)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#1-%EC%98%88%EC%99%B8-%EC%97%90%EB%9F%ACexception-error)
+      * [예외(Exception) 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#11-%EC%98%88%EC%99%B8exception-%EC%86%8C%EA%B0%9C)
+      * [예외 기본 규칙](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#11-%EC%98%88%EC%99%B8-%EA%B8%B0%EB%B3%B8-%EA%B7%9C%EC%B9%99)
+    * [예외 발생시키기(`throw`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#2-%EC%98%88%EC%99%B8-%EB%B0%9C%EC%83%9D%EC%8B%9C%ED%82%A4%EA%B8%B0throw)
+    * [예외 처리하기(`try-catch`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#3-%EC%98%88%EC%99%B8-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0try-catch)
+      * [`try-catch` 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#31-try-catch-%EC%86%8C%EA%B0%9C)
+      * [예외 세분화](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#32-%EC%98%88%EC%99%B8-%EC%84%B8%EB%B6%84%ED%99%94)
+      * 멀티 `catch`(`|`)
+    * [예외 객체 참조 변수(Exception Variable)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#4-%EC%98%88%EC%99%B8-%EA%B0%9D%EC%B2%B4-%EC%B0%B8%EC%A1%B0-%EB%B3%80%EC%88%98exception-variable)
+    * [예외 던지기(`throws`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#5-%EC%98%88%EC%99%B8-%EB%8D%98%EC%A7%80%EA%B8%B0throws)
+      * [`throws` 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#51-throws-%EC%86%8C%EA%B0%9C)
+      * [`throws`가 처리되는 과정](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#52-throws%EA%B0%80-%EC%B2%98%EB%A6%AC%EB%90%98%EB%8A%94-%EA%B3%BC%EC%A0%95)
+    * [Checked, Unchecked Exception](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#6-checked-unchecked-%EC%98%88%EC%99%B8)
+      * [체크, 언체크 예외 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#61-%EC%B2%B4%ED%81%AC-%EC%96%B8%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8-%EC%86%8C%EA%B0%9C)
+      * [체크 예외(Checked Exception)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#62-%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8checked-exception)
+      * [언체크 예외(Unchecked Exception, 런타임 예외)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#63-%EC%96%B8%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8unchecked-exception-%EB%9F%B0%ED%83%80%EC%9E%84-%EC%98%88%EC%99%B8)
+    * [`try-catch-finally`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#7-try-catch-finally)
+    * [`try-with-resource`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#8-try-with-resource)
+      * [`try-with-resource` 소개](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#81-try-with-resource-%EC%86%8C%EA%B0%9C)
+      * [사용 예시 1](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#82-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%8B%9C-1)
+      * [사용 예시 2](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#83-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%8B%9C-2)
+    * [체크 예외를 잘 사용하지 않는 이유](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#9-%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8%EB%A5%BC-%EC%9E%98-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EC%95%8A%EB%8A%94-%EC%9D%B4%EC%9C%A0)
+      * [체크 예외(Checked Exception)의 단점](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#91-%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8checked-exception%EC%9D%98-%EB%8B%A8%EC%A0%90)
+      * [언체크 예외(Uncheck Exception)의 사용](https://github.com/seungki1011/Data-Engineering/tree/main/java/(016)%20Exception#92-%EC%96%B8%EC%B2%B4%ED%81%AC-%EC%98%88%EC%99%B8unchecked-exception-%EB%9F%B0%ED%83%80%EC%9E%84-%EC%98%88%EC%99%B8%EC%9D%98-%EC%82%AC%EC%9A%A9)
+        * 언체크 예외 사용 방안
+        * 언체크 예외 사용 예시
 22. [```java.time```패키지](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#table-of-contents)
     * [날짜와 시간 라이브러리](https://github.com/seungki1011/Data-Engineering/tree/main/java/(017)%20Date%20and%20Time#1-%EB%82%A0%EC%A7%9C%EC%99%80-%EC%8B%9C%EA%B0%84-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC)
       * 날짜와 시간의 계산
@@ -320,7 +339,7 @@
 
 ## Further Reading
 
-* 연결된 예외(chained exception)
+* 연결된 예외(Chained Exception)
 * ```DecimalFormat```
 * ```SimpleDateFormat```
 * ```Collections```
@@ -334,19 +353,12 @@
 ## Reference
 
 1. [김영한의 자바 입문](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%9E%90%EB%B0%94-%EC%9E%85%EB%AC%B8)
-
 2. [김영한의 자바 기본](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%8B%A4%EC%A0%84-%EC%9E%90%EB%B0%94-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard)
-
 3. [김영한의 자바 중급](https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%8B%A4%EC%A0%84-%EC%9E%90%EB%B0%94-%EC%A4%91%EA%B8%89-1)
-
 4. [자바의 정석 기초편](https://www.youtube.com/user/MasterNKS)
-
-5. [Java docs](https://docs.oracle.com/javase/8/docs/api/overview-summary.html)
-
-6. [Wikipedia Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
-
-7. [Wikipedia Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)
-
-8. [점프 투 자바 - 인터페이스](https://wikidocs.net/217)
-
-9. https://st-lab.tistory.com/243
+5. [생활 코딩 자바](https://www.youtube.com/watch?v=-dPXqgWQBGE&list=PLuHgQVnccGMAIluRRVsC1e79ri-dwnBmR)
+6. [점프 투 자바](https://wikidocs.net/book/31)
+7. [Java docs](https://docs.oracle.com/javase/8/docs/api/overview-summary.html)
+8. [Wikipedia Bitwise Operation](https://en.wikipedia.org/wiki/Bitwise_operation)
+9. [Wikipedia Diamond Problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)
+10. https://st-lab.tistory.com/243

@@ -572,7 +572,7 @@ Handled Exception in main
 
 ---
 
-### 6.2 체크 예외
+### 6.2 체크 예외(Checked Exception)
 
 체크 예외에서 예외를 던지는 과정을 다시 한번 더 살펴보자. (이전의 [예외 기본 규칙](), [`throws`가 처리되는 과정]()과 내용이 상당수 겹칠 수 있다)
 
@@ -605,7 +605,7 @@ Handled Exception in main
 
 ---
 
-### 6.3 언체크 예외(런타임 예외)
+### 6.3 언체크 예외(Unchecked Exception, 런타임 예외)
 
 * `RuntimeException` 과 그 하위 예외는 언체크 예외로 분류된다
 * 언체크 예외는 체크 예외와 기본적으로 동일하다

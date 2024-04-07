@@ -8,3 +8,4 @@ public class MyCheckedException extends Exception {
         super(message);
     }
 }
+

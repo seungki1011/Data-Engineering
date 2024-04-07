@@ -6,3 +6,4 @@ public class Client {
         throw new MyCheckedException("ex");
     }
 }
+

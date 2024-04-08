@@ -1,6 +1,10 @@
 > Spring 프레임워크에 대한 기초 및 실습.
 >
-> [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)을 참고 했습니다.
+> 참고 강의 및 자료.
+>
+> * [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)
+> * [쉬운 코드 - 유튜브](https://www.youtube.com/@ez.)
+> * [spring.academy](https://spring.academy/paths/spring-certified-professional-2023)
 
 ---
 

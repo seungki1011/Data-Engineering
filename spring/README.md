@@ -153,7 +153,7 @@
      * `ViewResolver`
    * Spring MVC 사용해보기
    * 사용성 개선
-4. [Spring MVC 기능 살펴보기](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#4-spring-mvc---1%EA%B8%B0%EB%8A%A5-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
+4. [Spring MVC - 기능 살펴보기](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#4-spring-mvc---%EA%B8%B0%EB%8A%A5-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0)
    * Logging
    * `MappingController`(요청 매핑)
    * HTTP Header 조회
@@ -169,7 +169,69 @@
      * HTTP 메세지 사용(메세지 바디에 직접 입력)
    * `HttpMessageConverter`
    * `RequestMappingHandlerAdapter`
-5. 스프링
+5. [Spring 메세지, 국제화 (Message, Internationalization)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#5-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%A9%94%EC%84%B8%EC%A7%80-%EA%B5%AD%EC%A0%9C%ED%99%94-messages-internationalization)
+   * 메세지, 국제화 소개
+     * 메세지
+     * 국제화
+   * 메세지 적용하기
+     * 메세지 소스(`MessageSource`) 설정
+     * 타임리프 메세지 적용
+   * 국제화 적용하기
+6. [검증(Validation)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#6-%EA%B2%80%EC%A6%9Dvalidation)
+   * 검증 소개
+   * `BindingResult`
+   * 오류 코드, 메세지 처리
+     * `errors.properties`
+     * `rejectValue()`, `reject()`
+     * `MessageCodesResolver`
+     * 스프링이 직접 만든 오류 메세지 처리
+   * Validator 분리
+7. [Bean Validation](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#7-bean-validation)
+   * Bean Validation 사용해보기
+   * Bean Validation 검증 순서
+   * 에러 코드 수정
+   * Bean Validation `ObjectError`
+   * Bean Validation의 한계와 `groups`
+   * Form 객체의 분리
+   * `@RequestBody`에 `@Validated` 적용
+8. [쿠키, 세션(Cookie, Session)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#8-%EC%BF%A0%ED%82%A4-%EC%84%B8%EC%85%98-cookie-session)
+   * 로그인을 위한 요구 사항
+   * 화면과 기능 구현
+     * 홈 화면
+     * 회원 가입
+     * 로그인
+   * 쿠키 사용(Cookie)
+   * 세션 사용(Seesion)
+     * 세션 소개
+     * `HttpSession`으로 세션 구현
+     * 세션 타임아웃
+9. [필터, 인터셉터(Filter, Interceptor)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#9-%ED%95%84%ED%84%B0-%EC%9D%B8%ED%84%B0%EC%85%89%ED%84%B0filter-interceptor)
+   * 서블릿 필터(Servlet Filter) 소개
+   * 필터 예시
+     * 예시 1 - 사용자 요청 로깅
+     * 예시 2 - 로그인 체크
+   * 스프링 인터셉터(Interceptor) 소개
+   * 인터셉터 예시
+     * 예시 1 - 사용자 요청 로깅
+     * 예시 2 - 로그인 체크
+10. [오류 페이지(Error Page)](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#10-%EC%98%A4%EB%A5%98-%ED%8E%98%EC%9D%B4%EC%A7%80error-page)
+    * 서블릿에서의 예외 처리
+       * 스프링 부트에서 제공하는 오류 페이지 기능
+         * 오류 페이지 사용
+         * `BasicErrorController`가 제공하는 정보
+11. [API 예외 처리](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#11-api-%EC%98%88%EC%99%B8-%EC%B2%98%EB%A6%AC)
+    * `HandlerExceptionResolver` 소개
+    * 스프링이 제공하는 `ExceptionResolver`
+      * `ExceptionHandlerExceptionResolver`
+    * `@ControllerAdvice`
+12. [스프링 타입 컨버터](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#12-%EC%8A%A4%ED%94%84%EB%A7%81-%ED%83%80%EC%9E%85-%EC%BB%A8%EB%B2%84%ED%84%B0)
+    * `Converter`
+    * `ConversionService`
+    * `Converter` 사용하기
+    * `Formatter`
+    * `FormattingConversionService`
+    * 스프링 제공 `Formatter`
+13. [파일 업로드](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201#13-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C)
 
 ---
 
@@ -214,10 +276,8 @@
 
 ## Further Reading
 
-* 객체 지향의 사실과 오해
 * AOP
 * ```BeanDefinition``` - 빈 설정 메타 정보
-* ~~```Lombok``` 라이브러리 사용법~~ 
 * Dependency Lookup (DL)
 * mockito
 
@@ -233,8 +293,7 @@
 
 1. [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)
 
-   * [스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/)
-   * [스프링 핵심 원리 - 기본편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8#)
+1. [쉬운 코드 - 유튜브](https://www.youtube.com/@ez.)
 
 1. [https://www.geeksforgeeks.org/mvc-framework-introduction/](https://www.geeksforgeeks.org/mvc-framework-introduction/)
 
@@ -243,5 +302,3 @@
 1. [https://en.wikipedia.org/wiki/Query_string](https://en.wikipedia.org/wiki/Query_string)
 
 1. [https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html](https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html)
-
-   

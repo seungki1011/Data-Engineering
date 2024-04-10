@@ -87,15 +87,24 @@
    * 인터셉터 예시
      * 예시 1 - 사용자 요청 로깅
      * 예시 2 - 로그인 체크
-10. [예외 처리, 오류 페이지]()
-   * 
-
-
-
-
-
-
-
+10. [오류 페이지(Error Page)]()
+    * 서블릿에서의 예외 처리
+       * 스프링 부트에서 제공하는 오류 페이지 기능
+         * 오류 페이지 사용
+         * `BasicErrorController`가 제공하는 정보
+11. [API 예외 처리]()
+    * `HandlerExceptionResolver` 소개
+    * 스프링이 제공하는 `ExceptionResolver`
+      * `ExceptionHandlerExceptionResolver`
+    * `@ControllerAdvice`
+12. [스프링 타입 컨버터]()
+    * `Converter`
+    * `ConversionService`
+    * `Converter` 사용하기
+    * `Formatter`
+    * `FormattingConversionService`
+    * 스프링 제공 `Formatter`
+13. [파일 업로드]()
 ---
 
 ## 1) Web Application
@@ -4576,7 +4585,7 @@ public interface HandlerInterceptor {
 
 **예외 상황에서의 호출 흐름**
 
-<p align="center">   <img src="img/interceptor2.png" alt="spring MVC" style="width: 100%;"> </p>
+<p align="center">   <img src="img/in3.png" alt="spring MVC" style="width: 100%;"> </p>
 
 <p align='center'>인터셉터 예외 상황</p>
 
@@ -4736,23 +4745,969 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
 ---
 
-## 10) 예외 처리, 오류 페이지
+## 10) 오류 페이지(Error Page)
+
+### 10.1 서블릿에서의 예외 처리
+
+스프링이 아닌 순수 서블릿 컨테이너에서의 예외 처리에 대해서 알아보자.
+
+서블릿은 2가지 방식으로 예외 처리를 지원.
+
+* `Exception`
+
+  * 자바에서 `main()`을 직접 실행하는 경우, `main`이라는 이름의 스레드가 실행된다. 예외가 발생해서 `main()`에서 처리하지 못하면 `main()` 밖으로 예외가 던져지고 해당 스레드는 종료된다.
+
+  * 웹 애플리케이션에서는 사용자 요청별로 스레드가 할당되고, 서블릿 컨테이너 안에서 실행된다. 애플리케이션에서 예외를 잡지 못하고, 서블릿 밖까지 예외가 전달되는 경우를 살펴보자.
+
+  * ```
+    WAS(여기까지 전파) <- 필터 <- 서블릿 <- 인터셉터 <- 컨트롤러(예외발생)
+    ```
+
+  * 예외가 WAS(톰캣)까지 전달되면 톰캣이 기본으로 제공하는 오류 화면이 출력되는 것을 확인할 수 있다
 
 
 
+* `response.sendError(HTTP_STATUS_CODE, errorMessage)`
+
+  * 오류 발생 시  `HttpServletResponse`가 제공하는 `sendError`라는 메서드 사용 가능
+
+  * `sendError()`의 흐름은 다음과 같다
+
+  * ```
+    WAS(sendError 호출 기록 확인) <- 필터 <- 서블릿 <- 인터셉터 <- 컨트롤러(response.sendError())
+    ```
+
+  * `response.sendError()`를 호출하면 `response` 내부에는 오류가 발생했다는 상태를 저장해둔다
+
+  * 서블릿 컨테이너는 고객에게 응답 전에 `response`에 `sendError()`가 호출되었는지 확인한다
+
+  * 호출되었다면 설정한 오류 코드에 맞추어 기본 오류 페이지를 보여준다
+
+<br>
+
+서블릿 컨테이너가 제공하는 기본 예외 처리 화면은 사용자가 보기에 불편하고, 의미를 파악하기 어렵다. 의미가 있는 오류 화면을 제공하기 위해서는 서블릿이 제공하는 오류 화면 기능을 사용해야 한다.
+
+<br>
+
+**서블릿 페이지 오류 등록**
+
+```java
+@Component
+public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
+    @Override
+    public void customize(ConfigurableWebServerFactory factory) {
+
+        ErrorPage errorPage404 = new ErrorPage(HttpStatus.NOT_FOUND, "/error-page/404");
+        ErrorPage errorPage500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error-page/500");
+
+        ErrorPage errorPageEx = new ErrorPage(RuntimeException.class, "/error-page/500");
+
+        factory.addErrorPages(errorPage404, errorPage500, errorPageEx);
+    }
+}
+```
+
+**오류를 컨트롤할 컨트롤러**
+
+```java
+@Slf4j
+@Controller
+public class ErrorPageController {
+
+    @RequestMapping("/error-page/404")
+    public String errorPage404(HttpServletRequest request, HttpServletResponse response) {
+        log.info("errorPage 404");
+        return "error-page/404";
+    }
+
+    @RequestMapping("/error-page/500")
+    public String errorPage500(HttpServletRequest request, HttpServletResponse response) {
+        log.info("errorPage 500");
+        return "error-page/500";
+    }
+}
+```
+
+<br>
+
+**예외 발생과 오류 페이지 요청 흐름**
+
+1. `WAS(여기까지 전파)` ← `필터` ← `서블릿` ← `인터셉터` ← `컨트롤러(예외발생)`
+2. `WAS에서 /error-page/500 다시 요청` → `필터` → `서블릿` → `인터셉터` → `컨트롤러(/error-page/500)`→ `View`
+
+<br>
+
+서블릿에서의 예외 발생과 오류 페이지 요청에서 오류 페이지를 출력하기 위해 WAS 내부에서 다시 한번 호출이 발생하는 비효율적인 과정들이 포함된다. 서블릿은 이를 해결하기 위해 `DispatcherType`이라는 정보를 제공한다. 이 정보를 통해서 실제 고객이 요청한 것인지, 서버가 내부에서 오류 페이지를 요청하는 것인지 구분할 수 있다. 이 정보를 사용해서 필터의 중복 호출을 제거할 수 있다. (인터셉터의 경우 스프링이 제공하는 기능이라서, 중복 호출을 제거하기 위해서는 오류 페이지 경로를 `excludePathPatterns`를 사용해서 빼주면 된다)
+
+<br>
+
+---
+
+### 10.2 스프링 부트에서 제공하는 오류 페이지 기능
+
+#### 10.2.1 오류 페이지 사용
+
+서블릿에서 예외 처리 페이지를 만들기 위해서 다음과 같은 복잡한 과정을 거쳤다.
+
+* `WebServerCustomizer`에서 예외 종류에 따라 `ErrorPage` 등록
+* 예외 처리용 `ErrorPageController` 만들기
+* 필요한 경우 오류 정보를 `request`의 `attribute`에 추가해서 넘겨주기
+* 뿐만 아니라, 에러 페이지를 위한 요청도 WAS에서 다시 한번 호출이 발생하는 등, 비효율적인 과정들이 포함되어 있다
+
+<br>
+
+스프링 부트는 이런 과정을 모두 기본으로 제공한다.
+
+* `ErrorPage` 를 자동으로 등록한다, 이때 `/error` 라는 경로로 기본 오류 페이지를 설정한다
+  * `new ErrorPage("/error")` , 상태코드와 예외를 설정하지 않을 경우 `/error` 에서의 기본 오류 페이지 사용
 
 
 
+* `BasicErrorController` 라는 스프링 컨트롤러를 자동으로 등록한다
+  * `ErrorPage` 에서 등록한 `/error` 를 매핑해서 처리하는 컨트롤러
+
+<br>
+
+스프링 부트가 제공하는 기본 오류 메커니즘을 사용하면 오류가 발생했을 때 오류 페이지로 `/error` 를 기본 요청한다. 스프링 부트가 자동 등록한 `BasicErrorController`는 이 경로를 기본으로 받는다. 이제 개발자는 오류 페이지만 우선순위에 따라서 등록하기만 하면 된다.
+
+<br>
+
+<p align="center">   <img src="img/ep1.png" alt="spring MVC" style="width: 60%;"> </p>
+
+<p align='center'>스프링 부트 기본 오류 페이지 기능</p>
+
+* 해당 경로 위치에 HTTP 상태 코드 이름의 뷰 파일을 넣으면 된다
+* 우선 순위
+  * `뷰 템플릿` > `정적 리소스`
+  * `구체적` > `덜 구체적`
+  * 예) `400.html` > `4xx.html`
+
+<br>
+
+---
+
+#### 10.2.2 `BasicErrorController`가 제공하는 정보
+
+`BasicErrorController` 컨트롤러는 다음 정보를 model에 담아서 뷰에 전달한다. 뷰 템플릿에서 이 값을 활용해 출력할 수 있다.
+
+```
+* timestamp: Fri Feb 05 00:00:00 KST 2021
+* status: 400
+* error: Bad Request
+* exception: org.springframework.validation.BindException * trace: 예외 trace
+* message: Validation failed for object='data'. Error count: 1
+* errors: Errors(BindingResult)
+* path: 클라이언트 요청 경로 (`/hello`)
+```
+
+<br>
+
+**뷰에 오류 정보 추가**
+
+```html
+<ul>
+<li>오류 정보</li> 
+  <ul>
+             <li th:text="|timestamp: ${timestamp}|"></li>
+             <li th:text="|path: ${path}|"></li>
+             <li th:text="|status: ${status}|"></li>
+             <li th:text="|message: ${message}|"></li>
+             <li th:text="|error: ${error}|"></li>
+             <li th:text="|exception: ${exception}|"></li>
+             <li th:text="|errors: ${errors}|"></li>
+             <li th:text="|trace: ${trace}|"></li>
+	</ul>
+</li> 
+</ul>
+```
+
+* 오류 정보들을 고객에게 노출하는 것은 좋지 않다
+* 오류 정보를 `model`에 포함할지의 여부를 선택 할 수 있다
+
+<br>
+
+`application.properties`
+
+```
+server.error.include-exception=false
+server.error.include-message=never
+server.error.include-stacktrace=never
+server.error.include-binding-errors=never
+```
+
+* `never` : 사용하지 않음
+* `always` : 항상 사용
+* `on_param` : 파라미터가 있을 때 사용
+
+<br>
+
+**스프링 부트 오류 관련 옵션**
+
+`application.properties`
+
+```java
+server.error.whitelabel.enabled=true // 오류 처리 화면을 못 찾을 시, 스프링 whitelabel 오류 페이지 적용
+server.error.path=/error // 오류 페이지 경로
+// 스프링이 자동 등록하는 서블릿 글로벌 오류 페이지 경로, BasicErrorController 오류 컨트롤러 경로와 함께 사용
+```
+
+<br>
+
+---
+
+## 11) API 예외 처리
+
+HTML 페이지의 경우 지금까지 설명했던 것 처럼 4xx, 5xx와 같은 오류 페이지만 있으면 대부분의 문제를 해결할 수 있다.
+
+API의 경우는 생각할 내용이 더 많다. 오류 페이지는 단순히 고객에게 오류 화면을 보여주고 끝이지만, API는 각 오류 상황에 맞는 오류 응답 스펙을 정하고, JSON으로 데이터를 내려주어야 한다.
+
+API의 예외 처리에 대해서 알아보자.
+
+<br>
+
+### 11.1 `HandlerExceptionResolver` 소개
+
+API 예외 처리도 스프링 부트가 제공하는 `BasicErrorController`를 사용할 수 있다. 스프링 부트는 `BasicErrorController` 가 제공하는 기본 정보들을 활용해서 오류 API를 생성해준다. 
+
+`BasicErrorController`는 HTML 페이지를 제공하는 경우에 편리하다. 그러나 API 오류 처리의 경우 다르다. API 마다, 각각의 컨틀롤러나 예외 마다 서로 다른 응답 결과를 출력해야할 수도 있다.
+
+* 예) 회원 관련 API에서의 예외와 상품 관련 API에서의 예외인지에 따라 결과를 다르게 보내야할 수 있다
+
+쉽게 말해서 매우 세밀하고 복잡하게 컨트롤해야 한다. 물론 `BasicErrorController`를 확장하면 JSON 메시지도 변경할 수 있다, 그러나 `@ExceptionHadler`가 제공하는 기능을 사용하는 것이 더 나은 방법이다.
+
+<br>
+
+스프링 MVC는 컨트롤러 밖으로 예외가 던져진 경우 예외를 해결하고, 동작을 새로 정의할 수 있는 방법을 제공한다. 컨트롤러 박으로 던져진 예외를 해결하고, 동작 방식을 변경하고 싶은 경우 `HandlerExceptionResolver`를 사용하면 된다.(`ExceptionResolver`라고 부른다)
+
+<br>
+
+<p align="center">   <img src="img/er1.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>ExceptionResolver 적용</p>
+
+* `ExceptionResolver` 로 예외를 해결해도 `postHandle()`은 호출되지 않는다
+* `HandlerExceptionResolver` 인터페이스를 구현해서 커스텀 예외 처리 로직을 설정할 수 있다
+  * 그러나 직접 구현하는 것은 복잡하기 때문에, 스프링이 제공하는 `ExceptionResolver`를 사용하는 경우가 많다
+  * 그 중에서도 `ExceptionHandlerExceptionResolver`를 제일 많이 사용한다
 
 
 
+* 쉽게 설명하자면, 애플리케이션에서 요청에 대한 예외가 발생할 때, `DispatcherServlet`은 이를 해결할 수 있는 `HandlerExceptionResolver`를 찾고 맞는 `ExceptionResolver`를 찾으면, 해당 리졸버는 예외에 대한 처리 로직을 실행한다
+* 이런 `ExceptionResolver`를 사용하면 예외 처리에 대한 코드 유지 보수가 좋아진다
+
+<br>
+
+---
+
+### 11.2 스프링이 제공하는 `ExceptionResolver`
+
+스프링 부트가 제공하는 `ExceptionResolver`는 다음과 같다.
+
+`HandlerExceptionResolverComposite` 에 다음 순서로 등록된다.
+
+1. `ExceptionHandlerExceptionResolver`
+   * 제일 많이 사용
+   * `@ExceptionHandler` 통해서 사용
 
 
 
+2. `ResponseStatusExceptionResolver`
+   * 다음의 2가지 경우 처리
+   * `@ResponseStatus` 가 달려있는 예외
+   * `ResponseStatusException` 예외
 
 
 
+3. `DefaultHandlerExceptionResolver`
+   * 스프링 내부에서 발생하는 스프링 예외를 해결
+   * 예) 파라미터 바인딩 시점에 타입이 맞지 않으면 내부에서 `TypeMismatchException`이 발생
+   * `DefaultHandlerExceptionResolver`로 스트링 내부 오류를 어떻게 처리할지 정의되어 있음
 
+<br>
+
+---
+
+#### 11.2.1 `ExceptionHandlerExceptionResolver`
+
+지금까지 소개한 `BasicErrorController`를 사용하거나 `HandlerExceptionResolver`를 직접 구현하는 방식으로 API 예외를 다루기는 쉽지않다.
+
+API 예외 처리의 어려운 점.
+
+* `HandlerExceptionResolver` 를 떠올려 보면 `ModelAndView` 를 반환해야 했다. API 응답에는 필요하지 않다
+* API 응답을 위해서 `HttpServletResponse` 에 직접 응답 데이터를 넣어주었다. 이것은 매우 불편하다
+* 특정 컨트롤러에서만 발생하는 예외를 별도로 처리하기 어렵다
+  * 회원관리 컨트롤러 vs 상품관리 컨트롤러에서 서로 다르게 처리하고 싶은 경우
+
+<br>
+
+스프링은 API 예외 처리 문제를 해결하기 위해 `@ExceptionHandler` 라는 애노테이션을 사용하는 편리한 예외 처리 기능을 제공한다. 이것이 `ExceptionHandlerExceptionResolver`다.
+
+* `@ExceptionHandler`을 처리한다
+* API 예외 처리는 대부분 이 기능으로 해결한다
+* 우선 순위가 제일 높다
+
+<br>
+
+`ExceptionHandlerExceptionResolver`의 사용법을 알아보자.
+
+```java
+@Data
+@AllArgsConstructor
+public class ErrorResult {
+    private String code;
+    private String message;
+}
+```
+
+* `ErrorResult` : 예외가 발생했을 때 API 응답으로 사용하는 객체
+
+```java
+@Slf4j
+@RestController
+public class ApiExceptionV2Controller {
+		
+  	/**
+  	 * 컨트롤러를 호출한 결과 IllegalArgumentException 예외가 컨트롤러 밖으로 던져진다
+  	 * 예외가 발생했기 때문에 ExceptionResolver가 작동한다
+  	 * 우선순위가 제일 높은 ExceptionHandlerExceptionResolver 실행
+  	 * ExceptionHandlerExceptionResolver는 해당 컨트롤러에 IllegalArgumentException을 처리할 수 있는 @ExceptionHandler가 있는 확인한다
+  	 * illegalExHandle() 실행
+  	 * @RestController이므로 illegalExHandle()에도 @ResponseBody가 적용된다
+  	 * HttpConverter가 사용되고, 응답이 JSON으로 반환된다
+  	 * @ResponseStatus를 HTTP 상태 코드 400 지정(400으로 응답)
+  	 */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResult illegalExHandler(IllegalArgumentException e) {
+        log.error("[exceptionHandler] ex", e);
+        return new ErrorResult("BAD", e.getMessage());
+    }
+		
+  	/**
+  	 * @ExceptionHandler에 예외를 지정하지 않으면 해당 메서드 파라미터 예외를 사용한다(UserException 사용)
+  	 * ResponseEntity를 사용해서 HTTP 메세지 바디에 직접 응답(HttpConverter 사용됨)
+  	 * ResponseEntity를 사용하면 HTTP 응답 코드를 프로그래밍해서 동적으로 변경할 수 있다
+  	 */
+    @ExceptionHandler
+    public ResponseEntity<ErrorResult> userExHandler(UserException e) {
+        log.error("[exceptionHandler] ex", e);
+        ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
+        return new ResponseEntity(errorResult, HttpStatus.BAD_REQUEST);
+    }
+		
+  	/**
+  	 * RuntimeException 발생, 컨트롤러 밖으로 RuntimeException이 던져짐
+  	 * RuntimeException은 Exception의 자식이기 때문에 이 메서드가 호출된다
+  	 * HTTP 상태 코드 500으로 응답
+  	 */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public ErrorResult exHandler(Exception e) {
+        log.error("[exceptionHandler] ex", e);
+        return new ErrorResult("EX", "내부 오류");
+    }
+
+    @GetMapping("/api2/members/{id}")
+    public MemberDto getMember(@PathVariable("id") String id) {
+
+        if (id.equals("ex")) {
+            throw new RuntimeException("잘못된 사용자");
+        }
+        if (id.equals("bad")) {
+            throw new IllegalArgumentException("잘못된 입력 값");
+        }
+        if (id.equals("user-ex")) {
+            throw new UserException("사용자 오류");
+        }
+
+        return new MemberDto(id, "hello " + id);
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MemberDto {
+        private String memberId;
+        private String name;
+    }
+}
+```
+
+* `@ExceptionHandler` 예외 처리 방법
+  * `@ExceptionHandler` 애노테이션을 선언하고, 해당 컨트롤러에서 처리하고 싶은 예외를 지정해주면 된다
+  * 해당 컨트롤러에서 예외가 발생하면 이 메서드가 호출된다
+  * 지정한 예외 그리고 그 예외의 자식 클래스를 모두 잡는다
+
+
+
+* `@ExceptionHandler` 문서 : [https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html#mvc-ann-exceptionhandler-args](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-exceptionhandler.html#mvc-ann-exceptionhandler-args)
+
+<br>
+
+---
+
+### 11.3 `@ControllerAdvice`
+
+`@ExceptionHandler`를 사용해서 예외를 깔끔하게 처리할 수 있게 되었지만, 정상 코드와 예외 처리 코드가 하나의 컨트롤러에 섞여 있다. `@ControllerAdvice` 또는 `@RestControllerAdvice`를 사용하면 둘을 분리할 수 있다.
+
+<br>
+
+<p align="center">   <img src="img/ca1.png" alt="spring MVC" style="width: 100%;"> </p>
+
+<p align='center'>@ControllerAdvice 적용</p>
+
+* `@ControllerAdvice`는 대상으로 지정한 여러 컨트롤러에 `@ExceptionHandler` , `@InitBinder` 기능을 부여해주는 역할
+* `@ControllerAdvice`에 대상을 지정하지 않으면 모든 컨트롤러에 적용된다(글로벌 적용)
+* `@RestControllerAdvice`는 `@ControllerAdvice`와 같고, `@ResponseBody`가 추가되어 있다
+
+<br>
+
+**대상 컨트롤러 지정 방법**
+
+```java
+// Target all Controllers annotated with @RestController
+// 특정 컨트롤러 단위
+@ControllerAdvice(annotations = RestController.class)
+public class ExampleAdvice1 {}
+
+// Target all Controllers within specific packages
+// 특정 패키지 단위
+@ControllerAdvice("org.example.controllers")
+public class ExampleAdvice2 {}
+
+// Target all Controllers assignable to specific classes
+// 특정 클래스 단위
+@ControllerAdvice(assignableTypes = {ControllerInterface.class,
+AbstractController.class})
+public class ExampleAdvice3 {}
+```
+
+<br>
+
+---
+
+## 12) 스프링 타입 컨버터
+
+문자를 숫자로 변경하거나, 객체를 문자로 변환하거나 등, 애플리케이션을 개발하다 보면 타입을 변환해야 하는 경우가 많다. 스프링에서의 타입 변환에 대해서 알아보자.
+
+<br>
+
+### 12.1 `Converter`
+
+개발자가 새로운 타입을 만들어서 변환하고 싶은 경우, 스프링이 제공하는 `Converter`라는 확장 가능한 인터페이스를 사용할 수 있다.
+
+```java
+package org.springframework.core.convert.converter;
+
+public interface Converter<S, T> {
+   T convert(S source);
+}
+```
+
+* 개발자는 추가적인 타입 변환이 필요한 경우 이 컨버터 인터페이스를 구현해서 등록하면 된다
+
+<br>
+
+문자를 숫자로 바꾸는 타입 컨버터를 만들어보자.
+
+```java
+@Slf4j
+public class StringToIntegerConverter implements Converter<String, Integer> {
+
+    @Override
+    public Integer convert(String source) {
+        log.info("convert source={}", source);
+        return Integer.valueOf(source);
+    }
+}
+```
+
+* 소스는 `String`
+* 숫자를 반환
+* 반대의 경우도 비슷하게 구현하면 된다
+
+<br>
+
+그러면 이번에는 사용자 정의 타입에 대한 컨버터를 만들어보자.
+
+`127.0.0.1:8080`과 같이 `IP`, `PORT`를 입력하면 `IpPort` 객체로 변환하는 컨버터를 만들어보자.
+
+```java
+@Getter
+@EqualsAndHashCode
+public class IpPort {
+
+    private String ip;
+    private int port;
+
+    public IpPort(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
+    }
+}
+```
+
+* Lombok의  `@EqualsAndHashCode`를 넣으면 모든 필드를 사용해서 `equals()` , `hashcode()`를 생성한다
+  * 쉽게 말해서, 모든 필드의 값이 같다면  `a.equals(b)`의 결과가 참이 된다
+
+<br>
+
+`String` → `IpPort` 컨버터
+
+```java
+@Slf4j
+public class StringToIpPortConverter implements Converter<String, IpPort> {
+
+    @Override
+    public IpPort convert(String source) {
+        log.info("convert source={}", source);
+        //"127.0.0.1:8080" -> IpPort 객체
+        String[] split = source.split(":"); // ":"를 기준으로 문자열 split
+        String ip = split[0];
+        int port = Integer.parseInt(split[1]);
+        return new IpPort(ip, port);
+    }
+}
+```
+
+* `127.0.0.1:8080` 같은 `String`으로 이루어진 주소를 입력하면 `IpPort` 객체로 만들어서 반환
+
+<br>
+
+ `IpPort` → `String` 컨버터
+
+```java
+@Slf4j
+public class IpPortToStringConverter implements Converter<IpPort, String> {
+    @Override
+    public String convert(IpPort source) {
+        log.info("convert source={}", source);
+        //IpPort 객체 -> "127.0.0.1:8080"
+        return source.getIp() + ":" + source.getPort();
+    }
+}
+```
+
+* `IpPort` 객체를 `127.0.0.1:8080` 같은 문자로 반환하다
+
+<br>
+
+위의 예시에서는 `String`에서 `Integer`로 변환하는 컨버터를 구현했다. 그러나 사실 스프링은 문자, 숫자, 불린, Enum등 일반적인 타입에 대한 대부분의 컨버터를 기본으로 제공한다. 관련 구현체를 찾아보면 수 많은 컨버터를 확인할 수 있다. 물론 개발자가 직접 만든 타입(클래스)에 대한 컨버터는 직접 구현해야한다.
+
+<br>
+
+---
+
+### 12.2 `ConversionService`
+
+이제 만든 컨버터들을 하나하나 찾아서 사용하는 것은 불편하다. 스프링은 개별 컨버터들을 모아두고, 편리하게 사용할 수 있는 `ConversionService`라는 기능을 제공한다.
+
+<br>
+
+`ConversionService` 인터페이스
+
+```java
+public interface ConversionService {
+
+	boolean canConvert(@Nullable Class<?> sourceType, Class<?> targetType);
+	boolean canConvert(@Nullable TypeDescriptor sourceType, TypeDescriptor targetType);
+
+	@Nullable
+	<T> T convert(@Nullable Object source, Class<T> targetType);
+
+	@Nullable
+	Object convert(@Nullable Object source, @Nullable TypeDescriptor sourceType, TypeDescriptor targetType);
+
+}
+```
+
+<br>
+
+`ConversionService` 사용하기.
+
+```java
+public class ConversionServiceTest {
+
+    @Test
+    void conversionService() {
+        // 등록
+        DefaultConversionService conversionService = new DefaultConversionService();
+        conversionService.addConverter(new StringToIntegerConverter());
+        conversionService.addConverter(new IntegerToStringConverter());
+        conversionService.addConverter(new StringToIpPortConverter());
+        conversionService.addConverter(new IpPortToStringConverter());
+
+        // 사용
+        assertThat(conversionService.convert("10", Integer.class)).isEqualTo(10);
+        assertThat(conversionService.convert(10, String.class)).isEqualTo("10");
+
+        IpPort ipPort = conversionService.convert("127.0.0.1:8080", IpPort.class);
+        assertThat(ipPort).isEqualTo(new IpPort("127.0.0.1", 8080));
+
+        String ipPortString = conversionService.convert(new IpPort("127.0.0.1", 8080), String.class);
+        assertThat(ipPortString).isEqualTo("127.0.0.1:8080");
+
+    }
+}
+```
+
+* `DefaultConversionService`는 추가로 컨버를 등록하는 기능도 제공
+* 컨버터를 등록하는 입장에서는 컨버터를 정확히 알아야하지만, 사용하는 입장에서는 컨버터를 몰라도 된다
+* `IpPort ipPort = conversionService.convert("127.0.0.1:8080", IpPort.class);`
+  * 변환할 값, 목표 타입만 입력하면 변환(물론 변환할 수 있는 컨버터가 존재해야함)
+
+<br>
+
+---
+
+### 12.3 `Converter` 사용하기
+
+웹 애플리케이션에 `Converter`를 사용해보자.
+
+<br>
+
+`WebConfig`에 컨버터 등록.
+
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToIntegerConverter());
+        registry.addConverter(new IntegerToStringConverter());
+        registry.addConverter(new StringToIpPortConverter());
+        registry.addConverter(new IpPortToStringConverter());
+    }
+}
+```
+
+* 스프링 내부에서 `ConversionService` 제공
+* `WebMvcConfigurer`가 제공하는 `addFormatters()`를 사용해서 컨버터를 등록하면 된다
+
+<br>
+
+이제 뷰 템플릿에 컨버터를 적용해보자.
+
+```java
+@Controller
+public class ConverterController {
+
+    @GetMapping("/converter-view")
+    public String converterView(Model model) {
+        model.addAttribute("number", 10000);
+        model.addAttribute("ipPort", new IpPort("127.0.0.1", 8080));
+        return "converter-view";
+    }
+
+}
+```
+
+* `Model`에 숫자 `10000` 그리고 `ipPort` 객체를 담아서 뷰템플릿에 전달
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li>${number}: <span th:text="${number}" ></span></li>
+    <li>${{number}}: <span th:text="${{number}}" ></span></li>
+    <li>${ipPort}: <span th:text="${ipPort}" ></span></li>
+    <li>${{ipPort}}: <span th:text="${{ipPort}}" ></span></li>
+</ul>
+
+</body>
+</html>
+```
+
+```
+${number}: 10000
+${{number}}: 10000
+${ipPort}: hello.typeconverter.type.IpPort@59cb0946
+${{ipPort}}: 127.0.0.1:8080
+```
+
+* `${{}}` : 자동으로 `ConversionService`를 사용해서 변환된 결과를 출력해준다 (스프링과 통합된 기능을 사용하는 것임)
+
+<br>
+
+이번에는 컨버터를 폼(Form)에 적용해보자.
+
+```java
+@Controller
+public class ConverterController {
+
+		// 생략 ...	
+  
+    @GetMapping("/converter/edit")
+    public String converterForm(Model model) {
+        IpPort ipPort = new IpPort("127.0.0.1", 8080);
+        Form form = new Form(ipPort);
+        model.addAttribute("form", form);
+        return "converter-form";
+    }
+
+    @PostMapping("/converter/edit")
+    public String converterEdit(@ModelAttribute Form form, Model model) {
+        IpPort ipPort = form.getIpPort();
+        model.addAttribute("ipPort", ipPort);
+        return "converter-view";
+    }
+
+    @Data
+    static class Form {
+        private IpPort ipPort;
+
+        public Form(IpPort ipPort) {
+            this.ipPort = ipPort;
+        }
+    }
+}
+```
+
+* `GET /converter/edit` : `IpPort` 를 뷰 템플릿 폼에 출력한다
+* `POST /converter/edit` : 뷰 템플릿 폼의 `IpPort` 정보를 받아서 출력한다
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:object="${form}" th:method="post">
+    th:field <input type="text" th:field="*{ipPort}"><br/>
+    th:value <input type="text" th:value="*{ipPort}">(보여주기 용도)<br/>
+    <input type="submit"/>
+</form>
+
+</body>
+</html>
+```
+
+<p align="center">   <img src="img/cf1.png" alt="spring MVC" style="width: 50%;"> </p>
+
+* 타임리프의 `th:field`에는 컨버전 서비스 기능도 포함한다
+
+<br>
+
+---
+
+### 12.4 `Formatter`
+
+`Converter` 는 입력과 출력 타입에 제한이 없는, 범용 타입 변환 기능을 제공한다. 그러나 보통 문자를 다른 객체로 변환하거나, 객체를 문자로 변환하는 경우가 대다수이다.
+
+객체를 특정한 포멧에 맞추어 문자로 출력하거나 또는 그 반대의 역할을 하는 것에 특화된 기능을 가진것이 `Formatter`이다.
+
+* 문자에 특화(객체 → 문자, 문자 → 객체)
+* 현지화(Locale) 정보 사용 가능
+  * 예) 날짜나 숫자의 표현 방법이 Locale 마다 다를 수 있음
+
+<br>
+
+다음은 `Formatter` 인터페이스이다.
+
+```java
+public interface Printer<T> {
+     String print(T object, Locale locale);
+}
+
+public interface Parser<T> {
+     T parse(String text, Locale locale) throws ParseException;
+}
+
+public interface Formatter<T> extends Printer<T>, Parser<T> {
+}
+```
+
+* `String print(T object, Locale locale)` : 객체를 문자로 변경한다
+* `T parse(String text, Locale locale)` : 문자를 객체로 변경한다
+
+<br>
+
+이제 `Formatter`를 만들어보자.
+
+숫자 `1000`을 문자 `1,000`으로 변환해주는 포맷을 적용하고, 그 반대 과정도 처리해주는 `Formatter`를 구현해보자.
+
+```java
+@Slf4j
+public class MyNumberFormatter implements Formatter<Number> {
+
+
+    @Override
+    public Number parse(String text, Locale locale) throws ParseException {
+        log.info("text={}, locale={}", text, locale);
+        //"1,000" -> 1000 (문자를 숫자로)
+        NumberFormat format = NumberFormat.getInstance(locale);
+        return format.parse(text);
+    }
+
+    @Override
+    public String print(Number object, Locale locale) {
+      	// 객체를 문자로
+        log.info("object={}, locale={}", object, locale);
+        return NumberFormat.getInstance(locale).format(object);
+    }
+}
+```
+
+* `"1,000"` 처럼 숫자 중간의 쉼표를 적용하기 위해서 자바가 기본으로 제공하는 `NumberFormat` 객체를 사용하면 된다
+  * `Locale` 정보를 활용해서 나라별로 다른 숫자 포맷을 적용할 수 있다
+
+<br>
+
+---
+
+### 12.5 `FormattingConversionService`
+
+기존의 `ConversionService`에는 컨버터만 등록할 수 있고, 포맷터는 등록할 수 없다.
+
+`FormattingConversionService`를 사용하면 내부에서 어댑터 패턴을 사용해서 `Formatter`가 `Converter` 처럼 동작하도록 지원한다.
+
+쉽게 말해서 `FormattingConversionService`를 사용해야 포맷터를 등록해서 사용할 수 있다.
+
+<br>
+
+```java
+public class FormattingConversionServiceTest {
+
+    @Test
+    void formattingConversionService() {
+        DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();
+        //컨버터 등록
+        conversionService.addConverter(new StringToIpPortConverter());
+        conversionService.addConverter(new IpPortToStringConverter());
+        //포멧터 등록
+        conversionService.addFormatter(new MyNumberFormatter());
+
+        //컨버터 사용
+        IpPort ipPort = conversionService.convert("127.0.0.1:8080", IpPort.class);
+        assertThat(ipPort).isEqualTo(new IpPort("127.0.0.1", 8080));
+        //포멧터 사용
+        assertThat(conversionService.convert(1000, String.class)).isEqualTo("1,000");
+        assertThat(conversionService.convert("1,000", Long.class)).isEqualTo(1000L);
+
+    }
+}
+```
+
+* `FormattingConversionService` 는 `ConversionService` 관련 기능을 상속받기 때문에 컨버터, 포맷터 둘 모두 등록 가능
+
+<br>
+
+애플리케이션에서 사용할 수 있도록, `WebConfig`에 등록해보자.
+
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+				// registry.addConverter(new StringToIntegerConverter());
+				// registry.addConverter(new IntegerToStringConverter());
+        registry.addConverter(new StringToIpPortConverter());
+        registry.addConverter(new IpPortToStringConverter());
+				
+        // 추가
+        registry.addFormatter(new MyNumberFormatter());
+    }
+}
+```
+
+* 우선 순위는 `Converter` > `Formatter`이다. 위의 `MyNumberFormatter`도 문자와 숫자간 변환이 일어나기 때문에, 위의 주석 처리한 컨버터들과 기능이 겹친다. 만약 주석 처리한 컨버터들의 주석을 해제하면, 컨버터의 우선순위가 항상 높기 때문에 포맷터가 적용되지 않고 컨버터가 적용된다. 주의하자!
+
+<br>
+
+---
+
+### 12.6 스프링 제공 `Formatter`
+
+스프링은 자바에서 기본으로 제공하는 타입들에 대해 수 많은 포맷터를 기본으로 제공한다.
+
+또한 스프링은 애노테이션 기반으로 원하는 형식을 지정해서 사용할 수 있는 유용한 포맷터 2 가지를 제공한다.
+
+* `@NumberFormat` : 숫자 관련 형식 지정 포맷터 사용
+* `@DateTimeFormat` : 날짜 관련 형식 지정 포맷터 사용
+
+<br>
+
+다음과 같이 사용하면 된다.
+
+```java
+@Data
+static class Form {
+    @NumberFormat(pattern = "###,###")
+    private Integer number;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime localDateTime;
+}
+```
+
+<br>
+
+---
+
+## 13) 파일 업로드
+
+바로 예시를 통해서 알아보자.
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>File Upload</title>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" multiple>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
+```
+
+* `enctype="multipart/form-data"` : 멀티파트를 사용해야 파일을 바이너리 데이터로 변환해서 서버로 전송
+* `<input type="file" name="file" multiple>` : `multiple`을 통해서 복수의 파일 선택 가능
+
+<br>
+
+```java
+@Controller
+public class FileUploadController {
+
+    @PostMapping("/upload")
+    public String uploadFiles(@RequestParam("file") MultipartFile[] files) {
+        // Process uploaded files
+        for (MultipartFile file : files) {
+            // Handle each file (e.g., save it to a directory, process it, etc.)
+            // Example: file.transferTo(new File("path/to/save/" + file.getOriginalFilename()));
+        }
+        return "redirect:/upload-success"; // Redirect to a success page
+    }
+}
+```
+
+<br>
+
+`application.properties`
+
+```
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=10MB
+```
+
+* 업로드 하는 파일 크기, 총 크기 제한 가능
+* 이외에도 여러 옵션 설정 가능
+
+<br>
 
 ---
 

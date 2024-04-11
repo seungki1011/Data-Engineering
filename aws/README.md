@@ -17,19 +17,24 @@
 
 ### [1. Amazon EC2 소개]()
 
-* Amazon EC2
+* [Amazon EC2]()
   * EC2 소개
   * EC2 사용 케이스
   * EC2 특성
-* AWS User Type
+* [AWS User Type]()
   * Root User
   * IAM User
-* IAM(Identity and Access Management)
+* [IAM(Identity and Access Management)]()
   * IAM 소개
-  * IAM 사용시 주의점
-* EC2 인스턴스 생성
+  * IAM 주의 사항
+* [EC2 인스턴스 생성]()
   * EC2의 구성
-  * 인스턴스 생성해보기
+    * Instance
+    * EBS(Elastic Block Storage)
+    * Snapshot
+    * AMI(Amazon Machine Image)
+    * 보안 그룹(SG)
+  * 인스턴스 생성하기
 
 ---
 

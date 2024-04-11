@@ -1,7 +1,7 @@
 > Spring의 핵심 원리에 대한 이론 및 실습
 >
 
-> * 만약 빌드 옵션을 `IntelliJ IDEA`으로 선택했고, 스프링 부트 3.2 이상이면 `Java compiler` 필드에 `-parameters` 옵션을 넣어주자 (`IllegalArgumentException` 방지) 
+> * 만약 빌드 옵션을 `IntelliJ IDEA`으로 선택했고, 스프링 부트 3.2 이상이면 `Java compiler` 필드에 `-parameters` 옵션(`IllegalArgumentException` 방지)
 
 ---
 

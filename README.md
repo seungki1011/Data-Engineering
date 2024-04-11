@@ -18,8 +18,8 @@
 
 ## Data Engineering
 
-1. [데이터베이스(Database)](https://github.com/seungki1011/Data-Engineering/tree/main/database)
-2. [AWS]()
+1. [데이터베이스(Database)](database/README.md)
+2. [AWS](https://github.com/seungki1011/Data-Engineering/tree/main/aws)
 3. Hadoop
    * HDFS
    * MapReduce
@@ -53,8 +53,8 @@
    * [스프링 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(001)Spring%20Introduction)
    * [스프링 동작 원리](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(002)Spring%20Core%20-%201)
    * [Spring MVC](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201)
-   * [Thymeleaf](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)%20Thymeleaf)
-   * [JDBC]()
+   * [Thymeleaf](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)Thymeleaf)
+   * [자바 데이터베이스 접근]()
 
 ---
 

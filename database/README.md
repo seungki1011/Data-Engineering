@@ -13,7 +13,7 @@
    * 데이터베이스의 정의
    * 데이터베이스 관리 시스템(DBMS)
    * 메타데이터(Metadata)
-2. [Modeling](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#2-modeling)
+2. [Modeling]((001)%20Relational%20Database#2-modeling)
    * 데이터 모델링의 정의
    * 데이터 모델링의 3단계
    * 데이터 독립성(Data Independence)

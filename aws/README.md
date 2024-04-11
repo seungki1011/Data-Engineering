@@ -17,17 +17,17 @@
 
 ### [1. Amazon EC2 소개]()
 
-* [Amazon EC2]()
+* Amazon EC2
   * EC2 소개
   * EC2 사용 케이스
   * EC2 특성
-* [AWS User Type]()
+* AWS User Type
   * Root User
   * IAM User
-* [IAM(Identity and Access Management)]()
+* IAM(Identity and Access Management)
   * IAM 소개
   * IAM 주의 사항
-* [EC2 인스턴스 생성]()
+* EC2 인스턴스 생성
   * EC2의 구성
     * Instance
     * EBS(Elastic Block Storage)
@@ -53,7 +53,6 @@
   * Static NAT
   * PAT(Port Address Translation)
 * CIDR(Classless Inter Domain Routing)
-  * CIDR
   * CIDR Block/Notation
 * 서브넷(Subnet)
 * VPC(Virtual Private Cloud)
@@ -62,6 +61,7 @@
     * 서브넷(Subnet)
     * Internet Gateway(IGW)
     * Security Group(SG)
+  * VPC 예시(수정 예정)
 
 ---
 

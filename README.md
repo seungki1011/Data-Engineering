@@ -19,7 +19,7 @@
 ## Data Engineering
 
 1. [데이터베이스(Database)](database/README.md)
-2. [AWS](https://github.com/seungki1011/Data-Engineering/tree/main/aws)
+2. [AWS](aws/README.md)
 3. Hadoop
    * HDFS
    * MapReduce
@@ -36,24 +36,24 @@
 
 1. [자료주와 알고리즘(Data Structure & Algorithm)]()
 2. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)
-3. [네트워크(Network)와 HTTP](https://github.com/seungki1011/Data-Engineering/tree/main/network%20and%20http)
+3. [네트워크(Network)와 HTTP](network and http/README.md)
 
 ---
 
 ## Programming Language
 
 1. 파이썬(Python)
-2. [자바(Java)](https://github.com/seungki1011/Data-Engineering/tree/main/java)
+2. [자바(Java)](java/README.md)
 
 ---
 
 ## Backend
 
-1. [스프링 프레임워크(Spring)](https://github.com/seungki1011/Data-Engineering/tree/main/spring)
-   * [스프링 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(001)Spring%20Introduction)
-   * [스프링 동작 원리](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(002)Spring%20Core%20-%201)
-   * [Spring MVC](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201)
-   * [Thymeleaf](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)Thymeleaf)
+1. [스프링 프레임워크(Spring)](spring/README.md)
+   * [스프링 소개](spring/(001)Spring Introduction/README.md)
+   * [스프링 동작 원리](spring/(002)Spring Core - 1/README.md)
+   * [Spring MVC](spring/(003)Spring MVC - 1/README.md)
+   * [Thymeleaf](spring/(004)Thymeleaf/README.md)
    * [자바 데이터베이스 접근]()
 
 ---

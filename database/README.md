@@ -7,9 +7,9 @@
 
 ## Index
 
-### [1) RDBMS I](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database)
+### [1) RDBMS I]((001)%20Relational%20Database)
 
-1. [데이터베이스(Database, DB) 소개](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4database-%EC%86%8C%EA%B0%9C)
+1. [데이터베이스(Database, DB) 소개]((001)%20Relational%20Database#1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4database-%EC%86%8C%EA%B0%9C)
    * 데이터베이스의 정의
    * 데이터베이스 관리 시스템(DBMS)
    * 메타데이터(Metadata)
@@ -17,36 +17,36 @@
    * 데이터 모델링의 정의
    * 데이터 모델링의 3단계
    * 데이터 독립성(Data Independence)
-3. [Entity, Attribute, Relationship](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#3-entity-attribute-relationship)
+3. [Entity, Attribute, Relationship]((001)%20Relational%20Database#3-entity-attribute-relationship)
    * 엔티티(Entity)
    * 속성(Attribute)
    * 관계(Relationship)
-4. [식별자(Identifier)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#4-%EC%8B%9D%EB%B3%84%EC%9E%90identifier)
+4. [식별자(Identifier)]((001)%20Relational%20Database#4-%EC%8B%9D%EB%B3%84%EC%9E%90identifier)
    * 식별자의 정의
    * 식별자의 분류
    * 주식별자의 특징
    * 식별자와 비식별자 관계
-5. [테이블(Table), 키(Key)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#5-%ED%85%8C%EC%9D%B4%EB%B8%94table-%ED%82%A4key)
+5. [테이블(Table), 키(Key)]((001)%20Relational%20Database#5-%ED%85%8C%EC%9D%B4%EB%B8%94table-%ED%82%A4key)
    * 테이블(Table)
    * 키(Key)의 정의
    * 키(Key)의 종류
-6. [성능 데이터 모델링](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#6-%EC%84%B1%EB%8A%A5-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%AA%A8%EB%8D%B8%EB%A7%81)
+6. [성능 데이터 모델링]((001)%20Relational%20Database#6-%EC%84%B1%EB%8A%A5-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%AA%A8%EB%8D%B8%EB%A7%81)
    * 성능 데이터 모델링의 정의
    * 성능 데이터 모델링의 수행 시점
    * 성능 데이터 모델링의 고려 사항
-7. [정규화(Normalization)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#7-%EC%A0%95%EA%B7%9C%ED%99%94normalization)
+7. [정규화(Normalization)]((001)%20Relational%20Database#7-%EC%A0%95%EA%B7%9C%ED%99%94normalization)
    * 정규화의 정의
    * 잘못된 구조의 테이블
    * 정규화와 성능
    * [함수적 종속성(Functional Dependency, FD)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#74-%ED%95%A8%EC%88%98%EC%A0%81-%EC%A2%85%EC%86%8D%EC%84%B1functional-dependency-fd)
    * [정규화의 단계](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#75-%EC%A0%95%EA%B7%9C%ED%99%94%EC%9D%98-%EB%8B%A8%EA%B3%84)
-8. [반정규화(Denormalization)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database#8-%EB%B0%98%EC%A0%95%EA%B7%9C%ED%99%94denormalization)
+8. [반정규화(Denormalization)]((001)%20Relational%20Database#8-%EB%B0%98%EC%A0%95%EA%B7%9C%ED%99%94denormalization)
    * 반정규화의 정의
    * 반정규화의 적용
 
 ---
 
-### [2) SQL 기초 및 활용](https://github.com/seungki1011/Data-Engineering/tree/main/database/(002)%20Using%20SQL)
+### [2) SQL 기초 및 활용]((002)%20Using%20SQL)
 
 1. [```MySQL``` 설치](https://github.com/seungki1011/Data-Engineering/tree/main/database/(002)%20Using%20SQL#1-mysql-%EC%84%A4%EC%B9%98)
    * [```MySQL``` 설치와 연결](https://github.com/seungki1011/Data-Engineering/tree/main/database/(002)%20Using%20SQL#11-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%97%B0%EA%B2%B0)

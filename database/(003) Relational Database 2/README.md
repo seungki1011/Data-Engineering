@@ -68,6 +68,8 @@
 
 ```A```가 ```B```에게 20만원을 이체해주는 상황을 다음 그림을 통해 살펴보자.
 
+<br>
+
 <p align="center">   <img src="img/transaction2.png" alt="mysql" style="width: 80%;"> </p>
 
 여기서 이체가 성공하기 위해서는 ```A```의 ```balance```에서 20만원 차감을 ```UPDATE```하고, ```B```의 ```balance```에서 20만원 증감을 ```UPDATE```하는 일련의 과정이 전부 성공을 해야한다. 어느 하나의 작업이라도 실패하는 경우, ```A```나 ```B```의 ```balance```에 알맞는 금액이 남지 않기 때문이다. 결국 이체라는 작업은 두 작업 모두 정상 처리 돼야만 성공하는 단일 작업으로 생각할 수 있다. 이 때 이 단일 작업을 Transaction(트랜잭션)이라고 부른다.
@@ -202,6 +204,8 @@ mysql> SELECT * FROM account;
 
 기존에 ```A```가 ```B```에게 20만원을 이체하는 상황에서 Atomicity에 대해 알아보자.
 
+<br>
+
 <p align="center">   <img src="img/atom.png" alt="mysql" style="width: 80%;"> </p>
 
 - Transaction은 기본적으로 모든 작업이 수행되거나 아무것도 수행되지 않는 All or Nothing을 따른다 (중간 상태라는 것이 존재하지 않는다)
@@ -215,6 +219,8 @@ mysql> SELECT * FROM account;
 #### 1.2.2 Consistency(정합성, 일관성)
 
 이번에 ```A```가 ```B```에게 추가로 100만원을 이체하는 상황이라고 가정하자. 이 경우에는 ```balance```가 0 미만이 될 수 없다는 제약이 있기 때문에 DB가 inconsistent 상태가 된다. 이런 경우 ```Rollback```을 수행해서 다시 consistent 상태로 되돌려야한다. 
+
+<br>
 
 <p align="center">   <img src="img/consistent.png" alt="mysql" style="width: 80%;"> </p>
 
@@ -231,6 +237,8 @@ mysql> SELECT * FROM account;
 이번에는 ```A```가 ```B```에게 20만원을 이체하는데, 동일한 타이밍에 ```B```도 ATM에서 본인 계좌에 30만원 입금하는 상황을 가정해보자. 20만원 이체에 대한 ```Transaction```과정 중에 ```B```에게 20만원을 입금하기 위해 ```B```의 계좌잔액을 read 했다고 하자. 이 때 20만원 입금에 대한 잔액을 write하기 전에 ATM에서 30만원 입금을 하는 ```Transaction```이 발생하는 경우, 30만원 입금에 대해 DB에 반영되었던 내용이 220만원(20만원 입금)으로 덮어쓰여질 수 도 있다. 
 
 쉽게 말해서 동시에 일어난 ```Transaction```으로 인해서 잘못된 금액으로 DB에 write 되는 경우가 발생하기 때문에, 모든 ```Transaction```들은 서로 독립(고립)되어야 한다는 것을 알 수 있다.
+
+<br>
 
  <p align="center">   <img src="img/isolation.png" alt="mysql" style="width: 80%;"> </p>
 
@@ -397,6 +405,8 @@ Durability가 의미하는 것은 다음과 같다.
 > 1. 두 ```Schedule```은 같은 ```Transaction```들을 가진다
 > 2. 어떠한 ```Conflict Operation```의 순서도 두 ```Schedule``` 모두 동일하다
 
+<br>
+
  <p align="center">   <img src="img/confequi.png" alt="mysql" style="width: 80%;"> </p>
 
 여기서 그림에서 볼 수 있듯이 ```schedule2```는 ```serial schedule```이고, ```schedule3```의 입장에서 ```schedule2```와 ```conflict equivalent``` 한 것이다. 여기서 ```serial schedule```과 ```conflict equivalent``` 한 경우 이를 ```Conflict Serializable```이라고 한다.
@@ -424,9 +434,11 @@ Durability가 의미하는 것은 다음과 같다.
 
 여기서 ```Serial Schedule```과 동일한 ```Non Serial Schedule```은 결국에 ```Conflict Serializable```한 ```non-serial schedule```을 구현하면 되는 것이다.
 
-이런 ```schedule```을 구현하기 위해서 사용하는 방법은 
+이런 ```schedule```을 구현하기 위해서 사용하는 방법은 무엇일까?
 
-> 여러 ```Transaction```을 동시에 실행해도 ```schedule```이 ```conflict serializable```하도록 보장하는 프로토콜(Protocol)을 사용하는 것이다. 이런 프로토콜을 구현하기 위해 각 RDBMS는 Isolation Level, Locking, Concurrency control mechanisms, Conflict detection, etc.. 여러가지 전략들을 사용할 수 있다.
+<br>
+
+> 정답은 여러 ```Transaction```을 동시에 실행해도 ```schedule```이 ```conflict serializable```하도록 보장하는 프로토콜(Protocol)을 사용하는 것이다. 이런 프로토콜을 구현하기 위해 각 RDBMS는 Isolation Level, Locking, Concurrency control mechanisms, Conflict detection, etc.. 여러가지 전략들을 사용할 수 있다.
 
 <br>
 
@@ -460,6 +472,8 @@ Recoverability에 대해서 알아보자.
 
 그럼 Unrecoverable과 반대되는 Recoverable Schedule이 뭔지 알아보자.
 
+<br>
+
  <p align="center">   <img src="img/recover.png" alt="mysql" style="width: 80%;"> </p>
 
 * ```Transaction1```은 ```Transaction2```를 의존하기 떄문에 의존성이 있는 트랜잭션이 먼저 ```Commit``` 되면 안됨
@@ -480,6 +494,8 @@ Recoverability에 대해서 알아보자.
 하나의 ```Transaction```이 ```Rollback```을 하면 의존성이 있는 다른 ```Transaction```도 ```Rollback```을 해야한다. 바로 이전의 상황을 이용하자면, ```T2```가 ```Rollback```하는 경우, ```T2```에 의존성이 있는 ```T1```도 ```Rollback``` 해야한다. 이 처럼 연쇄적으로 ```Rollback```이 일어나는 것을 **Cascading Rollback**이라고 한다. **Cascading Rollback**의 경우 많이 일어나면 이를 **처리하기 위한 비용이 많이 든다**.
 
 이런 **Cascading Rollback**의 문제를 해결하기 위해서 데이터를 ```write```한 ```Transaction```이 ```Commit/Rollback``` 한 뒤에는 데이터를 읽는 ```schedule```만을 허용하는 방법이 나온다.
+
+<br>
 
  <p align="center">   <img src="img/cascadeless.png" alt="mysql" style="width: 100%;"> </p>
 
@@ -506,6 +522,8 @@ Recoverability에 대해서 알아보자.
 다시 한번 **Strict Schedule**의 정의를 살펴보자. 
 
 **Strict Schedule**은 ```schedule``` 내에서 어떠한 ```Transaction```도 ```Commit``` 되지 않은 ```Transaction```들이 ```write```한 데이터는 읽지도 쓰지도(read or write) 않았을 경우의 ```schedule```을 의미한다. 
+
+<br>
 
  <p align="center">   <img src="img/recoverab.png" alt="mysql" style="width: 75%;"> </p>
 
@@ -535,6 +553,8 @@ Recoverability에 대해서 알아보자.
 
 고속 버스 좌석 예약 시스템이 있다고 하자. ```A```라는 사람은 좌석을 예약할 것이고, ```B```는 좌석이 몇개 남았는지 확인하는 상황이다. 기존 좌석(seats)은 5개가 있다고 하자. 여기서 ```A```가 좌석 예약을 하는 ```Transaction1```이 실행되서 ```seats```(=5)를 ```read```하고 ```seats```를 4로 ```write```하는 operation을 수행 할 것이다. 이후 ```Transaction2```에서 ```Transaction1```에서 적용한 변화 (```seats = 4```)를 ```read```했는데 ```Transaction1```이 ```Rollback```하는 상황이 닥친 것이다. 그러면 ```seats```는 다시 기존의 5개로 ```Rollback```이 되지만 문제는 ```B```가 이미 ```seats```를 4개로 읽었다는 것이다. 이게 바로 **Dirty Read** 상황이다. (다음 그림으로 확인하면 더 이해가 쉬울 것이다)
 
+<br>
+
  <p align="center">   <img src="img/dirtyread1.png" alt="mysql" style="width: 80%;"> </p>
 
 이 처럼 ```Commit```되지 않은 변경사항(데이터)을 ```read```하는 것을 **Dirty Read**라고 부른다.
@@ -553,6 +573,8 @@ Recoverability에 대해서 알아보자.
 
 다음 그림을 살펴보자.
 
+<br>
+
  <p align="center">   <img src="img/nonrepeat1.png" alt="mysql" style="width: 80%;"> </p>
 
 Isolation은 여러 ```Transaction```들이 동시에 실행될 때도 혼자 실행되는 것 처럼 동작하게 만드는 것 이라고 이전에도 설명을 했다. 그러나 위의 상황을 살펴보면 두 번의 ```read```에 대해서 각각이 다른 결과를 가져왔다. 이러한 현상을 **Non-repeatable Read** (Fuzzy Read)라고 한다.
@@ -568,6 +590,8 @@ Isolation은 여러 ```Transaction```들이 동시에 실행될 때도 혼자 �
 <br>
 
 다음 그림을 살펴보자.
+
+<br>
 
  <p align="center">   <img src="img/phantom.png" alt="mysql" style="width: 80%;"> </p>
 
@@ -615,6 +639,8 @@ SQL 표준에서 정의한 3가지 이상 현상만으로 모든 이상현상을
 >
 > 다른 트랜잭션에 의해 수정됐지만 아직 ```Commit```되지 않은 데이터에 쓰는 것을 말한다. 변경 후 아직 ```Commit```되지 않은 값에 쓰기작업을 했는데 변경을 가한 ```Transaction```이 최종적으로 ```Rollback```된다면 그 값에 쓰기 작업을 한 ```Transaction```은 Incosistent 상태에 놓이게 된다.
 
+<br>
+
  <p align="center">   <img src="img/dirtywrite.png" alt="mysql" style="width: 80%;"> </p>
 
  <p align="center">   <img src="img/dirtywrite2.png" alt="mysql" style="width: 80%;"> </p>
@@ -630,6 +656,8 @@ SQL 표준에서 정의한 3가지 이상 현상만으로 모든 이상현상을
 >  두 개 이상의 ```Transaction```에서 같은 데이터(리소스)를 동시에 ```Update``` 할 때 ```Update``` 결과가 일부 사라지는 현상.
 
 이전의 ```Transaction``` 케이스에서 사용한 예시를 가져왔다.
+
+<br>
 
  <p align="center">   <img src="img/lostupdate.png" alt="mysql" style="width: 80%;"> </p>
 
@@ -653,6 +681,8 @@ SQL 표준에서 정의한 3가지 이상 현상만으로 모든 이상현상을
 Snapshot Isolation은 여러 버전(multi version)의 스냅샷을 관리하는 MVCC(Multi Version Concurrency Control)로 구현했다고 볼 수 있다. (MVCC는 뒤에서 더 자세히 다룰 예정) 
 
 Snapshot Isolation의 대략적인 동작 과정은 다음 그림과 같다.
+
+<br>
 
  <p align="center">   <img src="img/snapshotiso.png" alt="mysql" style="width: 85%;"> </p>
 
@@ -701,6 +731,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 > 공유(Shared) Lock은 데이터를 읽고자 할 때 사용된다. 다른 공유 Lock과는 호환되지만 배타적 Lock과는 호환되지 않는다. '호환된다'는 말은 하나의 데이터(리소스)에 두 개 이상의 Lock을 동시에 설정할 수 있음을 뜻한다. 다시 말해, 공유 Lock을 설정한 데이터(리소스)에 다른 트랜잭션이 추가로 공유 Lock을 설정할 수는 있지만 배타적 Lock은 불가능하다. 따라서 자신이 읽고 있는 데이터(리소스)를 다른 사용자가 동시에 읽을 수는 있어도 변경은 불가능하다. 반대로, 다른 사용자가 읽고 있는 데이터(리소스)를 동시에 읽을 수는 있어도 변경 중인 데이터(리소스)를 동시에 읽을 수는 없다.
 
+<br>
+
  <p align="center">   <img src="img/sharedlock1.png" alt="mysql" style="width: 85%;"> </p>
 
 * **Read-Lock**을 **Shared Lock**이라고도 한다
@@ -736,6 +768,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 > 교착상태(Deadlock)는, 두 세션이 각각 Lock을 설정한 리소스를 서로 액세스하려고 마주보며 진행하는 상황을 말하며, 둘 중 하나가 뒤로 물러나지 않으면 영영 풀릴 수 없다. 흔히 좁은 골목길에 두 대의 차량이 마주 선 것에 비유하곤 한다. 교착상태가 발생하면, DBMS가 둘 중 한 세션에 에러를 발생시킴으로써 문제를 해결하는데, 이를 방지하려면 어떻게 해야할까? 조금 전 설명한 Lock 튜닝 방안은 교착상태 발생 가능성을 줄이는 방안이기도 하다. 여러 테이블을 액세스하면서 발생하는 교착상태는 테이블 접근 순서를 같게 처리하면 피할 수 있다. 예를 들어, 마스터 테이블과 상세 테이블을 둘 다 갱신할 때 마스터 테이블 다음에 상세 테이블을 갱신하기로 규칙을 정하고, 모든 애플리케이션 개발자가 이 규칙을 지킨다면 교착상태는 발생하지 않을 것이다.
 
+<br>
+
  <p align="center">   <img src="img/deadlock.png" alt="mysql" style="width: 65%;"> </p>
 
 데이터베이스에서 발생하는 **Deadlock(교착상태)**는 OS의 Deadlock과 유사하고, 해결방법도 유사하다.
@@ -750,6 +784,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 
 예시를 통해 **Conservative 2PL**에 대해 알아보자.
 
+<br>
+
  <p align="center">   <img src="img/conserv2pl.png" alt="mysql" style="width: 85%;"> </p>
 
 * **Conservative 2PL** : 모든 Lock을 취득한 후에 Transaction을 시작한다
@@ -763,6 +799,8 @@ Lock을 이용한 동시성 제어에 대해 알아보자.
 ### 4.6. Strict 2PL (S2PL)
 
 예시를 통해 **Strict 2PL**에 대해 알아보자.
+
+<br>
 
  <p align="center">   <img src="img/s2pl.png" alt="mysql" style="width: 85%;"> </p>
 

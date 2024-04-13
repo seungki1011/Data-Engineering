@@ -109,6 +109,9 @@ DBMS는 크게 두 갈래로 구분할 수 있다.
    * 관계형 데이터 모델(Relation Model)을 이용하는 데이터베이스
    * 대부분 SQL을 이용한다
    * 대표적인 예시 : MySQL, Oracle Database, PostgreSQL 등
+
+<br>
+
 2. NoSQL DBMS
    * SQL을 사용하지 않는다가 아니라 "Not Only SQL"을 의미 한다
    * NoSQL은 그 안에서도 Document-Oriented, Key-Value Storage, Graph DB 등 여러가지 종류로 구분할 수 있다 
@@ -142,6 +145,9 @@ DBMS는 크게 두 갈래로 구분할 수 있다.
      * 데이블의 이름이나 행, 열에 대한 정보를 기록하는 테이블
      * 데이터 웨어하우스에 존재하는 데이터베이스의 이름
      * 각 열이 가지는 데이터 타입을 기록한 데이터 카탈로그(Data Catalog)
+
+<br>
+
 2. 운영 메타 데이터(Operational Metadata)
    * 문제 해결 및 워크 플로우 최적화에 유용
    * 예시
@@ -149,6 +155,9 @@ DBMS는 크게 두 갈래로 구분할 수 있다.
      * 작업의 시작 및 종료 시간
      * 디스크 사용량
      * 데이터 이동 및 사용자의 액세스 추적에 대한 기록
+
+<br>
+
 3. 비즈니스 메타데이터(Business Metadata)
    * 비즈니스적인 관점에서 관련된 메타데이터
    * 기술적인 메타데이터가 데이터의 구조와 형식에 집중한다면, 비즈니스 메타데이터는 비즈니스에 의미가 있는 데이터에 집중한다
@@ -267,10 +276,14 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
    * 특정 유저들이 필요로 하는 데이터만 표현하고, 알려줄 필요가 없는 데이터는 숨긴다
    * 논리적 데이터 모델을 통해서 표현한다
 
+<br>
+
 2. 개념적 스키마(Conceptual Schema)
    * 전체 데이터베이스에 대한 구조를 기술한다
    * 데이터베이스에 저장되는 데이타와 그들간의 관계를 표현한다
    * 내부적 스키마를 한번 추상화 시킨 스키마이고, 물리적인 저장 구조에 대한 내용은 숨긴다
+
+<br>
 
 3. 내부적 스키마(Internal Schema)
    * 물리적으로 데이터가 어떻게 저장되어 있는지 물리적 데이터 모델을 통해서 표현
@@ -482,10 +495,19 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 * 유일성 : 주식별자에 의해 엔터티내에 모든 인스턴스들을 유일하게 구분함
   * 예시) 사원번호가 주식별자가 모든 직원들에 대해 개인별로 고유하게 부여된다
+
+ 
+
 * 최소성 : 주식별자를 구성하는 속성의 수는 유일성을 만족하는 최소의 수가 되어야 함
   * 예시) 사원번호만으로도 고유한 구조인데 사원분류코드+사원번호 구조로 식별자를 구성하면 부적절하다
+
+ 
+
 * 불변성 : 주식별자가 한 번 특정 엔터티에 지정되면 그 식별자의 값을 변하지 않아야 함
   * 예시) 사원번호의 값이 변한다는 의미는 이전기록이 말소되는 개념임
+
+
+
 * 존재성 : 주식별자가 지정되면 반드시 데이터 값이 존재(Null 불가능)
   * 예시) 사원번호가 없는 사원은 존재할 수 없음
 
@@ -609,11 +631,12 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 5. 대체 키(Alternate Key)
 
    * 후보 키 중에서 기본 키로 선택되지 않은 키
-
 6. 외래 키(Foreign Key)
 
    * 다른 테이블의 PK(Primary Key, 기본키)를 참조하는 키
    * 예) 아래 그림의 {팀 코드}
+
+<br>
 
 <p align="center">   <img src="img/key1.png" alt="database" style="width: 70%;"> </p>
 
@@ -652,6 +675,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 ### 6.2. 성능 데이터 모델링 수행 시점
 
 **성능 향상을 위한 비용은 프로젝트 수행 중에 있어서 사전에 할수록 비용이 들지 않는다**. 성능을 향상 시키기 위한 작업을 초기에 하지 않으면 여러가지 추가적인 비용을 소진하게 되는 원인이 된다. 특히 데이터 증가가 빠르면 빠를수록 성능저하에 따른 개선비용은 기하급수적으로 증가한다.
+
+<br>
 
 <p align="center">   <img src="img/database_performance1.png" alt="database" style="width: 70%;"> </p>
 
@@ -753,6 +778,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 정규화를 하는 것은 기본적으로 데이터에 대한 중복성을 제거하여 주고 데이터가 관심사별로 처리되는 경우가 많기 때문에 성능이 향상되는 특징을 가지고 있다. 엔터티가 계속 발생되므로 SQL문장에서 조인이 많이 발생하여 이로 인한 성능저하가 나타나는 경우도 있지만 이런 부분은 사례별로 유의하여 반정규화를 적용하는 전략을 사용할 수 있다.
 
+<br>
+
 <p align="center">   <img src="img/normalization1.png" alt="database" style="width: 70%;"> </p>
 
 <p align='center'>SQL 전문가 가이드</p>
@@ -774,6 +801,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 > 어떤 릴레이션 *R*에서, *X*와 *Y*를 각각 *R*의 속성(Attribute) 집합의 부분 집합이라 하자. 애트리뷰트 *X*의 값 각각에 대해 시간에 관계없이 항상 애트리뷰트 *Y*의 값이 오직 하나만 연관되어 있을 때 *Y*는 *X*에 *함수적으로 종속한다*라 하고, *X → Y* 로로 표기한다.
 >
 > *X*를 *결정자*, *Y*를 *종속자*라고 표현하기도 한다.
+
+<br>
 
 <p align="center">   <img src="img/fd1.png" alt="database" style="width: 70%;"> </p>
 
@@ -853,6 +882,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 각 정규화의 단계에 대해서 살펴보자.
 
+<br>
+
 <p align="center">   <img src="img/nf1.webp" alt="database" style="width: 60%;"> </p>
 
 <p align='center'>Stackademic(Mohomed Ashkar Haris) - Normal Forms</p>
@@ -880,6 +911,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 정규화를 설명하기 위해 사용할 테이블과 그 스키마를 살펴보자.
 
+<br>
+
 <p align="center">   <img src="img/normalizationtable.png" alt="database" style="width: 80%;"> </p>
 
 <p align='center'>"인프런 쉬운코드 - DB 정규화"에서 사용한 스키마 예시</p>
@@ -887,12 +920,24 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 * 테이블은 사원(EMPLOYEE)의 월급 계좌(ACCOUNT)를 관리하는 테이블
 * 월급 계좌는 ```woori``` 또는 ```kookmin``` 은행 중 하나
 * 한 사원이 하나 이상의 월급 계좌를 등록하고, 각 계좌로 들어가는 월급 비율(```ratio```)를 조정가능 (```ratio```의 합은 항상 1)
+
+
+
 * 계좌마다 등급(```class```)이 존재한다
   * ```kookmin``` : STAR → PRESTIGE → LOYAL
   * ```woori``` : BRONZE → SILVER → GOLD
+
+
+
 * 한 계좌는 하나 이상의 현금 카드와 연동 가능
+
+
+
 * **Prime Attribute : 임의의 key(candidate key)에 속하는 속성**
   * ```account_id```, ```bank_name```, ``` account_name```
+
+
+
 * **Non-prime Attribute : 어떠한 key에도 속하지 않은 속성**
   * ```class```, ```ratio```, ```emp_id```, ```emp_name```, ```card_id```
 
@@ -919,6 +964,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 > *제 1 정규화(1NF)*는 테이블의 속성이 atomic value(나눠질 수 없는 값)를 갖도록 테이블을 분해하는 것이다.
 
+<br>
+
 <p align="center">   <img src="img/1NF_new.png" alt="database" style="width: 80%;"> </p>
 
 <p align='center'>1NF 과정</p>
@@ -928,6 +975,9 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
   * 중복 데이터가 생김
   * 기존의 PK ```{account_id}```를 ```{account_id, card_id}```로 변경해야 한다
   * ```ratio```는 합이 1이어야 함
+
+
+
 * **이런 문제들이 발생했지만 일단 값을 아토믹하게 만들었기 때문에 1NF를 만족 시켰다**
 
 <br>
@@ -942,6 +992,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 **제 2 정규화(2NF)**를 진행하기에 앞서 1NF 이후의 문제점들을 살펴보자. 
 
+<br>
+
 <p align="center">   <img src="img/after1NF_new.png" alt="database" style="width: 80%;"> </p>
 
 <p align='center'>After 1NF</p>
@@ -954,6 +1006,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 <br>
 
 다음은 **제 2 정규화(2NF)**의 과정이다.
+
+<br>
 
 <p align="center">   <img src="img/2NF.png" alt="database" style="width: 80%;"> </p>
 
@@ -983,6 +1037,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 
 **제3정규화(3NF)**를 진행하기에 앞서 2NF 이후의 문제점들을 살펴보자. 
 
+<br>
+
 <p align="center">   <img src="img/after2NF.png" alt="database" style="width: 80%;"> </p>
 
 <p align='center'>After 2NF</p>
@@ -990,6 +1046,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 <br>
 
 이제 **제3정규화(3NF)**를 진행해보자. 문제가 되었던 ```{emp_id}```→ ```{emp_name}```을 해결하기 위해서 새로운 테이블로 분리해내면 된다. 
+
+<br>
 
 <p align="center">   <img src="img/3NF.png" alt="database" style="width: 80%;"> </p>
 
@@ -1032,6 +1090,8 @@ DB 구조를 추상화해서 표현할 수 있는 데이터 모델(Data Model)�
 ### 8.2. 반정규화 적용 방법
 
 반정규화를 적용할 때는 기본적으로 데이터 무결성이 깨질 가능성이 많이 있기 때문에 반드시 데이터 무결성을 보장할 수 있는 방법을 고려한 이후에 반정규 화를 적용하도록 해야 한다.
+
+<br>
 
 <p align="center">   <img src="img/denormalization2.png" alt="database" style="width: 70%;"> </p>
 

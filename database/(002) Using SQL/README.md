@@ -144,6 +144,8 @@ mysql --host=localhost --user=root --password
 
 MySQL Workbench 설치 후 실행을 하면 다음과 같은 화면을 확인 할 수 있다.
 
+<br>
+
 <p align="center">   <img src="img/mysqlworkbench1.png" alt="mysql" style="width: 80%;"> </p>
 
 <p align='center'>MySQL Workbench</p>
@@ -432,6 +434,8 @@ ON DELETE SET NULL; -- 참조값이 삭제되면 NULL로 변경
 
 * ```ALTER TABLE```에는 ```ADD FOREIGN KEY``` 외에도 다양한 유형의 스키마 변경이 가능하다.
 * [MySQL Document 확인](https://dev.mysql.com/doc/refman/8.0/en/alter-table.html#alter-table-options)
+
+<br>
 
 > 프로덕션(Production)이나 다른 서비스 또는 파이프라인에서 사용중인 테이블의 스키마(Schema)를 변경하는 것이 어떤 영향을 미치는지 충분히 검토한 후에 진행되어야 함.
 >
@@ -1320,6 +1324,8 @@ FROM EMPLOYEE e RIGHT JOIN DEPARTMENT d ON e.dept_id = d.id; -- RIGHT는 DEPARTM
 * ```JOIN``` 컨디션에 매칭되지 못한 RIGHT의 테이블(```DEPARTMENT```)의 튜플들도 포함해서 반환
   * 이 경우에는 1006 ```data``` 부서를 말한다
 
+<br>
+
 <p align="center">   <img src="img/rightjoin.png" alt="mysql" style="width: 80%;"> </p>
 
 <p align='center'>RIGHT JOIN</p>
@@ -1398,6 +1404,8 @@ ALTER TABLE test_company.DEPARTMENT CHANGE name dept_name varchar(20) NOT NULL U
 
 먼저 현재의 ```EMPLOYEE```와 ```DEPARTMENT``` 테이블의 상황을 살펴보고 가자.
 
+<br>
+
 <p align="center">   <img src="img/empdepart.png" alt="mysql" style="width: 80%;"> </p>
 
 <p align='center'>EMPLOYEE, DEPARTMENT 테이블</p>
@@ -1475,6 +1483,8 @@ FROM EMPLOYEE e INNER JOIN DEPARTMENT d ON e.dept_id = d.dept_id AND e.name = d.
 <br>
 
 ```CROSS JOIN```이 수행되는 과정을 선으로 표현해보면 다음과 같다.
+
+<br>
 
 <p align="center">   <img src="img/crossjoin.png" alt="mysql" style="width: 80%;"> </p>
 
@@ -2401,6 +2411,8 @@ SQL의 인덱스(Index)에 대해 알아보자.
 
 먼저 ```employees``` 데이터베이스의 ```employees``` 테이블을 살펴보자.
 
+<br>
+
 <p align="center">   <img src="img/empl_table.png" alt="mysql" style="width: 70%;"> </p>
 
 <p align='center'>employees 테이블</p>
@@ -2537,6 +2549,8 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 
 ```a```, ```b```, ```c``` 라는 attribute을 가지는 테이블이 존재하고, ```a```를 이용해서 인덱스를 만들었다고 가정해보자.
 
+<br>
+
 <p align="center">   <img src="img/index2.png" alt="mysql" style="width: 80%;"> </p>
 
 * ```INDEX(a)```는 ```a```에 대해 정렬이 되어 있는 형태로 저장된다
@@ -2555,6 +2569,8 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 
 그러면 이번에는 ```WHERE a = 7 AND b = 95;```를 통해 ```a```가 7이면서 ```b```는 95인 튜플을 찾는 상황이라고 생각해보자. 만약 기존 처럼 ```a```로만 만들어진 인덱스를 사용하면 어떻게 될까?
 
+<br>
+
 <p align="center">   <img src="img/index3.png" alt="mysql" style="width: 80%;"> </p>
 
 위의 그림에서도 확인할 수 있듯이, ```INDEX(a)```만 사용하면 ```a = 7```은 빠르게 찾아도, ```b = 95```에 대한 조회는 full-scan으로 동작하기 때문에 시간이 걸린다. 이를 해결하기 위해서는 ```a```, ```b```를 묶어서 하나의 인덱스로 만들어야 한다.
@@ -2562,6 +2578,8 @@ SHOW INDEX FROM employees; -- employees 테이블에 존재하는 인덱스 확�
 <br>
 
 ```CREATE INDEX(a,b)```로 ```INDEX(a,b)```를 만들었다고 하자.
+
+<br>
 
 <p align="center">   <img src="img/index4.png" alt="mysql" style="width: 80%;"> </p>
 
@@ -2634,6 +2652,8 @@ SELECT * FROM employees IGNORE INDEX (제외할 인덱스 명) WHERE first_name 
 ### 7.5. Covering Index
 
 Covering Index에 대해 알아보자. 위의 [인덱스 동작 방식](https://github.com/seungki1011/Data-Engineering/tree/main/database/(002)%20Using%20SQL#72-%EC%9D%B8%EB%8D%B1%EC%8A%A4-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9D)에서 이용한 예시를 이용하겠다.
+
+<br>
 
 <p align="center">   <img src="img/covering_index.png" alt="mysql" style="width: 80%;"> </p>
 

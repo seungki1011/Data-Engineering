@@ -36,7 +36,7 @@
 
 1. [자료주와 알고리즘(Data Structure & Algorithm)]()
 2. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)
-3. [네트워크(Network)와 HTTP](network and http/README.md)
+3. [네트워크(Network)와 HTTP](network%20and%20http/README.md)
 
 ---
 
@@ -60,9 +60,8 @@
 
 ## Containerization
 
-1. 컨테이너(Container) 소개
-2. 도커(Docker)
-3. 쿠버네티스(Kubernetes)
+1. 도커(Docker)
+2. 쿠버네티스(Kubernetes)
 
 ---
 

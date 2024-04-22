@@ -1,4 +1,6 @@
-> 도커(Docker) 소개 및 사용해보기.
+> 컨테이너 개념 소개.
+>
+> 도커(Docker) 소개 및 사용하기.
 >
 > 참고 자료
 >
@@ -9,7 +11,7 @@
 
 ## Index
 
-### 1. Docker 소개
+### 1. [Docker]()
 
 
 
@@ -17,12 +19,16 @@
 
 
 
-### 2. Docker 사용하기
+### 2. [Container Orchestration]() (추가 예정)
 
-
+* Docker Swarm
+* Kubernetes(K8s)
 
 
 
 ---
 
 ## Further Reading
+
+* Docker Swarm
+* K8s

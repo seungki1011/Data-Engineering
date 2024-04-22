@@ -58,11 +58,10 @@
 
 ---
 
-## Container
+## [Container](container/README.md)
 
-1. [컨테이너(Container)](container/README.md)
-   * [도커(Docker)](container/(001)Docker/README.md)
-   * [Container Orchestration](container/(002)Container_Orchestration/README.md)
+1. [도커(Docker)](container/(001)Docker/README.md)
+2. [Container Orchestration](container/(002)Container_Orchestration/README.md)
 
 ---
 

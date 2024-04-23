@@ -287,12 +287,6 @@
 
 ---
 
-## P.S
-
-* 갓영한
-
----
-
 ## Reference
 
 1. [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)

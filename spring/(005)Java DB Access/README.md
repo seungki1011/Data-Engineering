@@ -88,11 +88,98 @@ JDBC의 등장 배경부터 살펴보자.
 
 JDBC의 사용법에 대해서 알아보자.
 
+먼저 MySQL 컨테이너를 만들고 스프링 부트 애플리케이션에 연결해보자.
+
+* [컨테이너를 설정하고 실행하는 방법](../../container/(001)Docker#4-docker-compose)
+
+<br>
+
+데이터베이스 이름은 `test_database`로 하자.
+
+`resources/schema.sql` 파일을 만들자.
+
+```sql
+drop table if exists member;
+
+create table member (
+     member_id varchar(10),
+     money integer not null default 0,
+     primary key (member_id)
+);
+
+insert into member(member_id, money) values ('hi1',10000);
+insert into member(member_id, money) values ('hi2',20000);
+```
+
+* 초기 데이터 입력은 `data.sql`에 정의하는것이 권장 되지만, 편의상 `schema.sql`에 그냥 쿼리 작성 함
+
+<br>
+
+---
+
+#### 1.2.1 데이터베이스 연결(`DriverManager`)
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+#### 1.2.2
+
+<br>
+
+`application.properties`는 다음과 같이 설정하자.
+
+```properties
+spring.application.name=jdbc
+# spring 2.5.x 부터 deprecated, 아래의 init.mode 사용
+# spring.datasource.initialization-mode=always
+spring.sql.init.mode=always
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+# 3306 포트의 mysql 컨테이너의 test_database에 연결
+spring.datasource.url=jdbc:mysql://localhost:3306/test_database?serverTimezone=Asia/Seoul
+spring.datasource.username=root
+spring.datasource.password=admin
+```
+
+<br>
+
+애플리케이션을 실행하고 `member` 테이블을 조회하면 다음과 같이 쿼리 결과가 나와야한다.
+
+```
+mysql> select * from member;
++-----------+-------+
+| member_id | money |
++-----------+-------+
+| hi1       | 10000 |
+| hi2       | 20000 |
++-----------+-------+
+```
+
+<br>
+
+---
+
+#### 1.2.3
 
 
 

@@ -28,7 +28,7 @@ JDBC의 등장 배경부터 살펴보자.
 
 <br>
 
-<p align="center">   <img src="img/beforejdbc.png" alt="jdbc" style="width: 100%;"> </p>
+<p align="center">   <img src="img/beforejdbc1.png" alt="jdbc" style="width: 100%;"> </p>
 
 <p align='center'>JDBC 이전</p>
 
@@ -36,7 +36,7 @@ JDBC의 등장 배경부터 살펴보자.
 
 <br>
 
-<p align="center">   <img src="img/jdbc.png" alt="jdbc" style="width: 80%;"> </p>
+<p align="center">   <img src="img/jdbc1.png" alt="jdbc" style="width: 100%;"> </p>
 
 <p align='center'>JDBC 인터페이스</p>
 
@@ -57,7 +57,7 @@ JDBC의 등장 배경부터 살펴보자.
 
 <br>
 
-<p align="center">   <img src="img/afterjdbc.png" alt="jdbc" style="width: 100%;"> </p>
+<p align="center">   <img src="img/afterjdbc1.png" alt="jdbc" style="width: 100%;"> </p>
 
 <p align='center'>JDBC 이후</p>
 
@@ -84,13 +84,31 @@ JDBC의 등장 배경부터 살펴보자.
 
 ---
 
-### 1.2 JDBC 사용하기
+### 1.2 JDBC 사용하기 - 1(`DriverManager`)
 
-JDBC의 사용법에 대해서 알아보자.
+JDBC의 사용법에 대해서 알아보자. (`DriverManager` 사용)
 
 먼저 MySQL 컨테이너를 만들고 스프링 부트 애플리케이션에 연결해보자.
 
 * [컨테이너를 설정하고 실행하는 방법](../../container/(001)Docker#4-docker-compose)
+
+<br>
+
+`build.gradle`에 `runtimeOnly 'com.mysql:mysql-connector-j'` 추가
+
+```groovy
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+}
+```
 
 <br>
 
@@ -117,13 +135,274 @@ insert into member(member_id, money) values ('hi2',20000);
 
 ---
 
-#### 1.2.1 데이터베이스 연결(`DriverManager`)
+#### 1.2.1 데이터베이스 연결
+
+JDBC의 `DriverManager`를 통한 연결에 대해서 알아보자.
+
+<br>
+
+<p align="center">   <img src="img/jdbcconnection.png" alt="jdbc" style="width: 80%;"> </p>
+
+* MySQL 드라이버는 JDBC의 `java.sql.Connection` 인터페이스를 구현한 `com.mysql.cj.jdbc.ConnectionImpl`이라는 구현체를 제공
+
+<br>
+
+<p align="center">   <img src="img/drivermanager.png" alt="jdbc" style="width: 100%;"> </p>
+
+<p align='center'>DriverManager 커넥션 요청 흐름</p>
+
+* `DriverManager`는 라이브러리에 등록된 데이터베이스 드라이버들을 관리하고, 커넥션을 획득하는 기능을 제공한다
+
+<br>
+
+이제 데이터베이스에 연결하기 위한 코드를 작성해보자.
+
+MySQL 데이터베이스에 접속하기 위한 상수 정의.
+
+```java
+public abstract class ConnectionConst {
+  
+    public static final String URL = "jdbc:mysql://localhost:3306/test_database?serverTimezone=Asia/Seoul";
+    public static final String USERNAME = "root";
+    public static final String PASSWORD = "admin";
+
+}
+```
+
+* 뒤에서 다루겠지만, 스프링 부트를 이용하는 경우 `application.properties`에 데이터베이스의 엔드포인트를 설정하고, `DataSource`를 의존성 주입으로 받아서 사용가능
+
+<br>
+
+JDBC를 사용해서 실제로 데이터베이스 연결하는 코드를 작성해보자.
+
+```java
+@Slf4j
+public class DBConnectionUtil {
+  
+    public static Connection getConnection() {
+        Connection connection = null;
+        try {
+            // ConnectionConst 상수 static import 처리
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            log.info("get connection={}, class={}", connection, connection.getClass());
+            return connection;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+}
+```
+
+* 데이터베이스에 연결하기 위해서 JDBC가 제공하는 `DriverManager.getConnection()`을 사용
+* `getConnection()`은 라이브러리에 있는 데이터베이스 드라이버를 찾아서 해당 드라이버가 제공하는 커넥션 반환
+
+<br>
+
+동작을 확인하기 위한 테스트 코드를 작성해보자.
+
+```java
+@Slf4j
+public class DBConnectionUtilTest {
+
+    @Test
+    void connection() {
+        Connection connection = DBConnectionUtil.getConnection();
+        Assertions.assertThat(connection).isNotNull();
+    }
+}
+```
+
+```
+[main] INFO de.jdbc.connection.DBConnectionUtil -- get connection=com.mysql.cj.jdbc.ConnectionImpl@c94fd30, class=class com.mysql.cj.jdbc.ConnectionImpl
+```
+
+* `com.mysql.cj.jdbc.ConnectionImpl` : MySQL 드라이버가 제공하는 MySQL 전용 커넥션
+
+<br>
+
+---
+
+#### 1.2.2 등록(`insert`)
+
+`Member` 데이터를 데이터베이스에 등록하는 기능을 JDBC를 사용해서 개발해보자.
+
+<br>
+
+```java
+@Data
+@NoArgsConstructor
+public class Member {
+
+    private String memberId;
+    private int money;
+
+}
+```
+
+* 롬복의 `@Data` :  `@RequiredArgsConstructor`, `@Getter`, `@Setter`, `@ToString`, `@EqualsAndHashCode` 포함
+* `memberId` : 회원의 아이디
+* `money` : 회원이 소지한 금액
+
+<br>
+
+회원 객체를 데이터베이스에 저장하는 코드를 작성해보자.
+
+```java
+/**
+ * DriverManager 사용
+ */
+@Slf4j
+public class DriverManagerMemberRepository {
+
+    public Member save(Member member) throws SQLException {
+        String sql = "insert into member(member_id, money) values(?, ?)";
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(sql);
+            // 파라미터 바인딩
+            pstmt.setString(1, member.getMemberId());
+            pstmt.setInt(2, member.getMoney());
+          	// 쿼리 실행
+            pstmt.executeUpdate();
+            return member;
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            // 외부 자원 해제
+            close(con, pstmt, null);
+        }
+
+    }
+
+    // 할당된 자원의 해제 과정 중에 예외 발생에 대한 처리를 해야 안정적인 코드
+    private void close(Connection con, Statement stmt, ResultSet rs) {
+        
+        if(rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                log.info("error", e);
+            }
+        }
+
+        if(stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                log.info("error", e);
+            }
+        }
+
+        if(con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                log.info("error", e);
+            }
+        }
+    }
+		
+    private static Connection getConnection() {
+        return DBConnectionUtil.getConnection();
+    }
+}
+```
+
+* `getConnection()` : `DBConnectionUtil`를 통해서 데이터베이스 커넥션을 획득
+* `sql` : 데이터베이스에 전달할 쿼리 정의
 
 
 
+* `con.prepareStatement(sql)` : 데이터베이스에 전달할 SQL과 파라미터로 전달할 데이터들을 준비
+  * 각 `?`에 바인딩할 값 지정
 
 
 
+* `pstmt.executeUpdate()` : `Statement`를 통해 준비된 `sql`을 커넥션을 통해 데이터베이스에 전달
+  * 데이터 추가, 변경에는 `executeUpdate()` 사용하면 됨
+
+
+
+* `close()` : 쿼리 실행후 리소스 정리. 리소스 정리는 항상 역순으로 진행
+  * `ResultSet`은 나중에 결과 조회 때 사용한다
+
+
+
+* SQL 인젝션을 방지하기 위해서 `PreparedStatement`의  `?`를 통한 파라미터 바인딩 방식을 사용한다
+
+<br>
+
+---
+
+#### 1.2.3 조회(`select`)
+
+데이터베이스에 저장한 데이터를 조회하는 기능을 개발해보자.
+
+<br>
+
+회원을 조회하는 코드를 추가하자.
+
+```java
+public Member findById(String memberId) throws SQLException {
+    String sql = "select * from member where member_id = ?";
+
+    Connection con = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        con = getConnection();
+        pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, memberId);
+        // 데이터 조회를 위해서는 executeQuery() 사용 
+        rs = pstmt.executeQuery();
+				
+      	// 목적은 회원 하나를 찾아서 조회
+        if (rs.next()) {
+            Member member = new Member();
+            member.setMemberId(rs.getString("member_id"));
+            member.setMoney(rs.getInt("money"));
+            return member;
+        } else {
+            throw new NoSuchElementException("member not found! memberId = " + memberId);
+        }
+    } catch (SQLException e) {
+        log.error("DB error", e);
+        throw e;
+    } finally {
+        close(con, pstmt, rs);
+    }
+}
+```
+
+* `executeQuery()`는 결과를 `ResultSet`에 담아서 반환한다
+* `ResultSet`의 모양은 아래 그림과 같다
+
+<br>
+
+<p align="center">   <img src="img/resultset.png" alt="jdbc" style="width: 100%;"> </p>
+
+* `findById()`의 목적은 회원 하나를 찾아서 조회하는 것이기 때문에, `if`를 사용해서 `member` 반환
+
+<br>
+
+---
+
+#### 1.2.4 수정, 삭제(`update`, `delete`)
+
+데이터베이스에 등록된 데이터를 수정 또는 삭제해보자.
+
+<br>
+
+다음 코드를 추가하자.
+
+```java
+```
 
 
 
@@ -143,7 +422,7 @@ insert into member(member_id, money) values ('hi2',20000);
 
 ---
 
-#### 1.2.2
+#### 1.2.5
 
 <br>
 
@@ -179,7 +458,7 @@ mysql> select * from member;
 
 ---
 
-#### 1.2.3
+#### 1.2.6
 
 
 

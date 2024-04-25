@@ -402,7 +402,156 @@ public Member findById(String memberId) throws SQLException {
 다음 코드를 추가하자.
 
 ```java
+public void update(String memberId, int money) throws SQLException {
+    String sql = "update member set money=? where member_id=?";
+
+    Connection con = null;
+    PreparedStatement pstmt = null;
+
+    try {
+        con = getConnection();
+        pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, money);
+        pstmt.setString(2, memberId);
+        int resultSize = pstmt.executeUpdate();
+        log.info("resultSize = {}", resultSize);
+    } catch (SQLException e) {
+        log.error("DB error", e);
+    } finally {
+        close(con, pstmt, null);
+    }
+}
+
+public void delete(String memberId) throws SQLException {
+    String sql = "delete from member where member_id=?";
+
+    Connection con = null;
+    PreparedStatement pstmt = null;
+
+    try {
+        con = getConnection();
+        pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, memberId);
+        pstmt.executeUpdate();
+    } catch (SQLException e) {
+        log.error("DB error", e);
+        throw e;
+    } finally {
+        close(con, pstmt, null);
+    }
+}
 ```
+
+* `executeUpdate()`은 쿼리 실행 후 영향받은 row의 수를 반환한다
+  * 위의 경우에서는 회원 하나의 데이터만 변경하기 때문에 `1`을 반환한다
+
+<br>
+
+---
+
+#### 1.2.5 테스트 코드로 동작 확인
+
+테스트 코드로 지금까지 작성한 기능들의 동작을 확인해보자.
+
+```java
+@Slf4j
+class DriverManagerMemberRepositoryTest {
+
+    DriverManagerMemberRepository repository = new DriverManagerMemberRepository();
+
+    @Test
+    void crud() throws SQLException {
+        // save()
+        Member member = new Member("member1", 10000);
+        repository.save(member);
+
+        // findById()
+        Member findMember = repository.findById(member.getMemberId());
+        log.info("findMember = {}", findMember);
+        Assertions.assertThat(findMember).isEqualTo(member);
+
+        // update()
+        // money : 10000 -> 30000으로 수정
+        repository.update(member.getMemberId(), 30000);
+        Member updatedMember = repository.findById(member.getMemberId());
+        Assertions.assertThat(updatedMember.getMoney()).isEqualTo(30000);
+
+        // delete()
+        repository.delete(member.getMemberId());
+        Assertions.assertThatThrownBy(() -> repository.findById(member.getMemberId()))
+                .isInstanceOf(NoSuchElementException.class);
+    }
+}
+```
+
+<br>
+
+---
+
+### 1.3 JDBC 사용하기 - 2(DBCP, 커넥션 풀)
+
+#### 1.3.1 `DBCP` 소개
+
+데이터베이스 커넥션 방법인 DBCP(Database Connection Pool)에 대해서 알아보자.
+
+먼저 기존 데이터베이스 커넥션 방법의 단점에 대해서 알아보자.
+
+<br>
+
+<p align="center">   <img src="img/dbcp1.png" alt="jdbc" style="width: 100%;"> </p>
+
+<p align='center'>기존 커넥션 방식</p>
+
+* 커넥션 획득 과정은 `TCP/IP` 연결 및 해제를 포함한 복잡한 과정을 거친다
+* 매요청 마다 커넥션을 새로 만들어야 하고 `TCP/IP`의 연결도 획득해야하기 때문에 결과적으로 응답 속도에 영향을 준다
+* 이런 문제를 해결하기 위해서 `커넥션 풀(DBCP)`이라는 방법을 사용한다
+
+<br>
+
+커넥션 풀을 다음 그림을 통해서 알아보자.
+
+<p align="center">   <img src="img/dbcp3.png" alt="jdbc" style="width: 100%;"> </p>
+
+<p align='center'>DBCP</p>
+
+* `커넥션 풀`은 이름 그대로, 커넥션들을 미리 만들어두고 풀에 모아두는 방식이다
+* `커넥션 풀`에 들어있는 커넥션은 TCP/IP로 연결이 되어있는 상태이기 때문에 언제든지 쿼리를 DB에 전달 가능하다
+* 기존 커넥션을 획득하던 방법과 달리, `커넥션 풀`을 통해 이미 생성되어 있는 커넥션을 객체 참조로 가져다 쓰면 된다
+* 애플리케이션 로직은 `커넥션 풀`에서 받은 커넥션을 이용해서 쿼리를 전달하고 결과를 처리한다
+* 이제 커넥션 종료(`close()`)는 커넥션을 `커넥션 풀`로 다시 돌려주는 것이다
+
+
+
+* `커넥션 풀`로 얻을 수 있는 이점이 크기 때문에 실무에서는 기본으로 사용한다
+* `커넥션 풀`에서 설정하는 `maximumPoolSize`나 데이터베이스에서 설정할 수 있는 `max_connections`과 같은 값은 성능 테스트를 통해서 정해야 한다
+
+
+
+* `커넥션 풀`을 구현한 오픈소스 중에서 `hikariCP`를 주로 사용한다
+
+<br>
+
+---
+
+#### 1.3.2 `DataSource`
+
+커넥션 풀을 사용하는 방법에 대해서 알아보기 전에 `DataSource` 인터페이스에 대해서 알아보자.
+
+커넥션을 얻는 방법은 앞서 소개한 JDBC `DriverManager`를 직접 사용하거나, `커넥션 풀`을 사용하는 등 다양한 방법이 존재한다.
+
+만약 우리가 커넥션을 획득하는 방법을 `DriverManager`에서 `커넥션 풀`로 변경한다면, 해당 애플리케이션 코드로 변경해야 한다. 자바는 이런 문제를 해결하기 위해서 `DataSource`라는 인터페이스를 제공한다. `DataSource` 인터페이스는 커넥션을 획득하는 방법을 추상화한 인터페이스이다.
+
+<br>
+
+<p align="center">   <img src="img/ds2.png" alt="jdbc" style="width: 90%;"> </p>
+
+<p align='center'>DataSource 인터페이스</p>
+
+<br>
+
+그럼 간단하게 `DataSource`가 적용된 `DriverManager`인 `DriverManagerDataSource`를 사용해보자. (스프링이 제공하는 코드임)
+
+
 
 
 
@@ -422,7 +571,7 @@ public Member findById(String memberId) throws SQLException {
 
 ---
 
-#### 1.2.5
+#### 1.3.3
 
 <br>
 
@@ -458,7 +607,7 @@ mysql> select * from member;
 
 ---
 
-#### 1.2.6
+#### 1.3.4
 
 
 
@@ -480,7 +629,7 @@ mysql> select * from member;
 
 ---
 
-### 1.3 
+### 1.4
 
 
 
@@ -491,6 +640,18 @@ mysql> select * from member;
 
 
 
+
+
+
+<br>
+
+---
+
+## Further Reading
+
+* `hikariCP`
+* `DBCP` 파라미터 설정
+* `max_connections`
 
 
 

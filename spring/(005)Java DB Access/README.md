@@ -84,7 +84,7 @@ JDBC의 등장 배경부터 살펴보자.
 
 ---
 
-### 1.2 JDBC 사용하기 - 1(`DriverManager`)
+### 1.2 JDBC 사용 - 1(`DriverManager`)
 
 JDBC의 사용법에 대해서 알아보자. (`DriverManager` 사용)
 
@@ -130,6 +130,20 @@ insert into member(member_id, money) values ('hi2',20000);
 ```
 
 * 초기 데이터 입력은 `data.sql`에 정의하는것이 권장 되지만, 편의상 `schema.sql`에 그냥 쿼리 작성 함
+
+<br>
+
+`member` 테이블을 조회하면 다음과 같이 쿼리 결과가 나와야한다.
+
+```
+mysql> select * from member;
++-----------+-------+
+| member_id | money |
++-----------+-------+
+| hi1       | 10000 |
+| hi2       | 20000 |
++-----------+-------+
+```
 
 <br>
 
@@ -488,9 +502,9 @@ class DriverManagerMemberRepositoryTest {
 
 ---
 
-### 1.3 JDBC 사용하기 - 2(DBCP, 커넥션 풀)
+### 1.3 JDBC 사용 - 2(`DBCP`)
 
-#### 1.3.1 `DBCP` 소개
+#### 1.3.1 `DBCP(커넥션 풀)` 소개
 
 데이터베이스 커넥션 방법인 DBCP(Database Connection Pool)에 대해서 알아보자.
 
@@ -549,87 +563,344 @@ class DriverManagerMemberRepositoryTest {
 
 <br>
 
-그럼 간단하게 `DataSource`가 적용된 `DriverManager`인 `DriverManagerDataSource`를 사용해보자. (스프링이 제공하는 코드임)
+그럼 간단하게 `DataSource`가 적용된 `DriverManager`인 `DriverManagerDataSource`를 사용하는 테스트 코드를 작성해보자. (스프링이 제공하는 코드임)
+
+```java
+@Slf4j
+public class DriverManagerDataSourceTest {
+
+    @Test
+    void driverManager() throws SQLException {
+        Connection con1 = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Connection con2 = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        log.info("connection={}, class={}", con1, con1.getClass());
+        log.info("connection={}, class={}", con2, con2.getClass());
+    }
+
+    @Test
+    void dataSourceDriverManager() throws SQLException {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
+        useDataSource(dataSource);
+    }
+
+    private void useDataSource(DataSource dataSource) throws SQLException {
+        Connection con1 = dataSource.getConnection();
+        Connection con2 = dataSource.getConnection();
+        log.info("connection={}, class={}", con1, con1.getClass());
+        log.info("connection={}, class={}", con2, con2.getClass());
+    }
+  
+}
+```
+
+```
+14:38:55.167 [main] INFO de.jdbc.connection.DriverManagerDataSourceTest -- connection=com.mysql.cj.jdbc.ConnectionImpl@2c4d1ac, class=class com.mysql.cj.jdbc.ConnectionImpl
+14:38:55.168 [main] INFO de.jdbc.connection.DriverManagerDataSourceTest -- connection=com.mysql.cj.jdbc.ConnectionImpl@2ef14fe, class=class com.mysql.cj.jdbc.ConnectionImpl
+14:38:55.210 [main] INFO de.jdbc.connection.DriverManagerDataSourceTest -- connection=com.mysql.cj.jdbc.ConnectionImpl@3d1848cc, class=class com.mysql.cj.jdbc.ConnectionImpl
+14:38:55.210 [main] INFO de.jdbc.connection.DriverManagerDataSourceTest -- connection=com.mysql.cj.jdbc.ConnectionImpl@7dda48d9, class=class com.mysql.cj.jdbc.ConnectionImpl
+```
+
+* `Connection con1 = DriverManager.getConnection(URL, USERNAME, PASSWORD);`
+  * 기존 `DriverManager`를 사용했을때는 커넥션을 획득할 때 마다 필요한 파라미터를 계속 명시했어야 함
 
 
 
+* `DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);`
+* `Connection con1 = dataSource.getConnection();`
+  * `DataSource`를 사용하는 방식은 처음 객체 생성때만 파라미터를 명시하고, 커넥션 획득 시에는 단순히 `dataSource.getConnection()`으로 획득 가능 함 
 
 
 
+* `DataSource`를 사용하는 방식은 필요한 속성을 설정하는 곳과 사용하는 곳을 분리할 수 있도록 해준다
 
+<br>
 
-
-
-
-
-
-
-
-
+> `application.properties`
+>
+> ```properties
+> spring.application.name=jdbc
+> # spring 2.5.x 부터 deprecated
+> # spring.datasource.initialization-mode=always
+> # 애플리케이션 시작시 schema.sql 적용
+> spring.sql.init.mode=always
+> spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+> # 3306 포트의 mysql의 test_database라는 엔드포인트 설정
+> spring.datasource.url=jdbc:mysql://localhost:3306/test_database?serverTimezone=Asia/Seoul
+> spring.datasource.username=root
+> spring.datasource.password=admin
+> ```
+>
+> * 설정 파일과 스프링 부트의 기능을 활용해서 `DataSource`를 주입받아서 사용할 수도 있다
 
 <br>
 
 ---
 
-#### 1.3.3
+#### 1.3.3 커넥션 풀 사용하기(`HikariDataSource`)
+
+기존에 사용하던 코드를 `HikariCP`를 사용하도록 작성해보자.
+
+먼저 `DataSource`를 적용해보자.
 
 <br>
 
-`application.properties`는 다음과 같이 설정하자.
+```java
+/**
+ * DataSource, JdbcUtils 사용
+ */
+@Slf4j
+public class CPMemberRepository {
+		
+    private final DataSource dataSource;
+		// DataSource 주입받아서 사용
+    public CPMemberRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
-```properties
-spring.application.name=jdbc
-# spring 2.5.x 부터 deprecated, 아래의 init.mode 사용
-# spring.datasource.initialization-mode=always
-spring.sql.init.mode=always
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-# 3306 포트의 mysql 컨테이너의 test_database에 연결
-spring.datasource.url=jdbc:mysql://localhost:3306/test_database?serverTimezone=Asia/Seoul
-spring.datasource.username=root
-spring.datasource.password=admin
+    public Member save(Member member) throws SQLException {
+        String sql = "insert into member(member_id, money) values(?, ?)";
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, member.getMemberId());
+            pstmt.setInt(2, member.getMoney());
+            pstmt.executeUpdate();
+            return member;
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(con, pstmt, null);
+        }
+    }
+
+    public void update(String memberId, int money) throws SQLException {
+        String sql = "update member set money=? where member_id=?";
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, money);
+            pstmt.setString(2, memberId);
+            int resultSize = pstmt.executeUpdate();
+            log.info("resultSize = {}", resultSize);
+        } catch (SQLException e) {
+            log.error("DB error", e);
+        } finally {
+            close(con, pstmt, null);
+        }
+    }
+
+    public void delete(String memberId) throws SQLException {
+        String sql = "delete from member where member_id=?";
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("DB error", e);
+            throw e;
+        } finally {
+            close(con, pstmt, null);
+        }
+    }
+
+    public Member findById(String memberId) throws SQLException {
+        String sql = "select * from member where member_id = ?";
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Member member = new Member();
+                member.setMemberId(rs.getString("member_id"));
+                member.setMoney(rs.getInt("money"));
+                return member;
+            } else {
+                throw new NoSuchElementException("member not found! memberId = " + memberId);
+            }
+        } catch (SQLException e) {
+            log.error("DB error", e);
+            throw e;
+        } finally {
+            close(con, pstmt, rs);
+        }
+    }
+
+    // JdbcUtils로 close를 편리하게 구현
+    private void close(Connection con, Statement stmt, ResultSet rs) {
+        JdbcUtils.closeResultSet(rs);
+        JdbcUtils.closeStatement(stmt);
+        JdbcUtils.closeConnection(con);
+    }
+
+    private Connection getConnection() throws SQLException {
+        Connection con = dataSource.getConnection();
+        log.info("get connection={}, class={}", con, con.getClass());
+        return con;
+    }
+}
 ```
+
+* 외부에서 `DataSource`를 주입받아서 사용하도록 변경했다
+* `JdbcUtils`를 통해서 `close()`를 더 편리하게 구현
 
 <br>
 
-애플리케이션을 실행하고 `member` 테이블을 조회하면 다음과 같이 쿼리 결과가 나와야한다.
+`DataSource`를 사용하는 `CPMemberRepository`에 `HikariDataSource`를 사용하는 테스트 코드를 작성해보자.
+
+```java
+@Slf4j
+class CPMemberRepositoryTest {
+
+    // DataSource를 주입받아서 사용할 것이다
+    // DriverManagerMemberRepository repository = new DriverManagerMemberRepository();
+
+    CPMemberRepository repository;
+  
+    @BeforeEach
+    void beforeEach() throws Exception {
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(URL);
+        dataSource.setUsername(USERNAME);
+        dataSource.setPassword(PASSWORD);
+      
+        dataSource.setMaximumPoolSize(10);
+        dataSource.setPoolName("MyPool");
+
+        // CPMemberRepository는 DataSource 주입이 필요하다
+        repository = new CPMemberRepository(dataSource);
+    }
+
+    @Test
+    void crud() throws SQLException {
+        // save()
+        Member member = new Member("member1", 10000);
+        repository.save(member);
+
+        // findById
+        Member findMember = repository.findById(member.getMemberId());
+        Assertions.assertThat(findMember).isEqualTo(member);
+
+        // update()
+        // money : 10000 -> 30000으로 수정
+        repository.update(member.getMemberId(), 30000);
+        Member updatedMember = repository.findById(member.getMemberId());
+        Assertions.assertThat(updatedMember.getMoney()).isEqualTo(30000);
+
+        // delete()
+        repository.delete(member.getMemberId());
+        Assertions.assertThatThrownBy(() -> repository.findById(member.getMemberId()))
+                .isInstanceOf(NoSuchElementException.class);
+    }
+}
+```
 
 ```
-mysql> select * from member;
-+-----------+-------+
-| member_id | money |
-+-----------+-------+
-| hi1       | 10000 |
-| hi2       | 20000 |
-+-----------+-------+
+15:24:28.246 [main] INFO com.zaxxer.hikari.HikariDataSource -- MyPool - Starting...
+15:24:28.458 [main] INFO com.zaxxer.hikari.pool.HikariPool -- MyPool - Added connection com.mysql.cj.jdbc.ConnectionImpl@4b6e2263
+15:24:28.458 [main] INFO com.zaxxer.hikari.HikariDataSource -- MyPool - Start completed.
+15:24:28.460 [main] INFO de.jdbc.repository.CPMemberRepository -- get connection=HikariProxyConnection@1866229258 wrapping com.mysql.cj.jdbc.ConnectionImpl@4b6e2263, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+15:24:28.494 [main] INFO de.jdbc.repository.CPMemberRepository -- get connection=HikariProxyConnection@1632497828 wrapping com.mysql.cj.jdbc.ConnectionImpl@4b6e2263, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+15:24:28.526 [main] INFO de.jdbc.repository.CPMemberRepository -- get connection=HikariProxyConnection@1060703587 wrapping com.mysql.cj.jdbc.ConnectionImpl@4b6e2263, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+15:24:28.532 [main] INFO de.jdbc.repository.CPMemberRepository -- resultSize = 1
+15:24:28.532 [main] INFO de.jdbc.repository.CPMemberRepository -- get connection=HikariProxyConnection@1514214932 wrapping com.mysql.cj.jdbc.ConnectionImpl@4b6e2263, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+15:24:28.534 [main] INFO de.jdbc.repository.CPMemberRepository -- get connection=HikariProxyConnection@1317375498 wrapping com.mysql.cj.jdbc.ConnectionImpl@4b6e2263, class=class com.zaxxer.hikari.pool.HikariProxyConnection
+15:24:28.537 [main] INFO de.jdbc.repository.CPMemberRepository -- get connection=HikariProxyConnection@1202220987 wrapping com.mysql.cj.jdbc.ConnectionImpl@4b6e2263, class=class com.zaxxer.hikari.pool.HikariProxyConnection
 ```
+
+* `HikariCP` 사용시 같은 커넥션인 `ConnectionImpl@4b6e2263`이 계속 재사용 되는 것을 확인 가능
+  * 사용하던 커넥션을 되돌려주고 다시 가져와서 사용되는 것이 반복되는 모습이다
+  * 동시다발적으로 여러 요청이 들어오는 경우에는 커넥션 풀의 커넥션을 다양하게 가져간다
 
 <br>
 
 ---
 
-#### 1.3.4
+## 2) 트랜잭션(Transaction)
+
+> 해당 파트는 트랜잭션에 대한 기본적인 내용을 알고 있다는 전제하에 진행.
+>
+> [트랜잭션에 대해서 알아보기](../../database/(003)%20Relational%20Database%202#1-transaction)
+
+<br>
+
+### 2.1 트랜잭션 복습
+
+데이터베이스의 연결구조는 다음과 같다.
+
+<br>
+
+<p align="center">   <img src="img/dbtransaction.png" alt="jdbc" style="width: 100%;"> </p>
+
+* 커넥션 마다 세션이 만들어진다
+* 커넥션을 통해서 들어온 요청은 세션을 통해서 실행하게 됨
+
+<br>
+
+트랜잭션을 적용한 비즈니스 로직을 구현하기 전에 간단히 트랜잭션의 몇 가지 특징을 살펴보고 가자.
+
+* 원자성(atomicity) : 트랜잭션 내에서 실행한 작업들은 마치 하나의 작업인 것처럼 모두 성공 하거나 모두 실패해야 한다
+* 격리성(isolation) : 동시에 실행되는 트랜잭션들이 서로에게 영향을 미치지 않도록 격리한다
+  * 격리성은 동시성과 관련된 성능 이슈로 인해 트랜잭션 격리 수준(Isolation level)을 선택할 수 있다
+  * 일반적으로 `READ COMMITTED(커밋된 읽기)`를 많이 사용
 
 
 
+* 많은 경우 데이터베이스들은 `autocommit`이 `true`로 설정되어 있다. 그래서 `autocommit`을 `false`로 설정하는 것을 트랜잭션을 시작하는 것으로 표현할 수도 있다.
+* 트랜잭션 모드에서는 이후에 꼭 `commit`이나 `rollback`을 호출해야 한다
 
 
 
-
-
-
-
-
-
-
-
-
-
+* 원자성이 깨지는 것을 방지하기 위해 [`DB 락`](../../database/(003)%20Relational%20Database%202#4-lock)을 사용한다
+* `SET LOCK_TIMEOUT <milliseconds>` : 락 타임아웃 시간을 설정해서 특정 세션이 무한히 대기하는 현상을 방지할 수 있다
 
 <br>
 
 ---
 
-### 1.4
+### 2.2 트랜잭션 적용
+
+트랜잭션을 적용한 계좌이체 로직을 구현해보자.
+
+<br>
+
+<p align="center">   <img src="img/tran1.png" alt="jdbc" style="width: 100%;"> </p>
+
+* 트랜잭션은 비즈니스 로직이 있는 서비스 계층에서 시작해야 함
+  * 비즈니스 로직에 문제가 생기는 경우 해당 부분 롤백
+
+
+
+* 트랜잭션 동안은 같은 커넥션 유지
+
+
+
+
+
+
+
+
 
 
 

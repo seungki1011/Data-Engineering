@@ -54,7 +54,7 @@
    * [스프링 동작 원리](spring/(002)Spring%20Core%20-%201/README.md)
    * [Spring MVC](spring/(003)Spring%20MVC%20-%201/README.md)
    * [Thymeleaf](spring/(004)Thymeleaf/README.md)
-   * [자바 데이터베이스 접근]()
+   * [Java DB Access](spring/(005)Java%20DB%20Access/README.md)
 
 ---
 

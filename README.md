@@ -34,7 +34,7 @@
 
 ## Computer Science
 
-1. [자료주와 알고리즘(Data Structure & Algorithm)]()
+1. [자료주와 알고리즘(Data Structure & Algorithm)]() (추가 예정)
 2. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)
 3. [네트워크(Network)와 HTTP](network%20and%20http/README.md)
 
@@ -61,7 +61,7 @@
 ## [Container](container/README.md)
 
 1. [도커(Docker)](container/(001)Docker/README.md)
-2. [Container Orchestration](container/(002)Container_Orchestration/README.md)
+2. [Container Orchestration](container/(002)Container_Orchestration/README.md) (추가 예정)
 
 ---
 

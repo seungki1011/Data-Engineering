@@ -4,17 +4,23 @@
 
 ## Index
 
-
-
-
-
-
-
-
-
-
-
-
+1. [JDBC(Java Database Connectivity)]()
+   * [JDBC 사용 - 1(`DriverManager`)]()
+     * 등록(`insert`)
+     * 조회(`select`)
+     * 수정, 삭제(`update`, `delete`)
+     * 테스트 코드로 동작 확인
+   * [JDBC 사용 - 2(`DBCP`)]()
+     * `DBCP(커넥션 풀)` 소개
+     * `DataSource`
+     * 커넥션 풀 사용하기(`HikariDataSource`)
+2. [트랜잭션(Transaction)]()
+   * [트랜잭션 복습]()
+   * [기존 트랜잭션 적용의 문제]()
+   * [스프링에서의 트랜잭션 처리]()
+     * `PlatformTransactionManager`
+     * `TransactionTemplate`
+     * `@Transactional`(트랜잭션 AOP)
 
 ---
 
@@ -183,7 +189,8 @@ public abstract class ConnectionConst {
 }
 ```
 
-* 뒤에서 다루겠지만, 스프링 부트를 이용하는 경우 `application.properties`에 데이터베이스의 엔드포인트를 설정하고, `DataSource`를 의존성 주입으로 받아서 사용가능
+* 뒤에서 다루겠지만, 스프링 부트를 이용하는 경우 `application.properties`에 데이터베이스의 속성 설정하고, `DataSource`를 의존성 주입으로 받아서 사용가능
+* 쉽게 말해서 `application.properties`에 속성 등록하면 `DataSource`를 자동으로 생성해준다
 
 <br>
 
@@ -625,12 +632,16 @@ public class DriverManagerDataSourceTest {
 > spring.sql.init.mode=always
 > spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 > # 3306 포트의 mysql의 test_database라는 엔드포인트 설정
+> # 스프링 부트는 아래의 속성으로 DataSource 자동 빈 등록
 > spring.datasource.url=jdbc:mysql://localhost:3306/test_database?serverTimezone=Asia/Seoul
 > spring.datasource.username=root
 > spring.datasource.password=admin
 > ```
 >
-> * 설정 파일과 스프링 부트의 기능을 활용해서 `DataSource`를 주입받아서 사용할 수도 있다
+> * 스프링 부트는 `DataSource`를 스프링 빈에 자동으로 등록한다
+> * 이때 스프링 부트는 `application.properties`에 있는 속성을 이용해서 `DataSource`를 생성한다
+>
+> <br>
 
 <br>
 
@@ -879,9 +890,9 @@ class CPMemberRepositoryTest {
 
 ---
 
-### 2.2 트랜잭션 적용
+### 2.2 기존 트랜잭션 적용의 문제
 
-트랜잭션을 적용한 계좌이체 로직을 구현해보자.
+서비스 계층의 특징을 알아보고, 기존 트랜잭션을 스프링 없이 적용하는 경우의 문제에 대해서 알아보자.
 
 <br>
 
@@ -894,25 +905,182 @@ class CPMemberRepositoryTest {
 
 * 트랜잭션 동안은 같은 커넥션 유지
 
+<br>
+
+<p align="center">   <img src="img/servicelayer.png" alt="jdbc" style="width: 100%;"> </p>
+
+<p align='center'>서비스 계층</p>
+
+* 서비스 계층
+  * 비즈니스 로직을 담당한다
+  * 가급적이면 순수한 자바 코드로 작성하는 것이 좋다
+  * 서비스 계층이 다른 계층에 종속적이면 안된다
+    * 예) 데이터 접근 계층에서 `JDBC`에서 `JPA`를 사용하도록 기술을 변경해도, 서비스 계층의 변경은 최소화 되도록 설계해야 함
+
+<br>
+
+* 스프링을 이용하기 전까지는 트랜잭션을 적용하려면, 어쩔 수 없이 서비스 계층에서 `JDBC`에 의존하게 되었음
+* 커넥션을 유지하기 위해서 커넥션을 파라미터 형태로 계속 넘겨야함
+* `JDBC`의 보일러 플레이트 코드의 양이 많음(계속 반복되는 코드가 많음)
+* 스프링을 통해서 이런 문제를 해결 가능
+
+<br>
+
+---
+
+### 2.3 스프링에서의 트랜잭션 처리
+
+스프링에서 트랜잭션을 적용하는 방법에 대해서 알아보자.
+
+#### 2.3.1 `PlatformTransactionManager`
+
+기존의 문제점의 원인 중 하나는, 구현 기술 마다 트랜잭션을 사용하는 방법이 다르기 때문이다. 서비스 계층이 특정 구현 기술에 종속적이면, 기술을 변경하는 경우 서비스 계층의 코드도 몽땅 바꿔야하는 대참사가 벌어진다.
+
+이를 해결하기 위해서, 트랜잭션 기능을 추상화하는 인터페이스가 있으면 된다. 스프링은 이런 문제를 해결하기 위해서 `PlatformTransactionManager`이라는 인터페이스를 제공한다.
+
+<br>
+
+```java
+public interface PlatformTransactionManager extends TransactionManager {
+
+	TransactionStatus getTransaction(@Nullable TransactionDefinition definition) throws TransactionException;
+
+	void commit(TransactionStatus status) throws TransactionException;
+	void rollback(TransactionStatus status) throws TransactionException;
+}
+```
+
+* `getTransaction()` : 트랜잭션 시작
+  * 진행중인 트랜잭션이 있는 경우 해당 트랜잭션에 참여할 수도 있다(트랜잭션의 전파에서 설명)
+* `commit()` : 트랜잭션을 커밋
+* `rollback()` : 트랜잭션은 롤백
+
+<br>
+
+이 트랜잭션 매니저는 크게 2 가지의 역할을 한다.
+
+1. 트랜잭션 추상화
+   * 앞에서 설명한 메서드 제공
+
+2. 리소스 동기화
+   * 트랜잭션을 유지하기 위해서는 같은 데이터베이스 커넥션을 유지해야함(동기화)
+   * `트랜잭션 매니저`는 `트랜잭션 동기화 매니저`(`TransactionSynchronizationManager`)를 사용해서 커넥션을 보관해서 사용한다
+   * `트랜잭션 동기화 매니저`는 `ThreadLocal`을 사용해서 커넥션을 동기화해준다
+
+<br>
+
+---
+
+#### 2.3.2 `TransactionTemplate`
+
+트랜잭션을 사용하는 로직이 계속 반복되는 문제가 있었다. 코드를 살펴보면 비즈니스 로직만 달라지고, 트랜잭션 관련 부분은 계속 변함이 없다.
+
+```java
+TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+try {
+	// 비즈니스 로직
+	bizLogic(fromId, toId, money); // 이 부분만 변경되고, 나머지 트랜잭션 관련 부분은 항상 반복됨
+	transactionManager.commit(status); // 성공시 커밋 
+} catch (Exception e) {
+	transactionManager.rollback(status); // 실패시 롤백
+  throw new IllegalStateException(e);
+}
+```
+
+<br>
+
+스프링은 이 문제를 해결하기 위해서 `TransactionTemplate`이라는 템플릿 클래스를 제공한다.(템플릿 콜백 패턴 찾아보기)
+
+<br>
+
+```java
+public class TransactionTemplate extends DefaultTransactionDefinition
+	implements TransactionOperations, InitializingBean {
+
+	protected final Log logger = LogFactory.getLog(getClass());
+
+	@Nullable
+	private PlatformTransactionManager transactionManager;
+
+	public TransactionTemplate() {
+	}
+
+	public TransactionTemplate(PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
+
+	public TransactionTemplate(PlatformTransactionManager transactionManager, TransactionDefinition transactionDefinition) {
+		super(transactionDefinition);
+		this.transactionManager = transactionManager;
+	}
 
 
+	/**
+	 * Set the transaction management strategy to be used.
+	 */
+	public void setTransactionManager(@Nullable PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
 
+	/**
+	 * Return the transaction management strategy to be used.
+	 */
+	@Nullable
+	public PlatformTransactionManager getTransactionManager() {
+		return this.transactionManager;
+	}
 
+	@Override
+	public void afterPropertiesSet() {
+		if (this.transactionManager == null) {
+			throw new IllegalArgumentException("Property 'transactionManager' is required");
+		}
+	}
 
+	@Override
+	@Nullable
+	public <T> T execute(TransactionCallback<T> action) throws TransactionException {
+	// ...
+	}
 
+	private void rollbackOnException(TransactionStatus status, Throwable ex) throws TransactionException {
+	// ...
+	}
 
+	@Override
+	public boolean equals(@Nullable Object other) {
+		return (this == other || (super.equals(other) && (!(other instanceof TransactionTemplate template) ||
+				getTransactionManager() == template.getTransactionManager())));
+	}
 
+}
+```
 
+* `execute()` : 응답 값이 있을 때 사용한다
+* `executeWithoutResult()` : 응답 값이 없을 때 사용한다
+* 트랜잭션 템플릿을 적용하면, 반복되는 트랜잭션의 보일러 플레이트 코드를 상당수 제거 가능
 
+<br>
 
+---
 
+#### 2.3.3 `@Transactional`(트랜잭션 AOP)
 
+지금까지 `PlatformTransactionManager`, 그리고 `TransactionTemplate`을 통해서 특정 기술에 대한 종속성을 제거하고, 반복되는 트랜잭션 코드도 제걸할 수 있다는 것을 알 수 있다. 그러나 이것이 서비스 계층에 순수하게 비즈니스 로직만 남았다는 것은 아니다. 
 
+이를 해결하기 위해서 스프링 AOP를 통해서 프록시를 도입해서 해결할 수 있다.
 
+<br>
 
+<p align="center">   <img src="img/transactional.png" alt="jdbc" style="width: 100%;"> </p>
 
+<p align='center'>Transaction AOP</p>
 
-
+* 프록시를 도입해서 위와 같이 서비스 계층에서 트랜잭션 로직을 분리하는 것이 목표
+* 스프링이 제공하는 AOP 기능을 이용하면 프록시를 편리하게 적용 가능
+  * 사실 스프링은 이미 `@Transactional`이라는 기능을 제공해준다
+  * 트랜잭션이 필요한 곳에 `@Transactional` 애노테이션만 붙여주면 스프링은 트랜잭션 프록시를 적용해줌
 
 <br>
 
@@ -921,11 +1089,10 @@ class CPMemberRepositoryTest {
 ## Further Reading
 
 * `hikariCP`
-* `DBCP` 파라미터 설정
-* `max_connections`
+  * 파라미터 설정
 
-
-
+* 데이터베이스의 `DBCP` 관련 파라미터 설정
+  * `max_connections`
 
 
 

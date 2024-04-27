@@ -1085,6 +1085,29 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 
 <br>
 
+* 테스트 코드에서도 `@Transactional`이 동작하도록 하려고 하면, `스프링 컨테이너`를 사용해서 필요한 `스프링 빈`이 전부 등록되어 있어야 한다 (`스프링 AOP`를 적용하기 위해서 `스프링 컨테이너` 필요)
+  * 이를 위해서 테스트 코드에 `@SpringBootTest`를 추가해야 한다
+  * 또한 서비스와 레포지토리를 의존성 주입을 받아서 사용해야 한다
+    * DI를 받기 위해서는 빈으로 등록이 되어있어야 하기 때문에 `@TestConfiguration`을 사용해서 빈으로 등록해준다
+    * `DataSource`, `PlatformTransactionManager`, `Repository`, `Service` 등록
+
+<br>
+
+> 선언적 트랜잭션(Declarative Transaction) vs 프로그래밍 방식 트랜잭션(Programmatic Transaction)
+>
+> * 선언적 트랜잭션(Declarative Transaction)
+>   * `@Transactional` 애노테이션 선언으로 트랜잭션을 적용하는 방식
+>   * 실무 대부분에서는 선언적 트랜잭션을 사용
+>
+> 
+>
+> * 프로그래밍 방식 트랜잭션(Programmatic Transaction)
+>   * 트랜잭션 매니저와 트랜잭션 템플릿을 사용해서 트랜잭션 관련 코드를 직접 작성하는 방식
+>   * 프로그래밍 방식은 스프링 컨테이너나 AOP 없이 트랜잭션을 적용할 수 있음
+>   * 테스트 시 가끔 사용
+
+<br>
+
 ---
 
 ## Further Reading

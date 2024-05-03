@@ -37,7 +37,7 @@
   - [spring/README.md](spring/README.md)
 
   - <details>
-      <summary><h4>1. Spring Introduction</h4></summary>
+      <summary>1. Spring Introduction</summary>
     
       1. [Introduction](spring/(001)Spring%20Introduction#1-introduction)
          * ```Spring```, ```SpringBoot``` 소개
@@ -75,9 +75,8 @@
       9. [전체 요약](spring/(001)Spring%20Introduction#%EC%A0%84%EC%B2%B4-%EC%9A%94%EC%95%BD)
     
     </details>
-
   - <details>
-      <summary><h4>2. Spring Core</h4></summary>
+      <summary>2. Spring Core</summary>
       
       1. [Object Oriented Design(객체 지향 설계)](spring/(002)Spring%20Core%20-%201#1-object-oriented-design%EA%B0%9D%EC%B2%B4-%EC%A7%80%ED%96%A5-%EC%84%A4%EA%B3%84)
          * SOLID 원칙
@@ -150,9 +149,8 @@
       10. [전체 요약](spring/(002)Spring%20Core%20-%201#%EC%A0%84%EC%B2%B4-%EC%9A%94%EC%95%BD)
   
     </details>
-
   - <details>
-      <summary><h4>3. Spring MVC</h4></summary>
+      <summary>3. Spring MVC</summary>
 
       1. [Web Application](spring/(003)Spring%20MVC%20-%201#1-web-application)
          * Web Server, Was
@@ -254,9 +252,8 @@
       13. [파일 업로드](spring/(003)Spring%20MVC%20-%201#13-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C)
 
     </details>
-
   - <details>
-      <summary><h4>4. Thymeleaf</h4></summary>
+      <summary>4. Thymeleaf</summary>
       
       1. [타임리프(Thymeleaf) 소개](spring/(004)Thymeleaf#1-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84thymeleaf-%EC%86%8C%EA%B0%9C)
       2. [타임리프의 기본 기능](spring/(004)Thymeleaf#2-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B8%B0%EB%8A%A5)

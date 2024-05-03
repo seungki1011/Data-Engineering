@@ -86,7 +86,7 @@
 
 MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프트웨어 디자인 패턴이다. 웹 개발의 많은 경우 이 MVC 패턴을 이용해서 개발된다. (스프링 뿐만 아니라 다른 프레임워크들도 MVC라는 명칭이 아니라도 비슷한 컨셉의 패턴을 이용해서 개발하는 것으로 알고 있다.)
 
-<p align="center">   <img src="img/mvc1.png" alt="MVC Pattern" style="width: 65%;"> </p>
+<p align="center">   <img src="img/mvc1.png" alt="MVC Pattern" style="width: 80%;"> </p>
 
 <p align='center'>https://www.geeksforgeeks.org/mvc-framework-introduction/</p>
 
@@ -132,7 +132,7 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 
 [https://start.spring.io/](https://start.spring.io/)에서 프로젝트 생성하기
 
-<p align="center">   <img src="img/springbootstart.png" alt="Start Spring Boot" style="width: 55%;"> </p>
+<p align="center">   <img src="img/springbootstart.png" alt="Start Spring Boot" style="width: 70%;"> </p>
 
 * Dependencies : ```Spring Web```, ```Thymeleaf```
 * Generate로 프로젝트 생성하고, ```build.gradle``` 파일을 통해서 프로젝트를 오픈
@@ -145,13 +145,13 @@ MVC 패턴은 Model-View-Controller의 3가지 컴포넌트로 구성된 소프�
 
 ```SpringdemoApplication```을 실행해보고 정상 동작하는지 확인해보자.
 
-<p align="center">   <img src="img/springboot2.png" alt="springboot" style="width: 35%;"> </p>
+<p align="center">   <img src="img/springboot2.png" alt="springboot" style="width: 45%;"> </p>
 
 * ```SpringdemoApplication```을 실행 후 ```localhost:8080```에서 Whitelabel Error Page를 확인할 수 있으면 스프링이 정상적으로 동작한다는 것을 알 수 있다
 * ```build.gradle```에서 ```plugins```, ```dependencies```, ```repositories``` 등을 관리할 수 있다
 * ```External Libraries```에서 땡겨온 라이브러리를 확인할 수 있다
 
-<p align="center">   <img src="img/springboot3.png" alt="springboot" style="width: 65%;"> </p>
+<p align="center">   <img src="img/springboot3.png" alt="springboot" style="width: 70%;"> </p>
 
 * ```Dependencies```에서 의존 관계를 계층적으로 확인 가능하다
 
@@ -191,7 +191,7 @@ This is a Static index.html
 
 * 위의 ```index.html```의 경우 그냥 정적 페이지이기 때문에 그냥 단순히 웹서버가 브라우저에 응답으로 넘겨주는 것
 
-<p align="center">   <img src="img/welcomepage1.png" alt="springboot" style="width: 65%;"> </p>
+<p align="center">   <img src="img/welcomepage1.png" alt="springboot" style="width: 70%;"> </p>
 
 * [```thymeleaf```](https://www.thymeleaf.org/)같은 템플릿 엔진을 사용해서 동적인 요소가 들어간 페이지를 만들 수 있다
 
@@ -230,7 +230,7 @@ public class HelloController {
 </html>
 ```
 
-<p align="center">   <img src="img/viewResolver2.png" alt="springboot" style="width: 90%;"> </p>
+<p align="center">   <img src="img/viewResolver2.png" alt="springboot" style="width: 100%;"> </p>
 
 <p align='center'>스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</p>
 
@@ -250,9 +250,9 @@ public class HelloController {
 4. ```jar``` 파일 실행 : ```java -jar springdemo-0.0.1-SNAPSHOT.jar```
 5. ```localhost:8080```에서 정상 동작하는지 확인
 
-<p align="center">   <img src="img/build1.png" alt="springboot" style="width: 65%;"> </p>
+<p align="center">   <img src="img/build1.png" alt="springboot" style="width: 70%;"> </p>
 
-<p align="center">   <img src="img/build2.png" alt="springboot" style="width: 65%;"> </p>
+<p align="center">   <img src="img/build2.png" alt="springboot" style="width: 70%;"> </p>
 
 <br>
 
@@ -313,7 +313,9 @@ public class MVCController {
 
 애플리케이션을 실행시키고 ```/hello-mvc```에 들어가면 Error Page가 뜨는 것을 확인할 수 있다. 그 이유는 URL에서 ```name```으로 넘길 값을 명시하지 않았기 때문이다. URL 뒤에 ```?name=name_value``` 같은 형식으로 파라미터를 넘길 수 있다.
 
- <p align="center">   <img src="img/mvccontroller2.png" alt="springboot" style="width: 65%;"> </p>
+<br>
+
+ <p align="center">   <img src="img/mvccontroller2.png" alt="springboot" style="width: 70%;"> </p>
 
 * 참고로 ```?```뒤에 오는 것을 [Query String](https://en.wikipedia.org/wiki/Query_string)이라고 한다.
 
@@ -324,6 +326,8 @@ public class MVCController {
 ### 3.3. API
 
 **API**의 경우 HTML 뷰를 랜더링하기 보다는 구조화 된 데이터를 ```json``` 형식으로 반환을 한다. (```xml```형식도 가능하지만 최근에는 거의 쓰이지 않음)
+
+<br>
 
 ```controller.ApiController```
 
@@ -351,6 +355,8 @@ public class ApiController {
     }
 }
 ```
+
+<br>
 
 <p align="center">   <img src="img/api1.png" alt="springboot" style="width: 100%;"> </p>
 
@@ -859,6 +865,8 @@ public class MemoryMemberRepository implements MemberRepository{}
 
 * ```@Autowired```를 통해서 ```memberController```가 ```memberService```를 사용 가능
   * ```memberService``` 또한 ```memberRepository```를 사용할 수 있게 해줌
+
+<br>
 
 > * 컴포넌트 스캔은 ```@Component```애노테이션을 포함하는 ```@Service```, ```@Controller```, ```@Repository``` 같은 스프링 빈을 찾아서 자동으로 등록 해준다. 
 > * 스프링 컨테이너에 스프링 빈이 등록될 때 기본적으로 [싱글톤(Singleton)](https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html)으로 등록된다.(유일하게 하나만 등록해서 공유) 따라서 같은 스프링 빈이면 같은 인스턴스이다.

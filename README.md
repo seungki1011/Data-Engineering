@@ -35,7 +35,8 @@
 
 <details>
   <summary>펼치기</summary>
-### [1) Spring 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(001)Spring%20Introduction)
+
+#### [1) Spring 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(001)Spring%20Introduction)
 
 1. [Introduction]((001)Spring%20Introduction#1-introduction)
    * ```Spring```, ```SpringBoot``` 소개
@@ -72,7 +73,7 @@
    * AOP 소개
 9. [전체 요약]((001)Spring%20Introduction#%EC%A0%84%EC%B2%B4-%EC%9A%94%EC%95%BD)
 
-### [2) Spring Core](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(002)Spring%20Core%20-%201)
+#### [2) Spring Core](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(002)Spring%20Core%20-%201)
 
 1. [Object Oriented Design(객체 지향 설계)]((002)Spring%20Core%20-%201#1-object-oriented-design%EA%B0%9D%EC%B2%B4-%EC%A7%80%ED%96%A5-%EC%84%A4%EA%B3%84)
    * SOLID 원칙
@@ -144,7 +145,7 @@
      * Request Scope
 10. [전체 요약]((002)Spring%20Core%20-%201#%EC%A0%84%EC%B2%B4-%EC%9A%94%EC%95%BD)
 
-### [3) Spring MVC](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201)
+#### [3) Spring MVC](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(003)Spring%20MVC%20-%201)
 
 1. [Web Application]((003)Spring%20MVC%20-%201#1-web-application)
    * Web Server, Was
@@ -245,7 +246,7 @@
     * 스프링 제공 `Formatter`
 13. [파일 업로드]((003)Spring%20MVC%20-%201#13-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C)
 
-### [4) Thymeleaf](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)Thymeleaf)
+#### [4) Thymeleaf](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(004)Thymeleaf)
 
 1. [타임리프(Thymeleaf) 소개]((004)Thymeleaf#1-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84thymeleaf-%EC%86%8C%EA%B0%9C)
 2. [타임리프의 기본 기능]((004)Thymeleaf#2-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B8%B0%EB%8A%A5)

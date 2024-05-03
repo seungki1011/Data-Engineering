@@ -1,7 +1,10 @@
 > 데이터베이스에 대한 이론, SQL 기초 및 실습
 >
-> "[한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/)"와 "[인프런 - 쉬운코드 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)" 를 많이 참고 했습니다.
+> 참고 자료 및 강의
 >
+> * [한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/) 
+> * [인프런 - 쉬운코드 데이터베이스](https://www.inflearn.com/course/%EB%B0%B1%EC%97%94%EB%93%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B0%9C%EB%A1%A0/dashboard)
+> * [인프런 - 김영한 : 스프링 완전 정복](https://www.inflearn.com/roadmaps/373)
 
 ---
 
@@ -46,7 +49,7 @@
 
 ---
 
-### [2) SQL 기초 및 활용]((002)%20Using%20SQL)
+### [2) SQL 기초 및 활용(MySQL)]((002)%20Using%20SQL)
 
 1. [```MySQL``` 설치]((002)%20Using%20SQL#1-mysql-%EC%84%A4%EC%B9%98)
    * [```MySQL``` 설치와 연결]((002)%20Using%20SQL#11-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%97%B0%EA%B2%B0)
@@ -116,7 +119,41 @@
    * 레플리케이션 (Replication)
 7. DBCP (Database Connection Pool) (추가 예정)
 
+---
 
+### [4) Java Database Access](https://github.com/seungki1011/Data-Engineering/tree/main/database/(004)Java_DB%20_Access)
+
+1. [JDBC(Java Database Connectivity)]((004)Java_DB%20_Access#1-jdbcjava-database-connectivity)
+   * [JDBC 소개]((004)Java_DB%20_Access#11-jdbc-%EC%86%8C%EA%B0%9C)
+   * [JDBC 사용 - 1(`DriverManager`)]((004)Java_DB%20_Access#12-jdbc-%EC%82%AC%EC%9A%A9---1drivermanager)
+     * 등록(`insert`)
+     * 조회(`select`)
+     * 수정, 삭제(`update`, `delete`)
+     * 테스트 코드로 동작 확인
+   * [JDBC 사용 - 2(`DBCP`)]((004)Java_DB%20_Access#13-jdbc-%EC%82%AC%EC%9A%A9---2dbcp)
+     * `DBCP(커넥션 풀)` 소개
+     * `DataSource`
+     * 커넥션 풀 사용하기(`HikariDataSource`)
+   * [JDBC 사용 -3(스프링 사용 x)]((004)Java_DB%20_Access#14-jdbc-%EC%82%AC%EC%9A%A9---3%EC%8A%A4%ED%94%84%EB%A7%81-%EC%82%AC%EC%9A%A9-x)
+     * [프로젝트, DB 설정]((004)Java_DB%20_Access#141-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-db-%EC%85%8B%ED%8C%85)
+     * [`dbutil` 구현]((004)Java_DB%20_Access#142-dbutil-%EA%B5%AC%ED%98%84)
+     * [커넥션 생성, `DatabaseMetaData` 확인]((004)Java_DB%20_Access#143-%EC%BB%A4%EB%84%A5%EC%85%98-%EC%83%9D%EC%84%B1-databasemetadata-%ED%99%95%EC%9D%B8)
+     * [`Statement` 사용]((004)Java_DB%20_Access#144-statement-%EC%82%AC%EC%9A%A9)
+       * `executeQuery()`
+       * `executeUpdate()`
+       * `executeBatch()`
+     * [`PreparedStatement` 사용]((004)Java_DB%20_Access#145-preparedstatement-%EC%82%AC%EC%9A%A9)
+     * `CallableStatement` 사용
+   * [`POJO` 클래스로 매핑]((004)Java_DB%20_Access#15-pojo-%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%82%AC%EC%9A%A9)
+     * [`POJO` 란]((004)Java_DB%20_Access#151-pojo%EB%9E%80)
+     * [`POJO` 클래스에 매핑 후 사용]((004)Java_DB%20_Access#152-pojo-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90-%EB%A7%A4%ED%95%91-%ED%9B%84-%EC%82%AC%EC%9A%A9)
+2. [트랜잭션(Transaction)]((004)Java_DB%20_Access#2-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98transaction)
+   * [트랜잭션 복습]((004)Java_DB%20_Access#21-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EB%B3%B5%EC%8A%B5)
+   * [기존 트랜잭션 적용의 문제]((004)Java_DB%20_Access#22-%EA%B8%B0%EC%A1%B4-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%A0%81%EC%9A%A9%EC%9D%98-%EB%AC%B8%EC%A0%9C)
+   * [스프링에서의 트랜잭션 처리]((004)Java_DB%20_Access#23-%EC%8A%A4%ED%94%84%EB%A7%81%EC%97%90%EC%84%9C%EC%9D%98-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%B2%98%EB%A6%AC)
+     * `PlatformTransactionManager`
+     * `TransactionTemplate`
+     * `@Transactional`(트랜잭션 AOP)
 
 ---
 
@@ -124,6 +161,7 @@
 
 * MySQL 8.0 (InnoDB 사용)
 * GUI 툴(MySQL Workbench, DBeaver)은 선택
+* Docker
 
 ---
 

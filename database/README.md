@@ -1,5 +1,7 @@
 > 데이터베이스에 대한 이론, SQL 기초 및 실습
 >
+> NoSQL 데이터베이스 소개, 사용법
+>
 > 참고 자료 및 강의
 >
 > * [한국 데이터 산업 진흥원 - SQL 전문가 가이드](https://dataonair.or.kr/db-tech-reference/d-guide/sql/) 

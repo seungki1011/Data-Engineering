@@ -12,24 +12,6 @@
 
 
 
-
-
----
-
-## Data Engineering
-
-1. [데이터베이스(Database)](database/README.md)
-2. [AWS](aws/README.md)
-3. Hadoop
-   * HDFS
-   * MapReduce
-   * Hbase
-   * Hive
-4. Airflow
-5. Kafka
-6. Spark
-8. Data Governance
-
 ---
 
 ## Computer Science
@@ -50,11 +32,47 @@
 ## Backend
 
 1. [스프링 프레임워크(Spring)](spring/README.md)
-   * [스프링 소개](spring/(001)Spring%20Introduction/README.md)
-   * [스프링 동작 원리](spring/(002)Spring%20Core%20-%201/README.md)
-   * [Spring MVC](spring/(003)Spring%20MVC%20-%201/README.md)
-   * [Thymeleaf](spring/(004)Thymeleaf/README.md)
-   * [Java DB Access](spring/(005)Java%20DB%20Access/README.md)
+
+<details>
+  <summary>펼치기</summary>
+
+  * [스프링 소개](spring/(001)Spring%20Introduction/README.md)
+  * [스프링 동작 원리](spring/(002)Spring%20Core%20-%201/README.md)
+  * [Spring MVC](spring/(003)Spring%20MVC%20-%201/README.md)
+  * [Thymeleaf](spring/(004)Thymeleaf/README.md)
+
+</details>
+
+---
+
+## [Database](database/README.md)
+
+
+
+
+
+---
+
+## Linux
+
+
+
+
+
+---
+
+## Data Engineering
+
+1. [AWS](aws/README.md)
+2. Hadoop
+   * HDFS
+   * MapReduce
+   * Hbase
+   * Hive
+3. Airflow
+4. Kafka
+5. Spark
+6. Data Governance
 
 ---
 

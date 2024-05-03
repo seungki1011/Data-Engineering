@@ -31,10 +31,8 @@
 
 # Backend
 
-### [스프링 프레임워크(Spring)](spring/README.md)
-
 <details>
-  <summary>펼치기</summary>
+  <summary><h1>1. 스프링 프레임워크(Spring Framework)</h1></summary>
 
 #### [1) Spring 소개](https://github.com/seungki1011/Data-Engineering/tree/main/spring/(001)Spring%20Introduction)
 

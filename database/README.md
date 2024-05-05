@@ -159,10 +159,17 @@
 
 ---
 
+### [5) MongoDB(NoSQL)]()
+
+
+
+---
+
 ## Requirements
 
 * MySQL 8.0 (InnoDB 사용)
-* GUI 툴(MySQL Workbench, DBeaver)은 선택
+  * GUI 툴(MySQL Workbench, DBeaver)
+
 * Docker
 
 ---
@@ -170,11 +177,13 @@
 ## Further Reading
 
 * Cache DB
+  * Redis
+
 * Oracle SQL
-* NoSQL 
+* NoSQL
+  * MongoDB
+
 * OLTP vs OLAP
-
-
 
 ---
 

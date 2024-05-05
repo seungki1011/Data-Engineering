@@ -14,7 +14,7 @@
 
 ---
 
-# :computer:Computer Science
+# :computer: Computer Science
 
 <details>
   <summary><h3>1. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)(추가 예정)</h3></summary>
@@ -98,7 +98,7 @@
 
 ---
 
-# Programming Language
+# :computer: ​Programming Language
 
 <details>
   <summary><h3>1. Java</h3></summary>
@@ -544,7 +544,7 @@
 
 ---
 
-# Backend
+# 🌐 Backend
 
 <details>
   <summary><h3>1. 스프링 프레임워크(Spring Framework)</h3></summary>
@@ -808,7 +808,7 @@
 
 ---
 
-# <img src="img/emoji/database.png" alt="Custom Emoji" style="width: 35px; height: 35px; vertical-align: middle; margin-bottom: -20px;">Database
+# 💾 Database
 
 ### [database/README.md](database/README.md)
 
@@ -962,7 +962,7 @@
 
 ---
 
-# Linux
+# ⚙️ Linux
 
 
 
@@ -970,7 +970,7 @@
 
 ---
 
-# Data Engineering
+# 🛠️ Data Engineering
 
 1. [AWS](aws/README.md)
 2. Hadoop
@@ -985,7 +985,7 @@
 
 ---
 
-# 📦Container
+# 📦 Container
 
 ### [container/README.md](container/README.md)
 
@@ -1024,7 +1024,7 @@
 
 ---
 
-# CI/CD
+# :arrows_counterclockwise: ​CI/CD
 
 1. CI/CD 소개
 2. 깃헙 액션(Github Action)
@@ -1032,7 +1032,7 @@
 
 ---
 
-# :books:Further Reading
+# :books: Further Reading
 
 * 빅데이터를 지탱하는 기술
 * 객체지향의 사실과 오해

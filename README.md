@@ -808,7 +808,7 @@
 
 ---
 
-# <img src="img/emoji/database.png" alt="Custom Emoji" style="width: 35px; height: 35px; vertical-align: middle; margin-bottom: -3px;">Database
+# <img src="img/emoji/database.png" alt="Custom Emoji" style="width: 35px; height: 35px; vertical-align: middle; margin-bottom: -8px;">Database
 
 ### [database/README.md](database/README.md)
 

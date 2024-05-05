@@ -300,11 +300,12 @@ ENV MYSQL_PASSWORD=my_password
 
 <br>
 
-빌드 후 `docker image` 명령어로 내가 가지고 있는 이미지들을 확인할 수 있다.
+빌드 후 `docker images` 명령어로 내가 가지고 있는 이미지들을 확인할 수 있다.
 
 <p align="center">   <img src="img/dockerimg2.png" alt="http" style="width: 100%;"> </p>
 
 * 이미지 생성 날짜는 내가 로컬에서 `Dockerfile`을 통해서 생성한 날짜가 아니라, 보통 베이스 이미지가 생성되거나 수정된 날짜 기준으로 표시된다
+* `docker rmi {image name:tag}`를 통해서 이미지를 삭제할 수 있다
 
 <br>
 

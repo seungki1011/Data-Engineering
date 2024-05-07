@@ -205,6 +205,7 @@ BSON은 쉽게 생각해서 JSON 도큐먼트를 바이너리(Binary)로 인코�
 
 
 * 데이터 중복 허용을 통한 `JOIN` 필요성을 제거하는 대신, 애플리케이션 레벨에서 데이터들이 모두 최신 상태를 유지할 수 있도록 관리해야한다
+* 도큐먼트에서 필드 안의 필드 같은 중첩(nested)된 형태로 데이터를 저장하는 것이 가능하다. 그러나 이 경우 데이터 저장, 검색, 집계 과정에서 속도가 느려질 가능성이 있다. 물론 데이터가 적을때는 큰 차이가 없지만, 데이터가 많아지면 성능이 떨어질 수 있기 때문에 유의해서 저장하자
 
 <br>
 
@@ -316,11 +317,19 @@ networks:
 
 `MongoDB` CRUD 공식 문서 : [https://www.mongodb.com/docs/manual/crud/](https://www.mongodb.com/docs/manual/crud/)
 
-몽고DB를 사용하기 위한 MQL의 문법에 대해서 알아보자.
+몽고DB를 사용해보자.
 
 <br>
 
-#### 3.1.1 새로운 데이터베이스 생성
+> `db.help()`
+>
+> * `db` 객체에 대한 일반적인 메서드 리스트와 설명 출력
+
+<br>
+
+---
+
+### 3.2 데이터베이스 생성
 
 `use <DB명>`
 
@@ -331,7 +340,7 @@ networks:
 
 ---
 
-#### 3.1.2 새로운 `Collection` 생성
+### 3.3 `Collection` 생성, 삭제
 
 `db.myCollection.insertOne({도큐먼트 안에 들어갈 데이터})`
 
@@ -348,9 +357,15 @@ networks:
 
 <br>
 
+`db.myCollection.drop()`
+
+* `myCollection`이라는 이름의 컬렉션을 삭제한다
+
+<br>
+
 ---
 
-#### 3.1.3 데이터베이스, 컬렉션 보기
+### 3.4 데이터베이스, 컬렉션 목록
 
 `show dbs;`
 
@@ -366,7 +381,7 @@ networks:
 
 ---
 
-#### 3.1.4 Document 조회
+### 3.5 Document 생성
 
 
 

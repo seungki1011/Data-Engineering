@@ -1,0 +1,47 @@
+[
+    {
+        "name" : "엘링 홀란드",
+        "gender" : "male",
+        "age" : 23,
+        "hobbies" : ["축구"],
+        "phone" : "010-1234-xxxx"
+    }, 
+    {
+        "name" : "퓨리 타이슨",
+        "gender" : "male",
+        "age" : 57,
+        "hobbies" : ["복싱"],
+        "phone" : "010-3456-xxxx"
+    },
+    {
+        "name" : "존 존스",
+        "gender" : "male",
+        "age" : 36,
+        "hobbies" : ["종합격투기"],
+        "phone" : "010-5678-xxxx"
+    },
+    {
+        "name" : "김연아",
+        "gender" : "female",
+        "age" : 33,
+        "hobbies" : ["피겨 스케이팅"],
+        "phone" : "010-7891-xxxx",
+        "address" : {
+            "country" : "South Korea",
+            "city" : "Seoul",
+            "district" : "Heukseok-dong"
+        }
+    },
+    {
+        "name" : "오타니 쇼헤이",
+        "gender" : "male",
+        "age" : 29,
+        "hobbies" : ["야구"],
+        "phone" : "010-7654-xxxx",
+        "address" : {
+            "country" : "United States of America",
+            "state" : "Hawaii",
+            "district" : "Kaunaoa Dr, Waimea"
+        }
+    }
+]

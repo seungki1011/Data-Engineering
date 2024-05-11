@@ -926,7 +926,7 @@ CREATE SCHEMA jdbc_test;
 USE jdbc_test;
 
 CREATE TABLE product (
-	id int unsigned NOT NULL AUTO_INCREMENT,
+	  id int unsigned NOT NULL AUTO_INCREMENT,
     name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
     updated_at datetime NOT NULL,
     description varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -939,7 +939,7 @@ VALUES
 	('shoe1', '2024-01-01 01:00:00', 'A footwear product', '20000'),
 	('shoe2', '2024-01-01 02:30:00', 'A footwear product', '50000'),
 	('shoe3', '2024-01-01 03:00:00', 'A footwear product', '35000'),
-  ('shoe4', '2024-01-01 06:00:00', 'A footwear product', '185000'),
+	('shoe4', '2024-01-01 06:00:00', 'A footwear product', '185000'),
 	('cap1', '2024-01-01 05:25:00', 'A product to wear on the head', '50000'),
 	('cap2', '2024-01-05 02:30:00', 'A product to wear on the head', '60000'),
 	('tshirt1', '2024-01-05 03:30:00', 'A short sleave shirt', '30000'),

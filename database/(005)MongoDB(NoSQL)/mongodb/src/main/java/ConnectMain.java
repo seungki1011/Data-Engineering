@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
 @Slf4j
-public class MongoDBMain {
+public class ConnectMain {
     public static void main(String[] args) {
 
         String HOST = MongoDBPropertiesLoader.getHost();

@@ -6,19 +6,66 @@
 
 ## Index
 
-
-
-
-
-
-
-
+1. [NoSQL(Not Only SQL)]()
+   * 관계형 데이터베이스의 한계
+   * NoSQL 등장 배경
+   * NoSQL 분류 및 특징
+2. [MongoDB 소개]()
+   * MongoDB의 특징
+   * MongoDB 설치
+3. [MondgoDB 사용하기 (CRUD)]()
+   * MongoDB Query Language(MQL)
+   * 데이터베이스 생성
+   * Collection 생성, 삭제
+   * [Document 생성]()
+     * `insertOne()`
+     * `insertMany()`
+     * Embedded(Nested) Document
+     * `ordered` 옵션
+     * `writeConcern` 옵션
+   * [Document 수정]()
+     * `updateOne()`
+     * `updateMany()`
+   * [Document 삭제]()
+     * `deleteOne()`
+     * `deleteMany()`
+   * [Document 조회]()
+     * `mongoimport`
+     * `find()`
+     * 모든 도큐먼트 조회
+     * 동등 조건으로 도큐먼트 조회
+     * 쿼리 오퍼레이터를 이용한 조건으로 도큐먼트 조회, Projection
+     * `AND`, `OR`
+     * Nested 도큐먼트의 필드를 이용해서 조회
+     * [:star: `find()`와 cursor]()
+     * `sort()`
+4. [MongoDB 스키마 설계]()
+   * 스키마 설계
+   * Nested Document vs Reference
+   * [:star: 스키마 검증(Validation))]()
+     * 스키마 검증 적용
+     * `validationAction`
+     * `validationLevel`
+     * 스키마 검증 규칙 변경
+5. [MongoDB 인덱스(Index)]()
+   * 인덱스 소개
+   * [인덱스 생성]()
+   * 쿼리 소요 시간 확인
+6. [Aggregation Pipeline]()
+   * Aggregation Pipeline 소개
+   * [사용 예시]()
+7. [Java MongoDB Driver]()
+   * [MongoDB 드라이버로 연결]()
+   * MongoDB에서의 POJO 클래스
+   * [POJO 클래스 사용하기]()
+     * POJO 클래스 만들기
+     * 도큐먼트 생성
+     * 도큐먼트 조회
+8. [Further Reading]()
 
 ---
 
 ## 1) NoSQL(Not Only SQL)
-
-### 1.1 NoSQL 소개
 
 NoSQL을 설명하기 전에 NoSQL이 등장하게 된 배경부터 살펴보자.
 
@@ -26,7 +73,7 @@ NoSQL을 설명하기 전에 NoSQL이 등장하게 된 배경부터 살펴보자
 
 <br>
 
-#### 1.1.1 관계형 데이터베이스의 단점
+### 1.1 관계형 데이터베이스의 한계
 
 <p align="center">   <img src="img/rdb1.png" alt="nosql" style="width: 100%;"> </p>
 
@@ -77,7 +124,7 @@ NoSQL을 설명하기 전에 NoSQL이 등장하게 된 배경부터 살펴보자
 
 ---
 
- #### 1.1.2 NoSQL 등장 배경
+### 1.2 NoSQL 등장 배경
 
 소셜 미디어 플랫폼들이 등장하면서 데이터베이스들은 높은 처리량(high-throughput)과 낮은 지연시간(low-latency), 등이 요구되었다. 
 
@@ -89,7 +136,7 @@ NoSQL을 설명하기 전에 NoSQL이 등장하게 된 배경부터 살펴보자
 
 ---
 
-#### 1.1.3 NoSQL 분류 및 특징
+### 1.3 NoSQL 분류 및 특징
 
 NoSQL 데이터베이스의 종류는 굉장히 많고, 특징에 따라 다음과 같이 분류할 수 있다.
 
@@ -318,7 +365,7 @@ networks:
 
 ---
 
-## 3) MongoDB 사용하기 - 1(CRUD)
+## 3) MongoDB 사용하기(CRUD)
 
 몽고DB를 사용하는 방법에 대해서 알아보자.
 
@@ -1313,6 +1360,10 @@ NoSQL이 가지는 유연한 스키마의 강점은 중간의 스키마 처럼 �
 
 <br>
 
+데이터 모델링 공식 문서 : [https://www.mongodb.com/docs/manual/data-modeling/](https://www.mongodb.com/docs/manual/data-modeling/)
+
+<br>
+
 ---
 
 #### 4.3.1 스키마 검증 적용
@@ -1833,6 +1884,8 @@ db.books.aggregate([
 
 자바의 몽고DB 드라이버를 통해 몽고DB 데이터베이스에 연결하고 사용해보자.
 
+몽고DB와 통신하면서 쿼리하는 문법은 언어별로 서로 다르다. 그러나 이전 몽고쉘에서 다룬 컨셉들과 동작원리는 동일하다.
+
 공식 문서 참고 : [https://www.mongodb.com/docs/drivers/java/sync/current/quick-start/](https://www.mongodb.com/docs/drivers/java/sync/current/quick-start/)
 
 <br>
@@ -1876,11 +1929,61 @@ mongodb.database=shop
 
 <br>
 
-`MongoDBMain`
+`dbutil/MongoDBPropertiesLoader`
 
 ```java
 @Slf4j
-public class MongoDBMain {
+public class MongoDBPropertiesLoader {
+    private static final String PROPERTIES_FILE = "database.properties";
+    private static Properties properties;
+
+    static {
+        properties = new Properties();
+        try (InputStream input = MongoDBPropertiesLoader.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
+            if (input == null) {
+                System.out.println("file not found");
+            }
+
+            properties.load(input);
+        } catch (IOException e) {
+            log.error("MongoDBPropertiesLoader error", e);
+        }
+    }
+
+    public static String getHost() {
+        return properties.getProperty("mongodb.host");
+    }
+
+    public static  String getPort() {
+        return properties.getProperty("mongodb.port");
+    }
+
+    public static String getDatabase() {
+        return properties.getProperty("mongodb.database");
+    }
+
+    public static String getUsername() {
+        return properties.getProperty("mongodb.username");
+    }
+
+    public static String getPassword() {
+        return properties.getProperty("mongodb.password");
+    }
+
+}
+```
+
+<br>
+
+이제 실제로 몽고DB에 연결하고 간단한 쿼리를 통해 조회해보자.
+
+<br>
+
+`ConnectMain`
+
+```java
+@Slf4j
+public class ConnectMain {
     public static void main(String[] args) {
 
         String HOST = MongoDBPropertiesLoader.getHost();
@@ -1910,7 +2013,7 @@ public class MongoDBMain {
             }
             
         } catch (Exception e) {
-            log.error("Exception", e);
+            // log.error("Exception", e);
         }
     }
 }
@@ -1936,27 +2039,245 @@ public class MongoDBMain {
 
 ---
 
-### 7.2 POJO 클래스 사용하기
+### 7.2 MongoDB에서 POJO 클래스 
 
+POJO 클래스를 사용하면, 프로그래밍적 스키마를 도큐먼트에 그대로 사용할 수 있다. 쉽게 이야기 해서 POJO 클래스를 컬렉션의 도큐먼트에 바로 매핑해서 사용할 수 있다.
 
+공식 문서 : [https://www.mongodb.com/docs/drivers/java/sync/current/fundamentals/data-formats/document-data-format-pojo/](https://www.mongodb.com/docs/drivers/java/sync/current/fundamentals/data-formats/document-data-format-pojo/)
 
+<br>
 
+POJO를 사용하기 위해서는 이를 해석할 수 있는 코덱을 설정해줘야한다.
 
+`예시`
 
+```java
+CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(),fromProviders(pojoCodecProvider));
 
+MongoClient mongoClient = MongoClients.create(uri);
+MongoDatabase database = mongoClient.getDatabase("sample_pojos").withCodecRegistry(pojoCodecRegistry);
+```
 
+* `sample_pojos`라는 데이터베이스에 `pojoCodecRegistry`를 설정
 
+<br>
 
+이후에는 사용할 POJO 클래스를 `MongoCollection` 객체의 타입으로 지정하고, `getCollection()`의 도큐먼트 클래스 인자로 전달해서 사용한다.
 
+`예시`
 
+```java
+MongoCollection<MyPOJO> collection = database.getCollection("mypojos", MyPOJO.class);
+```
 
+<br>
 
+---
 
+### 7.3 POJO 클래스 사용하기
 
+#### 7.3.1 POJO 클래스 만들기
 
+그러면 이제 POJO 클래스를 만들어보고, POJO 클래스를 사용해서 다양한 CRUD 작업을 해보자.
 
+<br>
 
+`domain/Movies`
 
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Movies {
+    @BsonId
+    ObjectId _id;
+    String title;
+    String genre;
+    Integer price;
+    // @BsonProperty("contents") : 데이터베이스상의 이름과 달라도 매핑 가능
+    String description;
+    LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return "Movies{" +
+                "_id=" + _id +
+                ", title='" + title + '\'' +
+                ", genre='" + genre + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+}
+```
+
+* `_id`를 위한 필드는 `@BsonId` 사용
+
+<br>
+
+몽고DB에 연결하기 위한 코드를 추출해서 유틸로 구현하자.
+
+`dbutil/MongoConnectionUtil`
+
+```java
+@Slf4j
+public class MongoConnectionUtil {
+    private static final String HOST = MongoDBPropertiesLoader.getHost();
+    private static final String PORT = MongoDBPropertiesLoader.getPort();
+    private static final String USERNAME = MongoDBPropertiesLoader.getUsername();
+    private static final String PASSWORD = MongoDBPropertiesLoader.getPassword();
+
+    public static MongoClient getConnection() {
+        String URI = "mongodb://"+USERNAME+":"+PASSWORD+"@" +HOST+":"+PORT;
+
+        try {
+            return MongoClients.create(URI);
+        } catch (Exception e) {
+            log.error("Failed to connect to MongoDB", e);
+            throw new RuntimeException("Failed to connect to MongoDB", e);
+        }
+    }
+}
+```
+
+<br>
+
+---
+
+#### 7.3.2 도큐먼트 생성
+
+POJO 클래스 `Movies`를 이용해서 `movies`라는 컬렉션에 도큐먼트들을 생성해보자.
+
+`CreateDocuments`
+
+```java
+public class CreateDocuments {
+    public static void main(String[] args) {
+
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(),fromProviders(pojoCodecProvider));
+
+        try(MongoClient mongoClient = MongoConnectionUtil.getConnection()) {
+            MongoDatabase database = mongoClient.getDatabase("shop").withCodecRegistry(pojoCodecRegistry);
+
+            MongoCollection<Movies> moviesCollection = database.getCollection("movies", Movies.class);
+            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            List<Movies> movies = new ArrayList<>();
+            movies.add(new Movies(null, "The Nexus Protocol", "Sci-Fi", 12000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "Quantum Dawn", "Sci-Fi", 9000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "Shadow Protocol", "Sci-Fi", 12000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "Midnight Echo", "Mystery", 10000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "Code Breaker", "Thriller", 15000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "Celestial Odyssey", "Adventure", 28000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "Echoes of Tomorrow", "Drama", 9000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "The Last Stand", "Action", 9000,
+                    "Summary comes here!", LocalDateTime.now()));
+            movies.add(new Movies(null, "Red Horizon", "Adventure", 5000,
+                    "Summary comes here!", LocalDateTime.now()));
+
+            moviesCollection.insertMany(movies);
+
+        }
+    }
+}
+```
+
+* 이전에도 설명했던 것 처럼 POJO를 사용하기 위한 코덱이 필요하다
+* `insertMany()`를 이용해서 다수의 도큐먼트를 생성한다
+
+<br>
+
+데이터베이스를 확인해보면 도큐먼트들이 정상적으로 생성이 된것을 확인할 수 있다.(`MongoExpress`를 한번 써봤다)
+
+<br>
+
+<p align="center">   <img src="img/pojo1.png" alt="nosql2" style="width: 100%;"> </p>
+
+<br>
+
+---
+
+#### 7.3.3 도큐먼트 조회
+
+도큐먼트를 조회해보자.
+
+`ReadMain`
+
+```java
+public class ReadMain {
+    public static void main(String[] args) {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(),fromProviders(pojoCodecProvider));
+
+        try(MongoClient mongoClient = MongoConnectionUtil.getConnection()) {
+            MongoDatabase database = mongoClient.getDatabase("shop").withCodecRegistry(pojoCodecRegistry);
+
+            MongoCollection<Movies> moviesCollection = database.getCollection("movies", Movies.class);
+
+            // 1. 커서를 이용해서 조회
+            MongoCursor<Movies> cursor = moviesCollection.find().cursor();
+            while (cursor.hasNext()) {
+                System.out.println(cursor.next());
+            }
+
+            // 2. 필터를 통한 조회 조건 설정
+            cursor = moviesCollection.find(eq("price", 9000)).cursor(); // price가 9000인 경우만 필터링
+            while (cursor.hasNext()) {
+                System.out.println(cursor.next());
+            }
+
+            // 3. projection으로 원하는 필드만 가져오기
+
+            // projection이라는 도큐먼트를 생성해서 사용하지 않고 Projections.fields(include()) 사용
+            Document projection = new Document("title", 1)
+                    .append("genre", 1)
+                    .append("price", 1);
+
+            cursor = moviesCollection.find()
+                    .projection(Projections.fields(Projections.include("title", "genre", "price")))
+                    .sort(Sorts.descending("price")) // price를 기준으로 내림차순 정렬
+                    .limit(5) // 첫 5개의 결과만 가져온다
+                    .cursor();
+						
+            while (cursor.hasNext()) {
+                Movies doc = cursor.next();
+
+                System.out.println("Title: " + doc.getTitle());
+                System.out.println("Genre: " + doc.getGenre());
+                System.out.println("Price: " + doc.getPrice());
+                System.out.println("-------------------------");
+
+            }
+        }
+    }
+}
+```
+
+<br>
+
+이외에도 몽공DB 매뉴얼을 참고해서 자바에서 업데이트와 삭제하는 방법과 `aggregation pipeline`을 사용하는 방법도 알아보자. 
+
+<br>
+
+---
+
+## Further Reading
+
+* Read concern
+* Write concern
+* MongoDB에서의 Atomic Operation
+* MongoDB에서의 [Transaction](https://www.mongodb.com/docs/manual/core/transactions/)
+* [Sharding](https://www.mongodb.com/docs/manual/sharding/)과 [Replication](https://www.mongodb.com/docs/manual/replication/) 방법
 
 ---
 

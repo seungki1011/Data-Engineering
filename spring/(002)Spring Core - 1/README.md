@@ -1088,7 +1088,7 @@ IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 
 
 #### 3.4.1 IoC(제어의 역전)
 
-> 말 그대로 제어의 역전을 의미한다. 프로그래머가 작성한 프로그램이 프레임워크의 [흐름 제어](https://ko.wikipedia.org/wiki/흐름_제어)를 받게 되는 소프트웨어 디자인 패턴을 말한다. 줄여서 **IoC**(Inversion of Control)이라고 부른다. 전통적인 프로그램에서의 흐름은 프로그래머가 작성한 프로그램이 라이브러리의 코드를 호출해 이용한다. 하지만 제어의 역전이 적용된 구조에서는 프레임워크의 코드가 프로그래머가 작성한 코드를 호출한다.
+> 말 그대로 제어의 역전을 의미한다. 프로그래머가 작성한 프로그램이 프레임워크의 흐름 제어를 받게 되는 소프트웨어 디자인 패턴을 말한다. 줄여서 **IoC**(Inversion of Control)이라고 부른다. 전통적인 프로그램에서의 흐름은 프로그래머가 작성한 프로그램이 라이브러리의 코드를 호출해 이용한다. 하지만 제어의 역전이 적용된 구조에서는 프레임워크의 코드가 프로그래머가 작성한 코드를 호출한다.
 
 <br>
 
@@ -1123,7 +1123,7 @@ IoC(제어의 역전, Inversion of Control), DI(Dependecny Injection) 그리고 
 
 
 
-* 애플리케이션 실행 시점(runtime)에 외부에서 실제 구현 객체를 생성하고 클라이언트에 전달해서 클라이언트와 서버의 실제 의존관계가 연결되는 것을 **의존관계 주입(Dependency Injection)**이라고 한다
+* 애플리케이션 실행 시점(runtime)에 외부에서 실제 구현 객체를 생성하고 클라이언트에 전달해서 클라이언트와 서버의 실제 의존관계가 연결되는 것을 **의존관계 주입**(Dependency Injection)이라고 한다
 
 <br>
 
@@ -1936,7 +1936,7 @@ void configurationDeep() {
 
 컴포넌트 스캔과 의존성 자동 주입에 대한 내용을 알아보자.
 
-지금까지 스프링 빈을 등록할 때는 자바 코드의 ```@Bean``` 처럼 설정 정보에 직접 등록할 스프링 빈을 명시했다. 스프링 빈이 몇 개가 안된다면 상관 없겠지만, 등록 해야할 빈이 수십~수백개가 된다면 일일이 등록하는 것이 귀찮기도 하고 실수할 가능성도 높아진다. 이런 문제를 해결하기 위해 스프링은 설정 정보가 없어도 자동으로 스프링 빈을 등록하는 **컴포넌트 스캔(component scan)**이라는 기능을 제공한다. 컴포넌트 스캔과 더불어서 의존성도 자동으로 주입하는 ```@Autowired```라는 기능도 제공한다.
+지금까지 스프링 빈을 등록할 때는 자바 코드의 `@Bean` 처럼 설정 정보에 직접 등록할 스프링 빈을 명시했다. 스프링 빈이 몇 개가 안된다면 상관 없겠지만, 등록 해야할 빈이 수십~수백개가 된다면 일일이 등록하는 것이 귀찮기도 하고 실수할 가능성도 높아진다. 이런 문제를 해결하기 위해 스프링은 설정 정보가 없어도 자동으로 스프링 빈을 등록하는 **컴포넌트 스캔**(component scan)이라는 기능을 제공한다. 컴포넌트 스캔과 더불어서 의존성도 자동으로 주입하는 `@Autowired`라는 기능도 제공한다.
 
 이제 코드로 ```@ComponentScan```과 ```@Autowired```에 대해서 알아보자.
 
@@ -1977,25 +1977,25 @@ public class MemoryMemberRepository implements MemberRepository{
 ```RateDiscountPolicy```
 
 ```java
- @Component
- public class RateDiscountPolicy implements DiscountPolicy {
-   // 기존 구현
- }
+@Component
+public class RateDiscountPolicy implements DiscountPolicy {
+  // 기존 구현
+}
 ```
 
 ```MemberServiceImpl``` - ```@Component```, ```@Autowired``` 추가
 
 ```java
 @Component
- public class MemberServiceImpl implements MemberService {
-     private final MemberRepository memberRepository;
+public class MemberServiceImpl implements MemberService {
+    private final MemberRepository memberRepository;
      
-   	 @Autowired
-     public MemberServiceImpl(MemberRepository memberRepository) {
-         this.memberRepository = memberRepository;
-     }
+    @Autowired
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
    	 
-     // 기존 구현
+    // 기존 구현
 }
 ```
 
@@ -2079,8 +2079,8 @@ public class MemoryMemberRepository implements MemberRepository{
 컴포넌트 스캔이 탐색을 시작하는 시작 위치를 지정할 수 있다.
 
 ```java
- @ComponentScan(
-         basePackages = "de.springbasic1.member", // member 패키지 부터 시작해서 하위 패키지 모두 스캔
+@ComponentScan(
+        basePackages = "de.springbasic1.member", // member 패키지 부터 시작해서 하위 패키지 모두 스캔
 }
 ```
 
@@ -2290,7 +2290,7 @@ public class OrderServiceImpl implements OrderService {
         this.memberRepository = memberRepository;
     }
     
-  	// setter
+    // setter
     @Autowired 
     public void setDiscountPolicy(DiscountPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
@@ -2687,7 +2687,7 @@ policyList = [de.springbasic1.discount.FixDiscountPolicy@6f3c660a, de.springbasi
 
 ### 8.1. 빈 생명주기 콜백
 
-DBCP(데이터베이스 커넥션 풀), 네트워크 소켓처럼 애플리케이션 시작 시점에 필요한 열결을 미리 해두고, 종료 시점에 열결을 모두 종료하는 작업을 진행하기 위해서는 객체의 초기화와 종료하는 작업이 필요하다. 스프링에서 이런 객체의 초기화와 종료를 어떻게 설정하는지 알아보자.
+DBCP(데이터베이스 커넥션 풀), 네트워크 소켓처럼 애플리케이션 시작 시점에 필요한 연결을 미리 해두고, 종료 시점에 열결을 모두 종료하는 작업을 진행하기 위해서는 객체의 초기화와 종료하는 작업이 필요하다. 스프링에서 이런 객체의 초기화와 종료를 어떻게 설정하는지 알아보자.
 
 들어가기에 앞서 어떤 외부 네트워크에 연결하는 객체를 생성한다고 가정해보자. ```NetworkClient```는 애플리케이션 시작 시점에 ```connect()```를 호출해서 연결을 맺어두어야 하고, 애플리케이션이 종료되면 ```disconnect()```를 호출해서 연결을 끊어야 한다.
 
@@ -2798,24 +2798,24 @@ call: null, message = 초기화 연결 메세지
      // 기존 구현
      public void disConnect() {
          System.out.println("close + " + url);
-		 }
+     }
 		 
-		 public void init() { System.out.println("NetworkClient.init"); // 초기화 메서드
+     public void init() { System.out.println("NetworkClient.init"); // 초기화 메서드
          connect();
-				 call("초기화 연결 메시지");
-		 }
+         call("초기화 연결 메시지");
+     }
      
      public void close() { // 소멸(종료) 메서드
          System.out.println("NetworkClient.close");
          disConnect();
-		 }
+     }
 ```
 
 ```test/lifecycle/BeanLifeCycleTest``` - ```LifeCycleConfig```
 
 ```java
- @Configuration
- static class LifeCycleConfig {
+@Configuration
+static class LifeCycleConfig {
      
      @Bean(initMethod = "init", destroyMethod = "close") // 초기화, 소멸 메서드 지정
      public NetworkClient networkClient() {
@@ -2859,12 +2859,12 @@ close: http://123.456.789.1
 ```java
      @PostConstruct
      public void init() {
-				System.out.println("NetworkClient.init");
+        System.out.println("NetworkClient.init");
         connect();
-				call("초기화 연결 메시지");
-		 }
+        call("초기화 연결 메시지");
+     }
      
-		 @PreDestroy
+     @PreDestroy
      public void close() {
         System.out.println("NetworkClient.close");
         disConnect();

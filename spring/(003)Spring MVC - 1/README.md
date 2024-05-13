@@ -2401,7 +2401,7 @@ button.cancel=Cancel
 스프링이 제공하는 `BindingResult`에 대해서 알아보자.
 
 * `BindingResult`는 스프링이 제공하는 검증 오류를 보관하는 객체이다
-  * 검증 오류 발생시 여가에ㅐ 보관하면 된다
+  * 검증 오류 발생시 여가에 보관하면 된다
 
 
 

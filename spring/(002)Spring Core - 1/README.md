@@ -160,8 +160,6 @@ public class MemberService {
 
 위의 경우에 다형성을 사용했지만 OCP 원칙을 완변히 지켰다고 볼 수는 없다. 왜냐하면 ```MemberService``` 클라이언트가 구현 클래스를 직접 선택하고 있기 때문이다. 구현 객체를 변경하기 위해서는 클라이언트 코드를 변경해야하는 경우 인것이다. 이 **문제를 해결하기 위해서는 객체를 생성하고, 연관관계를 맺어주는 별도의 조립, 설정자가 필요하다.** (이것을 해결하기 위해 스프링의 DI, IoC 컨테이너 등을 사용한다고 볼 수 있다) 
 
-> 전략 패턴(Strategy Pattern) 찾아보기
-
 <br>
 
 ---
@@ -171,8 +169,14 @@ public class MemberService {
 * 프로그램의 객체는 프로그램의 정확성을 깨드리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다
   * objects of a superclass should be able to be replaced with objects of a subclass without affecting the correctness of the program
   * in simpler terms, if a class is a subtype of another class, it should be usable wherever its parent class is used
+
+
+
 * LSP를 지킨다는 것은 다형성에서 하위 클래스는 인터페이스 규약을 다 지켜야 한다는 것
   * 예) 자동차 인터페이스의 엑셀 기능은 앞으로 가는 기능이다, 만약에 엑셀을 통해서 뒤로 갈 수 있도록 구현을 하게되면 LSP를 위반한 것임
+
+
+
 * 인터페이스를 구현한 구현체를 믿고 사용하기 위한 원칙이라고 볼 수 있음
 
 <br>
@@ -183,10 +187,16 @@ public class MemberService {
 
 * 자신이 사용하지 않는 메서드에 의존하지 않는다
   * 쉽게 말해서 클래스는 사용하지 않을 인터페이스는 구현하지 않아야 한다는 원칙이다
+
+
+
 * 특정 클라이언트를 위한 인터페이스 여러개가 범용적인 인터페이스 하나보다 낫다
   * 예) 자동차 인터페이스 → 운전 인터페이스, 정비 인터페이스 등으로 분리
   * 예) 사용자 클라이언트 → 운전자 클라이언트, 정비사 클라이언트 등으로 분리
   * 인터페이스를 분리하면 정비 인터페이스 자체가 변해도 운전자 클라이언트에 영향을 주지 않음
+
+
+
 * 분리하면 인터페이스가 명확해지고, 대체 가능성이 높아진다
 
 <br>
@@ -200,8 +210,14 @@ ISP 원칙이라는 것은 결국 인터페이스가 너무 광범위하면 인�
 #### 1.1.5 DIP (의존관계 역전 원칙)
 
 * 추상화에 의존 해야하고, 구체화에 의존하면 안된다 → 의존성 주입은 이 원칙을 따르는 방법 중 하나다
+
+
+
 * 쉽게 이야기해서 구현 클래스에 의존하지 말고 인터페이스에 의존하라는 뜻이다
   * 클라이언트가 인터페이스에 의존해야 유연하게 구현체를 변경할 수 있다
+
+
+
 * 역할과 구현에서 "역할"을 바라보고 의존해야 한다는 것 
 
 <br>
@@ -217,6 +233,8 @@ public class MemberService {
      */
 }
 ```
+
+<br>
 
 ```MemberService```는 ```MemoryMemberRepository```에 대해 알고 있다. 알고 있다는 것은 의존한다는 것과 같다. 이것은 **DIP 원칙을 위반**한다는 뜻. ```MemberRepository```만 의존해야하는데, 그 구현체인 ```MemoryMemberRepositor```와 ```JDBCMemberRepository```에도 의존하고 있다. 
 
@@ -314,7 +332,7 @@ public class MemberService {
 
 <br>
 
-일단 인터페이스를 만들어서 구현체를 언제든지 변경할 수 있는 객체 지향적 설계를 시도하기도 한다.
+일단 인터페이스를 만들어서 구현체를 언제든지 변경할 수 있는 객체 지향적 설계를 시도 해보자.
 
 <br>
 
@@ -430,8 +448,8 @@ public interface MemberRepository {
 public class MemoryMemberRepository implements MemberRepository{
     // 간단한 예시라서 동시성 고려 없이 구현 (Concurrent HashMap 사용 x)
     private static Map<Long, Member> store = new HashMap<>();
-    
-  	@Override
+  
+    @Override
     public void save(Member member) {
         store.put(member.getId(), member);
     }
@@ -789,13 +807,11 @@ class RateDiscountPolicyTest {
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository = new MemoryMemberRepository();
-  
-//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+  	
+  //private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
     private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
-		/**
-		 * 기존 구현
-		 */
+	  // 기존 구현
 }
 ```
 
@@ -828,12 +844,10 @@ public class OrderServiceImpl implements OrderService{
     private final MemberRepository memberRepository = new MemoryMemberRepository();
   	
   	private DiscountPolicy discountPolicy; // 인터페이스에만 의존!
-		// private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    // private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+ // private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+ // private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
-		/**
-		 * 나머지 구현 부분
-		 */
+	  // 나머지 구현 부분
 }
 ```
 

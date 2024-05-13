@@ -907,7 +907,7 @@ public class AppConfig {
 ```java
 public class MemberServiceImpl implements MemberService{
 
-		// 오로지 인터페이스에만 의존!
+    // 오로지 인터페이스에만 의존!
     private MemberRepository memberRepository;
 
     // 생성자를 통해서 구현체를 선택할 것이다 (주입)
@@ -926,11 +926,11 @@ public class MemberServiceImpl implements MemberService{
 ```java
 public class OrderServiceImpl implements OrderService{
 		
-  	// 오로지 인터페이스에만 의존!
+    // 오로지 인터페이스에만 의존!
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 		
-  	// 생성자를 통해 주입
+    // 생성자를 통해 주입
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;

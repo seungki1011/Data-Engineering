@@ -416,7 +416,7 @@ public class FrontControllerServletV1 extends HttpServlet {
 
     private Map<String, ControllerV1> controllerMap = new HashMap<>();
 		
-  	// 컨트롤러 맵을 통해서 URL과 호출될 컨트롤러를 매핑한다
+    // 컨트롤러 맵을 통해서 URL과 호출될 컨트롤러를 매핑한다
     public FrontControllerServletV1() {
         controllerMap.put("/front-controller/v1/members/new-form", new MemberFormControllerV1());
         controllerMap.put("/front-controller/v1/members/save", new MemberSaveControllerV1());
@@ -544,7 +544,7 @@ public class ModelView {
   
      private Map<String, Object> model = new HashMap<>();
      
-  	 public ModelView(String viewName) { this.viewName = viewName; }
+     public ModelView(String viewName) { this.viewName = viewName; }
   
      public String getViewName() { return viewName; }
   
@@ -752,25 +752,25 @@ public class FrontControllerServletV4 extends HttpServlet {
      HandlerExecutionChain mappedHandler = null;
      ModelAndView mv = null;
    
-		 // 1. 핸들러 조회
-		 mappedHandler = getHandler(processedRequest); 
+     // 1. 핸들러 조회
+     mappedHandler = getHandler(processedRequest); 
      if (mappedHandler == null) {
          noHandlerFound(processedRequest, response);
-		 		 return; 
+         return; 
      }
-		
+
      // 2. 핸들러 어댑터 조회 - 핸들러를 처리할 수 있는 어댑터
-		 HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
-   
-		 // 3. 핸들러 어댑터 실행 -> 4. 핸들러 어댑터를 통해 핸들러 실행 -> 5. ModelAndView 반환 
+     HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+
+     // 3. 핸들러 어댑터 실행 -> 4. 핸들러 어댑터를 통해 핸들러 실행 -> 5. ModelAndView 반환 
      mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
-   
+
      processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
  }
 
  private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,  HandlerExecutionChain mappedHandler, ModelAndView mv, Exception exception) throws Exception {
    	 
-   	 // 뷰 렌더링 호출
+     // 뷰 렌더링 호출
      render(mv, request, response);
  }
 
@@ -778,10 +778,10 @@ public class FrontControllerServletV4 extends HttpServlet {
    
      View view;
      String viewName = mv.getViewName();
-		 
+
      // 6. 뷰 리졸버를 통해서 뷰 찾기, 7. View 반환
      view = resolveViewName(viewName, mv.getModelInternal(), locale, request);
-		 
+
      // 8. 뷰 렌더링
      view.render(mv.getModelInternal(), request, response);
  }
@@ -799,9 +799,9 @@ public class FrontControllerServletV4 extends HttpServlet {
 
 ```java
  public interface Controller {
-   	 // 과거에 사용했던 컨트롤러
-     ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse
- 		 response) throws Exception;
+     // 과거에 사용했던 컨트롤러
+     ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) 
+     throws Exception;
  }
 ```
 
@@ -842,15 +842,15 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
 스프링은 필요한 핸들러 매핑과 어댑터를 대부분 구현해두었다. 스프링 부트는 자동으로 여러가지 `HandlerMapping`과  `HandlerAdapter`를 등록해둔다.
 
 * `HandlerMapping`
-  0. `RequestMappingHandlerMapping` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
-  1. `BeanNameUrlHanlderMapping` : 스프링 빈의 이름으로 핸들러를 찾는다 (위의 예시에서 사용)
+  1. `RequestMappingHandlerMapping` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
+  2. `BeanNameUrlHanlderMapping` : 스프링 빈의 이름으로 핸들러를 찾는다 (위의 예시에서 사용)
 
 
 
 * `HandlerAdapter`
-  0. `RequestMappingHandlerAdapter` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
-  1. `HttpRequestHandlerAdapter` : `HttpRequestHandler` 처리
-  2. `SimpleControllerHandlerAdapter` : `Controller` 인터페이스 처리(애노테이션X, 과거에 사용, 위의 예시에서 사용) 
+  1. `RequestMappingHandlerAdapter` : 애노테이션 기반의 컨트롤러인 `@RequestMapping`에서 사용한다
+  2. `HttpRequestHandlerAdapter` : `HttpRequestHandler` 처리
+  3. `SimpleControllerHandlerAdapter` : `Controller` 인터페이스 처리(애노테이션X, 과거에 사용, 위의 예시에서 사용) 
 
 <br>
 
@@ -921,9 +921,9 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
 
 ```java
  /**
-	* 클래스 단위 -> 메서드 단위
-	* @RequestMapping 클래스 레벨과 메서드 레벨 조합 
-	*/
+  * 클래스 단위 -> 메서드 단위
+  * @RequestMapping 클래스 레벨과 메서드 레벨 조합 
+  */
 
  @Controller
  @RequestMapping("/springmvc/v2/members") // 매핑 URL의 중복을 제거
@@ -1097,10 +1097,10 @@ http://localhost:8080/springmvc/old-controller을 실행해보면 `OldController
 // @Slf4j
 @RestController // 문자를 반환은 문자 그대로 반환(뷰 이름으로 반환 x)
 public class LogTestController {
-  	// @Slf4j 사용시 생략 가능
+    // @Slf4j 사용시 생략 가능
     // LogTestController.class 대신에 getClass() 사용가능
     private final Logger log = LoggerFactory.getLogger(LogTestController.class);
-		
+
     @GetMapping("/log-test")
     public String logTest() {
         String name = "Spring";
@@ -1809,9 +1809,9 @@ public class RequestBodyJsonController {
  @Controller
  public class ResponseViewController {
    	 
-   	 /**
-   	  * ModelAndView 반환
-   	  */
+     /**
+      * ModelAndView 반환
+      */
      @RequestMapping("/response-view-v1")
      public ModelAndView responseViewV1() {
          ModelAndView mav = new ModelAndView("response/hello") 
@@ -1873,10 +1873,10 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
 <br>
 
 ```java
-		@GetMapping("/response-body-string-v1")
-    public void responseBodyV1(HttpServletResponse response) throws IOException {
-        response.getWriter().write("ok");
-    }
+@GetMapping("/response-body-string-v1")
+public void responseBodyV1(HttpServletResponse response) throws IOException {
+    response.getWriter().write("ok");
+}
 ```
 
 * 서블릿을 직접 다룰 때 처럼 `HttpServletResponse` 객체를 통해서 HTTP 메시지 바디에 직접 `ok` 응답 메시지를 전달한다
@@ -1884,13 +1884,13 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
 <br>
 
 ```java
-    /**
-	   * HttpEntity, ResponseEntity(Http Status 추가)
-     */
-    @GetMapping("/response-body-string-v2")
-    public ResponseEntity<String> responseBodyV2() {
-        return new ResponseEntity<>("ok", HttpStatus.OK);
-    }
+/**
+ * HttpEntity, ResponseEntity(Http Status 추가)
+ */
+@GetMapping("/response-body-string-v2")
+public ResponseEntity<String> responseBodyV2() {
+    return new ResponseEntity<>("ok", HttpStatus.OK);
+}
 ```
 
 * `ResponseEntity` 엔티티는 `HttpEntity` 를 상속 받았음
@@ -1901,11 +1901,11 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
 <br>
 
 ```java
-		@ResponseBody
-    @GetMapping("/response-body-string-v3")
-    public String responseBodyV3() {
-        return "ok";
-    }
+@ResponseBody
+@GetMapping("/response-body-string-v3")
+public String responseBodyV3() {
+    return "ok";
+}
 ```
 
 * `@ResponseBody` 를 사용하면 view를 사용하지 않고, HTTP 메시지 컨버터를 통해서 HTTP 메시지를 직접 입력할 수 있다
@@ -1914,14 +1914,14 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
 <br>
 
 ```java
-    @GetMapping("/response-body-json-v1")
-    public ResponseEntity<HelloData> responseBodyJsonV1() {
-        HelloData helloData = new HelloData();
-        helloData.setUsername("userA");
-        helloData.setAge(20);
+@GetMapping("/response-body-json-v1")
+public ResponseEntity<HelloData> responseBodyJsonV1() {
+    HelloData helloData = new HelloData();
+    helloData.setUsername("userA");
+    helloData.setAge(20);
       
-        return new ResponseEntity<>(helloData, HttpStatus.OK);
-    }
+    return new ResponseEntity<>(helloData, HttpStatus.OK);
+}
 ```
 
 * `ResponseEntity` 를 반환한다
@@ -1930,16 +1930,16 @@ HTTP API를 제공하는 경우에는 HTML이 아니라 데이터를 전달해�
 <br>
 
 ```java
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    @GetMapping("/response-body-json-v2")
-    public HelloData responseBodyJsonV2() {
-        HelloData helloData = new HelloData();
-        helloData.setUsername("userA");
-        helloData.setAge(20);
+@ResponseStatus(HttpStatus.OK)
+@ResponseBody
+@GetMapping("/response-body-json-v2")
+public HelloData responseBodyJsonV2() {
+    HelloData helloData = new HelloData();
+    helloData.setUsername("userA");
+    helloData.setAge(20);
       
-        return helloData;
-    }
+    return helloData;
+}
 ```
 
 * `ResponseEntity` 는 HTTP 응답 코드를 설정할 수 있는데, `@ResponseBody` 를 사용하면 이런 것을 설정하기 까다롭다
@@ -2249,41 +2249,41 @@ button.cancel=Cancel
 <div class="container">
   
 <div class="py-5 text-center">
-	<h2 th:text="#{page.addItem}">상품 등록</h2>
+  <h2 th:text="#{page.addItem}">상품 등록</h2>
 </div>
   
 <h4 class="mb-3">상품 입력</h4>
   <form action="item.html" th:action th:object="${item}" method="post">
-  	<div>
-			<label for="itemName" th:text="#{label.item.itemName}">상품명</label> 
+    <div>
+      <label for="itemName" th:text="#{label.item.itemName}">상품명</label> 
       <input type="text" id="itemName" th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요"> 
     </div>
-		
+
     <div>
-			<label for="price" th:text="#{label.item.price}">가격</label> 
+      <label for="price" th:text="#{label.item.price}">가격</label> 
       <input type="text" id="price" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요"> 			</div>
 		
     <div>
-			<label for="quantity" th:text="#{label.item.quantity}">수량</label> 
-  		<input type="text" id="quantity" th:field="*{quantity}" class="form-control" placeholder="수량을 입력하세요"> 
+      <label for="quantity" th:text="#{label.item.quantity}">수량</label> 
+      <input type="text" id="quantity" th:field="*{quantity}" class="form-control" placeholder="수량을 입력하세요"> 
     </div>
     
     <hr class="my-4">
     <div class="row">
     <div class="col">
-			<button class="w-100 btn btn-primary btn-lg" 
+      <button class="w-100 btn btn-primary btn-lg" 
               type="submit" 
               th:text="#{button.save}">저장</button>
     </div>
       
     <div class="col">
-			<button class="w-100 btn btn-secondary btn-lg" 
+      <button class="w-100 btn btn-secondary btn-lg" 
               onclick="location.href='items.html'" 
               th:onclick="|location.href='@{/message/items}'|" 
               type="button" 
               th:text="#{button.cancel}">취소</button>
     </div>
-   	</div>
+    </div>
 </form>
 </div> <!-- /container -->
 ```
@@ -2446,27 +2446,27 @@ button.cancel=Cancel
          bindingResult.addError(new FieldError("item", "price", item.getPrice(), false, null, null, "가격은 1,000 ~ 1,000,000 까지 허용합니다."));
      }
      if (item.getQuantity() == null || item.getQuantity() >= 10000) {
-		     bindingResult.addError(new FieldError("item", "quantity", item.getQuantity(), false, null, null, "수량은 최대 9,999 까지 허용합니다."));
-		 }
+         bindingResult.addError(new FieldError("item", "quantity", item.getQuantity(), false, null, null, "수량은 최대 9,999 까지 허용합니다."));
+     }
    
-		 //특정 필드 예외가 아닌 전체 예외
-		 if (item.getPrice() != null && item.getQuantity() != null) {
+     //특정 필드 예외가 아닌 전체 예외
+     if (item.getPrice() != null && item.getQuantity() != null) {
          int resultPrice = item.getPrice() * item.getQuantity();
          
-       	 if (resultPrice < 10000) {
-				     bindingResult.addError(new ObjectError("item", null, null, "가격 * 수량 의 합은 10,000원 이상이어야 합니다. 현재 값 = " + resultPrice));
-				 } 
-	   }
+         if (resultPrice < 10000) {
+             bindingResult.addError(new ObjectError("item", null, null, "가격 * 수량 의 합은 10,000원 이상이어야 합니다. 현재 값 = " + resultPrice));
+         } 
+     }
      if (bindingResult.hasErrors()) {
          log.info("errors={}", bindingResult);
          return "validation/v2/addForm";
-	   }
+     }
 
    //성공 로직
-	 Item savedItem = itemRepository.save(item); 
+   Item savedItem = itemRepository.save(item); 
    redirectAttributes.addAttribute("itemId", savedItem.getId()); 
    redirectAttributes.addAttribute("status", true);
-	
+
    return "redirect:/validation/v2/items/{itemId}";
 }
 ```
@@ -2528,10 +2528,10 @@ button.cancel=Cancel
 <div>
     <label for="itemName" th:text="#{label.item.itemName}">상품명</label> 
     <input type="text" id="itemName" th:field="*{itemName}"
-                				             th:errorclass="field-error" 
+                                     th:errorclass="field-error" 
                                      class="form-control" 
                                      placeholder="이름을 입력하세요">
-				 
+ 
     <div class="field-error" th:errors="*{itemName}">상품명 오류</div>
 </div>
 ```
@@ -2642,33 +2642,33 @@ max= {0} 까지 허용합니다
      
      if (!StringUtils.hasText(item.getItemName())) {
          bindingResult.rejectValue("itemName", "required");
-		 }
+     }
      if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
          bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
      }
      if (item.getQuantity() == null || item.getQuantity() > 10000) {
          bindingResult.rejectValue("quantity", "max", new Object[]{9999}, null);
      }
-		
+
      //특정 필드 예외가 아닌 전체 예외
-		 if (item.getPrice() != null && item.getQuantity() != null) {
+     if (item.getPrice() != null && item.getQuantity() != null) {
          int resultPrice = item.getPrice() * item.getQuantity();
          
          if (resultPrice < 10000) {
-				     bindingResult.reject("totalPriceMin", new Object[]{10000,resultPrice}, null);
+             bindingResult.reject("totalPriceMin", new Object[]{10000,resultPrice}, null);
          }
      }
      if (bindingResult.hasErrors()) {
          log.info("errors={}", bindingResult);
           
          return "validation/v2/addForm";
-		 }
-			
+     }
+
      //성공 로직
      Item savedItem = itemRepository.save(item); 
      redirectAttributes.addAttribute("itemId", savedItem.getId()); 
      redirectAttributes.addAttribute("status", true);
-			
+
      return "redirect:/validation/v2/items/{itemId}";
 }
 ```
@@ -2910,12 +2910,12 @@ public class ItemValidator implements Validator {
          return "validation/v2/addForm";
      }
    
- //성공 로직
- Item savedItem = itemRepository.save(item); 
- redirectAttributes.addAttribute("itemId", savedItem.getId());  
- redirectAttributes.addAttribute("status", true);
+     //성공 로직
+     Item savedItem = itemRepository.save(item); 
+     redirectAttributes.addAttribute("itemId", savedItem.getId());  
+     redirectAttributes.addAttribute("status", true);
    
- return "redirect:/validation/v2/items/{itemId}";
+     return "redirect:/validation/v2/items/{itemId}";
 }
 ```
 
@@ -2981,10 +2981,10 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
      @Max(9999)
      private Integer quantity;
      
-   	 public Item() {
+     public Item() {
      }
    
-   	 public Item(String itemName, Integer price, Integer quantity) {
+     public Item(String itemName, Integer price, Integer quantity) {
          this.itemName = itemName;
          this.price = price;
          this.quantity = quantity;
@@ -3125,7 +3125,7 @@ if (item.getPrice() != null && item.getQuantity() != null) {
 @Data
 public class Item {
   
-		 @NotNull // 수정 요구사항 추가
+     @NotNull // 수정 요구사항 추가
      private Long id;
   
      @NotBlank
@@ -3183,7 +3183,7 @@ public interface UpdateCheck {
      
      @NotNull(groups = {SaveCheck.class, UpdateCheck.class})
      @Range(min = 1000, max = 1000000, groups = {SaveCheck.class, UpdateCheck.class})
-		 private Integer price;
+     private Integer price;
      
      @NotNull(groups = {SaveCheck.class, UpdateCheck.class}) 
      @Max(value = 9999, groups = SaveCheck.class) //등록시에만 적용 
@@ -3389,11 +3389,11 @@ API 요청의 경우 3가지 케이스를 나누어서 생각해야한다.
  public class ValidationItemApiController {
      @PostMapping("/add")
      public Object addItem(@RequestBody @Validated ItemSaveForm form, BindingResult bindingResult) { 			            log.info("API 컨트롤러 호출");
-			 
+ 
          if (bindingResult.hasErrors()) {
-			 	     log.info("검증 오류 발생 errors={}", bindingResult); return bindingResult.getAllErrors();
-			   }
-				 
+              log.info("검증 오류 발생 errors={}", bindingResult); return bindingResult.getAllErrors();
+         }
+
          log.info("성공 로직 실행");
          return form;
       }
@@ -3450,27 +3450,27 @@ POST http://localhost:8080/validation/api/items/add
 ```
 [
 	{
-		"codes": [
-    	"Max.itemSaveForm.quantity",
-    	"Max.quantity",
-    	"Max.java.lang.Integer",
-    	"Max"
-		],
-		"arguments": [
-  		{
-				"codes": [
-         	"itemSaveForm.quantity",
-					"quantity"
+    "codes": [
+      "Max.itemSaveForm.quantity",
+      "Max.quantity",
+      "Max.java.lang.Integer",
+      "Max"
+    ],
+    "arguments": [
+      {
+        "codes": [
+          "itemSaveForm.quantity",
+          "quantity"
         ],
         "arguments": null,
         "defaultMessage": "quantity",
         "code": "quantity"
-			},
-			9999
-	],
-	"defaultMessage": "9999 이하여야 합니다", 
-	"objectName": "itemSaveForm", 
-	"field": "quantity",
+      },
+      9999
+  ],
+  "defaultMessage": "9999 이하여야 합니다", 
+  "objectName": "itemSaveForm", 
+  "field": "quantity",
   "rejectedValue": 10000, 
   "bindingFailure": false,
   "code": "Max"
@@ -3580,12 +3580,12 @@ public class HomeController {
  public class Member {
    
      private Long id;
-		 
+
      @NotEmpty
-		 private String loginId; //로그인 ID
-		 @NotEmpty
+     private String loginId; //로그인 ID
+     @NotEmpty
      private String name; //사용자 이름
-		 @NotEmpty
+     @NotEmpty
      private String password;
    
 }
@@ -3599,9 +3599,9 @@ public class HomeController {
  @Slf4j
  @Repository
  public class MemberRepository {
-   	 /**
-			 * 동시성 문제가 고려되어 있지 않음, 실무에서는 ConcurrentHashMap, AtomicLong 사용 고려
-			 */
+     /**
+       * 동시성 문제가 고려되어 있지 않음, 실무에서는 ConcurrentHashMap, AtomicLong 사용 고려
+       */
      private static Map<Long, Member> store = new HashMap<>(); //static 사용 
      private static long sequence = 0L; //static 사용
      
@@ -3628,7 +3628,7 @@ public class HomeController {
    
      public void clearStore() {
          store.clear();
-		 } 
+     } 
 }
 ```
 
@@ -3653,7 +3653,7 @@ public class HomeController {
      public String save(@Valid @ModelAttribute Member member, BindingResult result) {
          if (result.hasErrors()) {
              return "members/addMemberForm";
-				 }
+         }
        
          memberRepository.save(member);
          return "redirect:/";
@@ -3671,23 +3671,23 @@ public class HomeController {
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" 
                th:each="err : ${#fields.globalErrors()}"
-						   th:text="${err}">전체 오류 메시지</p>
+               th:text="${err}">전체 오류 메시지</p>
           
         <!-- 필드 입력 생략 -->
           
         <hr class="my-4">
         <div class="row">
             <div class="col">
-							<button class="w-100 btn btn-primary btn-lg" 
+              <button class="w-100 btn btn-primary btn-lg" 
                       type="submit">회원 가입</button>
             </div>
-         		
-          	<div class="col">
+            
+            <div class="col">
               <button class="w-100 btn btn-secondary btn-lg"
                       onclick="location.href='items.html'"
                       th:onclick="|location.href='@{/}'|" 
                       type="button">취소</button>
-        	  </div>
+            </div>
          </div>
 </form>
 ```
@@ -3706,14 +3706,14 @@ public class HomeController {
  public class LoginService {
    
      private final MemberRepository memberRepository;
-		 /**
+     /**
        * @return null이면 로그인 실패 
        */
      public Member login(String loginId, String password) {
          return memberRepository.findByLoginId(loginId)
                  .filter(m -> m.getPassword().equals(password))
                  .orElse(null);
-		 }
+     }
  } 
 ```
 
@@ -3755,19 +3755,19 @@ public class HomeController {
      public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult) {
          if (bindingResult.hasErrors()) {
              return "login/loginForm";
-				 }
+         }
        
          Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
        
          log.info("login? {}", loginMember);
-  			 if (loginMember == null) {
-				     bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다."); 
+         if (loginMember == null) {
+             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다."); 
              return "login/loginForm";
-			   }
+         }
        
-				 //로그인 성공 처리 TODO
+         //로그인 성공 처리 TODO
          return "redirect:/";
-		 } 
+     } 
  }
 ```
 
@@ -3827,8 +3827,8 @@ public String homeLogin( @CookieValue(name = "memberId", required = false) Long 
         return "home";
     }
   
-		//로그인
-		Member loginMember = memberRepository.findById(memberId); 
+    //로그인
+    Member loginMember = memberRepository.findById(memberId); 
     if (loginMember == null) {
             return "home";
     }
@@ -3858,10 +3858,10 @@ public String homeLogin( @CookieValue(name = "memberId", required = false) Long 
 ```html
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-			<h2>홈 화면</h2> 
+      <h2>홈 화면</h2> 
     </div>
   
-		<h4 class="mb-3" th:text="|로그인: ${member.name}|">로그인 사용자 이름</h4>
+    <h4 class="mb-3" th:text="|로그인: ${member.name}|">로그인 사용자 이름</h4>
     <hr class="my-4">
   
     <div class="row">
@@ -3869,18 +3869,18 @@ public String homeLogin( @CookieValue(name = "memberId", required = false) Long 
             <button class="w-100 btn btn-secondary btn-lg" 
                     type="button"
                     th:onclick="|location.href='@{/items}'|">
-							상품 관리
+              상품 관리
             </button>
         </div>
         <div class="col">
             <form th:action="@{/logout}" method="post">
             <button class="w-100 btn btn-dark btn-lg" 
                     type="submit">
-							로그아웃
-					  </button>
+              로그아웃
+            </button>
             </form>
         </div>
-		</div>
+    </div>
   
     <hr class="my-4">
 </div> <!-- /container -->
@@ -4017,11 +4017,11 @@ public class SessionConst {
          return "login/loginForm";
      }
    
-  	 Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
+     Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
      log.info("login? {}", loginMember);
    
-		 if (loginMember == null) {
-		     bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다."); 
+     if (loginMember == null) {
+         bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다."); 
          return "login/loginForm";
      }
    
@@ -4125,12 +4125,12 @@ public class SessionConst {
  Member loginMember,
          Model model) {
    
-	 //세션에 회원 데이터가 없으면 home 
+   //세션에 회원 데이터가 없으면 home 
    if (loginMember == null) {
          return "home";
       }
    
-	 //세션이 유지되면 로그인으로 이동 
+   //세션이 유지되면 로그인으로 이동 
    model.addAttribute("member", loginMember); 
    return "loginHome";
 }
@@ -4285,13 +4285,13 @@ public class LogFilter implements Filter { // 필터를 사용하기 위해서 �
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("log filter init");
     }
-		
-  	/**
+
+    /**
   	 * HTTP 요청이 오면 doFliter 호출
-  	 * 
+     * 
      * ServletRequest request : HTTP 요청이 아닌 경우까지 고려해서 만든 인터페이스
      * HTTP 사용하는 경우 HttpServletRequest httpRequest = (HttpServletRequest) request; 처럼 다운캐스팅 사용
-  	 */
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("log filter doFilter");
@@ -4304,7 +4304,7 @@ public class LogFilter implements Filter { // 필터를 사용하기 위해서 �
         try {
             log.info("REQUEST [{}][{}]", uuid, requestURI); // uuid, requestURI 로깅(출력)
             chain.doFilter(request, response); // 다음 필터가 있으면 필터 호출, 없으면 서블릿 호출
-          	// 이 로직을 호출하지 않으면 다음 단계로 진행되지 않음
+            // 이 로직을 호출하지 않으면 다음 단계로 진행되지 않음
         } catch (Exception e) {
             throw e;
         } finally {
@@ -4334,7 +4334,7 @@ public class WebConfig implements WebMvcConfigurer {
         filterRegistrationBean.setFilter(new LogFilter()); // 등록할 필터를 지정한다 (이 경우 LogFilter)
         filterRegistrationBean.setOrder(1); // 필터는 체인으로 동작, 낮을 수록 먼저 동작한다
         filterRegistrationBean.addUrlPatterns("/*"); // 필터를 적용할 URL 패턴 지정
-		
+
         return filterRegistrationBean;
     }
 }
@@ -4360,11 +4360,11 @@ public class WebConfig implements WebMvcConfigurer {
 @Slf4j
 public class LoginCheckFilter implements Filter {
 		
-  	/**
-  	 * 인증 필터를 적용해도 특정 페이지나 리소스에는 접근이 가능해야 함
-  	 * 화이트리스트를 만들어서, 인증과 무관하게 항상 허용하도록 한다
-  	 * 화이트리스트를 제외한 나머지 모든 경로에는 인증 체크 로직 적용
-  	 */
+    /**
+     * 인증 필터를 적용해도 특정 페이지나 리소스에는 접근이 가능해야 함
+     * 화이트리스트를 만들어서, 인증과 무관하게 항상 허용하도록 한다
+     * 화이트리스트를 제외한 나머지 모든 경로에는 인증 체크 로직 적용
+     */
     private static final String[] whitelist = {"/", "/members/add", "/login", "/logout", "/css/*"};
 
     @Override
@@ -4385,20 +4385,20 @@ public class LoginCheckFilter implements Filter {
                 if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) { 
 
                     log.info("미인증 사용자 요청 {}", requestURI);
-                  	/**
-                  	 * 로그인으로 redirect
-                  	 * 미인증 사용자는 로그인 화면으로 redirect
-                  	 * 사용자 편의를 위해서, 로그인 화면으로 redirect 후에 원래보던 화면(경로)으로 다시 돌아가 주는 것이 좋다
-                  	 * 이를 위해서, 현재 요청한 경로인 requestURI를 '/login'에 쿼리 파라미터로 전달
-                  	 * '/login' 컨트롤러에서 로그인 성공시 해당 경로로 이동하는 기능은 추가로 개발해야 함
-                  	 */
+                    /**
+                     * 로그인으로 redirect
+                     * 미인증 사용자는 로그인 화면으로 redirect
+                     * 사용자 편의를 위해서, 로그인 화면으로 redirect 후에 원래보던 화면(경로)으로 다시 돌아가 주는 것이 좋다
+                     * 이를 위해서, 현재 요청한 경로인 requestURI를 '/login'에 쿼리 파라미터로 전달
+                     * '/login' 컨트롤러에서 로그인 성공시 해당 경로로 이동하는 기능은 추가로 개발해야 함
+                     */
                     httpResponse.sendRedirect("/login?redirectURL=" + requestURI);
-                  	/**
-                  	 * 미인증 사용자의 경우 다음으로 진행하지 않는다
-                  	 * 필터를 더 이상 진행하지 않는다
-                  	 * 서블릿, 컨트롤러도 더 이상 호출되지 않는다
-                  	 * redirect를 사용했기 때문에, redirect가 응답으로 적용되고 요청이 끝난다
-                  	 */
+                    /**
+                     * 미인증 사용자의 경우 다음으로 진행하지 않는다
+                     * 필터를 더 이상 진행하지 않는다
+                     * 서블릿, 컨트롤러도 더 이상 호출되지 않는다
+                     * redirect를 사용했기 때문에, redirect가 응답으로 적용되고 요청이 끝난다
+                     */
                     return;
                 }
             }
@@ -4428,7 +4428,7 @@ public class LoginCheckFilter implements Filter {
 ```java
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-		
+
     // 사용자 요청 로그를 위한 필터
     @Bean
     public FilterRegistrationBean logFilter() {
@@ -4439,8 +4439,8 @@ public class WebConfig implements WebMvcConfigurer {
 
         return filterRegistrationBean;
     }
-		
-  	// 로그인 체크를 위한 필터 추가
+
+    // 로그인 체크를 위한 필터 추가
     Bean
     public FilterRegistrationBean loginCheckFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
@@ -4545,14 +4545,14 @@ HTTP 요청 -> WAS -> 필터 -> 서블릿 -> 인터셉터1 -> 인터셉터2 -> �
 ```java
 public interface HandlerInterceptor {
 
-	default boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception { return true; }
+  default boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+      throws Exception { return true; }
 
-	default void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable ModelAndView modelAndView) throws Exception {}
+  default void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+      @Nullable ModelAndView modelAndView) throws Exception {}
 
-	default void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable Exception ex) throws Exception {}
+  default void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+      @Nullable Exception ex) throws Exception {}
   
 }
 ```
@@ -4618,14 +4618,14 @@ public class LogInterceptor implements HandlerInterceptor {
 
         String requestURI = request.getRequestURI();
         String uuid = UUID.randomUUID().toString(); // 요청 로그를 구분하기 위한 uuid 생성
-				
-      	/**
-      	 * 서블릿 필터의 경우 지역변수로 해결가능했지만, 스프링 인터셉터는 호출 시점이 완전히 분리되어 있다
-      	 * preHandle()에서 지정한 값을 postHandle(), afterCompletion()에서 함께 사용하기 위해서는 어딘가에 담아둬야함
-      	 * LogInterceptor도 싱글톤 처럼 사용되기 때문에 멤버변수를 사용하는 것은 위험하다
-      	 * 따라서 request에 담는다
-      	 * 이 값은 afterCompletion에서 request.getAttribute(LOG_ID)로 찾아서 사용가능
-      	 */
+
+        /**
+         * 서블릿 필터의 경우 지역변수로 해결가능했지만, 스프링 인터셉터는 호출 시점이 완전히 분리되어 있다
+         * preHandle()에서 지정한 값을 postHandle(), afterCompletion()에서 함께 사용하기 위해서는 어딘가에 담아둬야함
+         * LogInterceptor도 싱글톤 처럼 사용되기 때문에 멤버변수를 사용하는 것은 위험하다
+         * 따라서 request에 담는다
+         * 이 값은 afterCompletion에서 request.getAttribute(LOG_ID)로 찾아서 사용가능
+         */
         request.setAttribute(LOG_ID, uuid);
 
         // @RequestMapping: HandlerMethod
@@ -4642,10 +4642,10 @@ public class LogInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         log.info("postHandle [{}]", modelAndView);
     }
-		
-  	/**
-  	 * 종료 로그를 afterCompletion에서 실행하는 이유는, 예외가 발생할 경우 postHandle이 호출되지 않기 때문 
-  	 */
+
+    /**
+     * 종료 로그를 afterCompletion에서 실행하는 이유는, 예외가 발생할 경우 postHandle이 호출되지 않기 때문 
+     */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         String requestURI = request.getRequestURI();
@@ -4674,7 +4674,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**") // 인터셉터를 적용할 URL 패턴 지정
                 .excludePathPatterns("/css/**", "/*.ico", "/error"); // 인터셉터에서 제외할 패턴을 지정
     }
-		
+
 }
 ```
 
@@ -4724,13 +4724,13 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 ```java
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-      	// 로그 인터셉터
+        // 로그 인터셉터
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "/*.ico", "/error");
 				
-      	// 로그인 체크 인터셉터
+        // 로그인 체크 인터셉터
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**") // 적용할 패턴
@@ -5065,29 +5065,29 @@ public class ErrorResult {
 @Slf4j
 @RestController
 public class ApiExceptionV2Controller {
-		
-  	/**
-  	 * 컨트롤러를 호출한 결과 IllegalArgumentException 예외가 컨트롤러 밖으로 던져진다
-  	 * 예외가 발생했기 때문에 ExceptionResolver가 작동한다
-  	 * 우선순위가 제일 높은 ExceptionHandlerExceptionResolver 실행
-  	 * ExceptionHandlerExceptionResolver는 해당 컨트롤러에 IllegalArgumentException을 처리할 수 있는 @ExceptionHandler가 있는 확인한다
-  	 * illegalExHandle() 실행
-  	 * @RestController이므로 illegalExHandle()에도 @ResponseBody가 적용된다
-  	 * HttpConverter가 사용되고, 응답이 JSON으로 반환된다
-  	 * @ResponseStatus를 HTTP 상태 코드 400 지정(400으로 응답)
-  	 */
+
+    /**
+     * 컨트롤러를 호출한 결과 IllegalArgumentException 예외가 컨트롤러 밖으로 던져진다
+     * 예외가 발생했기 때문에 ExceptionResolver가 작동한다
+     * 우선순위가 제일 높은 ExceptionHandlerExceptionResolver 실행
+     * ExceptionHandlerExceptionResolver는 해당 컨트롤러에 IllegalArgumentException을 처리할 수 있는 @ExceptionHandler가 있는 확인한다
+     * illegalExHandle() 실행
+     * @RestController이므로 illegalExHandle()에도 @ResponseBody가 적용된다
+     * HttpConverter가 사용되고, 응답이 JSON으로 반환된다
+     * @ResponseStatus를 HTTP 상태 코드 400 지정(400으로 응답)
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResult illegalExHandler(IllegalArgumentException e) {
         log.error("[exceptionHandler] ex", e);
         return new ErrorResult("BAD", e.getMessage());
     }
-		
-  	/**
-  	 * @ExceptionHandler에 예외를 지정하지 않으면 해당 메서드 파라미터 예외를 사용한다(UserException 사용)
-  	 * ResponseEntity를 사용해서 HTTP 메세지 바디에 직접 응답(HttpConverter 사용됨)
-  	 * ResponseEntity를 사용하면 HTTP 응답 코드를 프로그래밍해서 동적으로 변경할 수 있다
-  	 */
+
+    /**
+     * @ExceptionHandler에 예외를 지정하지 않으면 해당 메서드 파라미터 예외를 사용한다(UserException 사용)
+     * ResponseEntity를 사용해서 HTTP 메세지 바디에 직접 응답(HttpConverter 사용됨)
+     * ResponseEntity를 사용하면 HTTP 응답 코드를 프로그래밍해서 동적으로 변경할 수 있다
+     */
     @ExceptionHandler
     public ResponseEntity<ErrorResult> userExHandler(UserException e) {
         log.error("[exceptionHandler] ex", e);
@@ -5095,11 +5095,11 @@ public class ApiExceptionV2Controller {
         return new ResponseEntity(errorResult, HttpStatus.BAD_REQUEST);
     }
 		
-  	/**
-  	 * RuntimeException 발생, 컨트롤러 밖으로 RuntimeException이 던져짐
-  	 * RuntimeException은 Exception의 자식이기 때문에 이 메서드가 호출된다
-  	 * HTTP 상태 코드 500으로 응답
-  	 */
+    /**
+     * RuntimeException 발생, 컨트롤러 밖으로 RuntimeException이 던져짐
+     * RuntimeException은 Exception의 자식이기 때문에 이 메서드가 호출된다
+     * HTTP 상태 코드 500으로 응답
+     */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ErrorResult exHandler(Exception e) {
@@ -5308,14 +5308,14 @@ public class IpPortToStringConverter implements Converter<IpPort, String> {
 ```java
 public interface ConversionService {
 
-	boolean canConvert(@Nullable Class<?> sourceType, Class<?> targetType);
-	boolean canConvert(@Nullable TypeDescriptor sourceType, TypeDescriptor targetType);
+  boolean canConvert(@Nullable Class<?> sourceType, Class<?> targetType);
+  boolean canConvert(@Nullable TypeDescriptor sourceType, TypeDescriptor targetType);
 
-	@Nullable
-	<T> T convert(@Nullable Object source, Class<T> targetType);
+  @Nullable
+  <T> T convert(@Nullable Object source, Class<T> targetType);
 
-	@Nullable
-	Object convert(@Nullable Object source, @Nullable TypeDescriptor sourceType, TypeDescriptor targetType);
+  @Nullable
+  Object convert(@Nullable Object source, @Nullable TypeDescriptor sourceType, TypeDescriptor targetType);
 
 }
 ```
@@ -5440,7 +5440,7 @@ ${{ipPort}}: 127.0.0.1:8080
 @Controller
 public class ConverterController {
 
-		// 생략 ...	
+    // 생략 ...	
   
     @GetMapping("/converter/edit")
     public String converterForm(Model model) {
@@ -5549,7 +5549,7 @@ public class MyNumberFormatter implements Formatter<Number> {
 
     @Override
     public String print(Number object, Locale locale) {
-      	// 객체를 문자로
+        // 객체를 문자로
         log.info("object={}, locale={}", object, locale);
         return NumberFormat.getInstance(locale).format(object);
     }
@@ -5608,11 +5608,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-				// registry.addConverter(new StringToIntegerConverter());
-				// registry.addConverter(new IntegerToStringConverter());
+        // registry.addConverter(new StringToIntegerConverter());
+        // registry.addConverter(new IntegerToStringConverter());
         registry.addConverter(new StringToIpPortConverter());
         registry.addConverter(new IpPortToStringConverter());
-				
+
         // 추가
         registry.addFormatter(new MyNumberFormatter());
     }

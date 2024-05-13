@@ -18,11 +18,10 @@
 
 <details>
   <summary><h3>1. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)(추가 예정)</h3></summary>
-
 </details>
 
 <details>
-  <summary><h3>2. 네트워크(Network)와 HTTP</h3></summary>
+  <summary><h3>2. 🌐 네트워크(Network)와 HTTP</h3></summary>
 
   - [network and http/README.md](network%20and%20http/README.md)
 
@@ -544,7 +543,7 @@
 
 ---
 
-# 🌐 Backend
+# ⚙️ Backend
 
 <details>
   <summary><h3>1. 스프링 프레임워크(Spring Framework)</h3></summary>
@@ -1024,7 +1023,7 @@
 
 ---
 
-# ⚙️ Linux
+# :shell: Shell Script
 
 
 

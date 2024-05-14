@@ -168,7 +168,6 @@
       * [Class, Instance](java/(006)%20Class#1-class--instance)
         * 클래스 작성, 인스턴스 생성
       * [객체 배열(Array of Objects)](java/(006)%20Class#2-array-of-instances)
-        
       
       </details>
   - <details>

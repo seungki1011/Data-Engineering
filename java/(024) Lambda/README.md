@@ -78,7 +78,7 @@ a -> a * a
 ```java
 @FunctionalInterface
 interface MyInterface {
-  public abstract int max(int a, int b); // 추상 메서드
+    public abstract int max(int a, int b); // 추상 메서드
 }
 ```
 
@@ -91,6 +91,7 @@ interface MyInterface {
 ```java
 public class LambdaTest2 {
     public static void main(String[] args) {
+      
         // 1. 익명 클래스의 선언과 객체 생성을 동시
         MyInterface myInterface = new MyInterface() {
             @Override
@@ -128,6 +129,7 @@ public interface MyInterface2 {
 ```java
 public class LambdaTest {
     public static void main(String[] args) {
+      
         LambdaTest lambdaTest = new LambdaTest();
 
         // 1. 함수령 인터페이스 타입의 참조 변수 사용

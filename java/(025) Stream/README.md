@@ -737,6 +737,7 @@ DAVID
 ```java
 public class FlatMapTest {
     public static void main(String[] args) {
+      
         // 1. flatMap()을 사용
         List<List<Integer>> nestedList = Arrays.asList( // 리스트 안의 리스트
                 Arrays.asList(1, 2, 3),
@@ -874,6 +875,7 @@ Optional<String> optVal = Optional.ofNullable(null); // null을 안전하게 다
 ```java
 public class OptionalTest {
     public static void main(String[] args) {
+      
         // Create an Optional with a non-null value
         Optional<String> optionalWithValue = Optional.ofNullable("Hello");
 
@@ -946,6 +948,7 @@ void forEachOrdered(Consumer<? super T> action) // 병렬 스트림인 경우에
 ```java
 public class ForEachTest {
     public static void main(String[] args) {
+      
         // 1. 맵의 각 요소를 forEach()를 이용해서 출력
         Map<Integer, String> studentMap = new HashMap<>();
         studentMap.put(1, "Alice");
@@ -998,6 +1001,7 @@ boolean noneMatch(Predicate<? super T> predicate) // 모든 요소가 조건을 
 ```java
 public class MatchTest {
     public static void main(String[] args) {
+      
         // 1. allMatch() - 모든 요소가 조건을 만족하면 true
         List<Integer> numbers = Arrays.asList(2, 4, 6, 8, 10);
 
@@ -1044,6 +1048,7 @@ Optional<T> findAny() // 아무 요소 하나를 반환, 병렬 스트림(parall
 ```java
 public class FindTest {
     public static void main(String[] args) {
+      
         // 1. findFirst() - 첫 번째 요소를 반환
         Optional<String> first = Stream.of("apple", "banana", "cherry", "date")
                 .findFirst();
@@ -1168,6 +1173,7 @@ Object collect(Supplier supplier, BiConsumer accumulator, BiConsumer combiner) /
 ```java
 public class CollectTest {
     public static void main(String[] args) {
+      
         // 1. toList()
         List<String> words = Arrays.asList("apple", "banana", "cherry");
 
@@ -1244,6 +1250,7 @@ groupingBy(Function<? super T, ? extends K> classifier) // 스트림을 n분할
 ```java
 public class CollectTest2 {
     public static void main(String[] args) {
+      
         // 1. partitioningBy() - 스트림을 2분할
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 

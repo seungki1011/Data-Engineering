@@ -307,6 +307,7 @@ try {
 ```java
 public class CatchMain2 {
     public static void main(String[] args) {
+      
         int[] array = {1, 2, 3, 4, 5};
 
         // 1. Exception의 배치
@@ -526,10 +527,12 @@ public class ThrowsnMain {
             System.out.println("Handled Exception in main"); // main에서 예외를 처리
         }
     }
+  
     static void method1() throws Exception { // 호출한 main()으로 예외 던지기
         System.out.println("method1 calls method2");
         method2();
     }
+  
     static void method2() throws Exception{ // 호출한 method1()으로 예외 던지기
         System.out.println("Exception is made in method2");
         throw new Exception(); // 예외 발생

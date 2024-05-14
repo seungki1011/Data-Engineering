@@ -43,11 +43,10 @@
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/array/arr1.java)
-
 ```java
 public class arr1 {
     public static void main(String[] args) {
+      
         // 1. 배열 선언
         int[] newArray = new int[3]; // int형 변수를 3개 담을 수 있는 배열 선언과 생성
       
@@ -103,11 +102,10 @@ public class arr1 {
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/array/arr2.java)
-
 ```java
 public class arr2 {
     public static void main(String[] args) {
+      
         // 1. 행이 2개, 열이 4개인 2차원 배열
         int[][] twodArray = new int[2][4];
 

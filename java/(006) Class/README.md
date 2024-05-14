@@ -8,7 +8,6 @@
 
 ## 1) Class & Instance
 
-* 클래스
 * [클래스는 첫글자 대문자, Camel Case](https://github.com/seungki1011/Data-Engineering/tree/main/java/(002)%20Basic%20Syntax#2-java-convention)
 * 하나의 소스파일에는 둘 이상의 ```public class```가 존재해선 안됨
 
@@ -46,8 +45,6 @@ public class Customer {
 * 클래스에 정의한 변수들은 멤버 변수, 필드라고 함
 
 <br>
-
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/classpractice/cp1.java)
 
 ```java
 public class cp1 {

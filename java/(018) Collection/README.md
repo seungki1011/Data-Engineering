@@ -216,6 +216,7 @@ class Node<E> {
 ```java
 public class LinkedListMain {
     public static void main(String[] args) {
+      
         // 1. LinkedList 생성
         LinkedList<String> linkedList = new LinkedList<>(); // String 타입만 넣을 수 있는 ArrayList
 
@@ -362,6 +363,7 @@ Title: Title3, Author: Author3, ISBN: ISBN789
 ```java
 public class HashSetMain {
     public static void main(String[] args) {
+      
         // 1. HashSet 생성
       	// 요소가 String이면 equals, hashCode 오바라이딩하지 않아도 됨
         HashSet<String> hashSet = new HashSet<>();
@@ -650,6 +652,7 @@ treeSet.tailSet(6) = [6, 8]
 ```java
 public class HashMapMain {
     public static void main(String[] args) {
+      
         // HashMap 생성 - student(key) : grade(value)
         Map<String, Integer> studentGrades = new HashMap<>();
 
@@ -744,6 +747,7 @@ HashMap after clearing: {}
 ```java
 public class ArrayDequeMain {
     public static void main(String[] args) {
+      
         // ArrayDeque 생성
         ArrayDeque<String> taskQueue = new ArrayDeque<>();
 
@@ -949,6 +953,7 @@ class Fruit2 {
 
 public class ComparatorMain {
     public static void main(String[] args) {
+      
         List<Fruit2> fruits = new ArrayList<>();
         fruits.add(new Fruit2("Apple", 10));
         fruits.add(new Fruit2("Grape", 19));
@@ -963,6 +968,7 @@ public class ComparatorMain {
             System.out.println(fruit);
         }
     }
+  
     // 익명 클래스를 사용해서 Comparator의 기능 사용
     public static Comparator<Fruit2> comparator = new Comparator<Fruit2>() {
         @Override

@@ -37,6 +37,8 @@
 
 ### 1.2 제네릭스 사용해보기
 
+<br>
+
 ```java
 public class GenericTest {
     public static void main(String[] args) {
@@ -114,10 +116,11 @@ ArrayList<MyClass> myList = new ArrayList<MyClass>(); // T -> MyClass
 
 ### 1.4 제네릭 클래스(Generic Class)
 
-[```GenericClassMain.java```]()
+<br>
 
 ```java
 class Box<T> { // 타입 파라미터 'T'로 설정
+  
     private T value;
 
     public Box(T value) {
@@ -189,8 +192,6 @@ Box value: This is a string!
 
 
 * 사용자 정의 클래스도 타입 파라미터로 사용가능
-
-
 
 <br>
 
@@ -282,6 +283,8 @@ class Person3<T extends Parent & MyInterface>{ // & MyInterface로 MyInterface �
 ### 3.2 제네릭스의 제약
 
 위의 `Box` 클래스를 다시 사용해보자.
+
+<br>
 
 ```java
 class Box<T> { // 타입 파라미터 'T'로 설정

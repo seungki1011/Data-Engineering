@@ -44,10 +44,9 @@
 
 ### 2.1 Without Static vs With Static
 
-[```Data1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticvariable/Data1.java)
-
 ```java
 public class Data1 {
+  
     public String name;
     public int cnt;
 
@@ -60,11 +59,10 @@ public class Data1 {
 
 <br>
 
-[```DataMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticvariable/DataMain.java)
-
 ```java
 public class DataMain {
     public static void main(String[] args) {
+      
         // 각 인스턴스를 새롭게 생성하고 인스턴스 멤버인 cnt를 접근하는 것(공유되지 않음!)
         Data1 d1 = new Data1("d1");
         System.out.println(d1.name+" count : "+d1.cnt);
@@ -86,10 +84,9 @@ d3 count : 1
 
 <br>
 
-[```StaticData1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticvariable/StaticData1.java)
-
 ```java
 public class StaticData1 {
+  
     public String name;
     public static int cnt; // static 붙음
 
@@ -104,11 +101,10 @@ public class StaticData1 {
 
 <br>
 
-[```StaticDataMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticvariable/StaticDataMain.java)
-
 ```java
 public class StaticDataMain {
     public static void main(String[] args) {
+      
         // 인스턴스 참조 변수로 접근하는 것이 아니라 클래스명을 이용해서 접근
         StaticData1 d1 = new StaticData1("d1");
         System.out.println(d1.name+" count : "+StaticData1.cnt);
@@ -154,10 +150,9 @@ d3 count : 3
 
 <br>
 
-[```StaticMethod1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticmethod/StaticMethod1.java)
-
 ```java
 public class StaticMethod1 {
+  
     // 메서드에 static이 붙음
     public static String addDecoration(String str){
         return "=========== "+str+" ===========";
@@ -167,11 +162,10 @@ public class StaticMethod1 {
 
 <br>
 
-[```StaticMethodMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/staticmethod/StaticMethodMain.java)
-
 ```java
 public class StaticMethodMain {
     public static void main(String[] args) {
+      
         String s = "This is the string value";
         
       	// 클래스명.메서드명 으로 접근

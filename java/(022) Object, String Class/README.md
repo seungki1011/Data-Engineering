@@ -100,6 +100,7 @@ Java를 이루는 가장 기본이 되는 클래스들을 보관하는 패키지
 
 ```java
 class Item {
+  
     String name = "Im a item";
 
     void itemMethod() {
@@ -115,6 +116,7 @@ class Item {
 
 ```java
 class Person {
+  
     String name = "Im a person";
     int age = 50;
 
@@ -169,6 +171,7 @@ The number of objects : 3
 ```java
 public class ObjectTest2 {
     public static void main(String[] args) {
+      
         Object object = new Object();
         String string = object.toString();
 
@@ -288,6 +291,7 @@ User b = new User("id001") // 참고(객체 주소) : x002
 ```java
 public class EqualsTest {
     public static void main(String[] args) {
+      
         String s1 = new String("Hello world!");
         String s2 = new String("Hello world!");
 
@@ -338,6 +342,7 @@ public class EqualsTest {
 
 ```java
 public class UserV2 {
+  
     private String id;
 
     public UserV2(String id) {
@@ -397,12 +402,12 @@ public class UserV2 {
 
 ```java
 public final class String {
-	//문자열 보관
-	private final char[] value; // 자바 9 이전 
+  //문자열 보관
+  private final char[] value; // 자바 9 이전 
   private final byte[] value; // 자바 9 이후
   
   //여러 메서드
-	public String concat(String str) {...} 
+  public String concat(String str) {...} 
   public int length() {...}
   
   //이하 생략...
@@ -434,6 +439,7 @@ public final class String {
 ```java
 public class EqualsTest {
     public static void main(String[] args) {
+      
         String s1 = new String("Hello world!");
         String s2 = new String("Hello world!");
 
@@ -498,6 +504,7 @@ public class EqualsTest {
 ```java
 public class StringTest1 {
     public static void main(String[] args) {
+      
         String str1 = "Hello";
         String str2 = " world!";
 
@@ -540,6 +547,7 @@ str3 = Hello world!
 ```java
 public class StringTest2 {
     public static void main(String[] args) {
+      
         String str = "광물 기타 중요한 지하자원·수산자원·수력과 경제상 이용할 수 있는 " +
                 "자연력은 법률이 정하는 바에 의하여 일정한 기간 그 채취·개발 또는 이용을 특허할 수 있다.";
 
@@ -574,6 +582,7 @@ public class StringTest2 {
 ```java
 public class StringTest3 {
     public static void main(String[] args) {
+      
         String str1 = "As the sun dipped below the horizon, painting the sky in hues of orange and pink," +
                 " a sense of serenity washed over the tranquil seaside village of Polppero.";
 
@@ -616,6 +625,7 @@ str1 ends with 'polperro.' = false
 ```java
 public class StringTest4 {
     public static void main(String[] args) {
+      
         String str = "As the sun dipped below the horizon, painting the sky in hues of orange and pink," +
                 " a sense of serenity washed over the tranquil seaside village of Polppero.";
 
@@ -650,6 +660,7 @@ public class StringTest4 {
 ```java
 public class StringTest5 {
     public static void main(String[] args) {
+      
         String str = "The verdant meadows stretched out before us.";
 
         System.out.println("인덱스 7부터의 부분 문자열 = " + str.substring(7));
@@ -681,6 +692,7 @@ public class StringTest5 {
 ```java
 public class StringTest6 {
     public static void main(String[] args) {
+      
         String strWithSpace = "   Hello world!   ";
 
         System.out.println("소문자로 변환 = " + strWithSpace.toLowerCase());
@@ -719,6 +731,7 @@ public class StringTest6 {
 ```java
 public class StringTest7 {
     public static void main(String[] args) {
+      
         String str = "Apple,Banana,Orange";
 
         // 1. split() - 주어진 정규 표현식 기준으로 분할
@@ -778,6 +791,7 @@ result = Apple-Banana-Orange
 ```java
 public class StringBuilderTest1 {
     public static void main(String[] args) {
+      
         StringBuilder sb = new StringBuilder();
         System.out.println("sb = " + sb);
 

@@ -39,9 +39,11 @@
 
 ```java
 public class ElectricCar {
+  
     public void move() {
         System.out.println("The car is currently moving on ground!");
     }
+  
     public void charge() {
         System.out.println("Charging the car!");
     }
@@ -54,9 +56,11 @@ public class ElectricCar {
 
 ```java
 public class GasCar {
+  
     public void move() {
         System.out.println("The car is currently moving on ground!");
     }
+  
     public void fillUp() {
         System.out.println("Filling up the car!");
     }
@@ -70,6 +74,7 @@ public class GasCar {
 ```java
 public class ExtendMain1 {
     public static void main(String[] args) {
+      
         ElectricCar e1 = new ElectricCar();
         e1.move();
         e1.charge();
@@ -106,8 +111,6 @@ Filling up the car!
 
 <br>
 
-[```ElectricCar.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/ElectricCar.java)
-
 ```java
 public class ElectricCar extends Car { // ElectricCar가 Car를 상속받는다
     public void charge() {
@@ -118,8 +121,6 @@ public class ElectricCar extends Car { // ElectricCar가 Car를 상속받는다
 
 <br>
 
-[```GasCar.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/GasCar.java)
-
 ```java
 public class GasCar extends Car { // GasCar가 Car를 상속받는다
     public void fillUp() {
@@ -129,8 +130,6 @@ public class GasCar extends Car { // GasCar가 Car를 상속받는다
 ```
 
 <br>
-
-[```Car.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/Car.java)
 
 ```java
 public class Car {
@@ -145,11 +144,10 @@ public class Car {
 
 <br>
 
-[```ExtendsMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/ExtendsMain2.java)
-
 ```java
 public class ExtendsMain2 {
     public static void main(String[] args) {
+      
         ElectricCar e1 = new ElectricCar();
         e1.move();
         e1.charge();
@@ -195,8 +193,6 @@ The car is currently moving on ground!
 
 <br>
 
-[```Aircraft.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/Aircraft.java)
-
 ```java
 public class Aircraft extends Vehicle{ // Aircraft는 Vehicle 클래스를 상속 받음
     public void fly() {
@@ -206,8 +202,6 @@ public class Aircraft extends Vehicle{ // Aircraft는 Vehicle 클래스를 상�
 ```
 
 <br>
-
-[```Vehicle.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/Vehicle.java)
 
 ```java
 public class Vehicle {
@@ -221,8 +215,6 @@ public class Vehicle {
 * ```Aircraft```과 ```Car``` 클래스가 공통으로 지니는 기능을 ```Vehicle``` 클래스에서 상속 받도록 함
 
 <br>
-
-[```ExtendsMain3.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/extend1/ExtendsMain3.java)
 
 ```java
 public class ExtendsMain3 {
@@ -318,8 +310,6 @@ ElectricCar e1 = new ElectricCar();
 
 <br>
 
-[```Aircraft.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/Aircraft.java)
-
 ```java
 public class Aircraft extends Vehicle {
     public void fly() {
@@ -333,8 +323,6 @@ public class Aircraft extends Vehicle {
 ```
 
 <br>
-
-[```Jet.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/Jet.java)
 
 ```java
 public class Jet extends Aircraft {
@@ -352,7 +340,7 @@ public class Jet extends Aircraft {
 }
 ```
 
-[```Vehicle.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/Vehicle.java)
+<br>
 
 ```java
 public class Vehicle {
@@ -363,8 +351,6 @@ public class Vehicle {
 ```
 
 <br>
-
-[```ExtendsMain4.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/overriding/ExtendsMain4.java)
 
 ```java
 public class ExtendsMain4 {
@@ -410,10 +396,9 @@ This vehicle used the brake!
 
 <br>
 
-[```Parent.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/protected1/parent/Parent.java)
-
 ```java
 public class Parent {
+  
     public String publicString = "This is a public string in the parent package";
     protected String protectedString = "This is a protected string in the parent package";
     private String privateString = "This is a private string in the parent package";
@@ -422,15 +407,19 @@ public class Parent {
     public void publicMethod() {
         System.out.println("Public method in the parent package, parent class.");
     }
+  
     protected void protectedMethod() {
         System.out.println("Protected method in the parent package, parent class.");
     }
+  
     private void privateMethod() {
         System.out.println("Private method in the parent package, parent class.");
     }
+  
     void defaultMethod() {
         System.out.println("Default(package-private) method in the parent package, parent class.");
     }
+  
     public void insideParent() {
         System.out.println("-----Inside Parent class which is inside the parent package-----");
         System.out.println("publicString = "+publicString);
@@ -447,13 +436,12 @@ public class Parent {
 
 <br>
 
-[```Child1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/protected1/child/Child1.java)
-
 ```java
 import de.java.inheritance.protected1.parent.Parent;
 
 public class Child1 extends Parent {
     public void callFromParent() {
+      
         publicString = "This is a public string redefined in the Child1 class";
         protectedString = "This is a protected string redefined in the Child1 class";
         System.out.println(publicString);
@@ -472,11 +460,10 @@ public class Child1 extends Parent {
 
 <br>
 
-[```ProtectedMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/protected1/ProtectedMain.java)
-
 ```java
 public class ProtectedMain {
     public static void main(String[] args) {
+      
         Child1 c1 = new Child1();
         c1.callFromParent();
 
@@ -534,10 +521,9 @@ Private method in the parent package, parent class.
 
 <br>
 
-[```Animal.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/super1/Animal.java)
-
 ```java
 public class Animal {
+  
     public String name = "Animal";
     public String sound = "Growl!";
 
@@ -549,19 +535,20 @@ public class Animal {
 
 <br>
 
-[```Dog.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/super1/Dog.java)
-
 ```java
 public class Dog extends Animal{
+  
     public String name = "Dog";
 
     @Override
     public void eat() {
         System.out.println("Eating meat");
     }
+  
     public void bark() {
         System.out.println("Barking. Bow wow!");
     }
+  
     void call() {
         System.out.println("----------Check Variable Values-----------");
         System.out.println("this.name = "+this.name);
@@ -581,11 +568,10 @@ public class Dog extends Animal{
 
 <br>
 
-[```SuperMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/super1/SuperMain1.java)
-
 ```java
 public class SuperMain1 {
     public static void main(String[] args) {
+      
         Dog d1 = new Dog();
         d1.call();
     }
@@ -626,8 +612,6 @@ called bark() : Barking. Bow wow!
 
 <br>
 
-[```ClassA.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/ClassA.java)
-
 ```java
 public class ClassA {
     public ClassA() {
@@ -639,16 +623,16 @@ public class ClassA {
 
 <br>
 
-[```ClassB.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/ClassB.java)
-
 ```java
 public class ClassB extends ClassA{
+  
     public ClassB(int a) {
         super(); // 기본 생성자 생략 가능, 원래는 첫줄에서 부모의 생성자를 호출해야 함
         System.out.println("-------------------------------------");
         System.out.println("ClassB 생성자 호출");
         System.out.println("ClassB, a = "+a);
     }
+  
     public ClassB(int a, int b) {
         super();
         System.out.println("-------------------------------------");
@@ -660,8 +644,6 @@ public class ClassB extends ClassA{
 
 <br>
 
-[```ClassC.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/ClassC.java)
-
 ```java
 public class ClassC extends ClassB {
 
@@ -669,18 +651,21 @@ public class ClassC extends ClassB {
         // super(); // ClassB에는 기본 생성자가 존재하지 않기 때문에 super() 불가능
         super(1); // super()에 직접 값 넣어서 사용해야 함
     }
+  
     public ClassC(int a) {
         super(a);
         System.out.println("-------------------------------------");
         System.out.println("ClassC 생성자 호출");
         System.out.println("ClassC, a = "+a);
     }
+  
     public ClassC(int a, int b) {
         super(a, b);
         System.out.println("-------------------------------------");
         System.out.println("ClassC 생성자 호출");
         System.out.println("ClassC, a = "+a+", b = "+b);
     }
+  
     public ClassC(int a, int b, int c) {
         super(a, b);
         System.out.println("-------------------------------------");
@@ -692,8 +677,6 @@ public class ClassC extends ClassB {
 ```
 
 <br>
-
-[```SuperMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/inheritance/superconstructor/SuperMain2.java)
 
 ```java
 public class SuperMain2 {

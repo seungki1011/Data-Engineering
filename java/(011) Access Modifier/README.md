@@ -49,10 +49,9 @@
 
 <br>
 
-[```Package1Data.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/package1/Package1Data.java)
-
 ```java
 public class Package1Data {
+  
     public int publicInt = 10;
     int defaultInt = 11;
     private int privateInt = 12;
@@ -66,19 +65,23 @@ public class Package1Data {
         System.out.println("public Int = "+publicInt);
         System.out.println("public String = "+publicString);
     }
+  
     private void privateMethod() {
         System.out.println("---------------------------------------------");
         System.out.println("3.private method is called");
         System.out.println("private Int = "+privateInt);
         System.out.println("private String = "+privateString);
     }
+  
     void defaultMethod() {
         System.out.println("---------------------------------------------");
         System.out.println("2.package-private(default) method is called.");
         System.out.println("package-private(default) Int = "+defaultInt);
         System.out.println("package-private(default) String = "+defaultString);
     }
+  
     public void innerAccess() {
+      
         publicInt = 1;
         defaultInt = 2;
         // 같은 클래스의 필드에 접근 가능
@@ -95,11 +98,10 @@ public class Package1Data {
 
 <br>
 
-[```Package1Main.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/package1/Package1Main.java)
-
 ```java
 public class Package1Main {
     public static void main(String[] args) {
+      
         Package1Data p = new Package1Data();
         p.publicMethod();
         p.defaultMethod();
@@ -138,11 +140,10 @@ private String = This is a private String(Inner Access)
 
 <br>
 
-[```Package2Main.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/package2/Package2Main.java)
-
 ```java
 public class Package2Main {
     public static void main(String[] args) {
+      
         Package1Data p = new Package1Data();
         p.publicMethod();
 
@@ -223,10 +224,9 @@ private String = This is a private String(Inner Access)
 
 <br>
 
-[```Item.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/practice1/Item.java)
-
 ```java
 public class Item {
+  
     private String name;
     private int price;
     private int quantity;
@@ -257,10 +257,9 @@ public class Item {
 
 <br>
 
-[```ShoppingCart.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/practice1/ShoppingCart.java)
-
 ```java
 public class ShoppingCart {
+  
     // 1. 데이터(속성)는 전부 private
     private Item[] items = new Item[4];
     private int itemCount = 0;
@@ -275,6 +274,7 @@ public class ShoppingCart {
         itemCount++;
         System.out.println("item("+itemCount+") added");
     }
+  
     public void displayItems(){
         System.out.println("Current Items in Shopping cart");
         for (int i = 0; i<itemCount; i++) {
@@ -296,14 +296,13 @@ public class ShoppingCart {
 
 <br>
 
-[```ShoppingMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/accessmodifier/practice2/ShoppingMain.java)
-
 ```java
 import de.java.accessmodifier.practice1.Item;
 import de.java.accessmodifier.practice1.ShoppingCart;
 
 public class ShoppingMain {
     public static void main(String[] args) {
+      
         ShoppingCart c = new ShoppingCart();
         Item item1 = new Item("Chicken", 20000, 6);
         Item item2 = new Item("Cola", 2500, 4);

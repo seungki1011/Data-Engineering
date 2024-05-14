@@ -55,8 +55,8 @@ class Outer {
 class Outer {
     //...
     // 정적 중첩 클래스
-		static class StaticNested {
-		//... 
+    static class StaticNested {
+    //... 
     }
 }
 ```
@@ -175,6 +175,7 @@ public class NestedOuter {
 public class NestedOuterMain {
 
     public static void main(String[] args) {
+      
         NestedOuter outer = new NestedOuter();
         NestedOuter.Nested nested = new NestedOuter.Nested();
         nested.print();
@@ -251,7 +252,7 @@ public class InnerOuter { // 바깥 클래스
     private static int outClassValue = 3;
     private int outInstanceValue = 2;
 		
-  	// 내부 클래스
+    // 내부 클래스
     class Inner {
         private int innerInstanceValue = 1;
 
@@ -694,6 +695,7 @@ public class AnonymousOuter {
 ```java
 public class BeforeRefactorMain {
     public static void helloDice() {
+      
         System.out.println("프로그램 시작");
 
         //코드 조각 시작

@@ -32,10 +32,10 @@
 
 ```java
 class MyThread extends Thread {
-	@Override
+  @Override
   public void run() {
-		// Thread클래스의 run()을 오버라이딩해서 사용한다
-	}
+    // Thread클래스의 run()을 오버라이딩해서 사용한다
+  }
 }
 ```
 
@@ -371,6 +371,18 @@ synchronized(객체 참조 변수) {
 > (macOS) IntelliJ IDEA > Preferences > search "console" > use soft wraps in console 
 >
 > 이 설정을 사용하면 콘솔의 내용을 자동 줄바꿈 해준다.
+
+<br>
+
+---
+
+## 8) `ThreadLocal`
+
+
+
+
+
+
 
 ---
 

@@ -36,18 +36,18 @@
 
 <br>
 
-[```Parent.Java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/Parent.java)
-
 ```java
 public class Parent {
+  
     private String color = "Yellow";
+  
     public void parentMethod() {
         System.out.println("called parentMethod");
     }
 }
 ```
 
-[```Child.Java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/Child.java)
+<br>
 
 ```java
 public class Child extends Parent{
@@ -57,17 +57,19 @@ public class Child extends Parent{
 }
 ```
 
-[```PolyMain1.Java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/PolyMain1.java)
+<br>
 
 ```java
 public class PolyMain1 {
     public static void main(String[] args) {
+      
         // 1. Parent 변수가 Parent 인스턴스 참조 (부모 -> 부모)
         System.out.println("1. Parent(p1)가 Parent 참조");
         Parent p1 = new Parent();
         System.out.print("p1.parentMethod() 실행 : ");
         p1.parentMethod();
         System.out.println("------------------------");
+      
         // 2. Child 변수가 Child 인스턴스 참조 (자식 -> 자식)
         System.out.println("2. Child(c1)가 Child 참조");
         Child c1 = new Child();
@@ -76,6 +78,7 @@ public class PolyMain1 {
         System.out.print("c1.parentMethod() 실행 : ");
         c1.parentMethod();
         System.out.println("------------------------");
+      
         // 3. Parent 변수가 Child 인스턴스 참조 (부모 -> 자식) (다형적 참조)
         System.out.println("3. Parent(p2)가 Child 참조");
         Parent p2 = new Child();
@@ -124,11 +127,10 @@ c.childMethod();
 
 <br>
 
-[```DownCastMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/DownCastMain1.java)
-
 ```java
 public class CastMain1 {
     public static void main(String[] args) {
+      
         // Parent가 Child 참조 (부모 -> 자식)
         Parent p3 = new Child();
         // 자식 타입을 참조하더라도 자식의 메서드 호출은 불가
@@ -156,11 +158,11 @@ called parentMethod
 * 다운캐스팅 결과를 변수에 담아두는 과정 없이 일시적으로 다운캐스팅을 해서 인스턴스의 하위 계층 클래스의 기능을 사용 가능
 
 <br>
-[```TempCastMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/TempCastMain1.java)
 
 ```java
 public class TempCastMain1 {
     public static void main(String[] args) {
+      
         Parent p4 = new Child();
 
         // 1. 기존 다운캐스팅
@@ -192,8 +194,6 @@ public class TempCastMain1 {
 * 다운캐스팅을 잘못하는 경우 런타임(Runtime) 오류 발생 가능
 
 <br>
-
-[```DownCastMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/DownCastMain2.java)
 
 ```java
 public class DownCastMain2 {
@@ -247,11 +247,12 @@ Parent p = (Parent) c;
 Parent p1 = c;
 ```
 
-[```UpCastMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/UpCastMain1.java)
+<br>
 
 ```java
 public class CastMain2 {
     public static void main(String[] args) {
+      
         // 1. 업캐스팅 - Parent는 Child를 담을 수 있음
         Child c = new Child();
         Parent p = (Parent) c;
@@ -278,11 +279,10 @@ public class CastMain2 {
 
 <br>
 
-[```InstanceOfMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/InstanceOfMain1.java)
-
 ```java
 public class InstanceOfMain1 {
     public static void main(String[] args) {
+      
         Parent poly1 = new Parent();
         Parent poly2 = new Child();
         Parent poly3 = new GrandChild();
@@ -347,6 +347,7 @@ Is poly5 a instance of GrandChild? : false
 ```java
 public class InstanceOfMain2 {
     public static void main(String[] args) {
+      
         Parent p = new Parent();
 
         System.out.println("p instanceof Child : "+(p instanceof Child));
@@ -386,31 +387,35 @@ c instanceof Parent : true
 
 <br>
 
-[```Parent.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/overriding/Parent.java)
-
 ```java
 public class Parent {
+  
     public String color = "Yellow";
     public String value = "Parent Value";
+  
     public void commonMethod() {
         System.out.println("Parent's commonMethod");
     }
+  
     public void parentMethod() {
         System.out.println("called parentMethod");
     }
 }
 ```
 
-[```Child.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/overriding/Child.java)
+<br>
 
 ```java
 public class Child extends Parent {
+  
     public String color = "White";
     public String value = "Child Value";
+  
     @Override
     public void commonMethod() {
         System.out.println("Child's commonMethod (Overrided)");
     }
+  
     public void childMethod() {
         System.out.println("called childMethod");
     }
@@ -430,6 +435,7 @@ public class OverridingMain1 {
         System.out.println("value = "+parent.value);
         parent.commonMethod();
         System.out.println("------------------------");
+      
         // 2. Child 변수가 Child 인스턴스 참조
         Child child = new Child();
         System.out.println("1. Child -> Child");
@@ -437,6 +443,7 @@ public class OverridingMain1 {
         System.out.println("value = "+child.value);
         child.commonMethod();
         System.out.println("------------------------");
+      
         // 3. Parent 변수가 Child 인스턴스 참조 (다형적 참조)
         Parent poly = new Child();
         System.out.println("3. Parent -> Child");
@@ -489,25 +496,26 @@ Child's commonMethod (Overrided)
 
 <br>
 
-[```Animal.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/polyusage/Animal.java)
-
 ```java
 public class Animal {
+  
     private String name = "Animal";
 
     public void sound() {
         System.out.println("Generate Animal Sound!");
     }
+  
     public void getName() {
         System.out.println("I'm a "+name+"!");
     }
 }
 ```
 
-[```Dog.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/polyusage/Dog.java)
+<br>
 
 ```java
 public class Dog extends Animal{
+  
     private String name = "Dog";
 
     @Override
@@ -522,10 +530,11 @@ public class Dog extends Animal{
 }
 ```
 
-[```Cat.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/polyusage/Cat.java)
+<br>
 
 ```java
 public class Cat extends Animal{
+  
     private String name = "Cat";
 
     @Override
@@ -540,11 +549,12 @@ public class Cat extends Animal{
 }
 ```
 
-[```UsePolyMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/polyusage/UsePolyMain1.java)
+<br>
 
 ```java
 public class UsePolyMain1 {
     public static void main(String[] args) {
+      
       	/*
       	Animal dog = New Dog();
       	Animal cat = New Cat();
@@ -649,8 +659,6 @@ Moo~
 
 <br>
 
-[```Animal.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/abstractclass/Animal.java)
-
 ```java
 public abstract class Animal { // 추상 클래스는 abstract
 
@@ -664,10 +672,11 @@ public abstract class Animal { // 추상 클래스는 abstract
 }
 ```
 
-[```Dog.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/abstractclass/Dog.java)
+<br>
 
 ```java
 public class Dog extends Animal {
+  
     private String name = "Dog";
 
     @Override
@@ -681,11 +690,13 @@ public class Dog extends Animal {
 }
 ```
 
-[```Pig.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/abstractclass/Pig.java)
+<br>
 
 ```java
 public class Pig extends Animal {
+  
     private String name = "Pig";
+  
     // 추상 클래스에서 정의한 추상 메서드는 무조건 오버라이드해서 구현해야 함
     @Override
     public void makeSound() {
@@ -694,7 +705,7 @@ public class Pig extends Animal {
 }
 ```
 
-[```AbstractMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/abstractclass/AbstractMain1.java)
+<br>
 
 ```java
 public class AbstractMain1 {
@@ -795,8 +806,6 @@ Oink~
 
 <br>
 
-[```Vehicle.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/Vehicle.java)
-
 ```java
 public abstract class Vehicle{
     // 추상 메서드
@@ -810,7 +819,7 @@ public abstract class Vehicle{
 }
 ```
 
-[```Move.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/Move.java)
+<br>
 
 ```java
 public interface Move { // 인터페이스는 class 대신 interface 사용
@@ -818,7 +827,7 @@ public interface Move { // 인터페이스는 class 대신 interface 사용
 }
 ```
 
-[```Fly.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/Fly.java)
+<br>
 
 ```java
 public interface Fly {
@@ -827,15 +836,17 @@ public interface Fly {
 }
 ```
 
-[```Car.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/Car.java)
+<br>
 
 ```java
 public class Car extends Vehicle implements Move{ // Move 인터페이스 구현
+  
     // Vehicle 클래스(부모 클래스)의 추상 메서드 구현(오버라이드)
     @Override
     public void fillUp() {
         System.out.println("Filled up gas.");
     }
+  
     @Override
     public void showName() {
         System.out.println("This is a Car.");
@@ -849,14 +860,16 @@ public class Car extends Vehicle implements Move{ // Move 인터페이스 구현
 }
 ```
 
-[```Jet.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/Jet.java)
+<br>
 
 ```java
 public class Jet extends Vehicle implements Fly, Move{ // Fly, Move 인터페이스 다중 구현
+  
     @Override
     public void fillUp() {
         System.out.println("Filled up jet fuel.");
     }
+  
     @Override
     public void showName() {
         System.out.println("This is a Jet.");
@@ -867,6 +880,7 @@ public class Jet extends Vehicle implements Fly, Move{ // Fly, Move 인터페이
     public void fly() {
         System.out.println("Jet will start to fly.");
     }
+  
     @Override
     public void move() {
         System.out.println("The jet is moving.");
@@ -874,14 +888,16 @@ public class Jet extends Vehicle implements Fly, Move{ // Fly, Move 인터페이
 }
 ```
 
-[```ElectricPlane.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/ElectricPlane.java)
+<br>
 
 ```java
 public class ElectricPlane extends Vehicle implements Fly, Move{
+  
     @Override
     public void fillUp() {
         System.out.println("Charging battery.");
     }
+  
     @Override
     public void showName() {
         System.out.println("This is a Electric Plane");
@@ -891,6 +907,7 @@ public class ElectricPlane extends Vehicle implements Fly, Move{
     public void fly() {
         System.out.println("The electric plane will start to fly.");
     }
+  
     @Override
     public void move() {
         System.out.println("The electric plane is moving.");
@@ -898,12 +915,14 @@ public class ElectricPlane extends Vehicle implements Fly, Move{
 }
 ```
 
-[```InterfaceMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/polymorphism/interf/InterfaceMain1.java)
+<br>
 
 ```java
 public class InterfaceMain1 {
     public static void main(String[] args) {
+      
         Vehicle[] vehicleArray = {new Car(), new ElectricPlane(), new Jet()};
+      
         for (Vehicle vehicle : vehicleArray) {
             action(vehicle);
             if (vehicle instanceof Fly) {
@@ -921,9 +940,11 @@ public class InterfaceMain1 {
         vehicle.showName();
         vehicle.fillUp();
     }
+  
     private static void startFly(Fly fly) {
         fly.fly();
     }
+  
     private static void startMove(Move move) {
         move.move();
     }

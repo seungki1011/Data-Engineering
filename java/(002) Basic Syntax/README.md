@@ -83,11 +83,12 @@
 
 * 대표적으로 ```String```
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/variable/VarType.java)
+<br>
 
 ```java
 public class VarType {
     public static void main(String[] args) {
+      
         // Integer(정수형)
         int a = 99;
         // Long(정수형), Long은 뒤에 대문자 L 이용 권장
@@ -185,11 +186,10 @@ Max of double : 1.7976931348623157E308
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/operators/Op1.java)
-
 ```java
 public class Op1 {
     public static void main(String[] args) {
+      
         int a = 20;
         int b = 10;
         int c = 7;
@@ -245,8 +245,6 @@ a % c = 6
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/operators/Op2.java)
-
 ```java
 public class Op2 {
     public static void main(String[] args) {
@@ -298,8 +296,6 @@ a <= b returns false
   * 원시 타입 비교할때 사용 권장
 
 <br>
-
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/operators/Op3.java)
 
 ```java
 public class Op3 {
@@ -368,8 +364,6 @@ compare str1 with str3 : false
   * 조건은 제일 많이 발생하는 조건을 최상단 조건으로 설정하는 것이 좋음
 
 <br>
-
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/conditional/con1.java)
 
 ```java
 public class con1 {
@@ -440,11 +434,10 @@ You are a child
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/conditional/con2.java)
-
 ```java
 public class con2 {
     public static void main(String[] args) {
+      
         // switch
         int choice = 2;
 
@@ -492,8 +485,6 @@ This is the remaining code executed after the switch block
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/conditional/con3.java)
-
 ```java
 public class con3 {
     public static void main(String[] args) {
@@ -537,11 +528,10 @@ With your asset 40000$ You can buy it!
 
 <br>
 
-[아래코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/loop/loop1.java)
-
 ```java
 public class loop1 {
     public static void main(String[] args) {
+      
         // while문
         int cnt = 0;
         while (cnt < 5) {
@@ -571,11 +561,10 @@ Current cnt is : 5
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/loop/loop2.java)
-
 ```java
 public class loop2 {
     public static void main(String[] args) {
+      
         // 1. do-while 1
         int cnt = 0;
         do {
@@ -619,8 +608,6 @@ for(초기값; 조건식; 증감식) {
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/loop/loop3.java)
-
 ```java
 public class loop3 {
     public static void main(String[] args) {
@@ -657,11 +644,10 @@ current i is 5
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/loop/loop4.java)
-
 ```java
 public class loop4 {
     public static void main(String[] args) {
+      
         // 1. for-each 1
         int[] numbers = {1, 2, 3};
         for (int number : numbers) {

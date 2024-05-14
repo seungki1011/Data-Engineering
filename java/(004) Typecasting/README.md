@@ -36,6 +36,7 @@
 ```java
 public class tc1 {
     public static void main(String[] args) {
+      
         int intVal = 5;
         long longVal;
         double doubleVal;
@@ -80,11 +81,10 @@ doubleVal is 5.0
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/typecasting/tc2.java)
-
 ```java
 public class tc2 {
     public static void main(String[] args) {
+      
         int intVal;
         long longVal;
         double doubleVal = 10.345;
@@ -113,11 +113,10 @@ Value after type casting to int is 10
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/typecasting/tc3.java)
-
 ```java
 public class tc3 {
     public static void main(String[] args) {
+      
         double d1;
         d1 = 10 / 4;
         System.out.println("d1 = " + d1);

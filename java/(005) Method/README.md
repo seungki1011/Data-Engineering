@@ -34,8 +34,6 @@
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/method/method1.java)
-
 ```java
 public class method1 {
     public static void main(String[] args) {

@@ -43,11 +43,10 @@
 
 <br>
 
-[```FinalMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalMain1.java)
-
 ```java
 public class FinalMain1 {
     public static void main(String[] args) {
+      
         final String finalString = "This is a string value made with final";
         // 한번만 할당 가능, 새롭게 할당 시도하면 컴파일 오류
         // FINAL_STRING = "Assigning to a new value for a final variable is impossible";
@@ -58,6 +57,7 @@ public class FinalMain1 {
 
         finalMethod1(500);
     }
+  
     static void finalMethod1(final int finalParameter) {
         System.out.println("This is the parameter passed to the method: "+finalParameter);
         // final이 붙은 파라미터는 메서드 내부에서 변경, 할당 불가
@@ -84,10 +84,9 @@ This is the parameter passed to the method: 500
 
 <br>
 
-[```FinalConstructInit.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalConstructInit.java)
-
 ```java
 public class FinalConstructInit {
+  
     final int finalIntValue;
 
     // final이 붙은 멤버변수를 필드에서 초기화하지 않은 경우 생성자를 통해서 초기화
@@ -103,10 +102,9 @@ public class FinalConstructInit {
 
 <br>
 
-[```FinalFieldInit.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalFieldInit.java)
-
 ```java
 public class FinalFieldInit {
+  
     // static final이 붙은 변수는 전부 대문자 사용하자
     static final int FINAL_CONST = 40;
     final int finalInt = 30;
@@ -124,11 +122,10 @@ public class FinalFieldInit {
 
 <br>
 
-[```FinalMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/constant/FinalMain2.java)
-
 ```java
 public class FinalMain2 {
     public static void main(String[] args) {
+      
         System.out.println("1. 생성자를 이용한 멤버 변수 초기화");
         FinalConstructInit f1 = new FinalConstructInit(10);
         FinalConstructInit f2 = new FinalConstructInit(20);

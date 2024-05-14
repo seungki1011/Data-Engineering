@@ -42,6 +42,7 @@
 ```java
 public class RF1 {
     public static void main(String[] args) {
+      
         Unit unit1 = createUnit("Marine", 30, 150);
         Unit unit2 = createUnit("Firebat", 50, 250);
 
@@ -50,6 +51,7 @@ public class RF1 {
     }
 
     static Unit createUnit(String name, int attack, int defense) { // return 타입이 Unit
+        
         Unit unit = new Unit();
         unit.name = name;
         unit.attack = attack;

@@ -36,6 +36,7 @@ public class StringGrade {
 ```java
 public class DiscountService {
      public int discount(String grade, int price) {
+       
          int discountPercent = 0;
        
          if (grade.equals(StringGrade.BASIC)) {
@@ -208,7 +209,7 @@ public class EnumMain {
 				 System.out.println("BASIC 등급의 할인 금액: " + basic); 
          System.out.println("GOLD 등급의 할인 금액: " + gold); 
          System.out.println("DIAMOND 등급의 할인 금액: " + diamond);
-	   } 
+     } 
 }
 ```
 

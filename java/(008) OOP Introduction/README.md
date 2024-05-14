@@ -48,8 +48,6 @@
 
 <br>
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/ControllerData.java)
-
 ```java
 public class ControllerData {
     int value;
@@ -61,7 +59,7 @@ public class ControllerData {
 }
 ```
 
-[아래 코드](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/oop/oop1.java)
+<br>
 
 ```java
 public class oop1 {

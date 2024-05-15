@@ -10,9 +10,9 @@
 5. [데몬 스레드(Daemon Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#5-%EB%8D%B0%EB%AA%AC-%EC%8A%A4%EB%A0%88%EB%93%9Cdaemon-thread)
 6. [스레드 상태(Thread State)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#6-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%83%81%ED%83%9Cthread-state)
 7. [스레드의 동기화(synchronized)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#7-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EB%8F%99%EA%B8%B0%ED%99%94-synchronized)
-8. [`ThreadLocal`]()
-   * [동시성 문제]()
-   * [`ThreadLocal`을 통해 문제 해결]()
+8. [`ThreadLocal`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#8-threadlocal)
+   * [동시성 문제](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#81-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C)
+   * [`ThreadLocal`을 통해 문제 해결](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#82-threadlocal%EC%9D%84-%ED%86%B5%ED%95%B4-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)
 
 ---
 

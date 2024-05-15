@@ -10,6 +10,9 @@
 5. [데몬 스레드(Daemon Thread)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#5-%EB%8D%B0%EB%AA%AC-%EC%8A%A4%EB%A0%88%EB%93%9Cdaemon-thread)
 6. [스레드 상태(Thread State)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#6-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%83%81%ED%83%9Cthread-state)
 7. [스레드의 동기화(synchronized)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(023)%20Thread#7-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EB%8F%99%EA%B8%B0%ED%99%94-synchronized)
+8. [`ThreadLocal`]()
+   * [동시성 문제]()
+   * [`ThreadLocal`을 통해 문제 해결]()
 
 ---
 
@@ -378,11 +381,234 @@ synchronized(객체 참조 변수) {
 
 ## 8) `ThreadLocal`
 
+### 8.1 동시성 문제
+
+동일한 객체의 필드에 여러 스레드가 접근하고 조회하면서 생기는 문제에 대해서 알아보자.
+
+다음 코드를 살펴보자.
+
+<br>
+
+`FieldService`
+
+```java
+@Slf4j
+public class FieldService {
+
+    private String nameStore;
+
+    public String logic(String name) {
+        log.info("Stored name = {} -> nameStore = {}", name, nameStore);
+        nameStore = name;
+        SleepUtil.sleep(1000);
+        log.info("Found nameStore = {}", nameStore);
+        return nameStore;
+    }
+}
+```
+
+* `FieldService`라는 클래스의 `logic()`은 넘어온 파라미터(`name`)를 `nameStore`라는 필드에 저장한다. 그 후 `sleep(1000)`을 통해서 1초 대기하고 `nameStore`를 반환하다
+* `sleep()`은 따로 `SleepUtil` 클래스를 만들어서 `try-catch`를 처리했다
+
+<br>
+
+이제 `FieldService`라는 클래스의 인스턴스를 생성하고, 두 스레드가 이용하는 경우를 살펴보자.
+
+<br>
+
+```FieldServiceTest```
+
+```java
+@Slf4j
+public class FieldServiceTest {
+
+    private FieldService fieldService = new FieldService();
+
+    @Test
+    void field() {
+        log.info("Main thread start!");
+				
+      	// Runnable 인터페이스를 통해서 스레드를 구현
+        Runnable userA = () -> {
+            fieldService.logic("userA");
+        };
+
+        Runnable userB = () -> {
+            fieldService.logic("userB");
+        };
+
+        Thread threadA = new Thread(userA);
+        threadA.setName("threadA");
+        Thread threadB = new Thread(userB);
+        threadA.setName("threadB");
+				
+      	// 스레드A 시작
+        threadA.start();
+        //SleepUtil.sleep(2000); // 동시성 문제 발생 x
+        SleepUtil.sleep(200); // 동시성 문제 발생 o
+        // 스레드B 시작
+        threadB.start();
+
+        SleepUtil.sleep(3000); // Main thread 종료 대기
+        log.info("Main Exit!");
+
+    }
+}
+```
+
+```
+02:20:54.319 [Test worker] INFO FieldServiceTest -- Main thread start!
+02:20:54.321 [threadA] INFO FieldService -- Stored name = userA -> nameStore = null
+02:20:54.522 [threadB] INFO FieldService -- Stored name = userB -> nameStore = userA
+02:20:56.327 [threadA] INFO FieldService -- Found nameStore = userB
+02:20:56.527 [threadB] INFO FieldService -- Found nameStore = userB
+02:20:57.526 [Test worker] INFO FieldServiceTest -- Main Exit!
+```
+
+* `FieldService`의 인스턴스인 `fieldService`를 통해서 두 스레드 `threadA`, `threadB`가 각각 `userA`, `userB`라는 파라미터를 넘기고 있다
+* 동작 순서
+  * `threadA` 시작
+  * `"userA"`를 인스턴스의 필드인 `nameStore`에 저장
+  * `threadA`는 아직 처리중(`sleep()`)
+  * `threadB` 시작
+  * `"userB"`를 인스턴스의 필드인 `nameStore`에 저장 (기존 `"userA"`→`"userB"`)
+  * `threadA`에서 `nameStore` 조회 : `userB`를 받음
+  * `threadB`에서 `nameStore` 조회 : `userB`를 받음
+
+<br>
+
+여기서의 문제는 로직의 동작 의도는 `threadA`에서 `userA`를 조회해야 하지만, `userB`를 조회했다는 것이다. 이것이 멀티 스레드에서 공통으로 사용하는 인스턴스의 필드에 접근시 격게되는 동시성 문제이다. 다음 그림을 통해서 문제를 다시 한번 살펴보자.
+
+<br>
+
+ <p align="center">   <img src="img/local1.png" alt="thread" style="width: 100%;"> </p>
+
+<p align='center'>동시성 문제</p>
+
+위 그림에서도 살펴볼 수 있듯이, 다수의 스레드에서 객체의 필드에 접근해서 사용하게 되면, 의도하지 않는 결과를 만들어낼 수 있다.(`threadA`에서 `userB` 값을 조회)
+
+이런 동시성 문제는 싱글톤 패턴 처럼 공통으로 사용하는 객체가 있거나, `static`과 같은 공용 필드에 값을 변경하기 때문에 발생한다.(값을 읽기만 하는 경우 발생하지 않는다) 
+
+이런 문제를 해결하기 위해서 자바는 `ThreadLocal` 클래스를 제공한다.
+
+<br>
+
+---
+
+### 8.2 `ThreadLocal`을 통해 문제 해결
+
+자바가 제공하는 `java.lang.ThreadLocal` 클래스를 사용해보자.
+
+들어가기에 앞서, 스레드 로컬의 기능을 아주 간단히 설명하자면 스레드 로컬을 사용하면 스레드 별로 별도의 내부 저장소를 제공한다. 스레드 별로 존재하기 때문에, 같은 인스턴스의 스레드 로컬 필드에 접근해도 별도로 저장되기 때문에 안전하다. 예시와 그림을 통해서 더 자세히 알아보자.
+
+<br>
+
+`ThreadLocalService`
+
+```java
+@Slf4j
+public class ThreadLocalService {
+    private ThreadLocal<String> nameStore = new ThreadLocal<>();
+
+    public String logic(String name) {
+        log.info("Stored name = {} -> nameStore = {}", name, nameStore.get());
+        nameStore.set(name);
+        SleepUtil.sleep(1000);
+        log.info("Found nameStore = {}", nameStore.get());
+        return nameStore.get();
+    }
+}
+```
+
+* `set(value)` : 값 저장
+  * 현재 스레드 기준으로 `ThreadLocalMap` 객체에 값을 저장한다(없다면 생성)
+* `get()` : 값 조회
+  * 현재 스레드 기준으로 `ThreadLocalMap` 객체에 저장된 값을 찾아서 반환
+* `remove()` : 값 제거
+  * 현재 스레드 기준으로 `ThreadLocalMap` 객체에 해당 값을 제거
+
+<br>
+
+코드에서 구현하지는 않았지만 스레드 로컬 필드에 값을 저장후 사용이 끝났으면, 나중에 `remove()`로 값을 제거해줘야 문제가 발생하지 않는다.
+
+<br>
+
+`ThreadLocalServiceTest`
+
+```java
+@Slf4j
+public class ThreadLocalServiceTest {
+
+    private ThreadLocalService service = new ThreadLocalService();
+
+    @Test
+    void field() {
+        log.info("Main thread start!");
+
+        Runnable userA = () -> {
+            service.logic("userA");
+        };
+
+        Runnable userB = () -> {
+            service.logic("userB");
+        };
+
+        Thread threadA = new Thread(userA);
+        threadA.setName("threadA");
+        Thread threadB = new Thread(userB);
+        threadB.setName("threadB");
+
+        threadA.start();
+        SleepUtil.sleep(100);
+        threadB.start();
+
+        SleepUtil.sleep(3000); // Main thread 종료 대기
+        log.info("Main Exit!");
+
+    }
+}
+```
+
+```
+16:48:58.456 [Test worker] INFO ThreadLocalServiceTest -- Main thread start!
+16:48:58.459 [threadA] INFO ThreadLocalService -- Stored name = userA -> nameStore = null
+16:48:58.564 [threadB] INFO ThreadLocalService -- Stored name = userB -> nameStore = null
+16:48:59.464 [threadA] INFO ThreadLocalService -- Found nameStore = userA
+16:48:59.569 [threadB] INFO ThreadLocalService -- Found nameStore = userB
+16:49:01.568 [Test worker] INFO ThreadLocalServiceTest -- Main Exit!
+```
+
+* 기존 필드 저장 후 조회의 문제가 `ThreadLocal`을 도입하면서 해결된 것을 확인할 수 있다
+
+<br>
+
+다음 그림을 통해서 더 쉽게 이해해보자.
+
+<br>
+
+ <p align="center">   <img src="img/local2.png" alt="thread" style="width: 100%;"> </p>
+
+* `ThreadLocal`을 사용하면 각 스레드 별로 필드에 대한 별도의 저장소가 생김
+* 스레드 별로 관리가 되기 때문에, 멀리 스레드 상황에서 스레드 로컬 필드에 접근해서 쓰기 작업을 하든 읽기 작업을 하든 문제가 생기지 않는다
+* 주의할 점은 해당 스레드의 로직이 스레드 로컬 사용을 완료했으면 반드시 `remove()`로 저장된 값을 제거해줘야 한다
+
+<br>
+
+그럼 왜 `remove()`를 통해 스레드 로컬 필드의 값을 제거해줘야 할까?
+
+그 이유는 스레드 풀을 사용할때 값을 제거하지 않는 경우 문제가 발생하기 때문이다.
+
+<br>
+
+ <p align="center">   <img src="img/local4.png" alt="thread" style="width: 90%;"> </p>
+
+* 기존 값을 제거하지 않는 경우 스레드풀에서 스레드를 재사용하는 과정에서 다시 `get()`을 통해 필드에 접근하면, 제거하지 않은 값을 그대로 조회할 수 있는 문제가 발생할 수 있다
 
 
 
 
 
+<br>
 
 ---
 

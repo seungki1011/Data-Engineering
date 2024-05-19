@@ -95,7 +95,7 @@
       </details>
 
 <details>
-  <summary><h3>3. 자료구조와 알고리즘(Data Structure and Algorithm)</h3></summary>
+  <summary><h3>3. 🧩 자료구조와 알고리즘(Data Structure and Algorithm)</h3></summary>
 
   - [algorithm and data structure/README.md](algorithm%20and%20data%20structure/README.md)
 

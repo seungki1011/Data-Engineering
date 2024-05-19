@@ -17,7 +17,7 @@
 # :computer: Computer Science
 
 <details>
-  <summary><h3>1. 컴퓨터 구조 및 운영 체제(Computer Structure and OS)(추가 예정)</h3></summary>
+  <summary><h3>1. 📂 컴퓨터 구조 및 운영 체제(Computer Structure and OS)(추가 예정)</h3></summary>
 </details>
 
 <details>

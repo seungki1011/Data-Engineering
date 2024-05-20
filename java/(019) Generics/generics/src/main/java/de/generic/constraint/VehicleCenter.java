@@ -1,11 +1,13 @@
 package de.generic.constraint;
 
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class VehicleCenter<T> {
 
     private T vehicle;
+
+    public void setVehicle(T vehicle) {
+        this.vehicle = vehicle;
+    }
 
     public void check() {
         // object 타입의 메서드는 이용 가능

@@ -251,7 +251,7 @@ public class PairTest {
         System.out.println(pair2.getSecond());
         System.out.println("pair2 = " + pair2);
 
-        // 지네릭 클래스간 다형성은 성립
+        // 제네릭 클래스간 다형성은 성립
         List<String> list = new ArrayList<String>();
 
         list.add("a");
@@ -423,10 +423,13 @@ public class Plane extends Vehicle{
 `VehicleCenter`
 
 ```java
-@AllArgsConstructor
 public class VehicleCenter<T> {
 
     private T vehicle;
+
+    public void setVehicle(T vehicle) {
+        this.vehicle = vehicle;
+    }
 
     public void check() {
         // object 타입의 메서드는 이용 가능
@@ -466,14 +469,18 @@ public class VehicleCenter<T> {
 public class NoConstraintTest {
     public static void main(String[] args) {
 
-        VehicleCenter<Car> car = new VehicleCenter<>(new Car("K5", 100));
-        VehicleCenter<Plane> plane = new VehicleCenter<>(new Plane("F-16", 500));
+        VehicleCenter<Car> car = new VehicleCenter<>();
+        VehicleCenter<Plane> plane = new VehicleCenter<>();
+
+        car.setVehicle(new Car("K5", 100));
+        plane.setVehicle(new Plane("F-16", 500));
 
         car.check();
         plane.check();
 
         // Vehicle이 아닌 것도 타입에 들어갈 수 있는 문제
-        VehicleCenter<String> string = new VehicleCenter<>("string value");
+        VehicleCenter<String> string = new VehicleCenter<>();
+        string.setVehicle("string value");
         string.check();
 
     }
@@ -508,14 +515,16 @@ string value
  `ConstraintVehicleCenter`
 
 ```java
-@AllArgsConstructor
 public class ConstraintVehicleCenter<T extends Vehicle> { // 타입 매개변수에 제약
 
     private T vehicle;
 
+    public void setVehicle(T vehicle) {
+        this.vehicle = vehicle;
+    }
+
     public void check() {
         System.out.println(vehicle.toString());
-        // 이제 Vehicle이 제공하는 메서드 사용 가능
         System.out.println("이동 수단 연료양 = " + vehicle.getVolume());
         vehicle.move();
     }
@@ -523,6 +532,7 @@ public class ConstraintVehicleCenter<T extends Vehicle> { // 타입 매개변수
     public T getLargerVolume(T target) {
         return vehicle.getVolume() > target.getVolume() ? vehicle : target;
     }
+  
 }
 ```
 
@@ -538,124 +548,95 @@ public class ConstraintVehicleCenter<T extends Vehicle> { // 타입 매개변수
 
 <br>
 
-
-
-
-
-
-
-
-
-<br>
-
----
-
-## 3) 제네릭 제약(Generic Constraints)
-
-### 3.1 제한된 제네릭 클래스
-
-* `extends`를 이용해서 대입할 수 있는 타입을 제한할 수 있다
-
-<br>
+`ConstraintTest`
 
 ```java
-class Person2<T extends Parent>{ // Parent의 자손 타입만 지정 가능
-    ArrayList<T> list = new ArrayList<>();
-}
-
-class Person3<T extends Parent & MyInterface>{ // & MyInterface로 MyInterface 인터페이스를 구현한 클래스로 제한 가능
-    ArrayList<T> list = new ArrayList<>();
-}
-```
-
-```java
-    Person2<Parent> p1 = new Person2<Parent>();
-    Person2<Child> p2 = new Person2<Child>(); // Child는 Parent의 자손이기 때문에 가능
-```
-
-* 인터페이스의 경우에도 `extends`를 사용한다
-* `<T extends Parent & MyInterface>` : `Parent`의 자손 타입이면서, `MyInterface` 인터페이스를 구현한 타입으로 제한
-  * 만약 `Parent`가 이 `MyInterface`를 구현한 클래스라면 사실 필요가 없음
-
-
-
-
-
-<br>
-
----
-
-### 3.2 제네릭스의 제약
-
-위의 `Box` 클래스를 다시 사용해보자.
-
-<br>
-
-```java
-class Box<T> { // 타입 파라미터 'T'로 설정
-    private T value;
-		
-  	// static T value; // static 멤버에 타입 변수 사용 불가
-  
-    public Box(T value) {
-        this.value = value;
-    }
-
-    // Getter and Setter
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
-
-    // value의 type을 출력하는 메서드
-    public void printValueType() {
-        System.out.println("Type of value: "+value.getClass().getName());
-    }
-}
-```
-
-```java
-public class GenericConstraintTest {
+public class ConstraintTest {
     public static void main(String[] args) {
 
-        // 1. 타입 변수에 대입은 인스턴스 별로 다르게 가능하다
-      	Box<Integer> integerBox = new Box<>(100); // Integer 객체만 저장 가능
-        Box<String> stringBox = new Box<>("My name is stringBox"); // String 객체만 저장가능
+        ConstraintVehicleCenter<Car> car = new ConstraintVehicleCenter<>();
+        ConstraintVehicleCenter<Plane> plane = new ConstraintVehicleCenter<>();
 
-        System.out.println(integerBox.getValue());
-        System.out.println(integerBox.getValue().getClass());
-        System.out.println("-------------------------");
-        System.out.println(stringBox.getValue());
-        System.out.println(stringBox.getValue().getClass());
+        car.setVehicle(new Car("K5", 100));
+        plane.setVehicle(new Plane("F-16", 500));
+
+        car.check();
+        plane.check();
+
+        // 제네릭의 타입 매개변수 제한으로 인해 Vehicle과 자손만 타입인자로 사용 가능
+        // ConstraintVehicleCenter<String> string = new ConstraintVehicleCenter<>();
+        // string.setVehicle("string value");
+        // string.check();
 
     }
 }
 ```
 
 ```
-100
-class java.lang.Integer
--------------------------
-My name is stringBox
-class java.lang.String
+Vehicle{name='K5', volume=100}
+이동 수단 연료양 = 100
+자동차는 달리는 중.
+Vehicle{name='F-16', volume=500}
+이동 수단 연료양 = 500
+비행기는 나는 중.
 ```
 
-* 타입 변수에 대입은 인스턴스 별로 다르게 가능하다
-* `static` 멤버에 타입 변수 사용 불가 → `static`이라는 것은 모든 인스턴스에 공통으로 사용가능하다는 것
-
-
-
-* 배열을 생성할 때 타입 변수 사용불가 → `T[] toArray() { T[] tmpArr = new T[itemArr.length] };` 불가
-  * `new` 다음에 `T` 불가
-
-
-
-* 타입 변수로 배열 선언은 가능하다 → `T[] itemArr;` 가능
+* 타입 매개변수의 제한을 통해 다음의 효과를 얻을 수 있었다
+  * 제네릭 클래스에서 특정 클래스의 메서드(기능)을 사용할 수 있게 됨
+  * 매개변수에 관련이 없는 온갖 타입을 사용할 수 없도록 제한할 수 있게 됨
 
 <br>
+
+제네릭 제한은 다음과 같이 사용도 가능하다.
+
+```java
+public class MultipleConstraintVehicleCenter <T extends Car & CarInterface>{
+    // ...
+}
+```
+
+* 이 경우 `Car`의 자손 타입이면서 `CarInterface`를 구현한 클래스만 타입인자로 사용 가능
+* 보통 클래스가 이미 특정 인터페이스를 구현하고 있는 경우가 대부분이기 때문에 이렇게 사용하는 케이스는 드물다
+
+<br>
+
+---
+
+## 3) 제네릭 메서드(Generic Method)
+
+### 3.1 
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 

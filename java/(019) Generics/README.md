@@ -4,7 +4,7 @@
 
 ---
 
-## 1) Generics 소개
+## 1) 제네릭스(Generics)
 
 ### 1.1 제네릭스 설명
 
@@ -604,59 +604,266 @@ public class MultipleConstraintVehicleCenter <T extends Car & CarInterface>{
 
 ## 3) 제네릭 메서드(Generic Method)
 
-### 3.1 
+### 3.1 제네릭 메서드 설명
 
+특정 메서드에 제네릭을 적용하는 제네릭 메서드에 대해 알아보자.
 
-
-
-
-
+다음 코드를 통해 살펴보자.
 
 <br>
 
+`GenericMethod`
+
+```java
+public class GenericMethod {
+
+    public static Object objMethod(Object obj) {
+        System.out.println("object print: " + obj);
+        return obj;
+    }
+
+    // 타입 인자를 전달 받는 시점은 메서드를 호출할 때
+    public static <T> T genericMethod(T t) {
+        System.out.println("generic print: " + t);
+        return t;
+    }
+    
+    // extends를 통한 타입 매개변수 제한도 가능
+    public static <T extends Number> T numberMethod(T t) {
+        System.out.println("number print: " + t);
+        return t;
+    }
+}
+```
+
+* 제네릭 메서드는 클래스 전체가 아닌 메서드 단위로 제네릭을 도입할 때 사용한다
+  * `static <T> T genericMethod(T t) {}`
+  * 제네릭 메서드를 사용하기 위해서는 반환 타입의 왼쪽에 `<타입 매개변수>`를 적어준다
 
 
 
+* 제네릭 메서드에도 제네릭 제한이 가능하다
+  * `public static <T extends Number> T numberMethod(T t){}`
+
+<br>
+
+`GenericMethodTest1`
+
+```java
+public class GenericMethodTest1 {
+    public static void main(String[] args) {
+
+        Integer i = 100;
+        Object object = GenericMethod.objMethod(i);
+
+        // 타입 인자 명시
+        Integer result = GenericMethod.<Integer>genericMethod(i);
+        Integer integerValue = GenericMethod.<Integer>numberMethod(100);
+      
+        // <Double>(타입 인자) 생략 가능
+        Double doubleValue = GenericMethod.numberMethod(200.0);
+
+    }
+}
+```
+
+* 타입 인자는 메서드를 호출하는 시점에 전달 된다
+  * `GenericMethod.<타입인자>genericMethod(i)`
+
+* 제네릭 메서드를 호출할 때 제네릭 메서드 타입의 추론이 가능하면 타입 인자를 생략할 수 있다
+  * `Double doubleValue = GenericMethod.numberMethod(200.0);`
+
+<br>
+
+위의 예시에서는 `static` 메서드에만 제네릭 메서드를 적용했지만, 제네릭 메서드는 인스턴스 메서드에도 적용가능하다. 코드를 통해 알아보자.
+
+<br>
+
+```java
+public class GenericMethodClass<T> {
+
+    private T value;
+
+    public static <V extends Vehicle> V staticGenericMethod1(V v) {
+        //...
+        return v;
+    }
+    
+    // 제네릭 메서드의 T가 제네릭 클래스의 T보다 높은 우선순위를 가진다
+    // 인스턴스 메서드도 제네릭 메서드 사용 가능
+    public <T extends Number> T instanceGenericMethod(T z) {
+        //...
+        return z;
+    }
+    
+    // 인스턴스 메서드에는 제네릭 클래스의 타입 매개변수 사용 가능
+    public T instanceMethod(T u) {
+        return null;
+    }
+    
+    // static 메서드에 제네릭을 사용하기 위해서는 제네릭 메서드 사용 필수
+    // public static T staticMethod(T z) { return null; }
+    
+}
+```
+
+* 제네릭 메서드를 사용하기 위해서는 `<타입 매개변수>`를 반환 타입 왼쪽에 추가해야 함
+  * `<타입 매개변수>` 없이 `public T instanceMethod(T u){}` 처럼 사용하는 것은 그냥 제네릭 클래스의 제네릭을 메서드에 적용하는 것임
 
 
 
+* `제네릭 클래스`의 매개변수 이름과 `제네릭 메서드`의 매개변수 이름이 동일하면 `제네릭 메서드`의 매개변수가 더 높은 우선순위를 가진다
+  * 쉽게 이야기 하자면 두 매개변수는 이름이 같아도 서로 다른 타입 매개변수이다
+  * 헷갈리니깐 서로 다르게 이름을 설정하자
 
 
 
+* `static` 메서드에는 제네릭 클래스의 제네릭 타입 매개변수를 적용할 수 없다. 제네릭 타입은 제네릭 클래스의 객체를 생성하는 시점에 정해지고, `static` 메서드는 클래스 단위로 작동하기 때문에 제네릭 타입을 적용하는 것은 불가능하다
+  * 쉽게 생각해서, 아직 객체를 생성하지도 않았는데(타입이 정해지지도 않았는데) 어떤 제네릭 타입이 적용된 `static` 메서드를 사용하는 것은 말이 되지 않는다!
 
 
 
+* `static` 메서드에 제네릭을 도입하고 싶으면 제네릭 메서드를 사용하면 된다 
 
+<br>
 
+<p align="center">   <img src="img/generic2.png" alt="generic" style="width: 80%;"> </p>
 
+<br>
 
+---
 
+### 3.2 제네릭 메서드 사용해보기
 
+제네릭 메서드를 사용해보자.
 
+<br>
 
+`BioUnit`
 
+```java
+@Getter
+@AllArgsConstructor
+public class BioUnit {
 
+    private String name;
+    private int hp;
 
+    @Override
+    public String toString() {
+        return "BioUnit{" +
+                "name='" + name + '\'' +
+                ", hp=" + hp +
+                '}';
+    }
+}
+```
+
+<br>
+
+`Marine`
+
+```java
+public class Marine extends BioUnit {
+
+    public Marine(String name, int hp) {
+        super(name, hp);
+    }
+}
+```
+
+<br>
+
+`Zeolot`
+
+```java
+public class Zealot extends BioUnit{
+
+    public Zealot(String name, int hp) {
+        super(name, hp);
+    }
+}
+```
+
+<br>
+
+`UnitUtil`
+
+```java
+public class UnitUtil {
+
+    public static <T extends BioUnit> T maxHp(T t1, T t2) {
+        return (t1.getHp() > t2.getHp()) ? t1 : t2;
+    }
+
+}
+```
+
+* `public static <T extends BioUnit> T maxHp(T t1, T t2)`는 제네릭 메서드
+* 두 유닛을 입력 받고, 둘 중 `hp`가 더 높은 유닛을 반환한다
+
+<br>
+
+`UnitUtilTest`
+
+```java
+public class UnitUtilTest {
+    public static void main(String[] args) {
+
+        Marine m1 = new Marine("마린1", 40);
+        Marine m2 = new Marine("마린2", 50);
+        Marine resultMarine = UnitUtil.maxHp(m1, m2);
+        System.out.println("resultMarine = " + resultMarine);
+
+        Zealot z1 = new Zealot("질럿1", 100);
+        Zealot z2 = new Zealot("질럿2", 150);
+        Zealot resultZealot = UnitUtil.maxHp(z1, z2);
+        System.out.println("resultZealot = " + resultZealot);
+
+        BioUnit resultBioUnit = UnitUtil.maxHp(m1, z2);
+        System.out.println("resultBioUnit = " + resultBioUnit);
+    }
+}
+```
+
+```
+resultMarine = BioUnit{name='마린2', hp=50}
+resultZealot = BioUnit{name='질럿2', hp=150}
+resultBioUnit = BioUnit{name='질럿2', hp=150}
+```
+
+<br>
 
 ---
 
 ## 4) 와일드카드(Wildcard, `<?>`)
 
-와일드 카드에 대해서 알아보자.
+### 4.1 와일드카드 설명
 
-```java
-ArrayList<? extends Product> list = new ArrayList<Tv>(); // 가능
-ArrayList<? extends Product> list = new ArrayList<Computer>(); // 가능
+와일드카드(wild card)에 대해서 알아보자.
 
-ArrayList<Product> list = new ArrayList<Tv>(); // 불가능, 대입 타입의 불일치
-```
+와일드카드에 대해서 아주 간단히 설명하자면, 제네릭 타입을 조금 더 편리하게 사용할 수 있는 방법으로 볼 수 있다.
 
-* 대입 타입이 무조건 일치해야한다는 제약을 벗어나기 위해서 와일드 카드 사용
-* 와일드 카드로 하나의 참조 변수로 대입된 타입이 다른 객체를 참조 가능해진다
+> 참고
+>
+> * 와일드카드는 제네릭 클래스나 제네릭 메서드를 선언하는 것이 아니라, 이미 만들어진 제네릭 타입을 활용할 때 사용하는 것이다.
+> * 프로그래밍에서의 와일드카드는 보통 다수를 상징하는 특수한 문자를 뜻한다. 예시 : `*`, `?`
 
 <br>
 
-> `<? extends T>` : 와일드 카드의 상한 제한. `T`와 그 자손들만 가능(가장 많이 사용) - upperbounded wildcard
+```java
+ArrayList<Product> list = new ArrayList<Tv>(); // 불가능, 대입 타입의 불일치
+
+ArrayList<? extends Product> list = new ArrayList<Tv>(); // 가능
+ArrayList<? extends Product> list = new ArrayList<Computer>(); // 가능
+```
+
+* 대입 타입이 무조건 일치해야한다는 제약을 벗어나기 위해서 와일드 카드 사용
+* 제네릭 클래스나 메서드가 무조건 필요한 상황이 아니라면, 와일드카드를 사용하는 것이 더 편하다
+
+<br>
+
+> `<? extends T>` : 와일드 카드의 상한 제한. `T`와 그 자손들만 가능 - upperbounded wildcard
 >
 > `<? super T>` : 와일드 카드의 하한 제한. `T`와 그 조상들만 가능 - lowerbounded wildcard
 >
@@ -664,31 +871,230 @@ ArrayList<Product> list = new ArrayList<Tv>(); // 불가능, 대입 타입의 �
 
 <br>
 
----
+코드를 통해 더 자세히 알아보자.
 
-## 5) 제네릭 메서드(Generic Method)
-
-```java
-static <T> void sort(List<T>, list, Comparator<? super T> o){...}
-```
-
-* 제네릭 타입이 선언된 메서드를 제네릭 메서드라고 한다 (타입 변수는 메서드 내에서만 유효하다)
+이후의 코드에서 이전의 [`GenericBox`]()를 다시 사용할 것이다.
 
 <br>
 
+---
+
+### 4.2 제한을 사용하지 않은 와일드 카드
+
+먼저 제한을 사용하지 않은 와일드카드 부터 살펴보자.
+
+<br>
+
+`WildcardTest1`
+
 ```java
-class Box<T> {
-  
-  // 생략...
-  
-  static <T> void sort(List<T>, list, Comparator<? super T> o){ // 메서드의 T는 클래스의 T와 서로 별개의 타입 변수이다
-    // 제네릭 메서드의 T는 메서드 내에서만 스코프를 가진다
-    // 생략...
-  }
- 
+public class WildcardTest1 {
+    public static void main(String[] args) {
+        
+        // GenericBox는 모든 타입을 담을 수 있음
+        GenericBox<Object> objBox = new GenericBox<>();
+        GenericBox<Plane> planeBox = new GenericBox<>();
+        GenericBox<Car> carBox = new GenericBox<>();
+        
+        // planeBox에 Plane 객체를 생성해서 넣음
+        planeBox.setValue(new Plane("F-22", 1000));
+
+        // 비제한
+        NoConstraint.printGeneric1(planeBox);
+        NoConstraint.printWildcard1(planeBox);
+        
+    }
 }
 ```
 
-* 클래스의 타입 매개변수 `<T>`와 메서드의 타입 매개변수 `<T>`는 별개이다
+```
+[GenericBox<T> 사용] box.getValue() = Vehicle{name='F-22', volume=1000}
+[GenericBox<?> 사용] box.getValue() = Vehicle{name='F-22', volume=1000}
+```
 
 <br>
+
+해당 메서드들을 자세히 살펴보자.
+
+<br>
+
+`NoConstraint`
+
+```java
+public class NoConstraint {
+  
+    // 제네릭 메서드
+    // GenericBox<Plane> planeBox 전달. T -> Plane
+    static <T> void printGeneric1(GenericBox<T> box) {
+        System.out.println("[GenericBox<T> 사용] box.getValue() = " + box.getValue());
+    }
+
+    // 비제한 와일드 카드를 사용한 일반 메서드
+    // GenericBox<Plane> planeBox 전달. ?는 모든 타입을 받을 수 있음
+    static void printWildcard1(GenericBox<?> box) {
+        System.out.println("[GenericBox<?> 사용] box.getValue() = " + box.getValue());
+    }
+}
+```
+
+* 와일드 카드 `?`는 모든 타입을 다 받을 수 있다는 뜻
+  * 비제한 와일드카드는 `carBox`, `objBox`, `planeBox` 모두 다 입력 가능함
+
+* 와일드카드는 `Box<Car>`, `Box<Plane>` 처럼 타입 인자가 정해진 제네릭 타입을 전달 받아서 활용할 때 사용한다
+
+<br>
+
+그러면 제네릭 메서드와 와일드카드의 차이에 대해서 조금더 자세히 알아보자.
+
+<br>
+
+---
+
+### 4.3 제네릭 메서드 vs 와일드 카드
+
+* 제네릭 메서드
+
+  * ```java
+    static <T> void printGeneric1(GenericBox<T> box) {
+            System.out.println("[GenericBox<T> 사용] box.getValue() = " + box.getValue());
+        }
+    ```
+
+  * 타입 매개변수가 존재한다
+
+  * 특정 시점에 타입 인자를 무조건 전달해서 사용해야 한다
+
+
+
+* 와일드 카드를 사용한 메서드
+
+  * ```java
+    static void printWildcard1(GenericBox<?> box) {
+            System.out.println("[GenericBox<?> 사용] box.getValue() = " + box.getValue());
+        }
+    ```
+
+  * 일반 메서드이다
+
+  * 단순히 제네릭 타입을 매개변수로 받을 수 있는 것 뿐이다
+
+  * 제네릭 메서드 처럼 타입 인자를 받아서, 제네릭 클래스나 제네릭 메서드의 모든 타입 파라미터에 타입 인자를 전달해서 결정하는 복잡한 방식으로 동작하지 않는다
+
+<br>
+
+차이점에서 볼 수 있듯이 와일드카드는 단순히 일반 메서드에 제네릭 타입을 받아서 사용할 수 있는 매개변수가 있는 것 뿐이다. 만약 제네릭 타입이나 제네릭 메서드를 무조건 정의해야하는 상황이 아니라면, 와일드카드를 사용하는것을 권장한다.
+
+<br>
+
+---
+
+### 4.4 상한, 하한 제한 와일드카드
+
+#### 4.4.1 상한 제한 와일드카드(Upper-bound)
+
+제네릭 클래스나 메서드에서 사용하는 것 처럼, 상한 제한을 두는 것이 가능하다
+
+<br>
+
+`UpperboundConstraint`
+
+```java
+public class UpperBoundConstraint {
+    
+    // 상한 제한 제네릭 메서드
+    static <T extends Vehicle> void printGeneric2(GenericBox<T> box) {
+        T t = box.getValue();
+        System.out.println("이름 = " + t.getName());
+    }
+
+    // 상한 제한 와일드 카드
+    static void printWildcard2(GenericBox<? extends Vehicle> box) {
+        Vehicle vehicle = box.getValue();
+        System.out.println("이름 = " + vehicle.getName());
+    }
+}
+```
+
+* `<? extends Vehicle>` : `Vehicle`과 그 하위 타입만 입력 가능
+
+<br>
+
+---
+
+#### 4.4.2 하한 제한 와일드카드(Lower-bound)
+
+제네릭에서 사용한것과 다르게 와일드카드는 하한 제한이 가능하다. 
+
+<br>
+
+`LowerboundTest`
+
+```java
+public class LowerBoundTest {
+    public static void main(String[] args) {
+      
+        GenericBox<Object> objBox = new GenericBox<>();
+        GenericBox<Vehicle> vehicleBox = new GenericBox<>();
+        GenericBox<Plane> planeBox = new GenericBox<>();
+        GenericBox<Car> carBox = new GenericBox<>();
+
+        // Vehicle을 포함한 상위 타입 전달 가능
+        writeBox(objBox);
+        writeBox(vehicleBox);
+
+        Vehicle vehicle = vehicleBox.getValue();
+        System.out.println("vehicle = " + vehicle);
+    }
+
+    static void writeBox(GenericBox<? super Vehicle> box) {
+        box.setValue(new Car("k5", 200));
+    }
+}
+```
+
+```
+vehicle = Vehicle{name='k5', volume=200}
+```
+
+* `? extends Vehicle` : `Vehicle`을 포함한 상위의 타입만 입력 받을 수 있다
+  * `Car`, `Plane`과 같은 하위 타입 입력 불가
+
+<br>
+
+---
+
+### 4.5 제네릭 클래스, 메서드를 사용해야하는 경우
+
+이전에도 설명했듯이 와일드카드는 `GenericBox<Plane>`, `GenericBox<Car>` 처럼 타입 인자가 전달된 제네릭 타입을 활용할 때 사용된다. 만약 타입 매개변수가 꼭 필요한 상황이라면 제네릭 클래스나 메서드를 사용해야 한다.
+
+코드를 통해 알아보자.
+
+<br>
+
+`NeedTypeParameter`
+
+```java 
+public class NeedTypeParameter {
+    
+    // 타입 파라미터 T를 무조건 사용해야하는 상황이면 제네릭 클래스나 메서드를 사용해야 한다
+    static <T extends Vehicle> T printAndReturnGeneric(GenericBox<T> box) {
+        T t = box.getValue();
+        System.out.println("이름 = " + t.getName());
+        return t;
+    }
+    
+    static Vehicle printAndReturnWildcard(GenericBox<? extends Vehicle> box) {
+        Vehicle vehicle = box.getValue();
+        System.out.println("이름 = " + vehicle.getName());
+        return vehicle;
+    }
+}
+```
+
+* 타입 파라미터 `T`를 사용해야하면 제네릭 타입이나 메서드 사용
+* `static <T extends Vehicle> T printAndReturnGeneric(GenericBox<T> box){}`에서 반환 타입이 `T`를 사용하기 때문에, 전달한 타입으로 명확하게 반환이 가능하다
+* 반면에 `static Vehicle printAndReturnWildcard(GenericBox<? extends Vehicle> box){}`는 반환 타입이 `Vehicle`로 고정 되었기 때문에, 전달된 타입으로 명확하게 반환하는 것은 불가능하다
+
+<br>
+
+위에서 알 수 있듯이, 와일드카드는 이미 만들어진 제네릭 타입을 전달 받아서 활용할 때 사용되지, 메서드의 타입을 타입 인자를 통해 변경하는 작업은 하지 못한다.

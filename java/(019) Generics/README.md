@@ -1,6 +1,23 @@
 ## Table of Contents
 
-
+1. [제네릭스(Generics)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#1-%EC%A0%9C%EB%84%A4%EB%A6%AD%EC%8A%A4generics)
+   * [제네릭스 설명](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#11-%EC%A0%9C%EB%84%A4%EB%A6%AD%EC%8A%A4-%EC%84%A4%EB%AA%85)
+   * 제네릭스 사용해보기
+   * 타입 변수 관례
+2. [제네릭 제한(Generic Constraint)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#2-%EC%A0%9C%EB%84%A4%EB%A6%AD-%EC%A0%9C%ED%95%9Cgeneric-constraint)
+   * [제한이 없을 경우의 문제점](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#21-%EC%A0%9C%ED%95%9C%EC%9D%B4-%EC%97%86%EC%9D%84-%EA%B2%BD%EC%9A%B0%EC%9D%98-%EB%AC%B8%EC%A0%9C%EC%A0%90)
+   * [타입 매개변수의 제한 도입](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#22-%ED%83%80%EC%9E%85-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98%EC%9D%98-%EC%A0%9C%ED%95%9C-%EB%8F%84%EC%9E%85)
+3. [제네릭 메서드(Generic Method)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#3-%EC%A0%9C%EB%84%A4%EB%A6%AD-%EB%A9%94%EC%84%9C%EB%93%9Cgeneric-method)
+   * [제네릭 메서드 설명](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#31-%EC%A0%9C%EB%84%A4%EB%A6%AD-%EB%A9%94%EC%84%9C%EB%93%9C-%EC%84%A4%EB%AA%85)
+   * [제네릭 메서드 사용해보기](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#32-%EC%A0%9C%EB%84%A4%EB%A6%AD-%EB%A9%94%EC%84%9C%EB%93%9C-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0)
+4. [와일드카드(Wildcard, `?`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#4-%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9Cwildcard-)
+   * [와일드카드 설명](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#41-%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C-%EC%84%A4%EB%AA%85)
+   * [제한을 사용하지 않은 와일드카드](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#42-%EC%A0%9C%ED%95%9C%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%80-%EC%99%80%EC%9D%BC%EB%93%9C-%EC%B9%B4%EB%93%9C)
+   * [제네릭 메서드 vs 와일드카드](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#43-%EC%A0%9C%EB%84%A4%EB%A6%AD-%EB%A9%94%EC%84%9C%EB%93%9C-vs-%EC%99%80%EC%9D%BC%EB%93%9C-%EC%B9%B4%EB%93%9C)
+   * [상한, 하한 제한 와일드카드](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#44-%EC%83%81%ED%95%9C-%ED%95%98%ED%95%9C-%EC%A0%9C%ED%95%9C-%EC%99%80%EC%9D%BC%EB%93%9C%EC%B9%B4%EB%93%9C)
+     * 상한 제한 와일드카드(Upper-bound)
+     * 하한 제한 와일드카드(Lower-bound)
+   * [제네릭 클래스, 메서드를 사용해야하는 경우](https://github.com/seungki1011/Data-Engineering/tree/main/java/(019)%20Generics#45-%EC%A0%9C%EB%84%A4%EB%A6%AD-%ED%81%B4%EB%9E%98%EC%8A%A4-%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC%ED%95%98%EB%8A%94-%EA%B2%BD%EC%9A%B0)
 
 ---
 
@@ -320,11 +337,11 @@ public class ArrayList<T> extends AbstractList<T> {
   * ```<N>``` : Number
   * ```<R>``` : Result
 
+<br>
 
+이런 타입 인자들의 약어는 관례일 뿐, 필요하면 원하는 문자를 사용할 수 있다
 
-* 관례일 뿐, 필요하면 원하는 문자를 사용할 수 있다
-
-<b>
+<br>
 
 ```java
 List<MyClass> myList = new ArrayList<MyClass>(); // T -> MyClass

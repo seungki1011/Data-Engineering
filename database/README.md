@@ -124,7 +124,7 @@
 
 ---
 
-### [4) Java Database Access](https://github.com/seungki1011/Data-Engineering/tree/main/database/(004)Java_DB%20_Access)
+### [4) Java Database Connectivity](https://github.com/seungki1011/Data-Engineering/tree/main/database/(004)Java_DB%20_Access)
 
 1. [JDBC(Java Database Connectivity)]((004)Java_DB%20_Access#1-jdbcjava-database-connectivity)
    * [JDBC 소개]((004)Java_DB%20_Access#11-jdbc-%EC%86%8C%EA%B0%9C)

@@ -16,12 +16,9 @@
 
 # :computer: Computer Science
 
-<details>
-  <summary><h3>1. 📂 컴퓨터 구조 및 운영 체제(Computer Structure and OS)(추가 예정)</h3></summary>
-</details>
+<h3>1. 📂 컴퓨터 구조 및 운영 체제(Computer Structure and OS)(추가 예정)</h3>
 
-<details>
-  <summary><h3>2. 🌐 네트워크(Network)와 HTTP</h3></summary>
+<h3>2. 🌐 네트워크(Network)와 HTTP</h3>
 
   - [network and http/README.md](network%20and%20http/README.md)
 
@@ -92,10 +89,9 @@
          * `Cache-Control`
       
     </details> 
-      </details>
 
-<details>
-  <summary><h3>3. 🧩 자료구조와 알고리즘(Data Structure and Algorithm)</h3></summary>
+
+<h3>3. 🧩 자료구조와 알고리즘(Data Structure and Algorithm)</h3>
 
   - [algorithm and data structure/README.md](algorithm%20and%20data%20structure/README.md)
 
@@ -108,7 +104,6 @@
 
     </details>
 
-</details>
 
 ---
 

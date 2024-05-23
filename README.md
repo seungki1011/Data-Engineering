@@ -931,7 +931,7 @@
 
 </details>
 <details>
-  <summary><h3>4. Java Database Access</h3></summary>
+  <summary><h3>4. Java Database Connectivity</h3></summary>
 
   1. [JDBC(Java Database Connectivity)](database/(004)Java_DB%20_Access#1-jdbcjava-database-connectivity)
      * [JDBC 소개](database/(004)Java_DB%20_Access#11-jdbc-%EC%86%8C%EA%B0%9C)
@@ -1057,8 +1057,7 @@
 
 ### [container/README.md](container/README.md)
 
-<details>
-  <summary><h3>1. Docker</h3></summary>
+<h3>1. Docker</h3>
 
   * [가상화(Virtualization)](container/(001)Docker#1-%EA%B0%80%EC%83%81%ED%99%94virtualization)
     * [가상화 소개](container/(001)Docker#11-%EA%B0%80%EC%83%81%ED%99%94-%EC%86%8C%EA%B0%9C)
@@ -1083,12 +1082,10 @@
     * [Docker Compose 소개](container/(001)Docker#41-docker-compose-%EC%86%8C%EA%B0%9C)
     * [Docker Compose 사용하기](container/(001)Docker#42-docker-compose-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
 
-</details>
 
-<details>
-  <summary><h3>2. Container Orchestration(추가 예정)</h3></summary>
 
-</details>
+<h3>2. Container Orchestration</h3>
+
 
 ---
 

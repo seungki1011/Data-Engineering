@@ -16,7 +16,7 @@
 
 # :computer: Computer Science
 
-<h3>1. 📂 컴퓨터 구조 및 운영 체제(Computer Structure and OS)(추가 예정)</h3>
+<h3>1. 📂 컴퓨터 구조 및 운영 체제(Computer Structure and OS)</h3>
 
 <h3>2. 🌐 네트워크(Network)와 HTTP</h3>
 
@@ -811,7 +811,7 @@
     </details>
 
 
-<h3>2. FastAPI(추가 예정)</h3>
+<h3>2. FastAPI</h3>
 
 ---
 

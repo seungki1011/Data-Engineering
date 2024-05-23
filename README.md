@@ -109,8 +109,7 @@
 
 # :capital_abcd: Programming Language
 
-<details>
-  <summary><h3>1. Java</h3></summary>
+<h3>1. Java</h3>
 
   - [java/README.md](java/README.md)
 
@@ -549,19 +548,15 @@
       
       
       </details>
-      </details>
 
-<details>
-  <summary><h3>2. Python(추가 예정)</h3></summary>
 
-</details>
+<h3>2. Python(추가 예정)</h3>
 
 ---
 
 # ⚙️ Backend
 
-<details>
-  <summary><h3>1. 스프링 프레임워크(Spring Framework)</h3></summary>
+<h3>1. 스프링 프레임워크(Spring Framework)</h3>
 
   - [spring/README.md](spring/README.md)
 
@@ -815,11 +810,8 @@
 
     </details>
 
-</details>
 
-<details>
-  <summary><h3>2. FastAPI(추가 예정)</h3></summary>
-</details>
+<h3>2. FastAPI(추가 예정)</h3>
 
 ---
 

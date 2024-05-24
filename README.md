@@ -1049,7 +1049,6 @@
 3. Airflow
 4. Kafka
 5. Spark
-6. Data Governance
 
 ---
 
@@ -1093,7 +1092,6 @@
 
 1. CI/CD 소개
 2. 깃헙 액션(Github Action)
-3. 젠킨스(Jenkins)
 
 ---
 

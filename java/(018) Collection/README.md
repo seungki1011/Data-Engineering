@@ -92,7 +92,7 @@ public class ArrayListMain {
     public static void main(String[] args) {
 
         // 1. ArrayList 생성
-      	// Collection<String> fruits = new ArrayList<>(); // Collection 참조 변수를 이용하면 더 flexible함
+        // List를 사용하는 것이 다형성 측면에서 더 유리
         ArrayList<String> fruits = new ArrayList<>(); // String 타입만 넣을 수 있는 ArrayList
 				
         // 2. ArrayList에 요소를 추가 (add)
@@ -190,12 +190,7 @@ The ArrayList contains Grape
 
 * 배열의 단점 보완을 위한 ```LinkedList```
 * 불연속으로 존재하는 데이터를 연결
-* Java의 컬렉션 프레임워크의 ```LinkedList```는 양방향 링크드 리스트(double linked list)로 구현되어 있다
-
-
-
-* 중간에 요소 추가 또는 삭제가 많으면 ```ArrayList```보다 ```LinkedList```가 더 효율적일 수도 있음
-  * 추가나 삭제가 필요하면 배열 복사같은 과정이 아니라 단순히 링크를 변경하면 됨
+* Java의 컬렉션 프레임워크의 ```LinkedList```는 양방향 링크드 리스트(doubly linked list)로 구현되어 있다
 
 
 

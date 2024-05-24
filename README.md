@@ -23,7 +23,7 @@
   - [network and http/README.md](network%20and%20http/README.md)
 
   - <details>
-      <summary>1. 네트워크(Network)(추가 예정)</summary>
+      <summary>1. 네트워크(Network)</summary>
 
     </details>
   - <details>

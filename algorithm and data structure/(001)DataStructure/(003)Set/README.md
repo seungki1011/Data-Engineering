@@ -411,6 +411,23 @@ public class HashCodeMain1 {
 }
 ```
 
+```
+obj1.hashCode() = 1933863327
+obj2.hashCode() = 1984697014
+
+10.hashCode = 127
+'A'.hashCode = 65
+'AB'.hashCode = 2081
+-1.hashCode = -1
+
+(member1 == member2) = false
+member1 equals member2 = true
+member1.hashCode() = 104101
+member2.hashCode() = 104101
+```
+
+
+
 * `id`를 기준으로 `equals()`와 `hashCode()`를 오버라이딩 했기 때문에 정상적으로 사용 가능하다
   * `equals()`를 `id` 기준으로 오버라이딩 했기 때문에, 추후에 중복 여부를 제대로 체크가 가능한 것이다
 
@@ -426,9 +443,107 @@ public class HashCodeMain1 {
 
 ---
 
+## 4) `HashSet` 구현
 
+지금까지 해시 알고리즘에 대한 내용을 알아보았다. 그러면 다시 `Set`으로 돌아가서 해시를 적용해서 구현해보자.
 
+<br>
 
+`MyHashSet`
+
+```java
+public class MyHashSet<E> {
+
+    static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    private LinkedList<E>[] buckets;
+
+    private int size = 0;
+    private int capacity = DEFAULT_INITIAL_CAPACITY;
+
+    public MyHashSet() {
+        initBuckets();
+    }
+
+    public MyHashSet(int capacity) {
+        this.capacity = capacity;
+        initBuckets();
+    }
+
+    private void initBuckets() {
+        buckets = new LinkedList[capacity];
+        for (int i = 0; i < capacity; i++) {
+            buckets[i] = new LinkedList<>();
+        }
+    }
+
+    public boolean add(E value) {
+        int hashIndex = hashIndex(value);
+        LinkedList<E> bucket = buckets[hashIndex];
+        if (bucket.contains(value)) {
+            return false;
+        }
+
+        bucket.add(value);
+        size++;
+        return true;
+    }
+
+    public boolean contains(E searchValue) {
+        int hashIndex = hashIndex(searchValue);
+        LinkedList<E> bucket = buckets[hashIndex];
+        return bucket.contains(searchValue);
+    }
+
+    public boolean remove(E value) {
+        int hashIndex = hashIndex(value);
+        LinkedList<E> bucket = buckets[hashIndex];
+        boolean result = bucket.remove(value);
+        if (result) {
+            size--;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private int hashIndex(Object value) {
+        //hashCode의 결과로 음수가 나올 수 있다. abs()를 사용해서 절댓값으로 만든다
+        return Math.abs(value.hashCode()) % capacity;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public String toString() {
+        return "MyHashSetV3{" +
+                "buckets=" + Arrays.toString(buckets) +
+                ", size=" + size +
+                ", capacity=" + capacity +
+                '}';
+    }
+}
+```
+
+<br>
+
+`Set`에 해시를 적용한 `HashSet`은 평균적으로 데이터 추가/삭제/검색 모두 `O(1)`의 성능을 보여준다. 물론 해시 충돌이 일어나는 최악의 경우 `O(n)`의 성능을 가지지만, 해시 충돌이 일어날 확률은 낮기 때문에 너무 걱정하면서 사용할 필요는 없다.
+
+<br>
+
+---
+
+## 5) `Set` 인터페이스
+
+자바의 컬렉션 프레임워크의 `Set` 인터페이스는 `Hashset`, `LinkedHashSet`, `TreeSet`을 제공한다.
+
+<br>
+
+<p align="center">   <img src="img/set7.png" alt="ds" style="width: 100%;"> </p>
+
+<p align='center'>https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/</p>
 
 
 

@@ -36,7 +36,7 @@
 
 ### 1.2 `Map` 인터페이스
 
-자바 컬렉션 프레임워크의 `Map` 인터페이스는 `HashMap`, `LinkedHashMap`, `TreeMap`, `HashTable`을 제공한다.
+`Map` 인터페이스는 `HashMap`, `LinkedHashMap`, `TreeMap`, `HashTable`을 제공한다. 참고로 `Map`은 컬렉션 프레임워크가 제공하지 않고, `Iterable` 인터페이스를 구현하지도 않는다. 이에 대한 내용은 나중에 다룰 예정이다.
 
 <br>
 
@@ -106,7 +106,7 @@
 
 ## 2) `Map` 사용하기
 
-컬렉션 프레임워크의 `Map` 인터페이스를 통해 `HashMap`을 사용해보자.
+`Map` 인터페이스를 통해 `HashMap`을 사용해보자.
 
 공식 문서 참고 : [https://docs.oracle.com/javase/8/docs/api/java/util/Map.html](https://docs.oracle.com/javase/8/docs/api/java/util/Map.html)
 

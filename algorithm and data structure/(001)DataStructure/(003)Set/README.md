@@ -11,9 +11,10 @@
   * 문자열 해시 코드
   * 자바가 제공하는 `hashCode()`
 
-* `HashSet`
+* `HashSet` 구현
 * `Set` 인터페이스
-  * `Set` 사용하기
+  * `Set` 인터페이스 설명
+  * `Set` 인터페이스 사용해보기
 
 ---
 
@@ -537,6 +538,8 @@ public class MyHashSet<E> {
 
 ## 5) `Set` 인터페이스
 
+### 5.1 `Set` 인터페이스 설명
+
 자바의 컬렉션 프레임워크의 `Set` 인터페이스는 `Hashset`, `LinkedHashSet`, `TreeSet`을 제공한다.
 
 <br>
@@ -545,23 +548,151 @@ public class MyHashSet<E> {
 
 <p align='center'>https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/</p>
 
+<br>
 
+각 `Set`의 종류에 따른 특징, 성능, 사용 용도를 알아보자.
 
+<br>
 
+1. `HashSet`
+   * 해시 자료구조를 사용해서 요소를 저장
+     * 사용자 정의 참조형에 사용하기 위해서 `hashCode()`, `equals()` 오버라이딩이 필요
+   * 순서 보장 X
+   * 중복 허용 X
+   * 용도
+     * 데이터의 유일성만 중요하고, 순서는 중요하지 않은 경우에 사용
+   * 성능
+     * 추사/삭제/검색은 평균적으로 `O(1)`의 시간복잡도를 가지나, 해시 충돌이 일어나는 최악의 경우에는 `O(n)`의 성능을 가진다
 
+<br>
 
+2. `LinkedHashSet`
+   * 기존 `HashSet`에 `LinkedList`를 이용해서 요소들의 순서를 유지한다
+     * `HashSet`에 연결 링크를 추가한 형태로 생각하면 편하다
+   * 요소들은 추가된 순서대로 유지된다
+   * 양방향 순회가 가능하다
+   * 용도
+     * 데이터의 유일성과 함께 삽입 순서를 유지해야하는 경우
+   * 성능
+     * `HashSet()`과 비슷하다
 
+<br>
 
+3. `TreeSet`
+   * 트리 구조에 대한 설명은 `Tree` 파트에서 설명할 예정
+   * `TreeSet`은 이진 탐색 트리를 개선한 Red-Black Tree를 내부에서 사용한다
+   * 요소들은 정렬된 순서로 저장된다. 순서의 기준은 `Comparator`로 변경 가능
+   * 용도
+     * 데이터들을 정렬된 순서로 유지하면서 집합의 특성을 유지해야 할 때 사용
+     * 예) 범위 검색, 정렬된 데이터 필요
+     * 정렬된 순서라는 것은 `3, 4, 1, 2`로 입력하면 `1, 2, 3, 4`로 정렬된 순서로 출력된다는 의미
+   * 성능
+     * 주요 연산은 `O(logn)`의 시간 복잡도를 가진다(`HashSet`보다 느림)
 
+<br>
 
+---
 
+### 5.2 `Set` 인터페이스 사용해보기
 
+`Set` 인터페이스의 `HashSet`을 사용해보자.
 
+<br>
 
+먼저 `Book`이라는 클래스를 만들어서 사용하자.
 
+`Book`
 
+```java
+public class Book {
 
+    private String title;
+    private String author;
+    private String isbn;
 
+    public Book(String title, String author, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+    }
 
+    // ISBN은 고유한 식별자이기 때문에, ISBN 기준으로 equals(), hashCode() 오버라이딩
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(isbn, book.isbn);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn);
+    }
 
+    @Override
+    public String toString() {
+        return "Title: "+title+", Author: "+author+", ISBN: "+isbn;
+    }
+}
+```
+
+* `isbn`을 기준으로 `equals()`와 `hashCode()` 오버라이딩
+
+<br>
+
+이제 사용해보자. 
+
+<br>
+
+`SetMain`
+
+```java
+public class HashSetMain {
+    public static void main(String[] args) {
+
+        Set<Book> bookSet = new HashSet<>();
+
+        // 세트에 객체(book) 추가
+        bookSet.add(new Book("1984", "George Orwell", "ISBN978-0451524935"));
+        bookSet.add(new Book("Pride and Prejudice", "Jane Austen", "ISBN978-1503290563"));
+        bookSet.add(new Book("Fahrenheit 451", "Ray Bradbury", "ISBN978-1451673319"));
+        bookSet.add(new Book("To Kill a Mockingbird", "Harper Lee", "ISBN978-0061120084"));
+
+        // 같은 ISBN으로 추가 시도(실패)
+        bookSet.add(new Book("XXX", "XXX", "ISBN978-0061120084"));
+
+        // 세트 출력
+        printSet(bookSet);
+
+        // 요소 제거 - ISBN을 기준으로 equals()를 오버라이딩 했기 때문에 ISBN이 일치하면 제거
+        bookSet.remove(new Book("XXX", "XXX", "ISBN978-0061120084"));
+        printSet(bookSet);
+
+    }
+
+    private static void printSet(Set set) {
+        System.out.println("------printSet------");
+        for (Object object : set) {
+            System.out.println(object);
+        }
+        System.out.println("--------------------");
+    }
+}
+```
+
+```
+------printSet------
+Title: 1984, Author: George Orwell, ISBN: ISBN978-0451524935
+Title: Fahrenheit 451, Author: Ray Bradbury, ISBN: ISBN978-1451673319
+Title: To Kill a Mockingbird, Author: Harper Lee, ISBN: ISBN978-0061120084
+Title: Pride and Prejudice, Author: Jane Austen, ISBN: ISBN978-1503290563
+--------------------
+------printSet------
+Title: 1984, Author: George Orwell, ISBN: ISBN978-0451524935
+Title: Fahrenheit 451, Author: Ray Bradbury, ISBN: ISBN978-1451673319
+Title: Pride and Prejudice, Author: Jane Austen, ISBN: ISBN978-1503290563
+--------------------
+```
+
+<br>

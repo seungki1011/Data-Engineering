@@ -85,7 +85,7 @@ it = hashSet.iterator();
 
 * 저장공간으로 배열 사용(배열 기반)
 
-[```ArrayListMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/ArrayListMain.java)
+<br>
 
 ```java
 public class ArrayListMain {
@@ -206,7 +206,7 @@ class Node<E> {
 }
 ```
 
-[```LinkedListMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/LinkedListMain.java)
+<br>
 
 ```java
 public class LinkedListMain {
@@ -289,8 +289,6 @@ Mango
 
 <br>
 
-[```HashSetMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/HashSetMain1.java)
-
 ```java
 class Book {
     private String title;
@@ -352,8 +350,6 @@ Title: Title3, Author: Author3, ISBN: ISBN789
 ```
 
 <br>
-
-[```HashSetMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/HashSetMain2.java)
 
 ```java
 public class HashSetMain {
@@ -466,8 +462,6 @@ public class TreeNode<E> {
 
 <br>
 
-[```TreeSetMain1.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/TreeSetMain1.java)
-
 ```java
 class Person implements Comparable<Person> {
     private String name;
@@ -547,8 +541,6 @@ Mark is 35 years old.
 
 <br>
 
-[```TreeSetMain2.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/TreeSetMain2.java)
-
 ```java
 public class TreeSetMain2 {
     public static void main(String[] args) {
@@ -618,8 +610,13 @@ treeSet.tailSet(6) = [6, 8]
 
 * Key-Value 쌍으로 데이터 저장
 * ```HashTable```은 동기화 되어있음 (Synchronization o)
+  * 지금은 `HashTable`은 거의 사용하지 않고 `ConcurrentHashMap` 사용
+
+
+
+
 * ```HashMap```은 동기화 되어있지 않음 (Synchronization x)
-* ```TreeMap```은 이진탐색 트리의 속성을 가지고 있음
+* ```TreeMap```은 이진 탐색 트리의 속성을 가지고 있음
 * [Java docs - ```Map```](https://docs.oracle.com/javase/8/docs/api/java/util/Map.html)
 
 
@@ -724,6 +721,8 @@ HashMap after clearing: {}
 * ```Stack``` : Last in First Out (LIFO)
 * ```Queue``` : First in First Out (FIFO)
 * ```ArrayDeque```는 ```Stack```, ```Queue```의 기능 모두 포함
+  * 내부적으로 `Vector`를 이용해서 구현된 `Stack`은 사실상 deprecated
+
 * [Java docs - ```ArrayDeque```](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayDeque.html)
 
 <br>
@@ -732,12 +731,10 @@ HashMap after clearing: {}
 
 ### 7.1 ```ArrayDeque```
 
-* ```Stack``` 보다 많이 사용
+* 실무에서는 대부분 `ArrayDeque` 사용
 * 양 끝에서 삽입과 반환이 가능함
 
 <br>
-
-[```ArrayDequeMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/ArrayDequeMain.java)
 
 ```java
 public class ArrayDequeMain {
@@ -828,8 +825,6 @@ The returned element after pop(): Urgent Task 1
 * [Java docs - ```Comparable```](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html)
 
 <br>
-
-[```ComparableMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/ComparableMain.java)
 
 ```java
 class Fruit implements Comparable<Fruit> {
@@ -928,8 +923,6 @@ Fruit{name='Orange', quantity=2}
   * 익명 객체를 여러개 생성해서 다른 비교를 위해 사용하는 것도 가능
 
 <br>
-
-[```ComparatorMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/ComparatorMain.java)
 
 ```java
 class Fruit2 {

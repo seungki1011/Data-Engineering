@@ -46,29 +46,169 @@
 
 ---
 
-## 3) ```Iterator```
+## 3) `Iterable`, `Iterator`
 
-* 컬렉션에 저장된 요소들을 읽어오는 방법을 표준화한 인터페이스
-* 컬렉션에 ```iterator()```를 호출해서 ```Iterator```를 구현한 객체를 얻어서 사용한다
-* 다시 사용하기 위해서는 새로운 ```Iterator```객체를 선언해야 함
-* [Java docs - ```Iterator```](https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html)
+### 3.1 `Iterable`, `Iterator` 설명
+
+자료 구조를 순회하기 위해서는 순회 방법에 대한 로직이 필요하다. 가령 배열을 인덱스 하나씩 증가시키면서 요소를 순회한다면, 연결 리스트는 `node.next`를 이용해서 `null`이 나올때 까지 순회한다. 이 처럼 각 자료 구조마다 순회하는 방법이 다르기 때문에, 자료 구조의 구현 방법과 관계 없이 모든 자료 구조를 동일한 방법으로 순회할 수 있는 추상화된 인터페이스가 있다면 개발자 입장에서는 편리할 것이다.
+
+이런 문제를 해결하기 위해 자바는 `Iterable`, `Iterator` 인터페이스를 제공한다. `Iterable` 인터페이스에 대해 먼저 알아보자.
 
 <br>
 
 ```java
-HashSet<String> hashSet = new HashSet<>();
-Iterator<String> it = hashSet.iterator(); // Iterator 객체 it를 이용해서 사용
-
-while (it.hasNext())  // 읽어올 요소가 존재하는지 확인
-		System.out.println(iterator.next()); // 요소 읽어오기
+public interface Iterable<T> {
+     Iterator<T> iterator();
 }
-
-// 다시 사용하기 위해 새로운 객체 사용
-it = hashSet.iterator();
 ```
 
-* ```Map```은 ```iterator()```가 없음
-  * ```keySet()```, ```values()``` 등을 호출한 후에 ```iterator()``` 사용
+* `Iterable`을 구현하는 클래스는 `Iterator`를 반환하는 메서드 `iterator()`를 오버라이딩해야 함
+* 그러면 우리가 사용할 반복자(`Iterator`)를 또 만들어야한다
+* `Iterator`에 순회 방법에 대한 로직을 구현한다고 생각하면 편하다
+
+<br>
+
+```java
+public interface Iterator<E> {
+     boolean hasNext();
+     E next();
+}
+```
+
+* `hasNext()` : 다음 요소가 있는지 확인. 없으면 `false` 반환.
+* `next()` : 다음 요소 반환. 내부에 있는 위치(커서)를 다음으로 이동.
+
+<br>
+
+정리하자면, 자료 구조를 순회하기 위해서는 자료 구조에 `Iterator`(반복자)를 제공하면 된다. 반복자에는 어떤 방식으로 순회할 것인지 구현하면 된다. 여기서 중요한 것은 `Iterator`를 단독으로 사용할 수 없다는 것이다. 먼저 순회의 대상이 되는 자료 구조가 `Iterable` 인터페이스를 구현해야하고, `iterator()` 메서드를 통해 구현한 반복자(`Iterator`)를 반환하도록 하면 된다.
+
+<br>
+
+---
+
+### 3.2 `Iterator` 구현
+
+* 컬렉션에 저장된 요소들을 읽어오는 방법을 표준화한 인터페이스
+* 컬렉션에 ```iterator()```를 호출해서 ```Iterator```를 구현한 객체를 얻어서 사용한다
+* [Java docs - ```Iterator```](https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html)
+
+<br>
+
+`Iterator`를 구현하는 과정을 살펴보자.
+
+<br>
+
+`MyIterator`
+
+```java
+public class MyIterator implements Iterator<Integer> {
+  
+     private int currentIndex = -1;
+     private int[] targetArr;
+  
+     public MyIterator(int[] targetArr) {
+         this.targetArr = targetArr;
+     }
+  
+     @Override
+     public boolean hasNext() {
+         return currentIndex < targetArr.length - 1;
+     }
+  
+     @Override
+     public Integer next() {
+         return targetArr[++currentIndex];
+     }
+  
+}
+```
+
+* 생성자를 통해 `MyIterator`가 사용할 배열 참조. 이 배열을 순회할 것이다.
+* `currentIndex` : 현재의 인덱스
+* `hasNext()` : 다음 요소가 있는지 검사. `null`이 나오면 `false` 반환
+* `next()`
+  * `currentIndex`를 하나 증가 시키고, 다음 요소를 반환한다
+  * 인덱스는 `0` 부터 시작하기 때문에 `currentIndex`는 가장 초기에는 `-1`을 가진다
+
+<br>
+
+`Iterator`를 사용하기 위해서는 `Iterator`를 사용할 자료 구조가 `Iterable` 인터페이스를 구현해야한다.
+
+<br>
+
+`MyArray`
+
+```java
+public class MyArray implements Iterable<Integer> {
+  
+    private int[] numbers;
+  
+    public MyArray(int[] numbers) {
+        this.numbers = numbers;
+    }
+  
+    @Override
+    public Iterator<Integer> iterator() {
+        return new MyArrayIterator(numbers);
+    }
+  
+}
+```
+
+* 직접 구현한 `MyArray` 자료 구조는 `Iterable` 인터페이스를 구현한다
+* 오버라이딩한 `iterator()` 메서드는 앞에서 만든 `Iterator`인 `MyIterator`를 반환하면 된다
+
+<br>
+
+`IteratorMain`
+
+```java
+public class IteratorMain {
+    public static void main(String[] args) {
+
+        MyArray myArray = new MyArray(new int[]{1, 2, 3, 4});
+
+        Iterator<Integer> iterator = myArray.iterator();
+        while (iterator.hasNext()) {
+            Integer value = iterator.next();
+            System.out.println("value = " + value);
+        }
+
+        System.out.println("--------");
+        // 다시 Iterator 객체를 사용하기 위해서는 새로 선언해야 한다
+        iterator = myArray.iterator();
+        while (iterator.hasNext()) {
+            Integer value = iterator.next();
+            System.out.println("value = " + value);
+        }
+      
+    }
+}
+```
+
+```
+value = 1
+value = 2
+value = 3
+value = 4
+--------
+value = 1
+value = 2
+value = 3
+value = 4
+```
+
+* `Iterator` 객체를 다시 사용하기 위해서는 새로운 ```Iterator```객체를 선언해야 함
+
+<br>
+
+우리가 사용하는 컬렉션 프레임워크의 자료 구조들은 이미 `Iterable`, `Iterator`가 전부 구현이 되어있기 때문에 순회기능을 바로 사용할 수 있다.
+
+<br>
+
+> 참고로 `Map`에 반복자를 사용하기 위해서는 `keySet()`, `values()` 등을 통해서 호출한 후에 사용해야 한다.
+>
+> `Map`은 `Iterable` 인터페이스를 구현하지 않는다.
 
 <br>
 
@@ -190,7 +330,7 @@ The ArrayList contains Grape
 
 * 배열의 단점 보완을 위한 ```LinkedList```
 * 불연속으로 존재하는 데이터를 연결
-* Java의 컬렉션 프레임워크의 ```LinkedList```는 양방향 링크드 리스트(doubly linked list)로 구현되어 있다
+* Java의 컬렉션 프레임워크의 ```LinkedList```는 양방향 연결 리스트(doubly linked list)로 구현되어 있다
 
 
 
@@ -255,32 +395,33 @@ Mango
 
 * 순서가 없고, 중복을 허용하지 않는다
   * 순서를 유지하고 싶으면 ```LinkedHashSet``` 사용 가능
-* 집합
+
+
+
 * [Java docs - ```Set```](https://docs.oracle.com/javase/8/docs/api/java/util/Set.html)
 
 <br>
 
 ### 5.1 ```HashSet```
 
-* 저장에 해쉬 테이블(HasH Table) 사용
+* 저장에 해시 알고리즘(hash algorithm) 사용
 
 
 
 * 정렬 불가
-  * 정렬을 위해서는 모든 요소를 ```List```에 저장하고 ```List```를 정렬
+  * 정렬을 위해서는 모든 요소를 리스트에 저장하고 리스트를 정렬
 
 
 
 * ```hashCode()```
   * ```hashCode()```를 구현하는 방법은 다양하다
-  * ```Objects.hash(데이터들)``` 같은 형태로 구현 가능
 
 
 
 * ```equals()```와 ```hashCode()```를 오버라이드 해야 정상 동작
   * 동일한 객체는 동일한 메모리 주소를 가진다 → 동일한 객체는 동일한 해시코드를 가져야 한다
   * 두 객체가 ```equals()```로 동일하다는 뜻은, 두 객체의 ```hashCode()```도 동일해야 함 
-  * 반면에 동일 해시코드 값을 가졌다고 동일 객체라는 보장은 없다
+  * 반면에 동일 해시코드 값을 가졌다고 동일 객체라는 보장은 없다(해시 충돌의 케이스)
 
 
 
@@ -348,6 +489,8 @@ Title: Title1, Author: Author1, ISBN: ISBN123
 Title: Title4, Author: Author2, ISBN: ISBN999
 Title: Title3, Author: Author3, ISBN: ISBN789
 ```
+
+* `equals()`와 `hashCode()`의 오버라이딩은 IDE를 통해서 하자
 
 <br>
 
@@ -438,7 +581,7 @@ HashSet is now empty.
 
 
 * Java의 ```TreeSet```은 Red-Black Tree로 구현
-  * Red-Black Tree는 Binary Search Tree(BST)의 일종
+  * Red-Black Tree는 이진탐색 트리(Binary Search Tree, BST)의 일종
 
 
 
@@ -447,7 +590,8 @@ HashSet is now empty.
 
 
 * ```TreeSet```은 요소들이 정렬이 되어서 들어감
-  * ```Comparator``` 또는 ```Comparable``` 사용 (비교 기준이 필요함)
+  * 정렬 기준이 필요
+    * `Comparable`, `Comparator` 사용
 
 <br>
 
@@ -638,8 +782,6 @@ treeSet.tailSet(6) = [6, 8]
 * 하나의 ```null``` key 가능, 복수의 ```null``` value 허용
 
 <br>
-
-[```HashMapMain.java```](https://github.com/seungki1011/Data-Engineering/blob/main/java/start-java/src/main/java/de/java/collections/HashMapMain.java)
 
 ```java
 public class HashMapMain {
@@ -962,11 +1104,11 @@ public class ComparatorMain {
         @Override
         public int compare(Fruit2 o1, Fruit2 o2) {
             return o1.quantity - o2.quantity; // 오름차순 정렬 가능
-          	// return (o1.name1).compareTo(o2.name2) // name을 기준으로 
+            // return (o1.name1).compareTo(o2.name2) // name을 기준으로 
         }
     };
-  	
-  	// 익명 클래스 하나더 생성해서 사용가능
+  
+    // 익명 클래스 하나더 생성해서 사용가능
     public static Comparator<Fruit2> comparator2 = new Comparator<Fruit2>() {
         @Override
         public int compare(Fruit2 o1, Fruit2 o2) {
@@ -990,6 +1132,5 @@ Fruit{name='Grape', quantity=19}
 
 ## Reference
 
-1. [패스트 캠퍼스 - 한번에 끝내는 데이터 엔지니어링](https://fastcampus.co.kr/data_online_engineering)
 1. [https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/](https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/)
 1. [https://st-lab.tistory.com/243](https://st-lab.tistory.com/243)

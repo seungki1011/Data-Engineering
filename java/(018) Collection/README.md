@@ -4,9 +4,11 @@
 
 ## Table of Contents
 
-1. [`Collection` 프레임워크](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#1-collection-framework)
+1. [`Collection` 프레임워크](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#1-collection-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC)
 2. [`Collection`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#2-collection)
-3. [`Iterator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#3-iterator)
+3. [`Iterator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#3-iterable-iterator)
+   * [`Iterable`, `Iterator` 설명](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#31-iterable-iterator-%EC%84%A4%EB%AA%85)
+   * [`Iterator` 구현](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#32-iterator-%EA%B5%AC%ED%98%84)
 4. [`List`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#4-list)
    * `ArrayList`
    * `LinkedList`
@@ -17,9 +19,14 @@
    * `HashMap`
 7. [`Stack`, `Queue`, `ArrayDeque`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#7-stack-queue-arraydeque)
    * `ArrayDeque`
-9. [`Comparable`, `Comparator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#9-comparable--comparator)
-   * `Comparable`
-   * `Comparator`
+8. [`Comparable`, `Comparator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#8-comparable--comparator)
+   * [`Comparator`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#81-comparator)
+   * [`Comparable`](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#82-comparable)
+   * `Comparator`, `Comparable` 예시
+9. [컬렉션 유틸(`Collections`)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#9-%EC%BB%AC%EB%A0%89%EC%85%98-%EC%9C%A0%ED%8B%B8collections)
+   * [정렬, 최댓값, 최소값](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#91-%EC%A0%95%EB%A0%AC-%EC%B5%9C%EB%8C%80%EA%B0%92-%EC%B5%9C%EC%86%8C%EA%B0%92)
+   * [컬렉션 생성](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#92-%EC%BB%AC%EB%A0%89%EC%85%98-%EC%83%9D%EC%84%B1)
+   * 멀리스레드 동기화(`SynchronizedXxx()`)
 
 ---
 

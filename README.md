@@ -97,6 +97,7 @@
 
   - <details>
       <summary>1. 자료구조(Data Structure)</summary>
+      
     1. [Array](algorithm%20and%20data%20structure/(001)DataStructure/(001)Array)
        * [자료구조(Data Structure)](algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#1-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0data-structure)
          * [자료구조란?](algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#11-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0%EB%9E%80)

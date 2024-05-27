@@ -16,42 +16,7 @@
 
 ### 1) 자료 구조(Data Structures) with 자바 컬렉션
 
-1. Array
-2. List
-   * `ArrayList` 설명
-   * `ArrayList` 구현
-   * `LinkedList` 설명
-   * `LinkedList` 구현
-   * `Collection` 프레임워크 소개
-   * `List` 인터페이스
-   * 성능 비교
-3. Set
-   * 세트(`Set`) 설명
-   * 해시 알고리즘(Hash Algorithm)
-     * 해시 알고리즘 설명
-     * 해시 충돌(Hash Collision)
-   * `HashSet` 구현
-   * `equals()`, `hashCode()` 구현 필요성
-   * `Set` 인터페이스
-4. Map
-   * `Map` 설명
-   * `TreeSet` 설명
-   * `Map` 인터페이스
-5. Queue
-   * `Stack` 설명
-   * `Queue` 설명
-   * `Deque` 설명
-   * `ArrayDeque` 사용하기
-6. `Iterable`, `Iterator`
-   * `Iterable`, `Iterator` 설명
-   * `Iterable`, `Iterator` 구현
-   * 사용하기
-7. `Comparable`, `Comparator`
-   * `Comparable`, `Comparator` 설명
-   * `Comparable`, `Comparator` 구현
-   * 사용하기
-8. `CollectionUtil`
-   * 컬렉션 유틸 설명
+1. 
 
 ---
 

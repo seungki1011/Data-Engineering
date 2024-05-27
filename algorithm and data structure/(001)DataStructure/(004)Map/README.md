@@ -1,10 +1,10 @@
 ## Index
 
-* `Map`
-  * `Map` 설명
-  * `Map` 인터페이스
-  * `HashMap` 원리
-* `Map` 사용하기
+* [`Map`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(004)Map#1-map)
+  * [`Map` 설명](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(004)Map#11-map-%EC%84%A4%EB%AA%85)
+  * [`Map` 인터페이스](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(004)Map#12-map-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4)
+  * [`HashMap` 원리](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(004)Map#13-hashmap-%EC%9B%90%EB%A6%AC)
+* [`Map` 사용하기](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(004)Map#2-map-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
 
 ---
 

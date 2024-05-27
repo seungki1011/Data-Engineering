@@ -4,15 +4,15 @@
 
 ## Index
 
-* 자료구조(Data Structure)
-  * 자료구조란?
-  * Big-O 표기법
+* [자료구조(Data Structure)](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#1-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0data-structure)
+  * [자료구조란?](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#11-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0%EB%9E%80)
+  * [Big-O 표기법](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#12-big-o-%ED%91%9C%EA%B8%B0)
     * Big-O 설명
     * Big-O 표기법 특징
-* 배열(`Array`)
-  * 배열 설명
-  * 배열 기능 구현
-  * 배열의 성능과 한계
+* [배열(`Array`)](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#2-%EB%B0%B0%EC%97%B4array)
+  * [배열 설명](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#21-%EB%B0%B0%EC%97%B4-%EC%84%A4%EB%AA%85)
+  * [배열 기능 구현](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#22-%EB%B0%B0%EC%97%B4-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84)
+  * [배열의 성능과 한계](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(001)Array#23-%EB%B0%B0%EC%97%B4%EC%9D%98-%EC%84%B1%EB%8A%A5%EA%B3%BC-%ED%95%9C%EA%B3%84)
 
 
 ---

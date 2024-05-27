@@ -6,25 +6,25 @@
 
 ## Index
 
-* `ArrayList`
-  * `ArrayList` 설명
-  * `ArrayList` 구현
-  * `ArrayList`의 한계
-* `LinkedList`
-  * `LinkedList` 설명
+* [`ArrayList`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#1-arraylist)
+  * [`ArrayList` 설명](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#11-arraylist-%EC%84%A4%EB%AA%85)
+  * [`ArrayList` 구현](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#12-arraylist-%EA%B5%AC%ED%98%84)
+  * [`ArrayList`의 한계](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#13-arraylist%EC%9D%98-%ED%95%9C%EA%B3%84)
+* [`LinkedList`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#2-linkedlist)
+  * [`LinkedList` 설명](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#21-linkedlist-%EC%84%A4%EB%AA%85)
     * 앞에 데이터(노드) 추가
     * 앞에 데이터(노드) 삭제
     * 특정 위치에 데이터(노드) 추가
-  * `LinkedList` 구현
-* `ArrayList` vs `LinkedList`
-* `Collection` 프레임워크 소개
-* `List` 인터페이스
-  * `List` 설명
-  * 추가적인 성능비교
+  * [`LinkedList` 구현](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#22-linkedlist-%EA%B5%AC%ED%98%84)
+* [`ArrayList` vs `LinkedList`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#3-arraylist-vs-linkedlist)
+* [`Collection` 프레임워크 소개](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#4-collection-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%86%8C%EA%B0%9C)
+* [`List` 인터페이스](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#5-list-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4)
+  * [`List` 설명](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#51-list-%EC%84%A4%EB%AA%85)
+  * [추가적인 성능비교](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#52-%EC%B6%94%EA%B0%80%EC%A0%81%EC%9D%B8-%EC%84%B1%EB%8A%A5-%EB%B9%84%EA%B5%90)
     * `MyArrayList` vs `ArrayList`
     * `ArrayList` vs `LinkedList`
 
-  * `List` 인터페이스 사용해보기
+  * [`List` 인터페이스 사용해보기](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(002)List#53-list-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0)
 
 
 ---
@@ -504,7 +504,7 @@ public class MyLinkedList<E> {
 
 <br>
 
-<p align="center">   <img src="img/link6.png" alt="ds" style="width: 90%;"> </p>
+<p align="center">   <img src="img/link6.png" alt="ds" style="width: 75%;"> </p>
 
 <p align = 'center'>성능 비교</p>
 

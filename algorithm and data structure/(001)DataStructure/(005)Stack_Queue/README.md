@@ -1,14 +1,14 @@
 ## Index
 
-* `Stack`
-  * `Stack` 설명
-  * 자바에서 제공하는 `Stack`
-* `Queue`
-  * `Queue` 설명
-  * `Queue` 인터페이스
-* `Deque`
-  * `Deque` 인터페이스
-  * `Deque` 사용하기
+* [`Stack`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#1-stack)
+  * [`Stack` 설명](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#11-stack-%EC%84%A4%EB%AA%85)
+  * [자바에서 제공하는 `Stack`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#12-%EC%9E%90%EB%B0%94%EC%97%90%EC%84%9C-%EC%A0%9C%EA%B3%B5%ED%95%98%EB%8A%94-stack)
+* [`Queue`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#2-queue)
+  * [`Queue` 설명](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#21-queue-%EC%84%A4%EB%AA%85)
+  * [`Queue` 인터페이스](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#22-queue-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4)
+* [`Deque`](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#3-deque)
+  * [`Deque` 인터페이스](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#31-deque-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4)
+  * [`Deque` 사용하기](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#32-deque-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
 
 ---
 

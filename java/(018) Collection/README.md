@@ -1,3 +1,7 @@
+> 자료구조에 대한 더 자세한 설명은 [자료 구조 포스트](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure)에 자세히 다루었다. 
+
+---
+
 ## Table of Contents
 
 1. [`Collection` 프레임워크](https://github.com/seungki1011/Data-Engineering/tree/main/java/(018)%20Collection#1-collection-framework)
@@ -19,12 +23,20 @@
 
 ---
 
-## 1) ```Collection``` Framework
+## 1) ```Collection``` 프레임워크
 
 * ```Collection```(다수의 객체)을 다루기 위한 프레임워크
 * 데이터를 다루기 위한 자료구조를 표현하고 사용할 수 있는 클래스들 제공
 * ```Collection```,```List```, ```Set```, ```Map``` 등 과 같은 코어 인터페이스 제공
-* 코어 인터페이스를 구현한 ```ArrayList```, ```LinkedList```, ```HashSet```, ```HashMap``` 등 과 같은  클래스들 제공
+* 코어 인터페이스를 구현한 ```ArrayList```, ```LinkedList```, ```HashSet```, ```HashMap```, 등 과 같은  클래스들 제공
+
+<br>
+
+정리하자면.
+
+* 모든 컬렉션 타입들이 `Collection`을 구현함으로써, 개발자들은 다양한 컬렉션에 대해 일관된 방식으로 사용할 수 있다
+* 새로운 컬렉션을 만들 때, 기존의 `Collection` 프레임워크를 사용해서, 기존에 정의된 알고리즘과 메서드들을 사용할 수 있게 된다 
+* `Collection`을 구현함으로써, 다양한 컬렉션 타입들을 같은 타입으로 다룰 수 있게 해서, 다형성을 활용할 수 있도록한다. 
 
 <br>
 
@@ -219,6 +231,8 @@ value = 4
 * 순서가 있고, 중복을 허용한다
 * [Java docs - ```List```](https://docs.oracle.com/javase/8/docs/api/java/util/List.html)
 
+---
+
 <br>
 
 ### 4.1 ```ArrayList```
@@ -399,6 +413,8 @@ Mango
 
 
 * [Java docs - ```Set```](https://docs.oracle.com/javase/8/docs/api/java/util/Set.html)
+
+---
 
 <br>
 
@@ -862,8 +878,13 @@ HashMap after clearing: {}
 
 * ```Stack``` : Last in First Out (LIFO)
 * ```Queue``` : First in First Out (FIFO)
+
+
+
 * ```ArrayDeque```는 ```Stack```, ```Queue```의 기능 모두 포함
   * 내부적으로 `Vector`를 이용해서 구현된 `Stack`은 사실상 deprecated
+
+
 
 * [Java docs - ```ArrayDeque```](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayDeque.html)
 
@@ -955,21 +976,329 @@ The returned element after pop(): Urgent Task 1
 
 * 객체를 비교하기 위해서 사용(정렬 기준을 제시)
 * ```sort()``` 디폴트는 오름차순
-* ```compareTo``` 또는 ```compare```를 통해서 사용자가 정한 기준을 토대로 양수, 0, 음수 중 하나가 반환 → 정렬 기준에 사용
+* `Comparable`또는 `Comparator`를 구현해서 사용자가 정한 기준을 토대로 양수, 0, 음수 중 하나가 반환 → 정렬 기준에 사용
 
 <br>
 
-### 8.1 ```Comparable```
+> 현재 포스트에서 정렬 알고리즘에 대한 설명은 하지 않는다.
 
-* ```Comparable``` 인터페이스
-  * ```compareTo(T o)``` 메서드 구현
-* 자기 자신과 매개변수 객체 비교
-* [Java docs - ```Comparable```](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html)
+<br>
+
+---
+
+### 8.1 `Comparator`
+
+배열을 정렬하는 하는 상황이라고 가정해보자. 정렬을 하기 위해서는 `sort()`를 사용할 때 `Comparator`(비교자)를 넘겨줘서 정렬을 할 수 있다. 
+
+넘겨주는 비교자는 `Comparator` 인터페이스를 구현하면 된다.
+
+<br>
+
+```java
+public interface Comparator<T> {
+     int compare(T o1, T o2);
+}
+```
+
+* 두 인수를 비교해서 결과값을 반환하면 된다
+  * 첫 번째 인수가 더 작으면 `음수`
+  * 두 값이 같으면 `0`
+  * 첫 번째 인수가 더 크면 `양수`
+
+<br>
+
+그러면 정렬을 해보자.
+
+<br>
+
+`SortMain1`
+
+```java
+public class SortMain1 {
+    public static void main(String[] args) {
+
+        Integer[] array = {4, 3, 2, 1};
+
+        System.out.println("array = " + Arrays.toString(array));
+
+        // AscComparator를 제공해서 오름차순 정렬
+        Arrays.sort(array, new AscComparator());
+        System.out.println("AscComparator : " + Arrays.toString(array));
+
+        // DescComparator를 제공해서 내림차순 정렬
+        Arrays.sort(array, new DescComparator());
+        System.out.println("DescComparator : " + Arrays.toString(array));
+
+        // AscComparator.reversed()를 사용해서 내림차순 정렬 가능
+        array = new Integer[]{4, 3, 2, 1};
+        Arrays.sort(array, new AscComparator().reversed());
+        System.out.println("AscComparator().reversed() : " + Arrays.toString(array));
+    }
+
+    // 오름차순 정렬을 위한 Comparator 구현
+    static class AscComparator implements Comparator<Integer> {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            // System.out.println("o1 = " + o1 + ", o2 = " + o2);
+            return (o1 < o2) ? -1 : ((o1.equals(o2)) ? 0 : 1);
+        }
+    }
+    
+    // 내림차순 정렬을 위한 Comparator 구현
+    static class DescComparator implements Comparator<Integer> {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            // System.out.println("o1 = " + o1 + ", o2 = " + o2);
+            return (o1 < o2) ? -1 : ((o1.equals(o2)) ? 0 : 1) * -1;
+        }
+    }
+
+}
+```
+
+```
+array = [4, 3, 2, 1]
+AscComparator : [1, 2, 3, 4]
+DescComparator : [4, 3, 2, 1]
+AscComparator().reversed() : [4, 3, 2, 1]
+```
+
+* `Arrays.sort()`를 사용할 때 비교자(`Comparator`)를 제공하면 알고리즘에서 어떤 값이 더 큰지 두 값을 비교할 때 비교자를 사용한다
+* 반대의 정렬을 하고 싶으면 간단하게 `.reversed()`를 사용할 수 있다
+
+<br>
+
+여기서 이런 의문을 가지는 사람이 있을 수 있다. 분명 다른 코드에서는 `Comparator`를 넘기지 않고 단순히 `.sort(array)` 같은 형식으로 오름차순 정렬을 할 수 있던걸로 기억하는데, 이게 어떻게 가능하지 궁금할 것이다.
+
+먼저 다음 코드를 살펴보자.
+
+<br>
+
+`SortMain2`
+
+```java
+public class SortMain2 {
+    public static void main(String[] args) {
+
+        Integer[] array = {2, 1, 3, 4};
+        System.out.println("array = " + Arrays.toString(array));
+
+        // 오름차순 정렬
+        Arrays.sort(array);
+        System.out.println(".sort(array) : " + Arrays.toString(array));
+
+        // 내림차순 정렬
+        Arrays.sort(array, reverseOrder());
+        System.out.println(".sort(array, Comparator.reverseOrder()) : " + Arrays.toString(array));
+    }
+}
+```
+
+```
+array = [2, 1, 3, 4]
+.sort(array) : [1, 2, 3, 4]
+.sort(array, Comparator.reverseOrder()) : [4, 3, 2, 1]
+```
+
+* `Comparator`를 제공하지 않고 `sort()`를 사용해도 오름차순 정렬이 되는 것을 확인할 수 있다. 이 이유는 별도의 비교자를 제공하지 않으면, 객체의 구현된 `Comparable`을 이용하기 때문이다.
+
+<br>
+
+우리가 사용한 `Integer`는 `Comparable`이 오름차순으로 정렬하도록 기본적으로 구현되어 있다. 이 `Comparable`을 통해 구현한 순서를 객체의 자연 순서(Natural Ordering)이라고 한다.
+
+<br>
+
+---
+
+### 8.2 ```Comparable```
+
+바로 이전에 설명했던 것 처럼 객체의 `Comparable` 인터페이스를 구현하면, 해당 `Comparable`이 객체의 디폴트 정렬 방식이 된다. 이런 디폴트 정렬 방식을 자연 순서(Natural Ordering)라고 한다. 
+
+어떤 객체를 정렬하기 위해서는 비교자(`Comparator`)를 제공하거나, `Comparable` 인터페이스를 구현하고 있어야한다.
+
+아무튼 이 `Comparable` 인터페이스를 구현해서 사용하면 사용자 정의 객체를 객체의 특정 필드를 기준으로 비교할 수 있게된다. 코드를 통해 살펴보자.
+
+<br>
+
+```java
+public interface Comparable<T> {
+     public int compareTo(T o);
+}
+```
+
+* 자기 자신과 인수로 넘어온 객체를 비교해서 반환하면 된다
+  * 현재 객체가 인수로 주어진 객체보다 저 작으면 `음수`
+  * 두 객체의 크기가 같으면 `0`
+  * 현재 객체가 인수로 주어진 객체보다 크면 `양수`
+
+<br>
+
+`Comparable`을 구현할 클래스를 만들어보자.
+
+<br>
+
+`Employee`
+
+```java
+public class Employee implements Comparable<Employee> {
+
+    private String id;
+    private int age;
+
+    public Employee(String id, int age) {
+        this.id = id;
+        this.age = age;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    // Comparable 구현 - age를 기준으로 오름차순 정렬
+    @Override
+    public int compareTo(Employee o) {
+        return this.age < o.age ? -1 : (this.age == o.age ? 0 : 1);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}
+```
+
+* `Employee` 객체를 `sort()`를 통해 정렬할 때 비교자를 제공하지 않으면 구현된 `Comparable`의 기준을 통해 정렬이 된다
+* 위의 `Employee`의 경우 `age`를 기준으로 오름차순 정렬하는 것이 자연 순서
+
+<br>
+
+한번 정렬된 결과를 확인해보자.
+
+<br>
+
+`ComparableMain`
+
+```java
+public class ComparableMain {
+    public static void main(String[] args) {
+
+        Employee employee1 = new Employee("김부장", 50);
+        Employee employee2 = new Employee("박과장", 30);
+        Employee employee3 = new Employee("최사원", 20);
+
+        List<Employee> employees = new ArrayList<>(Arrays.asList(employee1, employee2, employee3));
+        System.out.println("employees = " + employees);
+
+        // Comparable을 이용한 디폴트 정렬
+        // 이 경우에는 age를 기준으로 오름차순 정렬
+        employees.sort(null);
+        System.out.println("employees = " + employees);
+        
+    }
+}
+```
+
+```
+employees = [Customer{id='김부장', age=50}, Customer{id='박과장', age=30}, Customer{id='최사원', age=20}]
+
+employees = [Customer{id='최사원', age=20}, Customer{id='박과장', age=30}, Customer{id='김부장', age=50}]
+```
+
+<br>
+
+이제 `Comparator`를 다시 한번 사용해보자. 이전에도 설명했지만 `Comparator`를 제공해서 정렬 기준을 세울 수 있다. 현재 케이스에 적용해보자면, `age`를 기준으로 오름차순 정렬하는 `Comparable`을 이용하지 않고 `id`를 기준으로 정렬하고 싶다면, 이 때 `Comparator`를 구현해서 제공하면 되는 것이다. 
+
+코드를 통해 살펴보자.
+
+<br>
+
+ `id`로 비교할 수 있는 비교자인 `IdComparator`를 만들어보자.
+
+<br>
+
+`IdComparator`
+
+```java
+public class IdComparator implements Comparator<Employee> {
+
+    // Employee의 객체의 id를 기준으로 오름차순 정렬
+    // String 같은 클래스는 전부 compareTo() 같은 메서드들이 전부 구현되어 있다
+    @Override
+    public int compare(Employee o1, Employee o2) {
+        return o1.getId().compareTo(o2.getId());
+    }
+}
+```
+
+* `Comparator` 인터페이스를 구현해서 비교자를 만들었다
+* `id` 기준으로 오름차순 정렬
+
+<br>
+
+`IdComparator`를 이용해보자.
+
+<br>
+
+`ComparatorMain`
+
+```java
+public class ComparatorMain {
+    public static void main(String[] args) {
+
+        Employee employee1 = new Employee("Amy", 50);
+        Employee employee2 = new Employee("Bob", 30);
+        Employee employee3 = new Employee("Cindy", 20);
+
+        List<Employee> employees = new ArrayList<>(Arrays.asList(employee3, employee2, employee1));
+        System.out.println("employees = " + employees);
+
+        // Comparator를 이용한 정렬
+        // id를 기준으로 오름차순 정렬
+        employees.sort(new IdComparator());
+        System.out.println("IdComparator() : " + employees);
+
+        // 반대로 정렬
+        employees.sort(new IdComparator().reversed());
+        System.out.println("IdComparator().reversed() : " + employees);
+    }
+}
+```
+
+```
+employees = [Customer{id='Cindy', age=20}, Customer{id='Bob', age=30}, Customer{id='Amy', age=50}]
+
+IdComparator() : [Customer{id='Amy', age=50}, Customer{id='Bob', age=30}, Customer{id='Cindy', age=20}]
+
+IdComparator().reversed() : [Customer{id='Cindy', age=20}, Customer{id='Bob', age=30}, Customer{id='Amy', age=50}]
+```
+
+* `sort()`에 비교자를 제공해서 정렬 기준으로 사용할 수 있다
+* `Collections.sort()`를 이용할 수 있지만, 객체 스스로가 가지는 정렬 메서드를 활용하는 것을 권장한다
+
+<br>
+
+> 이전에도 언급했지만 `Comparable`도 구현하지않고 `Comparator`도 제공하지 않은 상태로 정렬을 시도하면 런타임 오류가 발생한다!
+
+<br>
+
+---
+
+### 8.3 `Comparable`, `Comparator` 예시
+
+`Comparable`을 다시 한번 사용해보자.
 
 <br>
 
 ```java
 class Fruit implements Comparable<Fruit> {
+  
     private String name;
     private int quantity;
 
@@ -1004,6 +1333,7 @@ class Fruit implements Comparable<Fruit> {
 
 public class ComparableMain {
     public static void main(String[] args) {
+      
         List<Fruit> fruits = new ArrayList<>();
         fruits.add(new Fruit("Apple", 10));
         fruits.add(new Fruit("Banana", 5));
@@ -1040,7 +1370,7 @@ Fruit{name='Apple', quantity=10}
 ```java
 @Override
 public int compareTo(Fruit other) {
-    return this.name.compareTo(other.name); // String의 compareTo를 사용(Comparable의 compareTo와 다름)
+    return this.name.compareTo(other.name); // String의 compareTo()를 사용
 }
 ```
 
@@ -1053,16 +1383,7 @@ Fruit{name='Orange', quantity=2}
 
 <br>
 
----
-
-### 8.2 ```Comparator```
-
-* ```Comparator``` 인터페이스
-  * ```compare(T o1, T o2)``` 메서드 구현
-* 두 매개변수 객체 비교
-* [Java docs - ```Comparator```](https://docs.oracle.com/javase/8/docs/api/index.html?java/util/Comparator.html)
-* ```Comparator```를 구현해서 사용할 수 도 있지만, 익명 클래스를 사용하면 코드가 더 일관성 있음
-  * 익명 객체를 여러개 생성해서 다른 비교를 위해 사용하는 것도 가능
+`Comparator`를 사용해보자.
 
 <br>
 
@@ -1125,6 +1446,209 @@ Fruit{name='Orange', quantity=8}
 Fruit{name='Apple', quantity=10}
 Fruit{name='Grape', quantity=19}
 ```
+
+<br>
+
+---
+
+## 9) 컬렉션 유틸(`Collections`)
+
+컬렉션을 편리하게 다룰 수 있는 유틸에 대해 알아보자.
+
+<br>
+
+### 9.1 정렬, 최대값, 최소값
+
+코드로 바로 알아보자.
+
+<br>
+
+`CollectionsMain1`
+
+```java
+public class CollectionsMain1 {
+    public static void main(String[] args) {
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+
+        Integer max = Collections.max(list);
+        Integer min = Collections.min(list);
+        System.out.println("min = " + min);
+        System.out.println("max = " + max);
+
+
+        System.out.println("list = " + list);
+
+        // 리스트 랜덤으로 섞기
+        Collections.shuffle(list);
+        System.out.println("shuffle list = " + list);
+
+        // 정렬
+        // Comparator 제공 가능
+        Collections.sort(list);
+        System.out.println("sort list = " + list);
+
+        // 역정렬
+        Collections.reverse(list);
+        System.out.println("reverse list = " + list);
+    }
+}
+```
+
+```
+min = 1
+max = 5
+list = [1, 2, 3, 4, 5]
+shuffle list = [5, 4, 1, 3, 2]
+sort list = [1, 2, 3, 4, 5]
+reverse list = [5, 4, 3, 2, 1]
+```
+
+<br>
+
+---
+
+### 9.2 컬렉션 생성
+
+코드로 바로 알아보자.
+
+<br>
+
+`ImmutableMain`
+
+```java
+public class ImmutableMain {
+    public static void main(String[] args) {
+
+        // 불변 컬렉션 생성
+        // 변경 불가!
+        List<Integer> list = List.of(1, 2, 3, 4);
+        Set<Integer> set = Set.of(1, 2, 3, 4);
+        Map<String, Integer> map = Map.of("A", 1, "B", 2);
+
+        System.out.println("list = " + list);
+        System.out.println("set = " + set);
+        System.out.println("map = " + map);
+
+        // java.lang.UnsupportedOperationException 발생
+        // list.add(5);
+
+    }
+}
+```
+
+```
+list = [1, 2, 3, 4]
+set = [1, 2, 3, 4]
+map = {A=1, B=2}
+```
+
+* `.of(...)`
+  * 컬렉션을 편리하게 생성
+  * 불변 컬렉션(immutable)으로 생성됨
+  * 불변이기 때문에 어떤 변경을 가하는 작업은 불가능 함
+  * 자바 9 부터 지원하는 기능이다. 만약 자바 8을 사용한다면 뒤에서 다룰 `asList()`를 사용하거나, 다른 방법을 사용해야 한다.
+  * `of()` 같은 형태로 사용해서 빈 컬렉션을 만들 수 있다
+    * `emptyList()`를 사용할 수도 있으나, 만약 자바9 이상을 사용한다면 `of()`를 사용하는 것을 권장한다
+
+<br>
+
+그럼 위의 불변 컬렉션을 가변으로 변환하는 방법을 코드로 알아보자. 
+
+<br>
+
+```java
+public class ToMutableMain {
+    public static void main(String[] args) {
+
+        // 불변 리스트 생성
+        List<Integer> list = List.of(1, 2, 3, 4); // add()와 같은 변경 불가
+        System.out.println("immutable list = " + list);
+
+        // 가변 리스트로 변환
+        ArrayList<Integer> mutableList = new ArrayList<>(list); // 변경 가능
+        mutableList.add(5);
+        System.out.println("mutableList = " + mutableList);
+
+        // 다시 불변 리스트로 변환
+        List<Integer> unmodifiableList = Collections.unmodifiableList(mutableList); // 불변 리스트
+        System.out.println("unmodifiableList.getClass() = " + unmodifiableList.getClass());
+
+    }
+}
+```
+
+```
+immutable list = [1, 2, 3, 4]
+mutableList = [1, 2, 3, 4, 5]
+unmodifiableList.getClass() = class java.util.Collections$UnmodifiableRandomAccessList
+```
+
+<br>
+
+이번에는 `asList()`에 대해 알아보자.
+
+<br>
+
+`AsListMain`
+
+```java
+public class AsListMain {
+    public static void main(String[] args) {
+        
+        // asList()를 사용하면 고정된 크기를 가지는 리스트를 생성한다.(길이 변경 불가)
+        // 그렇다고 불변이라는 뜻은 아니다. 요소를 변경하는 것은 가능하다.
+        List<Integer> list = Arrays.asList(1, 2, 3, 4);
+        System.out.println("list = " + list);
+
+        // 요소 변경
+        list.set(3, 100);
+        System.out.println("list = " + list);
+
+        // 요소 추가/삭제는 불가능
+        // list.add(5);
+    }
+}
+```
+
+```
+list = [1, 2, 3, 4]
+list = [1, 2, 3, 100]
+```
+
+* `asList()`은 사용하기 애매함. 보통은 `of()` 사용을 권장.
+* `asList()`를 사용하는 경우
+  * 자바9 하위 버전을 사용하는 경우
+  * 리스트의 크기는 변경하지 않으면서 내부의 요소를 변경하는 경우 
+
+<br>
+
+---
+
+### 9.3 멀티스레드 동기화(`synchronizedXxx()`)
+
+멀티스레드 상황에서 동기화 문제가 발생하지 않도록 컬렉션을 변경하는 방법에 대해 알아보자.
+
+<br>
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+List<Integer> synchronizedList = Collections.synchronizedList(list);
+```
+
+* `Collections.synchronizedList`를 사용하면 일반 리스트를 멀티스레드 상황에서 동기화 문제가 발생하지 않도록 스레드 안전한(thread-safe) 리스트로 만들 수 있다
+* 보통 동기화 작업으로 인해 성능은 일반 리스트에 비해 느리다
+* `synchronizedList()`외에도 다양한 `synchronizedXxx()`를 제공한다
+* 성능에 따라 특정 상황에서는 `CopyOnWriteArrayList` 같은 `CopyOnWrite` 컬렉션을 사용하거나, `ConcurrentHashMap`과 같은 `Concurrent` 컬렉션을 사용할 수 있다
+
+<br>
+
+멀티스레드에 상황에서의 컬렉션은 멀티스레드 개념을 충분히 알고 있어야하기 때문에, 이후에 더 깊게 다룰 예정이다.
 
 <br>
 

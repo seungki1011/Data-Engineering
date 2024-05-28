@@ -411,7 +411,6 @@
 * 연결된 예외(Chained Exception)
 * ```DecimalFormat```
 * ```SimpleDateFormat```
-* ```Collections```
 * `Serializable`
 * `java.util.function`
 

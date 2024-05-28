@@ -20,7 +20,7 @@
 
 <h3>2. 🌐 네트워크(Network)와 HTTP</h3>
 
-  - [network and http/README.md](network%20and%20http/README.md)
+  - [network and http/README.md](network%20and%20http)
 
   - <details>
       <summary>1. 네트워크(Network)</summary>
@@ -93,7 +93,7 @@
 
 <h3>3. 🧩 자료구조와 알고리즘(Data Structure and Algorithm)</h3>
 
-  - [algorithm and data structure/README.md](algorithm%20and%20data%20structure/README.md)
+  - [algorithm and data structure/README.md](algorithm%20and%20data%20structure)
 
   - <details>
       <summary>1. 자료구조(Data Structure)</summary>
@@ -635,7 +635,7 @@
 
 <h3>1. 스프링 프레임워크(Spring Framework)</h3>
 
-  - [spring/README.md](spring/README.md)
+  - [spring/README.md](spring)
 
   - <details>
       <summary>1. Spring Introduction</summary>
@@ -895,7 +895,7 @@
 
 # 💾 Database
 
-### [database/README.md](database/README.md)
+### [database/README.md](database)
 
 <details>
   <summary><h3>1. RDBMS I</h3></summary>
@@ -1132,7 +1132,7 @@
 
 # 📦 Container
 
-### [container/README.md](container/README.md)
+### [container/README.md](container)
 
 <h3>1. Docker</h3>
 

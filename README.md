@@ -160,6 +160,13 @@
        * [`Deque`](algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#3-deque)
          * [`Deque` 인터페이스](algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#31-deque-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4)
          * [`Deque` 사용하기](algorithm%20and%20data%20structure/(001)DataStructure/(005)Stack_Queue#32-deque-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
+    * [Tree](algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree)
+       * [Tree 설명](algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree#1-tree-%EC%86%8C%EA%B0%9C)
+       * [이진 탐색 트리(Binary Search Tree, BST)](algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree#2-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-%ED%8A%B8%EB%A6%ACbst)
+         * [입력](algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree#21-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-%ED%8A%B8%EB%A6%AC-%EC%9E%85%EB%A0%A5)
+         * [검색](algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree#22-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-%ED%8A%B8%EB%A6%AC-%EA%B2%80%EC%83%89)
+         * [성능](algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree#23-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-%ED%8A%B8%EB%A6%AC%EC%9D%98-%EC%84%B1%EB%8A%A5)
+         * [순회](algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree#24-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-%ED%8A%B8%EB%A6%AC-%EC%88%9C%ED%9A%8C)
     
     </details>
   - <details>
@@ -743,8 +750,8 @@
            * 웹 스코프 소개
            * Request Scope
       * [전체 요약](spring/(002)Spring%20Core%20-%201#%EC%A0%84%EC%B2%B4-%EC%9A%94%EC%95%BD)
-    
-    
+
+
     </details>
   - <details>
       <summary>3. Spring MVC</summary>

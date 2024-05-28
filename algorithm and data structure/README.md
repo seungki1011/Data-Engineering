@@ -78,13 +78,8 @@
    * [`Deque`]((001)DataStructure/(005)Stack_Queue#3-deque)
      * [`Deque` 인터페이스]((001)DataStructure/(005)Stack_Queue#31-deque-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4)
      * [`Deque` 사용하기]((001)DataStructure/(005)Stack_Queue#32-deque-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-
----
-
-### 2) 자료구조 with Python
-
-1. Tree
-2. Graph
+6. [Tree](https://github.com/seungki1011/Data-Engineering/tree/main/algorithm%20and%20data%20structure/(001)DataStructure/(006)Tree)
+   * 
 
 ---
 
@@ -111,7 +106,23 @@
 
 ---
 
-## Further Reading
+## BOJ
+
+> 사람들이 추천하는 문제 찾아 다니면서 기록
+
+* 정렬 - 2751, 11650, 11651, 10814, 10825, 10989, 11652, 11004
+* 완전 탐색 - 1476, 1107, 1451, 9095, 10819, 10971, 1697, 1963, 9019, 1525, 2251, 2186, 3108, 5014, 1759, 2580, 1987, 6603, 1182, 2003, 1806, 1644, 1261, 1208, 7453, 2632, 2143
+* 분할 정복 - 11728, 1780, 11729, 1992, 2447, 2448, 1517, 2261
+* 이분 탐색 - 1654, 2805, 2110, 10815, 10816, 11662
+* 스택 - 10828, 9012, 10799
+* 큐 - 10845
+* 그래프 - 1260, 11724, 1707, 10451, 2331, 9466, 2667, 4963, 7576, 2178, 2146, 1991, 11725, 1167, 1967
+* 그리디 - 11047, 2875, 10610, 1783, 1931, 11399, 2873, 1744
+* DP - 1463, 11726, 11727, 9095, 10844, 11057, 2193, 9465, 2156, 11053, 11055, 11722, 11054, 1912, 2579, 1699, 2133, 9461, 2225, 2011, 11052
+* 구현/시뮬레이션 - 2578, 20546, 14501, 16236, 14500, 13460, 17143, 17822, 5373, 11559
+* 재귀 - 10872, 10870, 2447, 11729
+* 백트래킹 - 
+* 투포인터 - 
 
 
 
@@ -123,3 +134,4 @@
 2.  [freecodecamp.org - big o notation why it matters and why it doesnt](https://www.freecodecamp.org/korean/news/big-o-notation-why-it-matters-and-why-it-doesnt-1674cfa8a23c/)
 3.  [https://en.wikipedia.org/wiki/Big_O_notation](https://en.wikipedia.org/wiki/Big_O_notation)
 4.  [https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/](https://www.geeksforgeeks.org/how-to-learn-java-collections-a-complete-guide/)
+5.  [https://www.geeksforgeeks.org/tree-meaning-in-dsa/](https://www.geeksforgeeks.org/tree-meaning-in-dsa/)

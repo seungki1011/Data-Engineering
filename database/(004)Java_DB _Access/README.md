@@ -1882,6 +1882,509 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 
 ---
 
+## 3) JdbcTemplate
+
+### 3.1 예시 프로젝트(메모리 기반) 소개
+
+상품 관리 프로젝트를 기반으로 단순 메모리에 상품을 저장했다가, JdbcTemplate을 적용할것이다.
+
+프로젝트의 구조부터 살펴보자.
+
+[메모리 저장소 코드]()
+
+<br>
+
+`build.gradle : dependencies`
+
+```groovy
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+}
+```
+
+<br>
+
+---
+
+#### 3.1.1 도메인
+
+`Item` : 상품을 나타내는 객체
+
+```Java
+@Data
+public class Item {
+
+    private Long id;
+
+    private String itemName;
+    private Integer price;
+    private Integer quantity;
+
+    public Item() {
+    }
+
+    public Item(String itemName, Integer price, Integer quantity) {
+        this.itemName = itemName;
+        this.price = price;
+        this.quantity = quantity;
+    }
+}
+```
+
+<br>
+
+---
+
+#### 3.1.2 레포지토리
+
+`ItemRepository` 인터페이스 : 이후 `JdbcTemplate`이나 `JPA`를 사용할 때 구현체를 쉽게 변경하기 위해서 인터페이스 도입
+
+```java
+public interface ItemRepository {
+
+    Item save(Item item);
+
+    void update(Long itemId, ItemUpdateDto updateParam);
+
+    Optional<Item> findById(Long id);
+
+    List<Item> findAll(ItemSearchCond cond);
+
+}
+```
+
+<br>
+
+`ItemSearchCond` : 검색 조건으로 사용
+
+```java
+@Data
+public class ItemSearchCond {
+
+    private String itemName;
+    private Integer maxPrice;
+
+    public ItemSearchCond() {
+    }
+
+    public ItemSearchCond(String itemName, Integer maxPrice) {
+        this.itemName = itemName;
+        this.maxPrice = maxPrice;
+    }
+}
+```
+
+* 상품명, 최대 가격
+* 상품명의 일부만 포함되어도 검색이 가능해야 함(`like` 검색)
+
+<br>
+
+`ItemUpdateDto` : 상품을 수정할 때 사용하는 객체
+
+```java
+@Data
+public class ItemUpdateDto {
+    private String itemName;
+    private Integer price;
+    private Integer quantity;
+
+    public ItemUpdateDto() {
+    }
+
+    public ItemUpdateDto(String itemName, Integer price, Integer quantity) {
+        this.itemName = itemName;
+        this.price = price;
+        this.quantity = quantity;
+    }
+}
+```
+
+<br>
+
+> DTO(Data Transfer Object)란?
+>
+> * 데이터 전송을 위한 객체
+> * 기능은 없고 데이터를 전달하는 용도로 사용되면 DTO
+>   * 기능이 무조건 없어야하는 것은 아니다
+>   * 주 목적이 데이터 전송이면 DTO라고 할 수 있음
+> * 예시 프로젝트의 `ItemSearchCond`도 일종의 DTO로 볼 수 있음
+>   * 네이밍은 상황에 따라서 적절히 붙여주면 됨
+> * DTO를 붙이면 이 객체가 데이터 전송을 위한 객체라는 것을 한눈에 알아볼 수 있어서 좋음
+
+<br>
+
+`MemoryItemRepository`
+
+* `ItemRepository`를 구현한 메모리 저장소
+* 메모리 기반이기 때문에 서버를 종료하고 다시 실행하면 데이터가 전부 사라짐
+
+<br>
+
+---
+
+#### 3.1.3 스프링 부트 설정
+
+`MemoryConfig`
+
+```java
+@Configuration
+public class MemoryConfig {
+
+    @Bean
+    public ItemService itemService() {
+        return new ItemServiceV1(itemRepository());
+    }
+
+    @Bean
+    public ItemRepository itemRepository() {
+        return new MemoryItemRepository();
+    }
+
+}
+```
+
+* 사용하는 서비스, 레포지토리를 스프링 빈으로 등록하고 생성자를 통한 의존성 주입
+* 컨트롤러는 컴포넌트 스캔
+
+<br>
+
+`TestDataInit`
+
+* 애플리케이션을 실행할 때 초기 데이터를 저장
+* `@EventListener(ApplicationReadyEvent.class)` : 스프링 컨테이너가 완전히 초기화를 다 끝내고, 실행 준비가 외었을 때 발생하는 이벤트
+  * 프로젝트에서는 이를 통해 `initData()` 메서드를 호출해서 초기 데이터를 생성해준다
+
+<br>
+
+`ItemServiceApplication`
+
+```java
+@Import(MemoryConfig.class)
+@SpringBootApplication(scanBasePackages = "hello.itemservice.web")
+public class ItemServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ItemServiceApplication.class, args);
+	}
+
+	@Bean
+	@Profile("local")
+	public TestDataInit testDataInit(ItemRepository itemRepository) {
+		return new TestDataInit(itemRepository);
+	}
+
+}
+```
+
+* `@Import(MemoryConfig.class)` : 앞서 설정한 `MemoryConfig` 를 설정 파일로 사용한다
+
+
+
+* `@SpringBootApplication(scanBasePackages = "hello.itemservice.web")`
+  * 프로젝트에서는 컨트롤러만 컴포넌트 스캔을 사용하고 나머지는 수동 등록한다
+  * 컴포넌트 스캔 경로를 `hello.itemservice.web` 하위로 지정한다
+
+
+
+* `@Profile("local")`
+  * 특정 프로필의 경우에만 해당 스프링 빈을 등록한다
+  * 여기의 경우 `local`이라는 프로필이 사용되는 경우만 `testDataInit`이라는 스프링 빈을 등록
+
+<br>
+
+프로필(profile)에 대한 내용을 조금 더 자세히 살펴보자.
+
+<br>
+
+---
+
+#### 3.1.4 프로필(`@Profile`)
+
+스프링은 로딩 시점에 `application.properties`의 `spring.profiles.active` 속성을 읽어서 프로필로 사용한다.
+
+이런 프로필을 사용하는 이유는 개발 환경(로컬), 운영 환경(프로덕션), 테스트 실행 등 다양한 환경에 따라 다른 설정을 사용하기 위해서다.
+
+예를 들면, 로컬 환경에서는 로컬에 설치된 DB에만 접근해야 하고, 운영 환경은 운영 DB에 접근해야 한다. 이를 위해서 프로필마다 설정 정보를 다르게 설정해서 이용하도록 하면 편하다.
+
+<br>
+
+예시 프로젝트의 경우 `main/resources`의 `application.properties`와 `test/resources`의 `application.properties`의 프로필이 다르게 설정되어 있다.
+
+<br>
+
+---
+
+### 3.2 프로젝트 데이터베이스 준비
+
+JdbcTemplate의 사용에 들어가기 전에 도커를 이용해서 MySQL 컨테이너를 띄우고 사용하자.
+
+<br>
+
+`docker-compose.yaml`
+
+```yaml
+services:
+  mysql:
+    image: mysql:8.1
+    container_name: mysql-container
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: my_username
+      MYSQL_PASSWORD: my_password
+    volumes:
+      - /Users/{사용자이름}/Desktop/mysql-volume:/var/lib/mysql
+```
+
+<br>
+
+``schema.sql``
+
+```sql
+DROP TABLE IF EXISTS item;
+CREATE TABLE item
+(
+    id BIGINT AUTO_INCREMENT,
+    item_name VARCHAR(10),
+    price INT,
+    quantity INT,
+    PRIMARY KEY (id)
+);
+```
+
+* 위의 쿼리로 테이블 생성하자
+
+<br>
+
+작동 확인 해보기.
+
+```sql
+insert into item(item_name, price, quantity) values ('ItemTest', 10000, 10)
+select * from item;
+```
+
+<br>
+
+데이터베이스의 기본키는 다음의 조건을 만족해야한다.
+
+* `null`값을 허용하지 않는다
+* 유일해야 한다(unique)
+* 변해선 안된다(immutable)
+
+<br>
+
+테이블의 기본 키를 선택은 다음의 두 종류를 사용할 수 있다.
+
+* 자연 키(natural key)
+  * 비즈니스에 의미가 있는 키
+  * 이메일, 주민등록번호, 전화번호
+
+
+
+* 대리 키(surrogate key)
+  * 비즈니스와 관련이 없는 임의로 만들어진 키(대체 키)
+  * `auto_increment`, 키 생성 테이블의 키, 오라클 시퀀스
+
+<br>
+
+보통의 경우 자연 키 보다 대리 키를 권장한다. 이유는 다음과 같다.
+
+* 이메일, 주민번호, 전화번호는 언뜻 보면 변하지 않을것 같지만 언젠가는 변할 수 있다
+* 어떤 외부적인 요인(정책, 법)에 의해 쉽게 변하지 않을 키를 위해서 자연 키 사용을 피하자
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 3.3 JdbcTemplate 소개
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 3.4 JdbcTemplate 적용
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 3.5 
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 3.6 `SimpleJdbcInsert`
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+## 4) DB Testing
+
+### 4.1 데이터베이스 연동
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 4.2 데이터베이스 분리
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 4.3 Rollback
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 4.4 `@Transactional`
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 4.5 Embedded Mode
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+## 5) JPA(Java Persistence API)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
 ## Further Reading
 
 * `hikariCP`

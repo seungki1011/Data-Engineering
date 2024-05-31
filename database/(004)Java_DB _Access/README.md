@@ -1882,6 +1882,76 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 
 ---
 
+### 2.4 스프링 트랜잭션 주의점
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 2.5 `@Transactional` 옵션들
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 2.6 예외에 따른 트랜잭션 커밋 or 롤백
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 2.7 스프링 트랜잭션 전파
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
 ## 3) JdbcTemplate
 
 ### 3.1 예시 프로젝트(메모리 기반) 소개
@@ -2476,7 +2546,7 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository{
 
 위의 4가지 상황에 따라 SQL이 동적으로 생성되어야 한다. 언뜻 보기에는 쉬워보이지만, 이것을 코드로 구현하려고 하면 생각보다 어렵다. 또한 실무로 들어가면 이보다 조건이 훨씬 복잡하다.
 
-JdbcTemplate의 단점은 이런 동적 쿼리를 처리하기 쉽지 않다는 것이다. 이런 문제를 해결하기 위해서는 MyBatis나 JPA 등의 기술을 사용할 수 있다.
+JdbcTemplate의 단점은 이런 동적 쿼리를 처리하기 쉽지 않다는 것이다. 이런 문제를 해결하기 위해서는 MyBatis 등의 기술을 사용할 수 있다.
 
 <br>
 
@@ -3072,31 +3142,41 @@ class ItemRepositoryTest {}
 
 ### 4.5 Embedded Mode
 
+임베디드 모드를 사용하기 위해서는 먼저 h2 데이터베이스를 라이브러리에 추가하자.
 
+<br>
 
+`build.gradle`
 
+```groovy
+dependencies {
+    // 기존
+  
+    // 추가
+    runtimeOnly 'com.h2database:h2'
+}
+```
 
+<br>
 
+`test/resources/application.properties`의 `datasource`관련 설정을 주석 처리 하자.
 
+```properties
+spring.profiles.active=test
 
+# spring.sql.init.mode=always
+# spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
+# spring.datasource.url=jdbc:mysql://localhost:3306/real_test_database?serverTimezone=Asia/Seoul
+# spring.datasource.username=root
+# spring.datasource.password=admin
 
+logging.level.org.springframework.jdbc=debug
+```
 
+<br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+별다른 정보를 제공하지 않으면 스프링 부트는 임베디드 모드로 접근하는 `DataSource`를 만들어서 제공한다.
 
 <br>
 

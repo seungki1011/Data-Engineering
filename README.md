@@ -1042,6 +1042,35 @@
        * `PlatformTransactionManager`
        * `TransactionTemplate`
        * `@Transactional`(트랜잭션 AOP)
+     * [스프링 트랜잭션 주의점](database/(004)Java_DB%20_Access#24-%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%A3%BC%EC%9D%98%EC%A0%90)
+     * [`@Transactional` 옵션들](database/(004)Java_DB%20_Access#25-transactional-%EC%98%B5%EC%85%98%EB%93%A4)
+     * [예외에 따른 트랜잭션 커밋/롤백](database/(004)Java_DB%20_Access#26-%EC%98%88%EC%99%B8%EC%97%90-%EB%94%B0%EB%A5%B8-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%BB%A4%EB%B0%8B%EB%A1%A4%EB%B0%B1)
+     * [스프링 트랜잭션 전파(Transaction Propagation)](database/(004)Java_DB%20_Access#27-%EC%8A%A4%ED%94%84%EB%A7%81-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%A0%84%ED%8C%8Ctransaction-propagation)
+       * [두 트랜잭션을 따로 관리](database/(004)Java_DB%20_Access#271-%EB%91%90-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%EC%9D%84-%EB%94%B0%EB%A1%9C-%EA%B4%80%EB%A6%AC)
+       * [전파 기본 옵션 `REQUIRED`](database/(004)Java_DB%20_Access#272-%EC%A0%84%ED%8C%8C-%EA%B8%B0%EB%B3%B8-%EC%98%B5%EC%85%98-required)
+       * [전파 옵션 `REQUIRES_NEW`](database/(004)Java_DB%20_Access#273-%EC%A0%84%ED%8C%8C-%EC%98%B5%EC%85%98-requires_new)
+       * 기타 전파 옵션
+  3. [JdbcTemplate](database/(004)Java_DB%20_Access#3-jdbctemplate)
+     * [예시 프로젝트(메모리 기반) 소개](database/(004)Java_DB%20_Access#31-%EC%98%88%EC%8B%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A9%94%EB%AA%A8%EB%A6%AC-%EA%B8%B0%EB%B0%98-%EC%86%8C%EA%B0%9C)
+       * 도메인
+       * 레포지토리
+       * 스프링 부트 설정
+       * [프로필(`@Profile`)](database/(004)Java_DB%20_Access#314-%ED%94%84%EB%A1%9C%ED%95%84profile)
+     * [프로젝트 데이터베이스 준비](database/(004)Java_DB%20_Access#32-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%A4%80%EB%B9%84)
+     * [JdbcTemplate 소개](database/(004)Java_DB%20_Access#33-jdbctemplate-%EC%86%8C%EA%B0%9C)
+     * [JdbcTemplate 설정](database/(004)Java_DB%20_Access#34-jdbctemplate-%EC%84%A4%EC%A0%95)
+     * [JdbcTemplate 적용](database/(004)Java_DB%20_Access#35-jdbctemplate-%EC%A0%81%EC%9A%A9)
+       * `ItemRepository` 구현체 만들기
+       * [동적 쿼리](database/(004)Java_DB%20_Access#352-%EB%8F%99%EC%A0%81-%EC%BF%BC%EB%A6%AC)
+       * 구성하고 실행
+     * [`NamedParameterJdbcTemplate`](database/(004)Java_DB%20_Access#36-namedparameterjdbctemplate)
+     * [`SimpleJdbcInsert`](database/(004)Java_DB%20_Access#37-simplejdbcinsert)
+  4. [DB Testing](database/(004)Java_DB%20_Access#4-db-testing)
+     * [데이터베이스 연동](database/(004)Java_DB%20_Access#41-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%97%B0%EB%8F%99)
+     * [데이터베이스 분리](database/(004)Java_DB%20_Access#42-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%B6%84%EB%A6%AC)
+     * [Rollback](database/(004)Java_DB%20_Access#43-rollback)
+     * [`@Transactional`](database/(004)Java_DB%20_Access#44-transactional)
+     * [Embedded Mode](database/(004)Java_DB%20_Access#45-embedded-mode)
 
 </details>
 <details>

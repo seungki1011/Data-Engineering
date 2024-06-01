@@ -35,6 +35,36 @@
      * `PlatformTransactionManager`
      * `TransactionTemplate`
      * `@Transactional`(트랜잭션 AOP)
+   * 스프링 트랜잭션 주의점
+   * `@Transactional` 옵션들
+   * 예외에 따른 트랜잭션 커밋/롤백
+   * 스프링 트랜잭션 전파
+   * 스프링 트랜잭션 전파(Transaction Propagation)
+     * 두 트랜잭션을 따로 관리
+     * 전파 기본 옵션 `REQUIRED`
+     * 전파 옵션 `REQUIRES_NEW`
+     * 기타 전파 옵션
+3. JdbcTemplate
+   * 예시 프로젝트(메모리 기반) 소개
+     * 도메인
+     * 레포지토리
+     * 스프링 부트 설정
+     * 프로필(`@Profile`)
+   * 프로젝트 데이터베이스 준비
+   * JdbcTemplate 소개
+   * JdbcTemplate 설정
+   * JdbcTemplate 적용
+     * `ItemRepository` 구현체 만들기
+     * 동적 쿼리
+     * 구성하고 실행
+   * `NamedParameterJdbcTemplate`
+   * `SimpleJdbcInsert`
+4. DB Testing
+   * 데이터베이스 연동
+   * 데이터베이스 분리
+   * Rollback
+   * `@Transactional`
+   * Embedded Mode
 
 ---
 
@@ -1884,17 +1914,94 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 
 ### 2.4 스프링 트랜잭션 주의점
 
+`@Transactional`을 사용하면 스프링의 트랜잭션 AOP가 적용이 된다. 이때 프록시 방식의 AOP가 사용되는데, 프록시 객체가 요청을 받아서 트랜잭션을 처리하고 실제 객체를 호출하는 방식으로 동작한다.
 
+트랜잭션을 적용하기 위해서는 프록시를 통해서 대상(Target) 객체를 호출해야 한다. 프록시를 거치치 않고 대상 객체를 직접 호출하게 되면, AOP가 적용되지 않아서 트랜잭션도 적용되지 않는다.
 
+스프링 트랜잭션 사용시 주의해야 할 것은 **대상 객체의 내부에서 메서드 호출이 발생하면 프록시를 거치지 않고 대상 객체를 직접 호출하는 문제가 발생한다.**
 
+이 경우에 `@Transactional`이 있어도 트랜잭션이 적용되지 않는다.
 
+<br>
 
+코드를 통해 살펴보자.
 
+<br>
 
+```java
+@Test
+void internalCall() {
+    callService.internal();
+}
 
+@Test
+void externalCall() {
+    callService.external();
+}
 
+@TestConfiguration
+static class InternalCallV1Config {
+    @Bean
+    CallService callService() {
+        return new CallService();
+    }
+}
 
+@Slf4j
+static class CallService {
+    public void external() {
+        log.info("call external");
+        printTxInfo();
+        internal();
+    }
+      
+    @Transactional
+    public void internal() {
+        log.info("call internal");
+        printTxInfo();
+    }
+      
+    private void printTxInfo() {
+        boolean txActive = TransactionSynchronizationManager.isActualTransactionActive();
+        log.info("tx active={}", txActive);
+    } 
+}
+```
 
+* `external()`은 트랜잭션이 없음
+* `internal()`은 `@Transactional`을 통해 트랜잭션 적용
+* `internalCall()`은 `internal()` 호출. 큰 문제는 없음
+
+<br>
+
+문제가 되는 `externalCall()`을 실행하는 경우를 살펴보자.
+
+`external()`은 `@Transactional`이 없어서 트랜잭션 없이 시작한다. 그러나 내부에 `@Transactional`이 붙은 `internal()`을 호출한다. 우리의 기대하는 것은 `internal()`에 트랜잭션이 적용되는 것이지만, 실제 결과를 살펴보면 트랜잭션 관련 코드가 전혀 반영되지 않는다.
+
+이 문제가 발생하는 원인은 `internal()`을 호출하는 부분에 있다. 자바에서는 메서드 앞에 별도의 참조가 없으면 자기 자신의 인스턴스를 가리키는 `this`가 붙는다. 그래서 위의 경우에는 `this.internal()`이 호출되는 것이다. 여기서 알아야할 것은 `this`는 자기 자신을 가리키기 때문에 대상(target) 객체를 뜻한다.
+
+이전에도 설명했듯이 프록시를 거치치 않고 대상 객체를 직접 호출하게 되면 트랜잭션이 적용되지 않는다.
+
+<br>
+
+이 문제를 해결하기 위해서는 `internal()`을 외부 클래스로 분리하고, `internal()`을 호출할 때 `외부클래스_참조변수.internal()` 같이 호출하면 된다. 
+
+<br>
+
+> 추가 주의점
+>
+> 1. 스프링은 기본적으로 `public` 메서드에만 트랜잭션을 적용하도록 설정되어 있다
+>    * 스프링 부트 3.0 부터는 `protected`, `package-visible`(default)에도 트랜잭션이 적용된다
+>
+> 
+>
+> 2. 초기화 코드(`@PostConstruct`)와 `@Transactional`을 함께 사용하면 트랜잭션이 적용되지 않는다
+>    * 초기화 코드가 먼저 호출되고, 그 다음에 트랜잭션 AOP가 적용된다
+>    * 초기화 시점에는 해당 메서드에서 트랜잭션 획득 불가
+>
+> <br>
+>
+> `@PostConstruct`를 사용하는 대신 `@EventListener(value = ApplicationReadyEvent.class)`를 사용하면, 트랜잭션 AOP를 포함한 스프링 컨테이너가 완전히 생성되고 난 다음에 이벤트가 붙은 메서드를 호출해준다.
 
 <br>
 
@@ -1902,51 +2009,329 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 
 ### 2.5 `@Transactional` 옵션들
 
+`@Transactional`에 사용할 수 있는 옵션들 소개
+
+<br>
+
+* `@Transactional(xxxTxManager)`
+
+  * 트랜잭션을 이용하기 위해서는 스프링 빈에 등록된 어떤 트랜잭션 매니저를 사용할지 알아야 한다
+
+  * 생략하는 경우 기본으로 등록된 트랜잭션 매니저를 사용한다(대부분 생략해서 사용하는 경우가 많다)
+
+  * 사용하는 트랜잭션 매니저가 둘 이상이라면 다음과 같이 트랜잭션 매니저 이름을 지정하면 된다
+
+  * ```java
+    @Transactional("memberTxManager")
+    public void member() {...}
+    
+    @Transactional("orderTxManager")
+    public void order() {...}
+    ```
+
+<br>
+
+* `@Transactional(rollbackFor = Exception.class)`
+  * 예외 발생시 스프링 트랜잭션의 기본 정책은 다음과 같다
+    * 언체크 예외 : 롤백
+    * 체크 예외 : 커밋
+  * 위의 `rollbackFor` 옵션을 이용하면 기본 정책에 추가로 어떤 예외가 발생할 때 롤백할 지 지정 가
 
 
 
+* `noRollbackFor`
+  * 위의 `rollbackFor`과 반대로 어떤 예외가 발생했을 때 롤백하면 안되는지 지정 가능
 
+<br>
 
+예외에 따른 트랜잭션 커밋과 롤백은 뒤에서 더 자세히 다룰 것이다.
 
+<br>
 
+* `isolation`
+  * 트랜잭션의 격리 수준을 지정 가능
+  * 기본값은 데이터베이스에서 설정한 트랜잭션 격리 수준을 사용한다
+  * 대부분 경우 기본값을 사용한다(개발자가 임의로 지정하는 경우는 드물다)
+
+<br>
+
+* `readOnly`
+  * 트랜잭션은 기본적으로 읽기/쓰기가 모두 가능한 트랜잭션이 생성된다
+  * `readOnly=true`를 사용하면 읽기 전용 트랜잭션이 생성된다. 이 경우 읽기 기능만 작동한다.
+  * `readOnly=true`를 통해 다양한 성능 최적화가 이루어질 수 있다
+  * 무조건 성능 최적화가 발생하는 것은 아니다, 모니터링 권장
 
 <br>
 
 ---
 
-### 2.6 예외에 따른 트랜잭션 커밋 or 롤백
+### 2.6 예외에 따른 트랜잭션 커밋/롤백
 
+예외 발생시 스프링 트랜잭션 AOP는 예외의 종류에 따라 트랜잭션을 커밋하거나 롤백한다.
 
+* 언체크 예외(`RuntimeException`, `Error`과 하위 예외) : 트랜잭션 롤백
+* 체크 예외(`Exception`과 하위 예외) : 트랜잭션 커밋
+* 정상 응답 : 트랜잭션 커밋
 
+<br>
 
+스프링이 체크 예외를 커밋하는 정책을 사용하는 이유는 체크 예외를 비즈니스적 의미가 있는 예외로 가정하고, 언체크 예외를 복구 불가능한 예외로 가정하고 있기 때문이다.
 
+<br>
 
+> 비즈니스 의미가 있는 예외
+>
+> * 잔고 부족
+> * 이체 목표의 은행이 점검중
+> * 말 그대로 비즈니스적 의미가 있는 예외를 말함
+>
+> <br>
+>
+> 비즈니스 의미가 있는 예외를 롤백해버리면 해당 정보를 가지고 고객에게 안내를 하거나 하는 일을 못한다. 
 
+<br>
 
-
-
-
-
-
-
-
-
+비즈니스 상황에 따라 체크 예외라도 트랜잭션을 커밋하지 않고 롤백하고 싶은 경우도 있을 것이다. 이 경우에는 `rollbackFor` 옵션을 사용하면 된다. 
 
 <br>
 
 ---
 
-### 2.7 스프링 트랜잭션 전파
+### 2.7 스프링 트랜잭션 전파(Transaction Propagation)
+
+#### 2.7.1 두 트랜잭션을 따로 관리
+
+트랜잭션이 둘 이상 있을 때 어떻게 동작하는지 자세히 알아보고, 스프링이 제공하는 트랜잭션 전파(propagation)라는 개념도 알아보자.
+
+먼저 복습하는 차원에서 `트랜잭션1`이 수행되고 `트랜잭션2`가 수행되는 상황을 살펴보자. 쉽게 말해서 트랜잭션이 각각 따로 사용되는 상황이다.
+
+<br>
+
+```java
+@Test
+void double_commit_rollback() {
+  
+    log.info("트랜잭션1 시작");
+    TransactionStatus tx1 = txManager.getTransaction(new DefaultTransactionAttribute());
+    log.info("트랜잭션1 커밋"); txManager.commit(tx1);
+  
+    log.info("트랜잭션2 시작");
+    TransactionStatus tx2 = txManager.getTransaction(new DefaultTransactionAttribute());
+    log.info("트랜잭션2 롤백");
+    txManager.rollback(tx2);
+  
+}
+```
 
 
 
+<br>
+
+<p align="center">   <img src="img/prop2.png" alt="jdbc" style="width: 100%;"> </p>
+
+<p align="center">트랜잭션이 따로 사용되는 상황</p>
+
+* `트랜잭션1`이 수행되고 `commit` 후에 `con0` 반환
+* `트랜잭션2`가 시작하면서 반환된 `con0` 사용
+* `트랜잭션2`에 대한 `rollback` 후에 `con0` 반환
+* 이 처럼 `트랜잭션1`, `트랜잭션2`를 묶지 않고 각각 관리했기 때문에 `트랜잭션1`에서 수행한 결과는 저장되고, `트랜잭션2`에서 수행한 결과는 롤백된다
+
+<br>
+
+---
+
+#### 2.7.2 전파 기본 옵션 `REQUIRED`
+
+그러면 이번에는 트랜잭션을 각각 사용하는 것이 아니라, 트랜잭션이 이미 진행중인 상황에서 추가로 트랜잭션을 수행하면 어떻게 될까?
+
+이렇게 트랜잭션 중에 새로운 트랜잭션이 수행되는 경우 어떻게 동작할지 결정하는 것을 트랜잭션 전파(Transaction Propogation)이라고 한다.
+
+<br>
+
+지금부터 설명할 동작은 전파의 기본 옵션인 `Required`일 때 일어나는 동작이다.
+
+외부 트랜잭션의 수행중에 내부 트랜잭션이 수행된다고 가정하자. 이때 외부 트랜잭션이라는 것은 상대적으로 바깥쪽에 있는 트랜잭션이다. 제일 먼저 시작된 트랜잭션으로 이해하면 된다.
+
+공식 문서 참고 : [https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/tx-propagation.html)
+
+<br>
+
+<p align="center">   <img src="img/prop3.png" alt="jdbc" style="width: 100%;"> </p>
+
+* 내부 트랜잭션(nested transaction)은 외부 트랜잭션이 수행되고 있는 도중에 호출되기 때문에 마치 내부에 있는 것 처럼 보여서 내부 트랜잭션이라고 한다
+
+<br>
+
+이런식으로 외부 트랜잭션이 수행되고 있는 중에 내부 트랜잭션이 도중에 참여하게 되면 스프링은 외부 트랜잭션과 내부 트랜잭션을 묶어서 하나의 트랜잭션으로 만들어준다. 다음 그림을 통해서 이해해보자. 
+
+<br>
+
+<p align="center">   <img src="img/prop4.png" alt="jdbc" style="width: 100%;"> </p>
+
+* 외부 트랜잭션과 내부 트랜잭션을 하나의 트랜잭션으로 묶는다
+* 이때 하나로 묶인 전체 트랜잭션을 물리 트랜잭션이라고 취급하고, 물리 트랜잭션을 이루는 외부/내부 트랜잭션을 논리 트랜잭션이라고 하자
 
 
 
+* 물리 트랜잭션은 우리가 이해하고 있는 실제 데이터베이스에 적용되는 트랜잭션을 말한다
+  * 실제 커넥션을 통해 트랜잭션을 시작/커밋/롤백하는 단위로 생각하면 편하다
 
 
 
+* 논리 트랜잭션은 트랜잭션 매니저를 통해 트랜잭션을 사용하는 단위이다
+* 논리 트랜잭션 개념은 위 처럼 트랜잭션 진행 도중에 내부에 추가로 트랜잭션이 사용되어 기존 트랜잭션에 참여하는 경우 나타난다 
 
+<br>
+
+스프링의 트랜잭션 전파의 기본 옵션인 `Required`를 사용하는 경우, 다음의 기본 원칙에 의해 논리 트랜잭션과 물리 트랜잭션이 동작한다. 
+
+* 모든 논리 트랜잭션이 커밋되어야 물리 트랜잭션이 커밋된다
+* 하나의 논리 트랜잭션이라도 롤백되면 물리 트랜잭션(전체 트랜잭션)은 롤백된다
+
+<br>
+
+그림으로 나타내면 다음과 같다.
+
+<br>
+
+<p align="center">   <img src="img/prop5.png" alt="jdbc" style="width: 100%;"> </p>
+
+* 외부/내부 트랜잭션 모두 커밋 되면 물리 트랜잭션도 커밋
+* 내부 트랜잭션이 롤백되면 물리 트랜잭션도 롤백
+* 외부 트랜잭션이 롤백되면 물리 트랜잭션도 롤백
+
+<br>
+
+외부/내부 트랜잭션이 모두 커밋되는 경우를 코드로 살펴보자.
+
+<br>
+
+```java
+@Test
+void inner_commit() {
+  
+    log.info("외부 트랜잭션 시작");
+    TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+    log.info("outer.isNewTransaction()={}", outer.isNewTransaction());
+  
+    log.info("내부 트랜잭션 시작");
+    TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+    log.info("inner.isNewTransaction()={}", inner.isNewTransaction()); 
+  
+    log.info("내부 트랜잭션 커밋");
+    txManager.commit(inner);
+  
+    log.info("외부 트랜잭션 커밋");
+    txManager.commit(outer);
+}
+```
+
+```
+외부 트랜잭션 시작
+Creating new transaction with name [null]:
+PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+Acquired Connection [HikariProxyConnection@1943867171 wrapping conn0] for JDBC
+transaction
+Switching JDBC Connection [HikariProxyConnection@1943867171 wrapping conn0] to manual commit
+outer.isNewTransaction()=true
+내부 트랜잭션 시작
+Participating in existing transaction inner.isNewTransaction()=false
+내부 트랜잭션 커밋
+외부 트랜잭션 커밋
+Initiating transaction commit
+Committing JDBC transaction on Connection [HikariProxyConnection@1943867171 wrapping conn0]
+Releasing JDBC Connection [HikariProxyConnection@1943867171 wrapping conn0] after transaction
+```
+
+* `PROPAGATION_REQUIRED` : 전파 디폴트 옵션
+* `Participating in existing transaction` : 내부 트랜잭션이 기존에 수행되는 외부 트랜잭션에 참여
+
+<br>
+
+스프링은 기본적으로 처음 트랜잭션을 시작한 외부 트랜잭션이 실제 물리 트랜잭션을 관리하도록 한다.
+
+그러면 이런 궁금증을 가질 수도 있다. 
+
+> "외부 트랜잭션이 실제 물리 트랜잭션을 관리하면, 외부 트랜잭션이 커밋되는 경우, 전체 물리 트랜잭션도 커밋되어야 하는 것이 아닌가?"
+
+<br>
+
+이 경우에는 내부 트랜잭션을 롤백하게 되면 기존 트랜잭션을 롤백 전용(`rollback-only`)로 표시한다. 이렇게 되면 외부 트랜잭션을 커밋해도, 전체 트랜잭션(물리 트랜잭션)이 `rollback-only`로 표시되어 있기 때문에 물리 트랜잭션을 롤백한다.
+
+<br>
+
+---
+
+#### 2.7.3 전파 옵션 `REQUIRES_NEW`
+
+외부 트랜잭션과 내부 트랜잭션을 완전히 분리해서 사용하는 방법에 대해 알아보자. 완전히 분리해서 별도의 물리 트랜잭션으로 사용하게 되면, 커밋과 롤백도 각각 별도로 이루어지게 된다.
+
+코드로 살펴보자.
+
+<br>
+
+```java
+@Test
+void inner_rollback_requires_new() {
+  
+    log.info("외부 트랜잭션 시작");
+    TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+    log.info("outer.isNewTransaction()={}", outer.isNewTransaction()); 
+    
+    log.info("내부 트랜잭션 시작");
+    DefaultTransactionAttribute definition = new DefaultTransactionAttribute();
+    definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW); // 옵션 변경
+  
+    TransactionStatus inner = txManager.getTransaction(definition);
+    log.info("inner.isNewTransaction()={}", inner.isNewTransaction());
+  
+    log.info("내부 트랜잭션 롤백"); 
+    txManager.rollback(inner); //롤백
+  
+    log.info("외부 트랜잭션 커밋");
+    txManager.commit(outer); //커밋 
+  
+}
+```
+
+* 내부 트랜잭션을 시작할 때 전파 옵션을 `PROPAGATION_REQUIRES_NEW` 옵션을 준다
+* 이 옵션을 사용하게 되면, 내부 트랜잭션을 시작할 때 기존 트랜잭션에 참여하는 것이 아리나 새로운 물리 트랜잭션을 만들어서 시작하게 된다
+* 이 옵션은 요청이 굉장히 많아지는 경우 성능에 영향을 끼칠 수 있다
+
+<br>
+
+---
+
+#### 2.7.4 기타 전파 옵션
+
+보통 트랜잭션 전파 옵션을 `REQUIRED`(기본 옵션)로 많이 사용한다. `REQUIRES_NEW`도 가끔 사용된다.
+
+<br>
+
+* `SUPPORT`
+  * 트랜잭션을 지원한다
+  * 기존 트랜잭션 없음 : 트랜잭션 없이 진행
+  * 기존 트랜잭션 있음 : 트랜잭션에 참여한다
+
+<br>
+
+* `NOT_SUPPORT`
+  * 기존 트랜잭션 없음 : 트랜잭션 없이 진행
+  * 기존 트랜잭션 있음 : 트랜잭션 없이 진행 (기존 트랜잭션 보류)
+
+<br>
+
+* `MANDATORY`
+  * 트랜잭션이 반드시 있어야 한다
+  * 기존 트랜잭션 없음 : `IllegalTransactionStateException` 예외 발생
+  * 기존 트랜잭션 있음 : 트랜잭션에 참여한다
+
+<br>
+
+* `NEVER`
+  * 트랜잭션을 사용하지 않는다
+  * 기존 트랜잭션 없음 : 트랜잭션 없이 진행한다
+  * 기존 트랜잭션 있음 : `IllegalTransactionStateException` 예외 발생
 
 <br>
 
@@ -1960,7 +2345,7 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 
 프로젝트의 구조부터 살펴보자.
 
-[메모리 저장소 코드]()
+[메모리 저장소 코드](https://github.com/seungki1011/Data-Engineering/tree/main/database/(004)Java_DB%20_Access/itemservice/src)
 
 <br>
 

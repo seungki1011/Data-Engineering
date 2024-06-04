@@ -3,12 +3,25 @@
 1. [Programming Language](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#1-programming-language)
    * 고급 언어
    * Translator
-2. [자바 동작 방식(How Java Works)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#2-%EC%9E%90%EB%B0%94-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9Dhow-java-works)
-3. [자바 메모리 구조(Java Memory Structure)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#3-java-memory-structure)
-   * 메서드 영역(Method Area)
-   * 스택 영역(Stack Area)
-   * 힙 영역(Heap Area)
-4. [JVM, JDK, JRE](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#4-jvm-jdk-jre)
+2. [자바 동작 방식(How Java Works)]()
+3. [Java Memory Structure]()
+   * [스레드(thread)별로 사용하는 영역]()
+     * Native Method Stack
+     * PC Registers
+     * Stack Area
+   * [공통으로 사용하는 영역]()
+     * [Method Area(Metaspace, PermGen)]()
+     * [Heap]()
+       * Young Gen
+       * Old Gen(Tenured Generation)
+4. [Garbage Collection(GC)]()
+   * [Minor GC(Young GC)]()
+   * [Major GC]()
+     * [Serial GC]()
+     * [Parallel GC]()
+     * [CMS(Concurrent Mark Sweep) GC]()
+     * [G1(Garbage First) GC]()
+5. [JVM, JDK, JRE]()
    * JDK
    * JRE
    * JVM
@@ -138,7 +151,7 @@ JVM의 런타임 데이터 영역(Runtime Data Area)를 자바의 메모리 구�
 
 ### 3.1 스레드(thread)별로 사용하는 영역
 
-#### 3.1.1 Native Method Area
+#### 3.1.1 Native Method Stack
 
 * 네이티브 메서드(Native Method)는 Java가 아닌 다른 언어(C, C++)로 작성된 메서드
 * Native Method Stack은 Java 메서드가 아닌 네이티브 메서드들의 호출 순서를 담아 관리하는 스택
@@ -284,6 +297,20 @@ GC는 보통 다음의 두 단계를 거친다.
 
 <br>
 
+그림으로 살펴보면 대략적으로 다음과 같이 동작할 것이다.
+
+<br>
+
+<p align="center">   <img src="img/gc1.png" alt="java jvm" style="width: 100%;"> </p>
+
+<p align="center">GC graph</p>
+
+* Stop-the-World 이후에 GC root에서 시작해서 참조하는 객체들을 찾아가며 mark한다
+* 참조를 잃은 객체들은 unreachable 객체로 판단해서 Sweep의 대상이 된다
+* Sweep을 통해 참조를 잃은 객체들 제거
+
+<br>
+
 ---
 
 ### 4.1 Minor GC(Young GC)
@@ -319,15 +346,26 @@ Major GC는 여러가지 방식이 존재하며, 세세한 구현은 자바의 �
 
 <br>
 
-#### 4.2.1 Serial GC (`-XX:+UseSerialGC`)
+> Full-GC
+>
+> * Young Gen, Old Gen 전체 영역을 대상으로 하는 GC
+> * 보통 모든 가용영역이 부족할 때 발생한다
+> * Full GC를 최소화 하는 것이 성능에 좋다
 
+<br>
 
+---
 
+#### 4.2.1 Serial GC
 
+<p align="center">   <img src="img/s.png" alt="java jvm" style="width: 100%;"> </p>
 
+<p align="center">Serial GC</p>
 
-
-
+* 싱글 스레드를 이용한다
+* mark-sweep-compact를 이용한다
+* STW(Stop-the-World)가 상대적으로 길다
+* CPU 코어 개수와 메모리가 아주 작을때 사용하는 것이 적합하다
 
 
 
@@ -335,15 +373,152 @@ Major GC는 여러가지 방식이 존재하며, 세세한 구현은 자바의 �
 
 ---
 
-### 4.3 Full GC
+#### 4.2.2 Parallel GC
+
+<p align="center">   <img src="img/p.png" alt="java jvm" style="width: 100%;"> </p>
+
+<p align="center">Parallel GC</p>
+
+* Java7, 8의 디폴트 GC
+* Serial과 달리 멀티 스레드를 활용한다
+  * 시스템의 CPU 코어 수 만큼 스레드를 만들어서 GC에 사용한다
+  * 엄밀히 말하자면 Parallel GC와 Parallel Old GC를 구분할 수 있지만, 여기서 알아야할 것은 GC에 멀티 스레드를 이용한다는 내용이다
+* mark-sweep-compact를 이용한다
+* STW는 Serial에 비해 짧다
+
+<br>
+
+---
+
+#### 4.2.3 CMS(Concurrent Mark Sweep) GC
+
+<p align="center">   <img src="img/cms2.png" alt="java jvm" style="width: 100%;"> </p>
+
+<p align="center">CMS GC</p>
+
+* STW는 줄이기 위해서 고안된 GC
+* 다음의 4단계로 수행된다
+  * `Initial Mark` : GC root가 참조하는 객체만 마크 
+    * (STW 수행)
+  * `Concurrent Mark` : 객체에서 참조하는 객체들을 따라가면서 마크 
+    * (다른 스레드가 실행 중인 상태에서 진행)
+  * `Re-mark` : `Concurrent Mark` 단계에서 추가 또는 끊어진 참조를 확인한다 
+    * (STW 수행)
+  * `Concurrent Sweep` : 마크가 안된 접근 못하는 객체(unreachable objects) 정리 
+    * (다른 스레드가 실행 중인 상태에서 진행)
 
 
 
+* 애플리케이션 스레드와 GC 스레드를 동시에 수행하면서 STW를 최대한 줄이려고 했다
 
 
 
+* 단점
+  * CMS는 다른 GC 방식에 비해 메모리와 CPU를 많이 사용한다
+  * Compaction 단계가 없다
 
 
+
+* CMS는 보통 애플리케이션 응답 성능이 중요할 때 사용(low latency가 필요할 때 사용)
+
+<br>
+
+---
+
+#### 4.2.4 G1(Garbage First) GC
+
+G1 GC는 CMS를 대체하기 위해 고안된 GC이다.
+
+G1 GC에 대해서 자세히 들어가기 전에 특징을 살펴보면 다음과 같다. 
+
+<br>
+
+* G1 GC는 기존 GC와 다르게 Heap 영역을 일정 크키의 Region(Region)으로 논리적으로 구분한다
+  * 큰 객체들을 구분 없이 마구마구 다른 Region에 넣어버리면 남은 Region 공간에 객체를 넣기 어려워 새로 Region을 이용하는 문제가 발생할 확률이 높아진다
+  * Region 크기의 50%를 넘는 객체를 Humongous Region에 따로 저장해서, fragmentation을 줄인다
+
+
+
+* 가득차거나 가비지(Garbage)가 많은 Region부터 GC의 대상이 된다 (이름부터가 Garbage First이다)
+  * liveness가 적은 Region으로 표현하는 것 같다
+
+
+
+* 한번에 모든 Young, Old Gen의 영역이 대상이 되는 것이 아니기 때문에 STW가 상대적으로 짧음
+
+
+
+* G1 GC는 Heap의 크기가 클수록 잘 작동하는 것은 맞지만, 작은 Heap에서 동작을 못하는 것은 아니다
+
+
+
+* Java9 이후부터 G1 GC가 디폴트 GC이다
+
+<br>
+
+다음 그림은 G1 GC의 사이클을 보여준다. G1 GC는 Young-Only Phase와 Space Reclamantation Phase가 반복되는 사이클로 동작한다.
+
+<br>
+
+<p align="center">   <img src="img/g1gc.png" alt="java jvm" style="width: 60%;"> </p>
+
+<p align="center">G1 GC cycle</p>
+
+<br>
+
+그럼 G1 GC의 Minor GC 과정을 다음 그림으로 살펴보자.
+
+<br>
+
+<p align="center">   <img src="img/ygc1.png" alt="java jvm" style="width: 100%;"> </p>
+
+<p align="center">G1 GC Minor GC</p>
+
+* Young Gen(Eden, Survivor) Region이 가득차면, 살아남을 객체를 다른 Region에 할당(copy)하고 해당 Region에 역할(Survivor, Old Gen)을 부여한다
+* Humongous 객체는 다른 객체들과 달리, Humongous Region으로 곧바로 할당됨
+
+<br>
+
+이번에는 G1 GC의 Major GC(Mixed GC)를 그림으로 살펴보자.
+
+<br>
+
+<p align="center">   <img src="img/ogc1.png" alt="java jvm" style="width: 100%;"> </p>
+
+<p align="center">G1 GC Major GC</p>
+
+* `Initial Marking` 
+  * STW
+  * Old Gen Region의 객체들이 참조하는 Survivor Region을 찾아서 마크
+  * Minor GC가 전부 끝난 상태에서 파악해야하기 때문에, Minor GC에 의존적
+
+
+
+* `Concurrent Marking`
+  * Old Gen Region에서 생존하고 있는 모든 객체 마크
+  * Minor GC와 같이 진행될 수 있기 때문에, Minor GC에 의해 중단 가능
+
+
+
+* `Remark`
+  * STW
+  * 이전 단계에서 마크한 리전을 회수
+  * 남은 마크 작업 완료
+  * 모든 리전에 대한 Liveness 계산
+  * SATB(Snapshot-at-the-Beginning)을 이용하기 때문에 CMS 보다 STW가 짧다
+
+
+
+* `Copy/Cleanup`
+  * STW
+  * Liveness가 낮은 Region부터 수거한다. 이때 살아있는 객체(live object)는 다른 Region으로 evacution(copy) 후에, 가비지를 수거한다.
+  * `Copy/Cleanup` 후에 Compaction으로 fragmentation을 해결한다
+
+<br>
+
+> GC에는 여기서 설명한 GC외에도 ZGC, Shenandoah GC 등의 GC들도 존재한다.
+
+<br>
 
 ---
 

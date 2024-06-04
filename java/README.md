@@ -20,11 +20,24 @@
   * 고급 언어
   * Translator
 * [자바 동작 방식(How Java Works)]((001)%20Java%20Introduction#2-%EC%9E%90%EB%B0%94-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9Dhow-java-works)
-* [자바 메모리 구조(Java Memory Structure)]((001)%20Java%20Introduction#3-java-memory-structure)
-  * 메서드 영역(Method Area)
-  * 스택 영역(Stack Area)
-  * 힙 영역(Heap Area)
-* [JVM, JDK, JRE]((001)%20Java%20Introduction#4-jvm-jdk-jre)
+* [Java Memory Structure]((001)%20Java%20Introduction#3-java-memory-structure)
+  * [스레드(thread)별로 사용하는 영역]((001)%20Java%20Introduction#31-%EC%8A%A4%EB%A0%88%EB%93%9Cthread%EB%B3%84%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%98%81%EC%97%AD)
+    * Native Method Stack
+    * PC Registers
+    * Stack Area
+  * [공통으로 사용하는 영역]((001)%20Java%20Introduction#32-%EA%B3%B5%ED%86%B5%EC%9C%BC%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%98%81%EC%97%AD)
+    * [Method Area(Metaspace, PermGen)]((001)%20Java%20Introduction#321-method-areametaspace-permgen)
+    * [Heap]((001)%20Java%20Introduction#322-heap)
+      * Young Gen
+      * Old Gen(Tenured Generation)
+* [Garbage Collection(GC)]((001)%20Java%20Introduction#4-garbage-collectiongc)
+  * [Minor GC(Young GC)]((001)%20Java%20Introduction#41-minor-gcyoung-gc)
+  * [Major GC]((001)%20Java%20Introduction#42-major-gcold-gc)
+    * [Serial GC]((001)%20Java%20Introduction#421-serial-gc)
+    * [Parallel GC]((001)%20Java%20Introduction#422-parallel-gc)
+    * [CMS(Concurrent Mark Sweep) GC]((001)%20Java%20Introduction#423-cmsconcurrent-mark-sweep-gc)
+    * [G1(Garbage First) GC]((001)%20Java%20Introduction#424-g1garbage-first-gc)
+* [JVM, JDK, JRE]((001)%20Java%20Introduction#5-jvm-jdk-jre)
   * JDK
   * JRE
   * JVM

@@ -3,25 +3,25 @@
 1. [Programming Language](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#1-programming-language)
    * 고급 언어
    * Translator
-2. [자바 동작 방식(How Java Works)]()
-3. [Java Memory Structure]()
-   * [스레드(thread)별로 사용하는 영역]()
+2. [자바 동작 방식(How Java Works)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#2-%EC%9E%90%EB%B0%94-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9Dhow-java-works)
+3. [Java Memory Structure](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#3-java-memory-structure)
+   * [스레드(thread)별로 사용하는 영역](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#31-%EC%8A%A4%EB%A0%88%EB%93%9Cthread%EB%B3%84%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%98%81%EC%97%AD)
      * Native Method Stack
      * PC Registers
      * Stack Area
-   * [공통으로 사용하는 영역]()
-     * [Method Area(Metaspace, PermGen)]()
-     * [Heap]()
+   * [공통으로 사용하는 영역](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#32-%EA%B3%B5%ED%86%B5%EC%9C%BC%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%98%81%EC%97%AD)
+     * [Method Area(Metaspace, PermGen)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#321-method-areametaspace-permgen)
+     * [Heap](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#322-heap)
        * Young Gen
        * Old Gen(Tenured Generation)
-4. [Garbage Collection(GC)]()
-   * [Minor GC(Young GC)]()
-   * [Major GC]()
-     * [Serial GC]()
-     * [Parallel GC]()
-     * [CMS(Concurrent Mark Sweep) GC]()
-     * [G1(Garbage First) GC]()
-5. [JVM, JDK, JRE]()
+4. [Garbage Collection(GC)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#4-garbage-collectiongc)
+   * [Minor GC(Young GC)](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#41-minor-gcyoung-gc)
+   * [Major GC](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#42-major-gcold-gc)
+     * [Serial GC](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#421-serial-gc)
+     * [Parallel GC](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#422-parallel-gc)
+     * [CMS(Concurrent Mark Sweep) GC](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#423-cmsconcurrent-mark-sweep-gc)
+     * [G1(Garbage First) GC](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#424-g1garbage-first-gc)
+5. [JVM, JDK, JRE](https://github.com/seungki1011/Data-Engineering/tree/main/java/(001)%20Java%20Introduction#5-jvm-jdk-jre)
    * JDK
    * JRE
    * JVM
@@ -358,7 +358,7 @@ Major GC는 여러가지 방식이 존재하며, 세세한 구현은 자바의 �
 
 #### 4.2.1 Serial GC
 
-<p align="center">   <img src="img/s.png" alt="java jvm" style="width: 100%;"> </p>
+<p align="center">   <img src="img/s.png" alt="java jvm" style="width: 90%;"> </p>
 
 <p align="center">Serial GC</p>
 
@@ -375,7 +375,7 @@ Major GC는 여러가지 방식이 존재하며, 세세한 구현은 자바의 �
 
 #### 4.2.2 Parallel GC
 
-<p align="center">   <img src="img/p.png" alt="java jvm" style="width: 100%;"> </p>
+<p align="center">   <img src="img/p.png" alt="java jvm" style="width: 90%;"> </p>
 
 <p align="center">Parallel GC</p>
 
@@ -392,7 +392,7 @@ Major GC는 여러가지 방식이 존재하며, 세세한 구현은 자바의 �
 
 #### 4.2.3 CMS(Concurrent Mark Sweep) GC
 
-<p align="center">   <img src="img/cms2.png" alt="java jvm" style="width: 100%;"> </p>
+<p align="center">   <img src="img/cms2.png" alt="java jvm" style="width: 90%;"> </p>
 
 <p align="center">CMS GC</p>
 
@@ -513,6 +513,10 @@ G1 GC에 대해서 자세히 들어가기 전에 특징을 살펴보면 다음�
   * STW
   * Liveness가 낮은 Region부터 수거한다. 이때 살아있는 객체(live object)는 다른 Region으로 evacution(copy) 후에, 가비지를 수거한다.
   * `Copy/Cleanup` 후에 Compaction으로 fragmentation을 해결한다
+
+<br>
+
+G1 GC에 대해 더 자세히 살펴보고 싶으면 다음 참고 : [https://www.oracle.com/technetwork/tutorials-1876574.html](https://www.oracle.com/technetwork/tutorials-1876574.html)
 
 <br>
 

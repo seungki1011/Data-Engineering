@@ -2729,7 +2729,7 @@ spring.datasource.password=admin
 
 `ItemRepository` 인터페이스를 기반으로 구현체인 `JdbcTemplateItemRepository`를 만들어보자.
 
-<b>
+<br>
 
 `JdbcTemplateItemRepositoryV1`
 

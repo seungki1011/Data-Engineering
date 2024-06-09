@@ -1,11 +1,13 @@
-package hellojpa;
+package hellojpa.bidir;
 
+import hellojpa.unidir.UniDirMember;
+import hellojpa.unidir.UniDirTeam;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class PersistenceContextMain {
+public class BiDirMain {
     public static void main(String[] args) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -16,18 +18,17 @@ public class PersistenceContextMain {
 
         try {
 
-            Member findMember1 = em.find(Member.class, 5L);
-            Member findMember2 = em.find(Member.class, 5L);
 
-            System.out.println(findMember1 == findMember2);
 
+             em.flush();
+             em.clear();
+
+            tx.commit();
         } catch (RuntimeException e) {
             tx.rollback();
         } finally {
             em.close();
         }
 
-        emf.close();
     }
 }
-

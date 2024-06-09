@@ -5,9 +5,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class PersistenceContextMain {
+public class PKMappingMain {
     public static void main(String[] args) {
-
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
         EntityManager em = emf.createEntityManager();
@@ -16,10 +15,14 @@ public class PersistenceContextMain {
 
         try {
 
-            Member findMember1 = em.find(Member.class, 5L);
-            Member findMember2 = em.find(Member.class, 5L);
+            SeqMember member = new SeqMember("memberA");
 
-            System.out.println(findMember1 == findMember2);
+            System.out.println("-------------");
+            em.persist(member);
+            System.out.println("member.getId() = " + member.getId());
+            System.out.println("-------------");
+
+            tx.commit();
 
         } catch (RuntimeException e) {
             tx.rollback();
@@ -30,4 +33,3 @@ public class PersistenceContextMain {
         emf.close();
     }
 }
-

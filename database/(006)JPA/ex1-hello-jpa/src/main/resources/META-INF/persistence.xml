@@ -17,6 +17,7 @@
             <property name="hibernate.use_sql_comments"  value="true"/>
             <!-- create 옵션은 SessionFactory 시작시 스키마 삭제후 생성 -->
             <!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
 

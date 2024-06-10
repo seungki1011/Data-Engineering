@@ -1,4 +1,6 @@
-> JPA의 동작 방식과 기본 사용법에 대해 알아보자. 
+> JPA의 구현체인 Hibernate의 동작 방식과 기본 사용법에 대해 알아보자.
+>
+> 코드 편의상 롬복 `@Setter`로 설정자 전부 열어둠. 실제 구현시, 필요한 설정자만 열어두는 것을 권장.
 
 ---
 
@@ -12,7 +14,7 @@
 
 ## 1) JPA 소개
 
-자바 퍼시스턴스(Java Persistence, 이전 이름: 자바 퍼시스턴스 API/Java Persistence API)는 객체 관계 매핑(ORM, Object Relational Mapping) 기술의 표준 인터페이스 모음이다. JPA를 구현하는 다양한 구현체들 중에서 대표적으로 Hibernate가 사용되며, 현재 포스트에서 추후 기술하는 사용법도 Hibernate를 기준으로 작성되었다.
+자바 퍼시스턴스(Java Persistence, 이전 이름: 자바 퍼시스턴스 API/Java Persistence API)는 객체 관계 매핑(ORM, Object Relational Mapping) 기술의 표준 인터페이스 모음이다. JPA를 구현하는 다양한 구현체들 중에서 대표적으로 Hibernate가 사용되며, 현재 포스트에서 추후 기술하는 사용법도 Hibernate를 기준으로 작성되었다. 이후 포스트에서 언급하는 JPA는 Hibernate과 동의어로 생각하면 된다.
 
 <br>
 
@@ -227,6 +229,7 @@ public class Member {
 ```
 
 * JPA는 기본적으로 객체와 테이블을 관례에 의해서 알아서 매핑해준다
+* 편의상 `@Setter`를 사용했는데, 실제 구현할 때는 필요한 `setter`만 열어두는게 좋다
 * 만약 실제 테이블 이름이 완전히 다르면 (`Member`가 아니라 `USER`라면) `@Table(name = "USER")` 처럼 지정할 수 있다
 * attribute도 마찬가지이다, `@Column(name = "user_name")`으로 이름을 직접 지정하는 것이 가능하다
 
@@ -1265,7 +1268,7 @@ System.out.println("findTeam = " + findTeam.getName());
 
 ### 5.2 양방향 연관관계(Bi-directional)
 
-#### 5.2.1 양방향 연관관계
+#### 5.2.1 양방향 연관관계 소개
 
 양방향 연관관계에 대해 알아보자.
 
@@ -1351,25 +1354,384 @@ public class BiDirTeam {
 
 <br>
 
+```java
+BiDirTeam team = new BiDirTeam("TeamA");
+em.persist(team);
 
+BiDirMember member = new BiDirMember("member1", team);
+em.persist(member);
 
+em.flush();
+em.clear();
 
+BiDirMember findMember = em.find(BiDirMember.class, member.getId());
+List<BiDirMember> members = findMember.getTeam().getMembers(); // 역방향 조회 가능
 
+for (BiDirMember m : members) {
+System.out.println("m.getUsername() = " + m.getUsername());
+}
+```
 
+<br>
 
+다음으로  `mappedBy`와 연관관계의 주인에 대한 내용을 알아보자.
 
+<br>
 
+---
 
+#### 5.2.2 :star: 연관관계의 주인(Owning side of Relationship) 소개
 
+위의 양방향 연관관계를 사용하기 위해서 `Team`에 추가한 `List<Member> members`에 `@OneToMany(mappedBy = "team")`를 사용했다.
 
+이제부터 `mappedBy`와 연관관계의 주인에 대한 내용을 알아보자.
 
+먼저 객체 끼리 연관관계를 맺는 경우와 테이블 끼리 연관 관계를 맺는 경우를 살펴보자.
 
+<br>
 
+* 객체 끼리 양방향 연관 관계
+  * `Member` → `Team` : 하나의 단방향 연관관계
+  * `Team` → `Member` : 하나의 단방향 연관관계
+  * 총 2개의 단방향 연관관계
+    * 쉽게 말해서 객체에서는 한쪽 방향으로 가기 위한 참조가 필요
 
+<br>
 
+* 테이블 끼리 연관 관계
+  * `MEMBER` ↔ `TEAM`
+  * 양방향 연관관계라기 보다는 FK를 통해 양쪽으로 `JOIN` 가능
 
+<br>
 
-#### 5.2.1 :star: 연관관계의 주인(Owning side of Relationship)
+객체 끼리의 양방향 연관 관계는 결국 서로에 대한 참조가 존재해야 가능하다. 그렇기 때문에, 위의 양방향 연관관계에서도 `Team`에 `List<Member> members`를 추가 했었다. 
+
+문제는 여기서부터다. 그러면 어느쪽을 가지고 연관관계 매핑을 해야할까? `team`을 가지고 연관관계 매핑을 해야할까, 아니면 `members`를 가지고 연관관계 매핑을 해야할까? 쉽게 말해서 어느값을 기준으로 바꿔야 FK를 업데이트 할것인가 정해야한다.
+
+쉽게 이야기해서, `Member`의 `team`으로 FK를 관리할지, `Team`의 `List members`로 FK를 관리할지 정해야한다. 여기서 연관관계의 주인이라는 개념이 나온다.
+
+<br>
+
+---
+
+#### 5.2.3 양방향 매핑 규칙
+
+**연관관계의 주인(owning side of relationship, owner of relationship)과 양방향 매핑의 규칙은 다음과 같다.**
+
+* 연관관계의 주인만이 외래키(FK)를 관리(등록, 수정)한다
+* 객체의 두 관계중 하나를 연관관계의 주인으로 지정한다
+* 주인이 아닌쪽은 읽기만 가능하다
+* 주인은 `mappedBy` 속성을 사용하지 않는다
+* **주인이 아닌쪽이 `mappedBy` 속성을 통해 주인을 지정한다**
+  * 예) `@OneToMany(mappedBy = "team")` : `Team` 쪽에서 `Member`의 `team`을 주인으로 지정했다
+
+<br>
+
+연관관계의 주인이 무엇인지는 알았다. 그러나 누구를 주인으로 지정해야하는지에 대한 물음은 해결되지 않았다.
+
+**단도직입적으로 이야기 하자면, FK가 있는 곳을 주인으로 정하는게 좋다.(Many쪽을 연관관계의 주인으로 지정)** 우리의 경우 `Member`의 `team`을 주인으로 지정하는 것.
+
+<br>
+
+---
+
+#### 5.2.4 양방향 매핑시 주의점, 권장사항
+
+양방향 매핑시의 주의점에 대해 알아보자.
+
+<br>
+
+1. 연관관계의 주인에 값을 입력하지 않음
+
+```java
+BiDirTeam team = new BiDirTeam("TeamA");
+em.persist(team);
+
+// 이번에는 flush()와 clear() 사용 x
+
+/**
+ * 주인에 team 입력 필수
+ * 입력하지 않으면 TEAM_ID가 null
+ * 생성자를 이용하든, setter를 이용하든 입력해야함
+ */
+BiDirMember member = new BiDirMember("member1", team);
+// 생성자 사용안하는 경우 아래 처럼할 수도 있음
+// BiDirMember member = new BiDirMember();
+// member.setName("member1");
+// member.setTeam(team); // 이 부분이 필수
+em.persist(member);
+
+team.getMembers().add(member); // 역방향으로만 하면 문제가 생김
+```
+
+* 양방향이면 순수객체 상태를 고려해서 양쪽으로 값을 셋팅하는 것이 좋다
+  * `Member member = new Member("member1", team);`
+    * 대신 `member.setTeam(team);` 사용 가능
+  * `team.getMembers().add(member);`
+
+<br>
+
+---
+
+2. 연관관계 편의 메서드를 생성하자
+
+양쪽으로 값을 셋팅하는 것이 좋은데, 개발자는 사람이기 때문에 어떤 경우에 역방향으로 값을 입력하는 것을 까먹을 수 있음. 이런 경우를 방지하기 위해서, 연관관계 주인 쪽의 값을 셋팅하는 `setXXX()` 메서드에 역방향의 값을 입력하는 로직까지 포함시키면 편하게 해결할 수 있다.
+
+코드로 살펴보자.
+
+```java
+public void setTeam(Team team) {
+    this.team = team;
+    // 아래 로직을 추가해서 편하게 사용
+    team.getMembers().add(this); // this는 현재 Member의 객체
+}
+```
+
+* 이제 `team.getMembers().add(member);`을 사용할 필요 없이, `member.setTeam(team);`만 사용해도 양방향으로 값이 셋팅됨
+* 아마 실제 편의 메서드를 구현할 때 기존 연관관계를 끊어주는 로직도 필요한듯
+
+<br>
+
+생성자를 살짝 수정하고, 위 편의 메서드를 조금 더 개선해보자.
+
+```java
+public Member(String username) {
+    this.username = username;
+}
+
+private void addTeam(Team team) {
+    if (this.team != null) {
+        this.team.getMembers().remove(this);
+    }
+    this.team = team;
+    team.getMembers().add(this);
+}
+```
+
+* 기존 `setTeam`을 `addTeam`이라는 이름으로 사용. `changeTeam` 같은 명칭도 ㄱㅊ
+
+<br>
+
+실제로 사용할 때 다음과 같이 사용.
+
+```java
+Team team = new Team("TeamA");
+em.persist(team);
+Member member = new Member("member1");
+member.addTeam(team); // 이걸로 양방향 값 셋팅
+em.persist(member);
+```
+
+<br>
+
+`Member` 기준으로 편의메서드를 만들것인지, `Team` 기준으로 편의메서드를 만들것인지 상황 봐가면서 정하자.
+
+<br>
+
+---
+
+3. 양방향 매핑시 무한루프 조심
+
+* `toString()` 오버라이드시 조심
+  * lombok 라이브러리 주의 : 롬복의 `@toString` 사용하지 마셈
+* JSON 생성 라이브러리 사용시 주의
+  * 컨트롤러에서 바로 엔티티를 반환하면 안됨
+  * 엔티티는 DTO로 변환해서 반환하자
+
+<br>
+
+---
+
+#### 5.2.5 양방형 매핑 정리
+
+* 단방향 매핑으로도 연관관계 매핑은 거의 완료
+* 양방향 매핑은 단방향 매핑에서 역방향 조회 기능이 추가된 것
+
+<br>
+
+권장 방식
+
+* 단방향 매핑으로 먼저 설계하되, 필요한 경우 양방향 매핑으로 추가(어차피 DB 테이블은 변하지 않음)
+  * 사실 단방향 매핑으로 설계해놓고, 역방향 조회가 필요하면 SQL 사용하는 것도 가능함(물론 이것은 객체 중심적 접근은 아님)
+  * 나중에 역방향 탐색이 많이 필요한 경우 추가하면 됨 
+
+<br>
+
+---
+
+## 6) 연관관계 카디널리티(Cardinality)
+
+연관관계 매핑시 개발자는 3가지 사항을 고려해야한다.
+
+* 단방향 vs 양방향
+* 연관관계의 주인 정하기
+* 연관 관계의 카디널리티(cardinality)
+
+<br>
+
+연관 관계의 카디널리티에 대해 알아보자. 일단 카디널리티라는 것은 연관 관계에서 엔터티 집합의 엔터티가 관계 엔터티 집합에 참여하는 횟수를 의미한다.
+
+예시를 통해서 설명하겠다. 우리가 이전에 사용한 `Member`와 `Team`을 생각해보자. 하나의 `Team`을 기준으로 `Member`는 여러명이 존재할 수 있다, 반면에 하나의 `Member`당 `Team`이 여러개 존재하지 않는다. 이것이 `Member`의 기준으로 다대일(`ManyToOne`, N:1) 관계이다.
+
+반대로 생각하면 `Team` 기준으로 일대다(`OneToMany`, 1:N) 관계가 되는 것이다.
+
+<br>
+
+JPA는 이런 카디널리티에 대한 4가지 애노테이션을 제공한다.
+
+* `@ManyToOne`
+* `@OneToMany`
+* `@OneToOne`
+* `@ManyToMany`
+
+<br>
+
+미리 말하자면, `ManyToMany` 관계는 실무에서 쓰이지 않는다. 가장 많이 사용하는 관계는 `ManyToOne`이다.
+
+<br>
+
+* `@JoinColumn` 주요 속성
+  * `@JoinColumn`은 FK를 매핑할 때 사용한다
+  * `name` : 매핑할 FK의 이름
+  * `referencedColumnName` : FK가 참조하는 대상 테이블의 컬럼명
+  * `foreignKey` : FK의 제약조건을 직접 지정(DDL)
+
+<br>
+
+* `@ManyToOne` 주요 속성
+  * `optional` : `false`로 설정시 연관된 엔티티가 항상 존재해야한다 (기본값 : `true`)
+  * `fetch` : 글로벌 fetch 전략 지정
+    * 기본 : `FetchType.EAGER`
+  * `cascade` : 영속성 전이 기능 사용
+  * `targetEntity` : 연관된 엔티티의 타입정보 설정(잘 사용 안함)
+
+<br>
+
+---
+
+### 6.1 다대일(N:1, `@ManyToOne`)
+
+다대일 매핑에 대해 알아보자. 우리는 이미 이전에 단방향, 양방향을 설명하면서 다대일 관계에 대해 많이 보았다.
+
+**다**대일(**Many**ToOne) 관계에서는 **다(Many)** 쪽이 연관 관계의 주인(FK 관리)이라는 뜻이다. 
+
+이전에 봤던 그림으로 다시 복습해보자.
+
+<br>
+
+<p align="center">   <img src="img/mto.png" alt="jpa" style="width: 80%;"> </p>
+
+<p align="center">다대일 양방향 연관관계</p>
+
+<br>
+
+---
+
+### 6.2 일대다(1:N, `@OneToMany`)
+
+**일**대다(**One**ToMany) 관계에서는 **일(One)** 쪽이 연관 관계의 주인(FK 관리)이라는 뜻이다. 
+
+일대다 관계의 문제점은 보통 테이블의 일대다 관계에서 다(N) 쪽에 FK(외래키)가 있다는 점이다. 이 때문에 일대다 관계를 사용하면 객체와 테이블의 차이점 때문에, 반대편 테이블의 FK를 관리하는 특이한 구조가 나온다.
+
+<br>
+
+<p align="center">   <img src="img/otm.png" alt="jpa" style="width: 80%;"> </p>
+
+<p align="center">일대다 단방향 연관관계</p>
+
+<br>
+
+엔티티가 관리하는 FK가 다른 테이블에 존재하는 구조 때문에 `INSERT` 쿼리가 실행될 때 연관관계 관리를 위해 추가로 `UPDATE` 쿼리가 나가게되고, 이는 성능상 이점이 아무것도 없다.
+
+만약에라도 객체 중심적 설계에서 일대다가 더 자연스러운 설계이더라도, 데이터베이스의 입장에서는 다(N) 쪽에서 FK를 관리하는 것이 자연스럽기 때문에, 대부분 상황에서는 일대다 단방향 매핑을 사용하지 않고 다대일 양방향 매핑을 사용하는 것을 권장한다.
+
+<br>
+
+> 일대다 양방향 연관관계도 work around로 구현할 수 있다.
+
+<br>
+
+---
+
+### 6.3 일대일(1:1, `@OneToOne`)
+
+* 일대일 관계는 주 테이블, 대상 테이블 중에 FK 선택 가능
+* FK에 데이터베이스 유니크 제약조건을 추가해야한다
+
+<br>
+
+일대일 관계의 핵심은 결국 주 테이블에서 FK를 관리할지, 대상 테이블이 FK를 관리할지 결정하는 것이다.
+
+* 주 테이블에 FK
+  * 주 객체가 대상 객체의 참조를 가지는 것 처럼, 주 테이블에 FK를 두고 대상 테이블을 찾는다
+  * JPA 매핑이 편리하다
+  * 장점 : 주 테이블만 조회해도 대상 테이블에 데이터가 있는지 확인 가능하다
+  * 단점 : 값이 없으면 FK에 `null` 값 허용
+
+<br>
+
+* 대상 테이블에 FK
+  * 대상 테이블에 FK가 존재한다
+  * 전통적인 DBA들이 선호한다
+  * 장점 : 주 테이블과 대상 테이블을 일대일에서 일대다 관계로 변경할 때 테이블 구조 유지가능
+  * 단점 : 프록시 기능의 한계로 지연로딩(lazy loading)으로 설정해도 항상 즉시 로딩(eager loading) 됨
+
+<br>
+
+> 일대일 관계에서 두 엔터티가 강력히 커플링(coupling) 되었다면, 두 엔터티를 하나로 합치는 것도 고려.
+
+<br>
+
+> 다대다(`ManyToMany`) 관계를 사용하는 것은 권장하지 않는다.
+>
+> * 객체는 DB와 다르게 객체 두 개는 컬렉션을 이용해서 서로 다대다가 가능
+> * DB는 중간에 연결 테이블이 있어야 다대다 관계가 가능
+> * 사용해보면 예상 못하는 이상한 쿼리들이 나감
+> * 정말 필요하다면 연결 테이블을 엔티티로 만들어서 `@OneToMany`, `@ManyToOne`을 이용하는 것을 권장
+
+<br>
+
+---
+
+## 7) 상속 관계 매핑(Inheritance Mapping)
+
+### 7.1 상속 관계 매핑 소개
+
+Hibernate에서의 상속 관계 매핑에 대해 알아보자.
+
+객체에는 기본적으로 상속 관계가 존재한다. 그러나 데이터베이스에서는 상속 관계는 존재하지 않는다.(물론 상속 관계 비슷한 것을 지원하는 DB들도 존재하지만, 그것 마저도 실제 객체의 상속 관계와는 다르다.)
+
+그나마 데이터베이스에서 객체의 상속 구조를 비슷하게 표현할 수 있는 것이 슈퍼타입(super-type)과 서브 타입(sub-type) 관계이다.
+
+다음 그림으로 두 관계를 살펴보자. 
+
+<br>
+
+<p align="center">   <img src="img/inh.png" alt="jpa" style="width: 100%;"> </p>
+
+<p align="center">슈퍼-서브 타입 구조, 상속 구조</p>
+
+<br>
+
+이런 슈퍼 타입과 서브 타입 구조를 실제 물리적인 모델로 구현하기 위해 데이터베이스 입장에서 다음의 3가지 방법을 사용할 수 있다.
+
+* 각각 테이블로 변환해서 조인해서 사용하는 전략
+* 모두 하나의 테이블로 통합해서 단일 테이블을 사용하는 전략
+* 서브 타입들을 모두 테이블로 변환해서 사용, 쉽게 말해서 구현 클래스마다 테이블을 사용하는 전략
+
+<br>
+
+Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노테이션을 제공한다. 이제 각 전략과 사용법에 대해 자세히 알아보자.
+
+<br>
+
+---
+
+### 7.2 조인 전략(`JOINED`)
+
+조인 전략에 대해 알아보자. 물리 모델로 구현한 조인 전략을 그림을 살펴보면 다음같다.
+
+<br>
 
 
 
@@ -1389,7 +1751,7 @@ public class BiDirTeam {
 
 ---
 
-#### 5.2.2
+### 7.3 단일 테이블 전략(`SINGLE_TABLE`)
 
 
 
@@ -1403,13 +1765,19 @@ public class BiDirTeam {
 
 ---
 
-### 5.3 다대일(N:1, `@ManyToOne`)
+### 7.4 클래스 마다 테이블 전략(`TABLE_PER_CLASS`)
 
 
 
 
 
 
+
+<br>
+
+---
+
+### 7.5 `@MappedSuperclass`
 
 
 
@@ -1423,29 +1791,7 @@ public class BiDirTeam {
 
 ---
 
-### 5.4 일대다(1:N), 일대일(1:1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br>
-
----
-
-## 6) 상속 관계 매핑
-
-
+## 8)
 
 
 

@@ -1,15 +1,16 @@
-package hellojpa.bidir;
+package hellojpa.conv;
 
-import hellojpa.unidir.UniDirTeam;
+import hellojpa.bidir.BiDirTeam;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
-public class BiDirMember {
+@Table(name = "MEMBER_CONV")
+public class Member {
 
     @Id
     @GeneratedValue
@@ -21,18 +22,18 @@ public class BiDirMember {
 
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
-    private BiDirTeam team;
+    private Team team;
 
-    public BiDirMember(String username, BiDirTeam team) {
+    public Member(String username) {
         this.username = username;
-        this.team = team;
     }
 
-
-
-    public void setBiDirTeam(BiDirTeam team) {
+    private void setTeam(Team team) {
+        if (this.team != null) {
+            this.team.getMembers().remove(this);
+        }
         this.team = team;
-        team.getMembers().add(this); //
+        team.getMembers().add(this);
     }
 
 }

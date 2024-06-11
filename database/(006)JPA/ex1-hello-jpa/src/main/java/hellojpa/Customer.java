@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
+//@Entity
 @Getter @Setter
 @AllArgsConstructor
 public class Customer {

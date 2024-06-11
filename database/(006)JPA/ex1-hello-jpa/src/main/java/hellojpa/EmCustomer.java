@@ -21,7 +21,7 @@ import lombok.Setter;
  * uniqueConstraints - DDL 생성시에 유니크 제약 조건 생성
  */
 //@Table(name="USERS")
-@Entity
+//@Entity
 @Getter @Setter
 @AllArgsConstructor
 public class EmCustomer {

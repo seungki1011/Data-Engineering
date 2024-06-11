@@ -1721,7 +1721,7 @@ Hibernate에서의 상속 관계 매핑에 대해 알아보자.
 
 <br>
 
-Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노테이션을 제공한다. 이제 각 전략과 사용법에 대해 자세히 알아보자.
+Hibernate는 위 3가지 방법 모두 사용할 수 있도록 애노테이션을 제공한다. 이제 각 전략과 사용법에 대해 알아보자.
 
 <br>
 
@@ -1729,23 +1729,164 @@ Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노�
 
 ### 7.2 조인 전략(`JOINED`)
 
-조인 전략에 대해 알아보자. 물리 모델로 구현한 조인 전략을 그림을 살펴보면 다음같다.
+조인 전략에 대해 알아보자. 물리 모델로 구현한 조인 전략을 그림으로 살펴보면 다음같다.
 
 <br>
 
+<p align="center">   <img src="img/join.png" alt="jpa" style="width: 80%;"> </p>
 
+<p align="center">JOINED 전략</p>
 
+<br>
 
+코드로 살펴보자.
 
+<br>
 
+`Item` : 부모 클래스
 
+```java
+@Entity
+@Setter @Getter
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
+public class abstract Item {
 
+    @Id @GeneratedValue
+    private Long id;
 
+    private String name;
+    private int price;
 
+    public Item(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+}
+```
 
+* `abstract` 클래스로 만든다 (단독으로 사용 방지)
+* `@Inheritance(strategy = InheritanceType.JOINED)` : 조인 전략을 선택한다
+* `@DiscriminatorColumn` : DTYPE 컬럼 생성
+  * DTYPE에는 엔티티명이 들어가게 된다
+  * 넣는 것을 권장한다
 
+<br>
 
+`Album`
 
+```java
+@Entity
+@Setter
+@NoArgsConstructor
+// @DiscriminatorValue("A")
+public class Album extends Item {
+    private String artist;
+
+    public Album(String name, int price, String artist) {
+        super(name, price);
+        this.artist = artist;
+    }
+}
+```
+
+* `@DiscriminatorValue("A")`를 통해서 DTYPE으로 들어가는 값을 바꿀수 있다. 기본값은 기존 엔티티명이다
+  * 예) `"A"`로 설정하면, DTYPE에 `Album`은 `A`로 표기됨
+
+<br>
+
+`Movie`
+
+```java
+@Entity
+@Setter
+@NoArgsConstructor
+public class Movie extends Item {
+
+    private String director;
+    private String actor;
+
+    public Movie(String name, int price, String director, String actor) {
+        super(name, price);
+        this.director = director;
+        this.actor = actor;
+    }
+}
+```
+
+<br>
+
+`Book`
+
+```java
+@Entity
+@Setter
+@NoArgsConstructor
+public class Book extends Item {
+
+    private String author;
+    public String isbn;
+
+    public Book(String name, int price, String author, String isbn) {
+        super(name, price);
+        this.author = author;
+        this.isbn = isbn;
+    }
+}
+```
+
+<br>
+
+다음 코드를 실행해보자.
+
+```java
+Movie movie = new Movie("매트릭스", 12000, "워쇼스키", "키아누 리브스");
+
+em.persist(movie);
+
+em.flush();
+em.clear();
+
+Movie findMovie = em.find(Movie.class, movie.getId());
+System.out.println("findMovie = " + findMovie);
+```
+
+* 테이블이 어떻게 생성되고, 조회를 어떻게 하는지 SQL을 확인해보자.
+
+<br>
+
+<p align="center">   <img src="img/join2.png" alt="jpa" style="width: 65%;"> </p>
+
+<p align="center">생성된 테이블</p>
+
+* `JOINED` 전략에 맞게, 각 객체에 대한 테이블을 생성해서 서로 조인해서 사용할 수 있도록 한다
+
+<br>
+
+<p align="center">   <img src="img/join3.png" alt="jpa" style="width: 45%;"> </p>
+
+<p align="center">JOIN으로 조회</p>
+
+* 조회하기 위해서 `JOIN`하는 것을 확인할 수 있다
+
+<br>
+
+조인 전략의 장점은 다음과 같다.
+
+* 다른 전략에 비해 테이블들이 더 정규화되었다
+  * 아주 쉽게 이야기하자면, 중복이 더 제거 됨
+* 저장공간을 더 효율적으로 사용한다
+* FK 참조 무결성 제약조건 활용가능
+  * 예를 들어 주문 정보에서 물건을 확인할때, `Item`만 확인해서 조회하는 것이 가능하다. 굳이 서브 타입까지 내려가서 조회할 필요가 없다. 
+
+<br>
+
+단점은 다음과 같다.
+
+* 조회시 조인을 많이 사용하게 될 수 있다
+  * 조인이 많으면 성능 저하
+* 조회 쿼리가 더 복잡하다
+* 데이터 저장시 `INSERT` 쿼리 2번 호출
 
 <br>
 
@@ -1753,13 +1894,36 @@ Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노�
 
 ### 7.3 단일 테이블 전략(`SINGLE_TABLE`)
 
+단일 테이블 전략에 대해 알아보자. 물리 모델로 구현한 단일 테이블 전략을 그림으로 살펴보면 다음같다.
 
+<br>
 
+<p align="center">   <img src="img/st1.png" alt="jpa" style="width: 55%;"> </p>
 
+<p align="center">단일 테이블 전략</p>
 
+* 단일 테이블 전략은 그림에서 볼 수 있듯이, 테이블을 나누지 않고 하나의 테이블에 다 때력박는 전략이다
+* 조회 성능이 필요할 때 사용할 수도 있다. 장점과 단점에 대한 내용은 뒤에서 설명.
 
+<br>
 
+단일 테이블 전략을 사용하기 위해서는 `@Inheritance(strategy = InheritanceType.SINGLE_TABLE)`을 사용하면 된다.
 
+<br>
+
+단일 테이블 전략의 장점은 다음과 같다.
+
+* 조인이 필요 없기 때문에 조회 성능이 빠르다
+* 조회 쿼리가 단순하다
+
+<br>
+
+단점은 다음과 같다.
+
+* 자식 엔티티가 매핑한 컬럼은 모두 `null`을 허용 해야한다
+* 테이블이 불필요하게 커질 수 있다.
+  * 상황에 따라서 오히려 성능이 떨어짐
+  * 불필요한 공간 낭비
 
 <br>
 
@@ -1767,11 +1931,37 @@ Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노�
 
 ### 7.4 클래스 마다 테이블 전략(`TABLE_PER_CLASS`)
 
+클래스 마다 테이블을 만드는 전략에 대해 알아보자. 물리 모델로 구현한 클래스 마다 테이블 전략을 그림으로 살펴보면 다음같다.
 
+<br>
 
+<p align="center">   <img src="img/cpt1.png" alt="jpa" style="width: 80%;"> </p>
 
+<p align="center">클래스 마다 테이블 전략</p>
 
+<br>
 
+클래스 마다 테이블 전략은 `InheritanceType.TABLE_PER_CLASS`를 선택해서 사용하면 된다.
+
+위의 그림에서도 확인할 수 있듯이, 각 구현마다 테이블을 생성해서 `Item`에 대한 속성도 전부 포함하고 있다. 굳이 객체로 따지자면, 반복되는 필드가 있어도 굳이 상속 받지 않고 그냥 각 클래스에 대해 테이블을 만드는 것이다.
+
+<br>
+
+`TABLE_PER_CLASS` 전략은 권장하지 않는다. 그냥 쓰지 말자.
+
+<br>
+
+장점
+
+* 서브 타입을 명확하게 구분해서 처리할 때 효과적이다
+* `not null` 제약 조건을 사용할 수 있다
+
+<br>
+
+단점
+
+* 여러 자식 테이블과 함께 조회하면 성능이 느림
+* 자식 테이블까지 통합해서 쿼리하는 것이 힘들다
 
 <br>
 
@@ -1779,6 +1969,201 @@ Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노�
 
 ### 7.5 `@MappedSuperclass`
 
+`@MappedSuperclass`는 공통 매핑 정보가 필요할 때 사용한다. 다음 그림을 보면 바로 이해가 될 것이다.
+
+<br>
+
+<p align="center">   <img src="img/msc1.png" alt="jpa" style="width: 90%;"> </p>
+
+<p align="center">공통 속성이 존재하는 경우</p>
+
+<br>
+
+이런 `@MappedSuperclass`는 상속관계 매핑이 아니며, 단순히 부모 클래스를 상속 받는 자식 클래스에 매핑 정보만 제공하고 싶을때 사용한다. 예를 들어서 등록일, 수정일, 등록자, 수정자와 같은 전체 엔티티에서 공통으로 적용하는 속성을 사용하고 싶을때 쉽게 적용할 수 있도록 해준다.
+
+만약 `@MappedSuperclass` 기능이 없었다면, 이전과 같은 공통 속성들을 기존 엔티티에 복사 붙여넣기 하면서 고생했을 것이다. 
+
+코드로 사용법을 알아보자.
+
+<br>
+
+공통 속성을 모아놓은 `BaseEntity` 부터 만들어보자.
+
+```java
+@MappedSuperclass
+@Getter @Setter
+public abstract class BaseEntity {
+
+    private String createdBy;
+    private LocalDateTime createdDate;
+    private String lastModifiedBy;
+    private LocalDateTime lastModifiedDate;
+
+}
+```
+
+* 단독으로 생성해서 사용하지 할 필요 없기 때문에 `abstract` 클래스로 만든다
+* `@MappedSuperclass`들은 보통 엔티티에서 공통으로 적용하는 속성들을 모아놓는다
+* `@MappedSuperclass`는 조회나 검색이 불가능
+* `@MappedSuperclass`는 엔티티가 아님, 단순히 속성만 제공해주는 애임
+
+<br>
+
+`BaseEntity`를 상속받아서 사용하기 위해서는 단순히 `extends`를 사용하면 된다.
+
+```java
+@Entity
+@NoArgsConstructor
+public class Seller extends BaseEntity {
+    @Id @GeneratedValue
+    private Long id;
+    private String product;
+}
+```
+
+* 테이블이 생성되는 SQL을 살펴보면 공통 속성까지 전부 포함해서 생성하는 것을 확인 가능
+
+<br>
+
+---
+
+## 8) 즉시 로딩(`EAGER`), 지연 로딩(`LAZY`)
+
+즉시 로딩과 지연 로딩에 대해 알아보자. 
+
+다음 상황이라고 가정해보자, `Student`(학생) 엔티티에서 `Major`(전공) 엔티티로 단방향 `@ManyToOne` 연결 관계이다.
+
+애플리케이션을 만들다보면 비즈니스 로직에서 `Student` 정보만 사용하고 `Major` 정보는 적은 빈도로 사용하는 상황이 있을 수 있다. 이때 `Student`와 함께 `Major`도 함께 조회하는 것은 비효율적이기 때문에 Hibernate는 지연 로딩(lazy loading) 기능을 제공한다.
+
+<br>
+
+코드를 통해 살펴보자.
+
+```java
+@Entity
+@Getter @Setter
+@NoArgsConstructor
+public class Student {
+
+    @Id @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    /**
+     * LAZY : 지연 로딩
+     * 기본값 : EAGER(즉시 로딩)
+     * 즉시 로딩은 사용하지 말자
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MAJOR_ID")
+    private Major major;
+
+    public Student(String name, Major major) {
+        this.name = name;
+        this.major = major;
+    }
+}
+```
+
+* `@ManyToOne`, `@OneToOne`은 기본이 `EAGER`(즉시 로딩)이다
+* `@OneToMany`, `@ManyToMany`는 기본이 `LAZY`
+* 뒤에서 자세히 설명하겠지만 즉시로딩을 사용하지 말고, 모든 상황에서 지연 로딩(`LAZY`)을 사용하자
+
+<br>
+
+```java
+@Entity
+@Getter @Setter
+@NoArgsConstructor
+public class Major {
+
+    @Id @GeneratedValue
+    @Column(name = "MAJOR_ID")
+    private Long id;
+
+    private String name;
+
+    public Major(String name) {
+        this.name = name;
+    }
+}
+```
+
+<br>
+
+지연 로딩이 적용된 상태에서 `student1`을 조회해보자.
+
+```java
+Major major1 = new Major("전자전기공학");
+em.persist(major1);
+
+Student student1 = new Student("김xx", major1);
+em.persist(student1);
+
+em.flush();
+em.clear();
+
+Student findStudent = em.find(Student.class, student1.getId()); // student1 조회
+System.out.println("findStudent = " + findStudent.getMajor().getClass()); // major1 객체 클래스 조회
+```
+
+<br>
+
+결과를 살펴보자.
+
+<br>
+
+<p align="center">   <img src="img/lazy.png" alt="jpa" style="width: 60%;"> </p>
+
+<p align="center">지연 로딩 결과</p>
+
+* 지연 로딩을 적용한 결과 `major1` 까지 조회하지 않고 `student1`만 조회하는 것을 확인할 수 있다
+* `major1` 객체의 클래스를 조회하면 프록시 객체라는 것을 확인할 수 있다
+
+<br>
+
+위 결과에서 확인할 수 있듯이, 지연로딩을 사용하면 조회하지 않을 엔티티는 프록시 객체를 사용해서 실제로 DB에 조회하지 않는다.
+
+<br>
+
+<p align="center">   <img src="img/l2.png" alt="jpa" style="width: 100%;"> </p>
+
+<br>
+
+위에서도 언급했지만 가급적이면 지연 로딩(`LAZY`)만 사용하자. 즉시 로딩(`EAGER`) 사용시 발생할 수 있는 문제점은 다음과 같다.
+
+* 즉시 로딩을 사용하는 경우 예상하지 못하는 SQL이 발생한다
+  * 테이블이 적으면 조인이 한~두개로 끝날 수 있음. 그러나 실제로는 테이블이 많으며, 즉시 로딩을 사용하는 경우 정말 많은 조인으로 조회하게 된다
+
+
+
+* 즉시 로딩은 JPQL에서 N+1 문제를 야기한다.
+  * N+1 문제는 뒤의 JPQL에서 더 자세히 다룰 예정
+  * 아주 간단히 설명하자면, JPQL을 사용해서 전체 `Student`을 조회한다고 가정하자. 즉시 로딩으로 되어 있으면, `Student`를 조회한 후에 다시 각 `Student` 객체 대한 `Major`도 가져오기 위해서 다수의 쿼리가 요청 된다
+
+<br>
+
+그러면 그냥 한꺼번에 `Student`, `Major`를 가져오고 싶은 상황이면 어떻게 해야할까? 이때도 기본적으로 지연 로딩으로 설정되어 있어야한다. 나중에 자세히 다루겠지만, `fetch join`으로 해결이 가능하다. 
+
+<br>
+
+---
+
+## 9) 영속성 전이(Cascade)
+
+### 9.1 영속성 전이 설명
+
+영속성 전이에 대해 알아보자.
+
+영속성 전이는 특정 엔티티를 영속 상태로 만들 때 연관된 엔티티도 함께 영속 상태로 만들고 싶을 때 사용한다.
+
+
+
+
+
+
+
 
 
 
@@ -1791,7 +2176,7 @@ Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노�
 
 ---
 
-## 8)
+### 9.2 고아 객체(Orphan Object)
 
 
 
@@ -1801,3 +2186,24 @@ Hibernate는 위 3가지 방법 모두 사용할 수 있도록 기능과 애노�
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+## 10) 값 타입

@@ -8,9 +8,59 @@
 
 1. JPA 소개
 2. JPA 준비
+   * 프로젝트 setup
+   * 객체와 테이블 매핑
+   * JPA 동작 확인
+     * JPA 정상 동작 체크
+     * 저장
+     * 조회
+     * 삭제
+     * 수정
+     * JPQL
 3. 내부 동작 - 영속성 컨텍스트(Persistence Context)
+   * 영속성 컨텍스트란?
+   * 영속성 컨텍스트를 사용하는 이유
+     * 1차 캐시(First level Cache)
+     * 영속 엔티티의 동일성 보장
+     * 쓰기 지연(Write-Behind), 변경 감지(Dirty-Check)
+     * 플러시(Flush)
 4. 엔티티 매핑(Entity Mapping)
-5. 연
+   * DB 스키마 자동 생성(`hibernate.hbm2ddl.auto`)
+   * 객체 - 테이블 매핑
+   * 필드 - 컬럼 매핑
+   * 기본키(PK) 매핑
+     * 기본키 매핑 애노테이션
+     * `IDENTITY` 전략
+     * `SEQUENCE` 전략
+5. 연관관계 매핑(Relationship Mapping)
+   * 단방향 연결관계(Uni-directional)
+   * 양방향 연관관계(Bi-directional)
+     * 양방향 연관관계 소개
+     * :star: 연관관계의 주인(Owning side of Relationship)
+     * 양방향 매핑 규칙
+     * 양방향 매핑시 주의점, 권장사항
+     * 양방향 매핑 정리
+6. 연관관계 카디널리티(Cardinality)
+   * 다대일(N:1, `@ManyToOne`)
+   * 일대다(1:N, `@OneToMany`)
+   * 일대일(1:1, `@OneToOne`)
+7. 상속관계 매핑 (Inheritance Mapping)
+   * 상속 관계 매핑 소개
+   * 조인 전략(`JOINED`)
+   * 단일 테이블 전략(`SINGLE_TABLE`)
+   * 클래스 마다 테이블 전략(`TABLE_PER_CLASS`)
+   * `@MappedSuperclass`
+8. 즉시 로딩(`EAGER`), 지연 로딩(`LAZY`)
+9. 영속성 전이(Cascade)
+   * 영속성 전이 설명
+   * 영속성 전이를 사용하는 경우
+   * 고아 객체 제거(`orphanRemoval`)
+10. Embedded Type(추가 예정)
+11. JPQL
+    * JPQL 소개
+    * QueryDSL 소개
+    * Native SQL 소개
+    * JPQL 사용법(추가 예정)
 
 
 
@@ -1546,7 +1596,7 @@ em.persist(member);
 
 ---
 
-#### 5.2.5 양방형 매핑 정리
+#### 5.2.5 양방향 매핑 정리
 
 * 단방향 매핑으로도 연관관계 매핑은 거의 완료
 * 양방향 매핑은 단방향 매핑에서 역방향 조회 기능이 추가된 것

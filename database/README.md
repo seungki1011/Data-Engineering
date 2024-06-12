@@ -13,7 +13,7 @@
 
 ## Index
 
-### [1) RDBMS I]((001)%20Relational%20Database)
+### [1) RDBMS I](https://github.com/seungki1011/Data-Engineering/tree/main/database/(001)%20Relational%20Database)
 
 1. [데이터베이스(Database, DB) 소개]((001)%20Relational%20Database#1-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4database-%EC%86%8C%EA%B0%9C)
    * 데이터베이스의 정의
@@ -52,7 +52,7 @@
 
 ---
 
-### [2) SQL 기초 및 활용(MySQL)]((002)%20Using%20SQL)
+### [2) SQL 기초 및 활용(MySQL)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(002)%20Using%20SQL)
 
 1. [```MySQL``` 설치]((002)%20Using%20SQL#1-mysql-%EC%84%A4%EC%B9%98)
    * [```MySQL``` 설치와 연결]((002)%20Using%20SQL#11-mysql-%EC%84%A4%EC%B9%98%EC%99%80-%EC%97%B0%EA%B2%B0)
@@ -91,7 +91,7 @@
 
 ---
 
-### [3) RDBMS II]((003)%20Relational%20Database%202)
+### [3) RDBMS II](https://github.com/seungki1011/Data-Engineering/tree/main/database/(003)%20Relational%20Database%202)
 
 1. [트랜잭션 (Transaction)]((003)%20Relational%20Database%202#1-transaction)
    * [Transaction 설명]((003)%20Relational%20Database%202#11-transaction-%EC%84%A4%EB%AA%85)
@@ -247,6 +247,66 @@
      * 도큐먼트 생성
      * 도큐먼트 조회
 8. [Further Reading]((005)MongoDB(NoSQL)#further-reading)
+
+---
+
+### [6) JPA](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA)
+
+1. [JPA 소개]((006)JPA#1-jpa-%EC%86%8C%EA%B0%9C)
+2. [JPA 준비]((006)JPA#2-jpa-%EC%A4%80%EB%B9%84)
+   * [프로젝트 setup]((006)JPA#21-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-setup)
+   * [객체와 테이블 매핑]((006)JPA#22-%EA%B0%9D%EC%B2%B4%EC%99%80-%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%A7%A4%ED%95%91)
+   * [JPA 동작 확인]((006)JPA#23-jpa-%EB%8F%99%EC%9E%91-%ED%99%95%EC%9D%B8)
+     * JPA 정상 동작 체크
+     * 저장
+     * 조회
+     * 삭제
+     * 수정
+     * JPQL
+3. [내부 동작 - 영속성 컨텍스트(Persistence Context)]((006)JPA#3-%EB%82%B4%EB%B6%80-%EB%8F%99%EC%9E%91---%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8persistence-context)
+   * [영속성 컨텍스트란?]((006)JPA#31-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%9E%80)
+   * [영속성 컨텍스트를 사용하는 이유]((006)JPA#32-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0)
+     * [1차 캐시(First level Cache)]((006)JPA#321-1%EC%B0%A8-%EC%BA%90%EC%8B%9C)
+     * [영속 엔티티의 동일성 보장]((006)JPA#322-%EC%98%81%EC%86%8D-%EC%97%94%ED%8B%B0%ED%8B%B0%EC%9D%98-%EB%8F%99%EC%9D%BC%EC%84%B1-%EB%B3%B4%EC%9E%A5)
+     * [쓰기 지연(Write-Behind), 변경 감지(Dirty-Check)]((006)JPA#323-%EC%93%B0%EA%B8%B0-%EC%A7%80%EC%97%B0write-behind-%EB%B3%80%EA%B2%BD-%EA%B0%90%EC%A7%80dirty-check)
+     * [플러시(Flush)]((006)JPA#324-%ED%94%8C%EB%9F%AC%EC%8B%9Cflush)
+4. [엔티티 매핑(Entity Mapping)]((006)JPA#4-%EC%97%94%ED%8B%B0%ED%8B%B0-%EB%A7%A4%ED%95%91entity-mapping)
+   * [DB 스키마 자동 생성(`hibernate.hbm2ddl.auto`)]((006)JPA#40-db-%EC%8A%A4%ED%82%A4%EB%A7%88-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1-hibernatehbm2ddlauto)
+   * [객체 - 테이블 매핑]((006)JPA#41-%EA%B0%9D%EC%B2%B4---%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%A7%A4%ED%95%91)
+   * [필드 - 컬럼 매핑]((006)JPA#42-%ED%95%84%EB%93%9C---%EC%B9%BC%EB%9F%BC-%EB%A7%A4%ED%95%91)
+   * [기본키(PK) 매핑]((006)JPA#43-%EA%B8%B0%EB%B3%B8%ED%82%A4pk-%EB%A7%A4%ED%95%91)
+     * 기본키 매핑 애노테이션
+     * `IDENTITY` 전략
+     * `SEQUENCE` 전략
+5. [연관관계 매핑(Relationship Mapping)]((006)JPA#5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91relationship-mapping)
+   * [단방향 연결관계(Uni-directional)]((006)JPA#51-%EB%8B%A8%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84uni-directional)
+   * [양방향 연관관계(Bi-directional)]((006)JPA#52-%EC%96%91%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84bi-directional)
+     * [양방향 연관관계 소개]((006)JPA#521-%EC%96%91%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%86%8C%EA%B0%9C)
+     * [:star: 연관관계의 주인(Owning side of Relationship))]((006)JPA#522-star-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%EC%9D%98-%EC%A3%BC%EC%9D%B8owning-side-of-relationship-%EC%86%8C%EA%B0%9C)
+     * [양방향 매핑 규칙]((006)JPA#523-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91-%EA%B7%9C%EC%B9%99)
+     * [양방향 매핑시 주의점, 권장사항]((006)JPA#524-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%A0%90-%EA%B6%8C%EC%9E%A5%EC%82%AC%ED%95%AD)
+     * [양방향 매핑 정리]((006)JPA#525-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91-%EC%A0%95%EB%A6%AC)
+6. [연관관계 카디널리티(Cardinality)]((006)JPA#6-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%B9%B4%EB%94%94%EB%84%90%EB%A6%AC%ED%8B%B0cardinality)
+   * [다대일(N:1, `@ManyToOne`)]((006)JPA#61-%EB%8B%A4%EB%8C%80%EC%9D%BCn1-manytoone)
+   * 일대다(1:N, `@OneToMany`)
+   * 일대일(1:1, `@OneToOne`)
+7. [상속관계 매핑 (Inheritance Mapping)]((006)JPA#7-%EC%83%81%EC%86%8D-%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91inheritance-mapping)
+   * [상속 관계 매핑 소개]((006)JPA#71-%EC%83%81%EC%86%8D-%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91-%EC%86%8C%EA%B0%9C)
+   * [조인 전략(`JOINED`)]((006)JPA#72-%EC%A1%B0%EC%9D%B8-%EC%A0%84%EB%9E%B5joined)
+   * [단일 테이블 전략(`SINGLE_TABLE`)]((006)JPA#73-%EB%8B%A8%EC%9D%BC-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%A0%84%EB%9E%B5single_table)
+   * 클래스 마다 테이블 전략(`TABLE_PER_CLASS`)
+   * [`@MappedSuperclass`]((006)JPA#75-mappedsuperclass)
+8. [즉시 로딩(`EAGER`), 지연 로딩(`LAZY`)]((006)JPA#8-%EC%A6%89%EC%8B%9C-%EB%A1%9C%EB%94%A9eager-%EC%A7%80%EC%97%B0-%EB%A1%9C%EB%94%A9lazy)
+9. [영속성 전이(Cascade)]((006)JPA#9-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4cascade)
+   * [영속성 전이 설명]((006)JPA#91-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4-%EC%84%A4%EB%AA%85)
+   * [영속성 전이를 사용하는 경우]((006)JPA#92-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B2%BD%EC%9A%B0)
+   * 고아 객체 제거(`orphanRemoval`)
+10. Embedded Type(추가 예정)
+11. [JPQL]((006)JPA#11-jpql)
+    * JPQL 소개
+    * QueryDSL 소개
+    * Native SQL 소개
+    * JPQL 사용법(추가 예정)
 
 ---
 

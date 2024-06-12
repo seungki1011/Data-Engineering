@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+//@Entity
 @Setter
 @NoArgsConstructor
 public class Movie extends Item {

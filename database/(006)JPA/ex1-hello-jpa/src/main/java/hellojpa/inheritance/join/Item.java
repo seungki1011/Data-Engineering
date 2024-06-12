@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+//@Entity
 @Setter @Getter
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)

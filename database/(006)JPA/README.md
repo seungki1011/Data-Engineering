@@ -6,7 +6,11 @@
 
 ## Index
 
-
+1. JPA 소개
+2. JPA 준비
+3. 내부 동작 - 영속성 컨텍스트(Persistence Context)
+4. 엔티티 매핑(Entity Mapping)
+5. 연
 
 
 
@@ -2156,19 +2160,176 @@ System.out.println("findStudent = " + findStudent.getMajor().getClass()); // maj
 
 영속성 전이에 대해 알아보자.
 
-영속성 전이는 특정 엔티티를 영속 상태로 만들 때 연관된 엔티티도 함께 영속 상태로 만들고 싶을 때 사용한다.
+영속성 전이는 특정 엔티티를 영속 상태로 만들 때 연관된 엔티티도 함께 영속 상태로 만들고 싶을 때 사용한다. (자료를 찾아보면 Parent 엔티티에서 Child 엔티티로 특정 연산을 전파할 수 있도록 해주는 기능으로 나오는데, 여기서 말하는 Parent과 Child는 상속과 관련된 용어가 아니라 단순히 연관 관계를 통해 연관된 엔티티를 뜻하고 있다. (보통 `다대일` 관계에서 `다`가 Child)
 
+코드로 바로 알아보자. 먼저 `cascade`를 적용하지 않았을때의 동작을 알아보자.
 
+<br>
 
+`Parent`
 
+```java
+@Entity
+@Getter @Setter
+@NoArgsConstructor
+public class Parent {
 
+    @Id @GeneratedValue
+    @Column(name = "PARENT_ID")
+    private Long id;
 
+    private String name;
 
+    @OneToMany(mappedBy = "parent")
+    private List<Child> childList = new ArrayList<>();
 
+    public void addChild(Child child) {
+        childList.add(child);
+        child.setParent(this);
+    }
 
+    public Parent(String name) {
+        this.name = name;
+    }
+}
+```
 
+<br>
 
+`Child`
 
+```java
+@Entity
+@Getter @Setter
+@NoArgsConstructor
+public class Child {
+
+    @Id @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    // 연관관계의 주인
+    @ManyToOne
+    @JoinColumn(name = "PARENT_ID")
+    private Parent parent;
+
+    public Child(String name) {
+        this.name = name;
+    }
+}
+```
+
+<br>
+
+다음 코드를 실행해보자.
+
+```java
+Child child1 = new Child();
+Child child2 = new Child();
+
+Parent parent = new Parent();
+parent.addChild(child1);
+parent.addChild(child2);
+
+em.persist(parent);
+em.persist(child1);
+em.persist(child2);
+```
+
+* `Parent`와 `Child` 엔티티를 만들어서 저장하고 있다
+
+<br>
+
+이때 개발자는 `Parent` 엔티티를 `persist()`하면서 자동으로 같이 `Child` 엔티티들을 같이 `persist()` 해주고 싶을 수 있다.
+
+쉽게 말해서 `Parent` 엔티티 쪽에서 `Child` 엔티티들에게 특정 연산을 전파하고 싶을 수 있다. 이런것을 가능하게 해주는 것이 `cascade` 기능이다.
+
+그럼 `cascade` 기능을 사용해보자.
+
+<br>
+
+`Parent` 클래스에서 다음과 같이 수정하면 된다.
+
+```java
+// @OneToMany(mappedBy = "parent")
+@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+```
+
+* 뒤에서 `ALL`을 비롯한 옵션들에 대해 설명할 것이다
+* `ALL`은 영속, 삭제 등의 작업을 모두 적용한다는 옵션
+
+<br>
+
+이제 `main` 코드에서 `Child` 엔티티를 `persist()`하지 않고 `Parent` 엔티티만 `persist()`하자.
+
+```java
+em.persist(parent);
+// em.persist(child1);
+// em.persist(child2);
+```
+
+<br>
+
+코드를 실행해보면 `child1`, `child2` 까지 모두 `persist` 된것을 확인할 수 있다.
+
+<br>
+
+<p align="center">   <img src="img/casc.png" alt="jpa" style="width: 100%;"> </p>
+
+<p align="center">영속성 전이</p>
+
+<br>
+
+정리하자면 영속성 전이(Cascade)는 연관 관계 매핑과는 관련이 없으며, 단지 엔티티를 영속화(`persist`)할 때 연관된 엔티티(Child)도 함께 영속화하는 편리함을 제공하는 기능이다!
+
+<br>
+
+---
+
+### 9.2 영속성 전이를 사용하는 경우
+
+`cascade` 에는 다음 옵션들이 존재한다.
+
+* `CascadeType.ALL` : 모두 적용
+* `CascadeType.PERSIST` : 영속
+* `CascadeType.REMOVE` : 삭제
+* `MERGE`, `REFRESH`, `DETACH` 등의 옵션도 존재한다
+* 대부분 경우 `ALL`, `PERSIST` 정도를 사용한다
+
+<br>
+
+그러면 영속성 전이는 언제 사용할까? 
+
+* `Child` 엔티티 입장에서 연관관계를 가지는 엔티티가 하나일 때 사용하는 것을 권장한다(소유자가 1개 일 때)
+* 라이플 사이클이 굉장히 유사할 때
+  * 예) 등록/삭제
+
+<br>
+
+---
+
+### 9.2 고아 객체 제거(`orphanRemoval`)
+
+`orphanRemoval = true`로 하면, 고아 객체를 제거할 수 있다. 여기서 고아 객체를 제거한다는 뜻은, `Parent` 엔티티와 연관 관계가 끊어진 `Child` 엔티티를 자동으로 삭제한다는 뜻이다.
+
+코드에서 `Child` 엔티티를 컬렉션에서 제거하면 해당 `Child` 엔티티를 삭제하는 것을 확인할 수 있다. 
+
+<br>
+
+`orphanRemoval`도 참조하는 곳이 하나일 때 사용해야 한다.
+
+* 예) 게시판 포스트의 업로드 파일
+
+<br>
+
+`orphanRemoval`는 조심해서 사용해야 한다.
+
+<br>
+
+---
+
+## 10) Embedded Type(추가 예정)
 
 
 
@@ -2176,34 +2337,119 @@ System.out.println("findStudent = " + findStudent.getMajor().getClass()); // maj
 
 ---
 
-### 9.2 고아 객체(Orphan Object)
+## 11) JPQL
 
+### 11.1 JPQL 소개
 
+JPA는 다양한 쿼리 방법을 지원한다.
 
+* JPQL
+* QueryDSL
+* Native SQL
+* JDBC API 직접 사용
+* MyBatis, JdbcTemplate 사용
+  * JDBC API, MyBatis, JdbcTemplate 등을 이용할 때 영속성 컨텍스트를 적절한 시점에 강제로 플러시할 필요가 있다
+  * SQL 실행 직전에 수동으로 영속성 컨텍스트 수동 플러시
+  * 위의 라이브러리나 API는 JPA의 라이프사이클이 관리하는 것들이 아니기 때문!
+* 이외에도 다양한 쿼리 방법들이 존재한다.
 
+<br>
 
+JPQL에 대해 알아보자.
 
+기존에 우리가 조회하던 방법은 `find()`를 이용해서 객체 그래프를 탐색하는 방식으로 조회했다.(`a.getB().getC()`) 
 
+그러면 `나이가 20살 이상인 회원 조회`, `특정 날짜 사이에 가입한 회원 조회` 처럼 복잡하게 검색을 하고 싶은 경우 어떻게 할까? 
 
+JPA의 경우 엔티티 객체를 중심으로 개발을 하게 된다. 이때 검색을 해도 테이블이 아닌 엔티티 객체를 대상으로 검색을 한다. 그러나 모든 DB 데이터를 객체로 변환해서 검색하는 것은 사실상 불가능하다.
 
+우리는 애플리케이션이 필요한 데이터만 DB에서 불러오는, 검색 조건이 포함된 SQL이 필요하다. 이를 도와주기 위해서 JPA는 SQL을 추상화한 JPQL이라는 객체 지향 쿼리 언어를 제공한다. 왜 객체 지향 쿼리 언어냐면, JPQL은 엔티티 객체를 대상으로 쿼리를 하기 때문이다.
 
+<br>
 
+JPQL 사용 예시를 살펴보자.
 
+```java
+String jpql = "select m from Member m where m.age > 18";
 
+List<Member> result = em.createQuery(jpql, Member.class)
+        .getResultList();
+```
 
+* JPQL은 테이블이 아닌 객체를 대상으로 검색한다
+* SQL을 추상화하기 때문에 특정 데이터베이스 벤더에 의존적이지 않다
 
+<br>
 
+위 JPQL이 SQL로 변환되어 DB에 요청이 날라간다. 실행된 SQL의 모습을 확인해보자.
 
-
-
-
-
-
-
-
+```sql
+select
+    m.id as id,
+    m.age as age,
+    m.USERNAME as USERNAME,
+    m.TEAM_ID as TEAM_ID
+from
+    Member m
+where
+    m.age>18
+```
 
 <br>
 
 ---
 
-## 10) 값 타입
+### 11.2 QueryDSL 소개
+
+* JPQL은 동적 쿼리 작성이 어렵다는 단점이 있다
+  * 조건에 따라 문자열을 더하고 생략하는 등의 작업은 실수를 하기 쉽다
+* QueryDSL은 문자가 아닌 자바 코드로 JPQL을 작성할 수 있다
+* JPQL 빌더 역할을 하고, 컴파일 시점에서 문법 오류를 찾을 수도 있다
+* 이런 코드로 작성할 수 있다는 점에서 동적 쿼리의 작성도 편리하다
+
+<br>
+
+QueryDSL 사용 예시
+
+```java
+// JPQL 사용
+// String jpql = "select m from Member m where m.age > 18"
+
+// QueryDSL 사용
+JPAFactoryQuery query = new JPAQueryFactory(em);
+QMember m = QMember.member;
+
+List<Member> list = query.selectFrom(m)
+    .where(m.age.gt(18))
+    .orderBy(m.name.desc())
+    .fetch();
+```
+
+<br>
+
+---
+
+### 11.3 Native SQL 소개
+
+* JPA에서 SQL을 직접 사용할 수 있는 기능이다
+* JPQL로 해결할 수 없는 특정 DB에 의존적인 기능을 사용하거나, 아주 복잡한 SQL을 사용할 때 사용 가능
+
+<br>
+
+NativeSQL 사용 예시
+
+```java
+String sql = "SELECT ID, AGE, TEAM_ID, NAME FROM MEMBER WHERE NAME = ‘kim’"; // 표준 SQL 사용
+
+List<Member> resultList = em.createNativeQuery(sql, Member.class)
+      .getResultList();
+```
+
+<br>
+
+---
+
+### 11.4 JPQL 사용법(추가 예정)
+
+JPQL 문서 : [https://docs.oracle.com/cd/E11035_01/kodo41/full/html/ejb3_langref.html#ejb3_langref_select](https://docs.oracle.com/cd/E11035_01/kodo41/full/html/ejb3_langref.html#ejb3_langref_select)
+

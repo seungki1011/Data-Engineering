@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.NoArgsConstructor;
 
-@Entity
+//@Entity
 @NoArgsConstructor
 public class Seller extends BaseEntity {
 

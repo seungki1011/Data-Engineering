@@ -28,8 +28,6 @@ public class BiDirMember {
         this.team = team;
     }
 
-
-
     public void setBiDirTeam(BiDirTeam team) {
         this.team = team;
         team.getMembers().add(this); //

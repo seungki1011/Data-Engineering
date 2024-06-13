@@ -1146,67 +1146,66 @@
   8. [Further Reading](database/(005)MongoDB(NoSQL)#further-reading)
 
 </details>
-
 <details>
   <summary><h3>6. JPA</h3></summary>
 
-    1. [JPA 소개](database/(006)JPA#1-jpa-%EC%86%8C%EA%B0%9C)
-    2. [JPA 준비](database/(006)JPA#2-jpa-%EC%A4%80%EB%B9%84)
-     * [프로젝트 setup](database/(006)JPA#21-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-setup)
-     * [객체와 테이블 매핑](database/(006)JPA#22-%EA%B0%9D%EC%B2%B4%EC%99%80-%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%A7%A4%ED%95%91)
-     * [JPA 동작 확인](database/(006)JPA#23-jpa-%EB%8F%99%EC%9E%91-%ED%99%95%EC%9D%B8)
-       * JPA 정상 동작 체크
-       * 저장
-       * 조회
-       * 삭제
-       * 수정
-       * JPQL
-    3. [내부 동작 - 영속성 컨텍스트(Persistence Context)](database/(006)JPA#3-%EB%82%B4%EB%B6%80-%EB%8F%99%EC%9E%91---%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8persistence-context)
-     * [영속성 컨텍스트란?](database/(006)JPA#31-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%9E%80)
-     * [영속성 컨텍스트를 사용하는 이유](database/(006)JPA#32-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0)
-       * [1차 캐시(First level Cache)](database/(006)JPA#321-1%EC%B0%A8-%EC%BA%90%EC%8B%9C)
-       * [영속 엔티티의 동일성 보장](database/(006)JPA#322-%EC%98%81%EC%86%8D-%EC%97%94%ED%8B%B0%ED%8B%B0%EC%9D%98-%EB%8F%99%EC%9D%BC%EC%84%B1-%EB%B3%B4%EC%9E%A5)
-       * [쓰기 지연(Write-Behind), 변경 감지(Dirty-Check)](database/(006)JPA#323-%EC%93%B0%EA%B8%B0-%EC%A7%80%EC%97%B0write-behind-%EB%B3%80%EA%B2%BD-%EA%B0%90%EC%A7%80dirty-check)
-       * [플러시(Flush)](database/(006)JPA#324-%ED%94%8C%EB%9F%AC%EC%8B%9Cflush)
-    4. [엔티티 매핑(Entity Mapping)](database/(006)JPA#4-%EC%97%94%ED%8B%B0%ED%8B%B0-%EB%A7%A4%ED%95%91entity-mapping)
-     * [DB 스키마 자동 생성(`hibernate.hbm2ddl.auto`)](database/(006)JPA#40-db-%EC%8A%A4%ED%82%A4%EB%A7%88-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1-hibernatehbm2ddlauto)
-     * [객체 - 테이블 매핑](database/(006)JPA#41-%EA%B0%9D%EC%B2%B4---%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%A7%A4%ED%95%91)
-     * [필드 - 컬럼 매핑](database/(006)JPA#42-%ED%95%84%EB%93%9C---%EC%B9%BC%EB%9F%BC-%EB%A7%A4%ED%95%91)
-     * [기본키(PK) 매핑](database/(006)JPA#43-%EA%B8%B0%EB%B3%B8%ED%82%A4pk-%EB%A7%A4%ED%95%91)
-       * 기본키 매핑 애노테이션
-       * `IDENTITY` 전략
-       * `SEQUENCE` 전략
-    5. [연관관계 매핑(Relationship Mapping)](database/(006)JPA#5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91relationship-mapping)
-     * [단방향 연결관계(Uni-directional)](database/(006)JPA#51-%EB%8B%A8%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84uni-directional)
-     * [양방향 연관관계(Bi-directional)](database/(006)JPA#52-%EC%96%91%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84bi-directional)
-       * [양방향 연관관계 소개](database/(006)JPA#521-%EC%96%91%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%86%8C%EA%B0%9C)
-       * [:star: 연관관계의 주인(Owning side of Relationship))](database/(006)JPA#522-star-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%EC%9D%98-%EC%A3%BC%EC%9D%B8owning-side-of-relationship-%EC%86%8C%EA%B0%9C)
-       * [양방향 매핑 규칙](database/(006)JPA#523-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91-%EA%B7%9C%EC%B9%99)
-       * [양방향 매핑시 주의점, 권장사항](database/(006)JPA#524-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%A0%90-%EA%B6%8C%EC%9E%A5%EC%82%AC%ED%95%AD)
-       * [양방향 매핑 정리](database/(006)JPA#525-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91-%EC%A0%95%EB%A6%AC)
-    6. [연관관계 카디널리티(Cardinality)](database/(006)JPA#6-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%B9%B4%EB%94%94%EB%84%90%EB%A6%AC%ED%8B%B0cardinality)
-     * [다대일(N:1, `@ManyToOne`)](database/(006)JPA#61-%EB%8B%A4%EB%8C%80%EC%9D%BCn1-manytoone)
-     * 일대다(1:N, `@OneToMany`)
-     * 일대일(1:1, `@OneToOne`)
-    7. [상속관계 매핑 (Inheritance Mapping)](database/(006)JPA#7-%EC%83%81%EC%86%8D-%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91inheritance-mapping)
-     * [상속 관계 매핑 소개](database/(006)JPA#71-%EC%83%81%EC%86%8D-%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91-%EC%86%8C%EA%B0%9C)
-     * [조인 전략(`JOINED`)](database/(006)JPA#72-%EC%A1%B0%EC%9D%B8-%EC%A0%84%EB%9E%B5joined)
-     * [단일 테이블 전략(`SINGLE_TABLE`)](database/(006)JPA#73-%EB%8B%A8%EC%9D%BC-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%A0%84%EB%9E%B5single_table)
-     * 클래스 마다 테이블 전략(`TABLE_PER_CLASS`)
-     * [`@MappedSuperclass`](database/(006)JPA#75-mappedsuperclass)
-    8. [즉시 로딩(`EAGER`), 지연 로딩(`LAZY`)](database/(006)JPA#8-%EC%A6%89%EC%8B%9C-%EB%A1%9C%EB%94%A9eager-%EC%A7%80%EC%97%B0-%EB%A1%9C%EB%94%A9lazy)
-    9. [영속성 전이(Cascade)](database/(006)JPA#9-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4cascade)
-     * [영속성 전이 설명](database/(006)JPA#91-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4-%EC%84%A4%EB%AA%85)
-     * [영속성 전이를 사용하는 경우](database/(006)JPA#92-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B2%BD%EC%9A%B0)
-     * 고아 객체 제거(`orphanRemoval`)
-    10. [임베디드 타입(Embedded Type)](database/(006)JPA#10-embedded-type)
-      * [값 타입(Value Object, Value Type)이란?](database/(006)JPA#101-%EA%B0%92-%ED%83%80%EC%9E%85value-object-value-type%EC%9D%B4%EB%9E%80)
-      * [임베디드 타입 사용](database/(006)JPA#102-%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-%ED%83%80%EC%9E%85-%EC%82%AC%EC%9A%A9)
-    11. [JPQL](database/(006)JPA#11-jpql)
-        * JPQL 소개
-         * QueryDSL 소개
-         * Native SQL 소개
-         * JPQL 사용법(추가 예정)
+1. [JPA 소개](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#1-jpa-%EC%86%8C%EA%B0%9C)
+2. [JPA 준비](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#2-jpa-%EC%A4%80%EB%B9%84)
+   * [프로젝트 setup](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#21-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-setup)
+   * [객체와 테이블 매핑](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#22-%EA%B0%9D%EC%B2%B4%EC%99%80-%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%A7%A4%ED%95%91)
+   * [JPA 동작 확인](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#23-jpa-%EB%8F%99%EC%9E%91-%ED%99%95%EC%9D%B8)
+     * JPA 정상 동작 체크
+     * 저장
+     * 조회
+     * 삭제
+     * 수정
+     * JPQL
+3. [내부 동작 - 영속성 컨텍스트(Persistence Context)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#3-%EB%82%B4%EB%B6%80-%EB%8F%99%EC%9E%91---%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8persistence-context)
+   * [영속성 컨텍스트란?](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#31-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%9E%80)
+   * [영속성 컨텍스트를 사용하는 이유](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#32-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0)
+     * [1차 캐시(First level Cache)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#321-1%EC%B0%A8-%EC%BA%90%EC%8B%9C)
+     * [영속 엔티티의 동일성 보장](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#322-%EC%98%81%EC%86%8D-%EC%97%94%ED%8B%B0%ED%8B%B0%EC%9D%98-%EB%8F%99%EC%9D%BC%EC%84%B1-%EB%B3%B4%EC%9E%A5)
+     * [쓰기 지연(Write-Behind), 변경 감지(Dirty-Check)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#323-%EC%93%B0%EA%B8%B0-%EC%A7%80%EC%97%B0write-behind-%EB%B3%80%EA%B2%BD-%EA%B0%90%EC%A7%80dirty-check)
+     * [플러시(Flush)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#324-%ED%94%8C%EB%9F%AC%EC%8B%9Cflush)
+4. [엔티티 매핑(Entity Mapping)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#4-%EC%97%94%ED%8B%B0%ED%8B%B0-%EB%A7%A4%ED%95%91entity-mapping)
+   * [DB 스키마 자동 생성(`hibernate.hbm2ddl.auto`)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#40-db-%EC%8A%A4%ED%82%A4%EB%A7%88-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1-hibernatehbm2ddlauto)
+   * [객체 - 테이블 매핑](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#41-%EA%B0%9D%EC%B2%B4---%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%A7%A4%ED%95%91)
+   * [필드 - 컬럼 매핑](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#42-%ED%95%84%EB%93%9C---%EC%B9%BC%EB%9F%BC-%EB%A7%A4%ED%95%91)
+   * [기본키(PK) 매핑](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#43-%EA%B8%B0%EB%B3%B8%ED%82%A4pk-%EB%A7%A4%ED%95%91)
+     * 기본키 매핑 애노테이션
+     * `IDENTITY` 전략
+     * `SEQUENCE` 전략
+5. [연관관계 매핑(Relationship Mapping)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91relationship-mapping)
+   * [단방향 연결관계(Uni-directional)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#51-%EB%8B%A8%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84uni-directional)
+   * [양방향 연관관계(Bi-directional)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#52-%EC%96%91%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84bi-directional)
+     * [양방향 연관관계 소개](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#521-%EC%96%91%EB%B0%A9%ED%96%A5-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%86%8C%EA%B0%9C)
+     * [:star: 연관관계의 주인(Owning side of Relationship))](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#522-star-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%EC%9D%98-%EC%A3%BC%EC%9D%B8owning-side-of-relationship-%EC%86%8C%EA%B0%9C)
+     * [양방향 매핑 규칙](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#523-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91-%EA%B7%9C%EC%B9%99)
+     * [양방향 매핑시 주의점, 권장사항](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#524-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%A0%90-%EA%B6%8C%EC%9E%A5%EC%82%AC%ED%95%AD)
+     * [양방향 매핑 정리](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#525-%EC%96%91%EB%B0%A9%ED%96%A5-%EB%A7%A4%ED%95%91-%EC%A0%95%EB%A6%AC)
+6. [연관관계 카디널리티(Cardinality)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#6-%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84-%EC%B9%B4%EB%94%94%EB%84%90%EB%A6%AC%ED%8B%B0cardinality)
+   * [다대일(N:1, `@ManyToOne`)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#61-%EB%8B%A4%EB%8C%80%EC%9D%BCn1-manytoone)
+   * 일대다(1:N, `@OneToMany`)
+   * 일대일(1:1, `@OneToOne`)
+7. [상속관계 매핑 (Inheritance Mapping)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#7-%EC%83%81%EC%86%8D-%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91inheritance-mapping)
+   * [상속 관계 매핑 소개](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#71-%EC%83%81%EC%86%8D-%EA%B4%80%EA%B3%84-%EB%A7%A4%ED%95%91-%EC%86%8C%EA%B0%9C)
+   * [조인 전략(`JOINED`)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#72-%EC%A1%B0%EC%9D%B8-%EC%A0%84%EB%9E%B5joined)
+   * [단일 테이블 전략(`SINGLE_TABLE`)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#73-%EB%8B%A8%EC%9D%BC-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%A0%84%EB%9E%B5single_table)
+   * 클래스 마다 테이블 전략(`TABLE_PER_CLASS`)
+   * [`@MappedSuperclass`](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#75-mappedsuperclass)
+8. [즉시 로딩(`EAGER`), 지연 로딩(`LAZY`)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#8-%EC%A6%89%EC%8B%9C-%EB%A1%9C%EB%94%A9eager-%EC%A7%80%EC%97%B0-%EB%A1%9C%EB%94%A9lazy)
+9. [영속성 전이(Cascade)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#9-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4cascade)
+   * [영속성 전이 설명](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#91-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4-%EC%84%A4%EB%AA%85)
+   * [영속성 전이를 사용하는 경우](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#92-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B2%BD%EC%9A%B0)
+   * 고아 객체 제거(`orphanRemoval`)
+10. [임베디드 타입(Embedded Type)](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#10-embedded-type)
+    * [값 타입(Value Object, Value Type)이란?](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#101-%EA%B0%92-%ED%83%80%EC%9E%85value-object-value-type%EC%9D%B4%EB%9E%80)
+    * [임베디드 타입 사용](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#102-%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-%ED%83%80%EC%9E%85-%EC%82%AC%EC%9A%A9)
+11. [JPQL](https://github.com/seungki1011/Data-Engineering/tree/main/database/(006)JPA#11-jpql)
+    * JPQL 소개
+    * QueryDSL 소개
+    * Native SQL 소개
+    * JPQL 사용법(추가 예정)
 
 </details>
 

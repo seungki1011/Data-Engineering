@@ -1146,6 +1146,7 @@
   8. [Further Reading](database/(005)MongoDB(NoSQL)#further-reading)
 
 </details>
+
 <details>
   <summary><h3>6. JPA</h3></summary>
 
@@ -1199,13 +1200,13 @@
      * [영속성 전이를 사용하는 경우](database/(006)JPA#92-%EC%98%81%EC%86%8D%EC%84%B1-%EC%A0%84%EC%9D%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B2%BD%EC%9A%B0)
      * 고아 객체 제거(`orphanRemoval`)
     10. [임베디드 타입(Embedded Type)](database/(006)JPA#10-embedded-type)
-        * [값 타입(Value Object, Value Type)이란?](database/(006)JPA#101-%EA%B0%92-%ED%83%80%EC%9E%85value-object-value-type%EC%9D%B4%EB%9E%80)
-        * [임베디드 타입 사용](database/(006)JPA#102-%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-%ED%83%80%EC%9E%85-%EC%82%AC%EC%9A%A9)
+      * [값 타입(Value Object, Value Type)이란?](database/(006)JPA#101-%EA%B0%92-%ED%83%80%EC%9E%85value-object-value-type%EC%9D%B4%EB%9E%80)
+      * [임베디드 타입 사용](database/(006)JPA#102-%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-%ED%83%80%EC%9E%85-%EC%82%AC%EC%9A%A9)
     11. [JPQL](database/(006)JPA#11-jpql)
         * JPQL 소개
-        * QueryDSL 소개
-        * Native SQL 소개
-        * JPQL 사용법(추가 예정)
+         * QueryDSL 소개
+         * Native SQL 소개
+         * JPQL 사용법(추가 예정)
 
 </details>
 

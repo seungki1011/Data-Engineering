@@ -456,7 +456,7 @@ G1 GC에 대해서 자세히 들어가기 전에 특징을 살펴보면 다음�
 
 <br>
 
-다음 그림은 G1 GC의 사이클을 보여준다. G1 GC는 Young-Only Phase와 Space Reclamantation Phase가 반복되는 사이클로 동작한다.
+다음 그림은 G1 GC의 사이클을 보여준다. G1 GC는 Young-Only Phase와 Space Reclamation Phase가 반복되는 사이클로 동작한다.
 
 <br>
 

@@ -49,7 +49,6 @@
    * 파티셔닝 (Partitioning)
    * 샤딩 (Sharding)
    * 레플리케이션 (Replication)
-7. DBCP (Database Connection Pool) (추가 예정)
 
 ---
 

@@ -1,6 +1,5 @@
 package hellojpa.cascade;
 
-import hellojpa.SeqMember;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;

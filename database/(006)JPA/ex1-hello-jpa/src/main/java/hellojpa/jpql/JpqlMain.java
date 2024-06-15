@@ -1,13 +1,16 @@
-package hellojpa;
+package hellojpa.jpql;
 
+import hellojpa.bidir.BiDirMember;
+import hellojpa.bidir.BiDirTeam;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class PersistenceContextMain {
-    public static void main(String[] args) {
+import java.util.List;
 
+public class JpqlMain {
+    public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
         EntityManager em = emf.createEntityManager();
@@ -16,18 +19,13 @@ public class PersistenceContextMain {
 
         try {
 
-            Member findMember1 = em.find(Member.class, 5L);
-            Member findMember2 = em.find(Member.class, 5L);
 
-            System.out.println(findMember1 == findMember2);
 
+            tx.commit();
         } catch (RuntimeException e) {
             tx.rollback();
         } finally {
             em.close();
         }
-
-        emf.close();
     }
 }
-

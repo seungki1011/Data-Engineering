@@ -1,11 +1,12 @@
-package hellojpa;
+package hellojpa.jpql.paging;
 
+import hellojpa.jpql.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class PKMappingMain {
+public class PagingMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
@@ -15,21 +16,24 @@ public class PKMappingMain {
 
         try {
 
-            SeqMember member = new SeqMember("memberA");
-
-            System.out.println("-------------");
+            Member member = new Member("member1", 25);
             em.persist(member);
-            System.out.println("member.getId() = " + member.getId());
-            System.out.println("-------------");
+
+            em.flush();
+            em.clear();
+
+            em.createQuery("select m from Member m order by m.age desc", Member.class)
+                    .setFirstResult(0)
+                    .setMaxResults(10)
+                    .getResultList();
+
+
 
             tx.commit();
-
         } catch (RuntimeException e) {
             tx.rollback();
         } finally {
             em.close();
         }
-
-        emf.close();
     }
 }

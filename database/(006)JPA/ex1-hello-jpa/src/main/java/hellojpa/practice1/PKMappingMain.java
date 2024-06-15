@@ -1,11 +1,11 @@
-package hellojpa.inheritance.join;
+package hellojpa.practice1;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class JoinedMain {
+public class PKMappingMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
@@ -15,15 +15,12 @@ public class JoinedMain {
 
         try {
 
-            Movie movie = new Movie("매트릭스", 12000, "워쇼스키", "키아누 리브스");
+            SeqMember member = new SeqMember("memberA");
 
-            em.persist(movie);
-
-            em.flush();
-            em.clear();
-
-            Movie findMovie = em.find(Movie.class, movie.getId());
-            System.out.println("findMovie = " + findMovie);
+            System.out.println("-------------");
+            em.persist(member);
+            System.out.println("member.getId() = " + member.getId());
+            System.out.println("-------------");
 
             tx.commit();
 

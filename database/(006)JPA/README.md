@@ -1,6 +1,8 @@
 > JPA의 구현체인 Hibernate의 동작 방식과 기본 사용법에 대해 알아보자.
 >
 > 코드 편의상 롬복 `@Setter`로 설정자 전부 열어둠. 실제 구현시, 필요한 설정자만 열어두는 것을 권장.
+>
+> `@NoArgsConstructor`도 권장사항은 `@NoArgsConstructor(access = AccessLevel.PROTECTED)`을 사용하는 것이지만, 편의상 아무런 속성을 설정하지 않고 사용함.
 
 ---
 
@@ -2627,7 +2629,351 @@ List<Member> resultList = em.createNativeQuery(sql, Member.class)
 
 ---
 
-### 11.4 JPQL 사용법(추가 예정)
+## 12) JPQL 기본 사용법
 
 JPQL 문서 : [https://docs.oracle.com/cd/E11035_01/kodo41/full/html/ejb3_langref.html#ejb3_langref_select](https://docs.oracle.com/cd/E11035_01/kodo41/full/html/ejb3_langref.html#ejb3_langref_select)
+
+JPQL의 기본 사용법에 대해 알아보자. 들어가기에 앞서 JPQL의 특징을 다시 살펴보자.
+
+* JPQL은 테이블 대상으로 쿼리하는 것이 아니라 엔티티 객체를 대상으로 쿼리하는 객체지향 쿼리 언어
+* JPQL은 특정 DB 벤더에 의존적이지 않도록 SQL을 추상화한다
+* JPQL을 통해 쿼리를 할때 결국은 SQL로 변환되어서 DB에 쿼리 요청을 한다
+
+<br>
+
+JPQL 연습에 사용할 엔티티 클래스를 모두 만들고나서 DB의 테이블 관계도를 살펴보면 다음과 같다.
+
+<br>
+
+<p align="center">   <img src="img/jpql1.png" alt="jpa" style="width: 80%;"> </p>
+
+<br>
+
+---
+
+### 12.1 기본 `select` 문
+
+JPQL의 `select`문의 문법은 다음과 같다.
+
+```sql
+select_query :: =
+    select_clause
+    from_clause
+    [where_clause]
+    [grouby_clause]
+    [having_clause]
+    [orderby_clause]
+```
+
+<br>
+
+살펴보면 기존 SQL의 쿼리와 상당히 유사하다는 것을 알 수 있다. JPA에서 엔티티의 값만 바꾸는 경우, 트랜잭션의 커밋 시점에서  `update`과 `delete`를 할 수 있다. 그러나 한번에 대량의 대상을 업데이트/삭제하는 경우 JPA에서는 벌크 연산(bulk operation)이라고 해서 따로 존재한다.
+
+<br>
+
+다음 JPQL 예시를 통해 더 알아보자.
+
+```sql
+select m from Member as m where m.age > 18
+```
+
+* 엔티티와 속성은 대소문자를 구분한다
+  * 예) `Member`와 `MEMBER`는 다르다
+
+
+
+* JPQL 키워드는 대소문자를 구분하지 않는다
+  * 예) `SELECT`와 `select`는 같다
+
+
+
+* 테이블 이름이 아닌 엔티티 이름을 사용한다
+  * 위 예시에서 `Member` 엔티티를 대상으로 한다
+  * 만약 `@Entity(name="xxx")` 처럼 엔티티명을 변경했다면 해당 이름을 사용해야 함
+
+
+
+* 별칭을 필수로 지정한다
+  * 예) `Member as m` : 멤버 엔티티의 별칭을 `m`으로 지정했다
+  * `as`는 생략가능하다
+
+<br>
+
+집합과 정렬은 다음 처럼 사용할 수 있다.
+
+```sql
+select
+    COUNT(m), // 회원수
+    SUM(m.age), // 나이 합
+    AVG(m.age), // 평균 나이
+    MAX(m.age), // 최대 나이
+    MIN(m.age) // 최소 나이
+from Member m
+```
+
+* 이외에도 `groupby`, `having`, `orderby` 모두 기존 SQL과 비슷하게 사용하면 된다
+
+<br>
+
+---
+
+### 12.2 `TypedQuery`, `Query`
+
+타입쿼리와 쿼리에 대해 알아보자.
+
+* `TypedQuery` : 반환 타입이 명확할 때 사용
+* `Query` : 반환 타입이 명확하지 않을 때 사용 
+
+<br>
+
+예시를 통해서 알아보자.
+
+<br>
+
+```java
+/**
+ * 1. TypedQuery : 반환 타입을 명시할 수 있음
+ * Member 타입이라는 것을 명시할 수 있음
+ * select를 통해 멤버를 조회
+ */
+TypedQuery<Member> typedQuery = em.createQuery("select m from Member m", Member.class);
+
+/**
+ * 2. Query : 반환 타입이 명확하지 않음
+ * 만약 m.username만 조회한다면 TypedQuery<String>으로 타입을 명기할 수 있찌만
+ * 그러나 지금은 username: String, age: int를 조회하고 있음
+ */
+Query query = em.createQuery("select m.username, m.age from Member m");
+```
+
+<br>
+
+---
+
+### 12.3 결과 조회
+
+결과 조회 API는 다음과 같다.
+
+* `query.getResultList()`
+  * 결과가 하나 이상일 때 사용
+  * 리스트를 반환함
+  * 결과가 없으면 빈 리스트를 반환
+
+
+
+* `query.getSingleResult()`
+  * 결과가 정확히 하나일 때 사용
+  * 단일 객체를 반환함
+  * 결과가 없다면 `NoResultException`
+  * 둘 아싱이면 `NonUniqueResultException`
+  * 스프링 Data JPA에서는 예외 처리를 알아서 추상화해서 제공을 해줌
+    * 예) 위의 예외가 발생하면 `null` 반환 등으로 처리해줌
+  * 정확하게 하나만 반환할 때 사용하도록 하자
+
+<br>
+
+---
+
+### 12.4 파라미터 바인딩(`setParameter()`)
+
+파라미터 바인딩 방법에 대해 알아보자.
+
+코드를 통해 바로 알아보자.
+
+<br>
+
+```java
+Member member = new Member("member1", 25);
+em.persist(member);
+
+// :username에 "member1"이 들어감
+Member findByName = em.createQuery("select m from Member m where m.username = :username", Member.class)
+                    .setParameter("username", "member1") // 파라미터 바인딩
+                    .getSingleResult();
+            
+System.out.println("findByName.getUsername() = " + findByName.getUsername());
+```
+
+* `setParameter(field, parameter)` : 바인딩할 필드와 파라미터 명시
+  * 위치 기반으로 파라미터 바인딩도 가능하지만 권장하지 않는다
+* JDBC에서 `?`로 파라미터 바인딩 했던것과 비슷하다
+
+<br>
+
+결과와 해당 SQL을 확인해서 파라미터 바인딩이 정상적으로 수행됐는지 확인해보자.
+
+<br>
+
+<p align="center">   <img src="img/jpql2.png" alt="jpa" style="width: 50%;"> </p>
+
+<br>
+
+---
+
+### 12.5 프로젝션(Projection)
+
+프로젝션이라는 것은 데이터베이스에서 필요한 속성만을 조회하는 것을 말한다.
+
+쉽게 말하자면, `select`절에 조회할 속성을 지정하는 것이라고 보면 된다. 프로젝션의 대상은 엔티티, 임베디드 타입, 스칼라 타입(`int`, `String` ...)이 될 수 있다.
+
+* `select m from Member m` : 엔티티 프로젝션
+* `select m.team from Member m` : 엔티티 프로젝션
+  * 뒤에서 설명하겠지만 `select t from Member m join m.team t` 같은 형식으로 사용하는 것을 권장한다
+  * 명시적으로 `join`을 사용하는 것을 권장한다
+  * 최대한 SQL과 비슷하게!
+* `select m.address from Member m` : 임베디드 타입 프로젝션
+* `select m.username, m.age from Member m` : 스칼라 타입 프로젝션
+* `select distinct`로 중복 제거 가능
+
+<br>
+
+참고로 엔티티들을 조회할 때, 가져온 엔티티들은 전부 영속성 컨텍스트가 관리한다. 예를 들어서 다음의 코드 처럼 `Member` 엔티티를 전부 조회한다고 가정해보자.
+
+```java
+List<Member> result = em.createQuery("select m from Member m", Member.class)
+  .getResultList();
+```
+
+* 조회한 엔티티가 1개이든 10개이든 100개이든 전부 영속성 컨텍스트에 넣어서 관리한다
+* 해당 영속성 컨텍스트에서 관리하는 엔티티들을 수정하면 당연히 수정을 반영할 수 있다
+
+<br>
+
+프로젝션에 여러 값을 조회하는 방법에 대해 알아보자. JPQL 쿼리가 다음과 같다고 가정해보자.
+
+```sql
+select m.username, m.age from Member m
+```
+
+값을 조회할 때 여러가지 방법이 존재한다. 
+
+* `Query`를 통해서 조회
+* `new` 명령어를 통해서 조회
+
+<br>
+
+`new` 명령어를 통해서 조회하는 방법에 대해 알아보자. `new` 명령어를 통해서 조회하는 것은 단순 값을 `DTO`를 통해서 바로 조회하는 것이다.
+
+코드를 통해 알아보자. 먼저 `MemberDTO` 클래스를 만들어보자.
+
+<br>
+
+```java
+@Getter @Setter
+public class MemberDTO {
+
+    private String username;
+    private int age;
+
+    public MemberDTO(String username, int age) {
+        this.username = username;
+        this.age = age;
+    }
+}
+```
+
+<br>
+
+이제 JPQL을 사용하는 코드를 만들어보자.
+
+<br>
+
+```java
+List<MemberDTO> result = em.createQuery("select new hellojpa.jpql.projection.MemberDTO(m.username, m.age) from Member m", MemberDTO.class)
+    .getResultList();
+
+MemberDTO memberDTO = result.get(0);
+System.out.println("memberDTO.getUsername() = " + memberDTO.getUsername());
+System.out.println("memberDTO.getAge() = " + memberDTO.getAge());
+```
+
+* `new hellojpa.jpql.projection.MemberDTO(m.username, m.age)`를 통해서 사용한다
+* 사용하기 위해서는 `DTO`에 순서와 타입이 일치하는 생성자가 필요하다 
+* 단점은 패키지명을 전부 적어줘야한다
+  * QueryDSL을 사용하면 간단하게 사용할 수 있다
+
+<br>
+
+---
+
+### 12.6 페이징(Pagination)
+
+JPA에서 페이징(paging)을 사용하는 방법에 대해 알아보자.
+
+> Pagination은 조회 결과를 가져올 때, 결과를 분할해서 일부 데이터만 가져오도록 가져오는 기법을 말한다.
+
+<br>
+
+JPA에서는 페이징을 다음의 두 API로 추상화한다.
+
+* `setFirstResult(int startPosition)` : 조회 시작 위치
+* `setMaxResults(int maxResult)` : 조회할 데이터 수
+
+<br>
+
+JPA를 이용하면 몇 번째 시작 위치에서 몇 개 가져오고 싶은지 정하기만 하면 된다.
+
+JPA는 이렇게 간단하게 추상화해서 제공하기 때문에, Oracle에서 페이징을 처리하는 것 보다 훨씬 쉽게 사용이 가능하다.
+
+<br>
+
+> Oracle에서의 페이징은  다음 처럼 복잡하게 사용해야한다.
+>
+> `예시`
+>
+> ```sql 
+> SELECT * FROM (
+>     SELECT a.*, ROWNUM rnum FROM (
+>         SELECT m.* FROM Member m ORDER BY m.id
+>     ) a WHERE ROWNUM <= :endRow
+> ) WHERE rnum > :startRow;
+> 
+> ```
+
+<br>
+
+코드를 통해 사용법을 알아보자.
+
+<br>
+
+```java
+em.createQuery("select m from Member m order by m.age desc", Member.class)
+    .setFirstResult(0) // 0번 부터
+    .setMaxResults(10) // 10개 가져온다
+    .getResultList();
+```
+
+* `order by m.age desc` : 나이 내림차순 정렬
+
+<br>
+
+---
+
+### 12.7 조인(`JOIN`)
+
+JPQL에서의 조인에 대해 알아보자.
+
+조인을 사용하는 예시를 살펴보자.
+
+* 내부조인(Inner Join)
+  * `select m from Member m inner join m.team t`
+
+
+
+* 외부 조인(Outer Join)
+  * `select m from Member m left outer join m.team t`
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
 

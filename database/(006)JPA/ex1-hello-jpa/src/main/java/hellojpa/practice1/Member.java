@@ -1,4 +1,4 @@
-package hellojpa;
+package hellojpa.practice1;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

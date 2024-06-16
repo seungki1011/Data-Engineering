@@ -1,4 +1,4 @@
-package hellojpa.jpql.paging;
+package hellojpa.jpql.join;
 
 import hellojpa.jpql.Member;
 import hellojpa.jpql.Team;
@@ -7,7 +7,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class PagingMain {
+import java.util.List;
+
+public class JoinMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
@@ -17,18 +19,23 @@ public class PagingMain {
 
         try {
 
+            Team team = new Team("teamA");
+            em.persist(team);
+
             Member member = new Member("member1", 25);
+            member.addTeam(team);
             em.persist(member);
 
 
             em.flush();
             em.clear();
 
-            em.createQuery("select m from Member m order by m.age desc", Member.class)
-                    .setFirstResult(0)
-                    .setMaxResults(10)
+
+            String query = "select m from Member m inner join m.team t";
+            List<Member> resultList = em.createQuery(query, Member.class)
                     .getResultList();
 
+            
 
 
             tx.commit();

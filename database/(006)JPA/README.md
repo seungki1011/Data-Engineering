@@ -474,7 +474,7 @@ JPQL은 이후에 자세히 다룰 예정.
 
 ---
 
-## 3) 내부 동작 - 영속성 컨텍스트(Persistence Context)
+## 3) :star: 내부 동작 - 영속성 컨텍스트(Persistence Context)
 
 ### 3.1 영속성 컨텍스트란?
 
@@ -2955,15 +2955,639 @@ JPQL에서의 조인에 대해 알아보자.
 
 조인을 사용하는 예시를 살펴보자.
 
-* 내부조인(Inner Join)
+* 내부 조인(Inner Join)
   * `select m from Member m inner join m.team t`
+  * 관계형 데이터베이스에서 내부 조인은 조인 컨디션을 만족하는 튜플들로 결과 테이블을 만든다
+  * `inner` 생략 가능
 
 
 
 * 외부 조인(Outer Join)
   * `select m from Member m left outer join m.team t`
+  * `outer` 생략 가능
+  * 관계형 데이터베이스에서 외부 조인은 조인 컨디션을 만족하지 않는 튜플들도 결과 테이블에 포함시켜서 만든다
+    * `LEFT` : 왼쪽 테이블에서 컨디션에 매칭 되지 않는 튜플까지 포함해서 반환
+    * `RIGHT` : 오른쪽 테이블의 튜플을 포함한다는 점을 제외하고 `LEFT` 와 동일
 
 <br>
+
+코드로 알아보자.
+
+<br>
+
+```java
+String query = "select m from Member m inner join m.team t";
+List<Member> resultList = em.createQuery(query, Member.class)
+    .getResultList();
+```
+
+* 내부 조인 사용
+* `select m.team from Member m` 와 동일하다. 그러나 이런 묵시적 조인은 사용을 권장하지 않는다
+
+<br>
+
+이번에는 `on` 절을 활용한 조인에 대해 알아보자. `on` 절을 사용하면 다음이 가능하다.
+
+* 조인 대상 필터링
+* 연관관계 없는 엔티티에 대한 외부 조인
+
+<br>
+
+조인 대상을 필터링하는 경우에 대해 알아보자. 조인 대상을 필터링한다는 것은 예를 들자면, `Member`와 `Team`을 조인하면서 팀 이름이 `teamA`인 팀에 대해서만 조인을 수행한다는 것이다. 쿼리는 다음과 같다.
+
+<br>
+
+```java
+// 1. JPQL
+String query = "select m, t from Member left join m.team t on t.name = 'teamA'";
+```
+
+```SQL
+-- 2. SQL
+SELECT m.*, t.* FROM
+Member m LEFT JOIN Team t ON m.TEAM_ID=t.id abd t.name='teamA';
+```
+
+* `on t.name = 'teamA'` : 팀 이름이 `teamA`인 대상에 대해서만 외부 조인을 수행
+
+<br>
+
+연관관계가 없는 엔티티에 대해서 외부 조인도 가능하다.
+
+```java
+String query = "select m, t from Member left join Team t on m.username = t.name";
+```
+
+* `Member`의 `username`과 `Team`의 `name`이 동일한 경우에 대해서 조인
+
+<br>
+
+---
+
+### 12.8 서브쿼리(Subquery)
+
+JPQL에서 서브쿼리를 사용하는 방법에 대해 알아보자.
+
+JPQL도 SQL과 비슷하게 서브쿼리를 사용하면 된다.
+
+간단하게 예시를 들자면.
+
+```java
+String query = "select m from Member m" +
+  " where m.age > (select avg(m2.age) from Member m2)";
+```
+
+* `()`안에 서브쿼리를 작성해서 사용하면 된다
+
+<br>
+
+서브쿼리 지원 함수에는 다음이 존재한다.
+
+* `[NOT] EXISTS (subquery)`
+  * 서브쿼리에 결과가 존재하면 참
+
+
+
+* `{ALL | ANY | SOME} (subquery)`
+  * `ALL` : 모두 만족하면 참
+  * `ANY`, `SOME` : 조건을 하나라도 만족하면 참
+
+
+
+* `[NOT] IN (subquery)`
+  * 서브쿼리의 결과 중 하나라도 같은 것이 있으면 참
+
+<br>
+
+> 서브쿼리 사용시 주의점.
+>
+> * 서브쿼리는 가능하면 최대한 단순하고 이해하기 쉽게 짜자
+> * `SELECT` 절이 아닌 `WHERE`나 `HAVING` 절에 사용하는 것이 성능면에서 좋다
+> * 가능하다면 서브쿼리 보다는 `JOIN`으로 풀어서 사용하자
+
+<br>
+
+---
+
+### 12.9 조건식(Case)
+
+JPQL의 조선식에 대해 알아보자.
+
+<br>
+
+1. 기본 `CASE`식
+
+```sql
+select
+    case when m.age <= 20 then 'student'
+         when m.age >= 60 then 'elder'
+         else 'standard'
+    end
+from Member m
+```
+
+* 조건을 만족하면 해당 결과 사용
+
+<br>
+
+2.  단순 `CASE`식
+
+```sql
+select
+    case t.name
+        when 'teamA' then '110%'
+        when 'teamB' then '120%'
+        else '105%'
+    end
+from Team t
+```
+
+* 명시한 필드와 매칭이 되면 해당 결과 사용
+* 위의 경우 `t.name`이 `teamA`와 일치하면 `110%`를 결과로 사용  
+
+<br>
+
+3. `COALESCE`
+
+```sql
+select coalesce(m.username, 'memberNull') from Member m
+```
+
+* 결과에 대해서 각 `Member` 엔티티 `m`의 `username` 필드를 검증해서 `null`이라면 `memberNull`이라는 값으로 대체 
+  * 만약 `null`이 아니라면 진짜 `username` 값이 반환
+  * `null`이라면 `memberNull`이 반환
+
+<br>
+
+4. `NULLIF`
+
+```sql
+select nullif(m.username, 'admin') from Member m
+```
+
+* `m.username`과 `'admin'`이 같다면 `null` 반환
+* 같지않다면 기존 `username` 반환
+
+<br>
+
+---
+
+### 12.10 JPQL 함수
+
+JPQL의 기본 함수들에 대해서 알아보자.
+
+JPQL에는 여러가지 기본 함수들도 제공한다.
+
+문서 참고 : [https://docs.oracle.com/cd/E13189_01/kodo/docs40/full/html/ejb3_overview_query.html](https://docs.oracle.com/cd/E13189_01/kodo/docs40/full/html/ejb3_overview_query.html)
+
+* CONCAT
+* SUBSTRING
+* TRIM
+* LOWER, UPPER
+* LENGTH
+* LOCATE
+* ABS, SQRT, MOD
+* SIZE
+* INDEX : `@OrderColumn`을 통해 매핑된 컬렉션의 요소의 인덱스를 구하기 위해서 사용
+  * 사용을 권장하지 않는다
+
+<br>
+
+사용자 정의 함수를 만들어서 호출하는 것도 가능하다. 사용자 정의 함수를 사용하기 위해서는 다음을 해야한다.
+
+* `Dialect`를 만들어서 사용하는 DB `Dialect`(방언)을 상속받고, 사용자 정의 함수를 등록해야 한다.
+* 사용전에 만든 `Dialect`로 설정해야한다
+  * `persistence.xml`의 `hibernate.dialect` 변경
+
+<br>
+
+---
+
+## 13) JPQL 고급
+
+### 13.1 경로 표현식(Path Expression)
+
+경로 표현식에 대해 알아보자. 경로 표현식은 `.`을 찍어 객체 그래프를 탐색하는 것을 말한다.
+
+경로 표현식에는 다음의 3가지 표현식이 존재한다.
+
+```sql
+select m.username -- 1. 상태 필드(state field)
+   from Member m
+      join m.team t -- 2. 단일 값 연관 필드(single value association field)
+      join m.orders o -- 3. 컬렉션 값 연관 필드(collection value association field)
+where t.name = 'teamA'
+```
+
+
+
+**상태 필드(state field)**
+
+* 단순히 값을 저장하기 위한 필드
+* 경로 탐색의 끝이다, 더이상 탐색이 불가능하다는 뜻이다 
+
+<br>
+
+**연관 필드(association field)** : 연관 관계를 위한 필드
+
+* 단일 값 연관 필드(single value)
+  * `@ManyToOne`, `@OneToOne`, 대상이 엔티티
+  * 묵시적 내부 조인 발생
+    * 조심하면서 사용해야 한다!
+    * 웬만하면 사용하면 안된다
+  * 탐색이 가능하다
+    * 예) `m.team.name` 처럼 엔티티인 `team`의 필드로 다시 탐색이 가능하다
+
+
+
+* 컬렉션 값 연관 필드(collection value)
+  * `@OneToMany`, `@ManyToMany`, 대상이 컬렉션
+  * 묵시적 내부 조인 발생
+  * 탐색 불가능
+    * 예) `t.members`에서 다시 `.`으로 탐색이 불가능하다
+  * `from` 절에서 명시적 조인을 통해 별칭을 얻으면 별칭을 통해 탐색 가능
+    * 예) `select m.username from Team t join t.members m`
+    * `t.members`에 별칭 `m`을 부여해서 `m.username`으로 탐색을 했다
+
+<br>
+
+**묵시적 조인이 발생하는 경로 표현식은 최대한 사용하지 않는 것이 좋다.** 묵시적 조인을 사용하게 되면 조인이 일어나는 상황을 파악하기가 어렵다.
+
+결론적으로 명시적 조인을 사용하는 것을 권장하고, 명시적 조인을 사용해야 나중에 쿼리 튜닝이나 추적이 쉽다.
+
+<br>
+
+---
+
+### 13.2 :star: 페치 조인(`JOIN FETCH`)
+
+#### 13.2.1 페치 조인 소개
+
+JPQL의 페치 조인에 대해 알아보자.
+
+일단 JPQL의 페치 조인은 표준 SQL의 조인 종류에 해당하지 않는다. 페치 조인은 JPQL에서 성능 최적화를 위해 독자적으로 제공하는 기능이다. 페치 조인은 연관된 엔티티나 컬렉션을 SQL 한 번에 함께 조회할 수 있도록 해주는 기능이다.
+
+여기서 한번에 조회한다는 것은 해당 데이터를 조회시 `fetch` 전략을 `EAGER`로 사용한다는 것으로 이해하면 된다.
+
+<br>
+
+ 페치 조인을 사용하는 방법은 `join fetch`를 통해 사용할 수 있다
+
+```sql
+[left [outer] | inner] join fetch
+```
+
+<br>
+
+예시를 통해 알아보자.
+
+회원을 조회하면서 연관된 팀도 SQL 한번으로 함께 조회하고 싶다고 가정해보자. 페치 조인을 사용하면 이것이 가능하다.
+
+```java
+// 1. JPQL
+String query = "select m from Member m join fetch m.team";
+```
+
+<br>
+
+JPQL은 다음과 같은 SQL로 변환된다.
+
+```sql
+-- 2. SQL
+SELECT M.*, T.* FROM MEMBER M
+INNER JOIN TEAM T ON M.TEAM_ID=T.ID
+```
+
+<br>
+
+여기서 다음과 같은 의문점을 가질 수 있다. 
+
+> "그래서 `join fetch`가 왜 필요한데? `select m from Member m join fetch m.team` 처럼 사용하지 않고 그냥 `select m from Member m`을 사용하고 필요한 팀 데이터만 `member.getTeam().name()`으로 사용하면 되는거 아닌가?"
+
+<br>
+
+결론적으로 말하자며 페치 조인을 사용하는 이유는 `N+1` 문제라는 것을 해결하기 위해서 사용할 수 있다. 이 `N+1` 문제에 대해 알아보자.
+
+<br>
+
+---
+
+#### 13.2.2 N+1 문제
+
+`N+1` 문제에 대해 알아보자.
+
+다음의 코드를 살펴보자. `join fetch`를 사용하지 않는 경우를 살펴보자.
+
+<br>
+
+```java
+Team teamA = new Team("teamA");
+em.persist(teamA);
+
+Team teamB = new Team("teamB");
+em.persist(teamB);
+
+Team teamC = new Team("teamC");
+em.persist(teamC);
+
+Member member1 = new Member("member1", 10);
+member1.addTeam(teamA);
+em.persist(member1);
+
+Member member2 = new Member("member2", 20);
+member2.addTeam(teamA);
+em.persist(member2);
+
+Member member3 = new Member("member3", 30);
+member3.addTeam(teamB);
+em.persist(member3);
+
+Member member4 = new Member("member4", 40);
+member4.addTeam(teamC);
+em.persist(member4);
+
+// 영속성 컨텍스트 비우기
+em.flush();
+em.clear();
+
+// join fetch 사용 X
+String query = "select m from Member m";
+
+List<Member> result = em.createQuery(query, Member.class)
+                .getResultList();
+
+/**
+ * 멤버의 팀의 정보를 조회한다
+ * 우리는 기본적으로 fetch 전략을 LAZY로 사용하고 있다 (지연 로딩)
+ */
+for (Member member : result) {
+    System.out.println("member.getUsername() = " + member.getUsername());
+    System.out.println("member.getTeam().getName() = " + member.getTeam().getName());
+}
+```
+
+<br>
+
+실행해보면 다음의 결과와 SQL을 확인할 수 있다. (`insert` SQL 제외)
+
+```
+Hibernate: 
+    /* select
+        m 
+    from
+        Member m */ select
+            m1_0.member_id,
+            m1_0.age,
+            m1_0.team_id,
+            m1_0.username 
+        from
+            Member m1_0
+member.getUsername() = member1
+Hibernate: 
+    select
+        t1_0.team_id,
+        t1_0.name 
+    from
+        Team t1_0 
+    where
+        t1_0.team_id=?
+member.getTeam().getName() = teamA
+member.getUsername() = member2
+member.getTeam().getName() = teamA
+member.getUsername() = member3
+Hibernate: 
+    select
+        t1_0.team_id,
+        t1_0.name 
+    from
+        Team t1_0 
+    where
+        t1_0.team_id=?
+member.getTeam().getName() = teamB
+member.getUsername() = member4
+Hibernate: 
+    select
+        t1_0.team_id,
+        t1_0.name 
+    from
+        Team t1_0 
+    where
+        t1_0.team_id=?
+member.getTeam().getName() = teamC
+```
+
+<br>
+
+여기서 확인할 수 있는 것은, 단지 팀의 정보를 확인하려고 하는데 `select` 쿼리가 총 4번 나가데 된다.
+
+왜 이렇게 되는지 그림을 통해서 확인해보자.
+
+<br>
+
+<p align="center">   <img src="img/jpql4.png" alt="jpa" style="width: 100%;"> </p>
+
+* `fetch` 전략이 `LAZY`이기 때문에, `Team`과 `@ManyToOne` 관계인 `Member`를 조회할 때 `Member`만 일단 가져온다.
+* `Team` 정보가 필요한 순간에, 가령 `member.getTeam().getName()`을 실행할 때 필요한 `Team` 정보를 조회하는 SQL을 보낸다
+* 이미 조회한 `Team` 정보는 영속성 컨텍스트에 저장되기 때문에, 다시 해당 정보를 조회할 때는 SQL을 보내지 않는다
+
+<br>
+
+위 경우 처럼 첫 번째 SQL 요청 후에 반복문을 돌면서 SQL을 `N`번 더 요청하게 되는 문제를 `N+1` 문제라고 한다.  
+
+이게 회원을 한 두 명이 아니라, 100명 또는 1000명 조회하게 되면, 쿼리의 수도 그만큼 날려야하기 때문에 아주 비효율적이다. 이런 문제를 해결하기 위해서 페치 조인(`join fetch`)을 사용하는 것이다.
+
+<br>
+
+페치 조인을 적용한 코드를 사용해보고 결과와 SQL을 확인해보자.
+
+<br>
+
+```java
+// 페치 조인 사용
+String query = "select m from Member m join fetch m.team";
+
+List<Member> result = em.createQuery(query, Member.class)
+                .getResultList();
+            
+// 페치 조인으로 회원과 팀을 함께 조회하기 때문에 지연 로딩 X
+for (Member member : result) {
+    System.out.println("member.getUsername() = " + member.getUsername());
+    System.out.println("member.getTeam().getName() = " + member.getTeam().getName());
+}
+```
+
+* `select m from Member m join fetch m.team`으로 페치 조인 사용
+
+```
+Hibernate: 
+    /* select
+        m 
+    from
+        Member m 
+    join
+        
+    fetch
+        m.team */ select
+            m1_0.member_id,
+            m1_0.age,
+            t1_0.team_id,
+            t1_0.name,
+            m1_0.username 
+        from
+            Member m1_0 
+        join
+            Team t1_0 
+                on t1_0.team_id=m1_0.team_id
+member.getUsername() = member1
+member.getTeam().getName() = teamA
+member.getUsername() = member2
+member.getTeam().getName() = teamA
+member.getUsername() = member3
+member.getTeam().getName() = teamB
+member.getUsername() = member4
+member.getTeam().getName() = teamC
+```
+
+<br>
+
+결과를 확인해보면 SQL은 한번만 나가고, 반복문을 통해 `member.getTeam().getName()`를 사용할 때는 프록시를 통한 지연로딩을 사용하는 것이 아니라, 이미 가져온 데이터에서 조회하는 것 뿐이다.
+
+<br>
+
+---
+
+#### 13.2.3 컬렉션 페치 조인
+
+이번에는 일대다(`OneToMany`) 관계에서 컬렉션에 대한 페치 조인에 대해 알아보자.
+
+이전 예시에서 `Team`의 입장에서 `Member`에 대한 컬렉션과 페치 조인하는 상황을 생각하면 된다.
+
+코드로 살펴보자.
+
+<br>
+
+```java
+// 컬렉션 페치 조인 사용
+String query = "select t from Team t join fetch t.members";
+
+List<Team> result = em.createQuery(query, Team.class)
+                .getResultList();
+            
+for (Team team : result) {
+    System.out.println("team = " + team.getName() +
+            ", member size = " + team.getMembers().size());
+}
+```
+
+```
+Hibernate: 
+    /* select
+        t 
+    from
+        Team t 
+    join
+        
+    fetch
+        t.members */ select
+            t1_0.team_id,
+            m1_0.team_id,
+            m1_0.member_id,
+            m1_0.age,
+            m1_0.username,
+            t1_0.name 
+        from
+            Team t1_0 
+        join
+            Member m1_0 
+                on t1_0.team_id=m1_0.team_id
+team = teamA, member size = 2
+team = teamB, member size = 1
+team = teamC, member size = 1
+```
+
+* 하이버네이트6 이전 버전에서는 `DISTINCT` 명령어로 중복 제거를 해야했지만, 버전 6부터는 애플리케이션에서 중복 제거가 자동으로 적용된다
+  * 예) 중복 제거 전에는 `teamA`가 2 번 등장했을 것이다
+  * `teamA` → `Member(name="member1", age=10, team=teamA)`
+  * `teamA` → `Member(name="member2", age=20, team=teamA)`
+
+
+
+* 참고로 하이버네이트6 이전의 `DISTINCT`는 기존 관계형 DB의 `DISTINCT`와는 기능이 살짝 다르다
+  * RDB에서는 완전히 같아야 `DISTINCT`로 제거했다면, 6 이전 버전의 하이버네이트에서는 같은 식별자를 가진 엔티티도 제거해준다
+  * 예) 똑같이 `teamA`를 가지고 있으면 `Team` 입장에서는 같은 식별자를 가지고 있다
+
+<br>
+
+---
+
+ #### 13.2.4 페치 조인의 한계
+
+페치 조인의 한계는 다음과 같다.
+
+* 페치 조인 대상에는 별칭을 주는 것이 불가능하다
+  * 하이버네이트에서는 가능하지만, 웬만하면 사용하지 않을 것을 권장한다
+
+
+
+* 둘 이상의 컬렉션을 페치 조인하는 것은 안된다
+  * 가능한 경우가 있어도 사용하지 않을 것을 권장한다
+
+
+
+* 컬렉션을 페치 조인하는 경우, 페이징 API(`setFirstResult()`, `setMaxResultsI()`)를 사용하지 못한다
+  * 일대다, 다대일 같은 단일값 연관 필드들은 페치 조인해도 페이징 가능
+  * `@BatchSize`를 이용한 해결 방법 찾아보기!
+
+<br>
+
+페치 조인에 대한 추가적인 내용을 포함해서 정리하면 다음과 같다.
+
+* 페치 조인을 통해서 연관된 엔티티들을 SQL 한 번으로 조회할 수 있다
+  * 이를 통해서 성능 최적화가 가능하다
+
+
+
+* 엔티티에 직접 적용하는 글로벌 로딩 전략보다 우선시 된다
+  * 기본적으로 실무에서는 `@OneToMany(fetch=FetchType.LAZY)`를 사용한다 (지연 로딩)
+  * 페치 조인을 사용하는 경우 이런 글로벌 로딩 전략보다 우선시 되어서 적용된다
+
+
+
+* 최적화가 필요한 곳에 페치 조인을 적용하자
+  * 예) `N+1` 문제 해결
+
+
+
+* 여러 테이블을 조인해서 엔티티가 가진 모양이 아닌 전혀 다른 결과가 필요하다면, 페치 조인보다는 일반 조인을 사용하고 필요한 데이터들만 조회해서 DTO로 반환하는 것이 효과적일 수 있다
+  * 페치 조인은 객체 그래프를 유지할 때 사용하는 것이 효과적이다!
+
+<br>
+
+---
+
+### 13.3 `NamedQuery`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+---
+
+### 13.4 벌크 연산(Bulk Operation)
+
+
 
 
 

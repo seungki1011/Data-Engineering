@@ -27,6 +27,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    private void setTeam(Team team) {
+        this.team = team;
+    }
 
     public Member(String username, int age) {
         this.username = username;
@@ -35,6 +38,7 @@ public class Member {
 
     // 편의 메서드
     public void addTeam(Team team) {
+        this.setTeam(team);
         team.getMembers().add(this);
     }
 

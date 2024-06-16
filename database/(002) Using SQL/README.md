@@ -874,6 +874,8 @@ Subquery를 통해서 조금 더 복잡한 쿼리를 작성해보자.
 
 ```EMPLOYEE(id)```가 14인 임직원 보다 ```birth_date```가 빠른 임직원의 ```id```, ```name```, ```birthdate```를 조회 해보자.
 
+<br>
+
 ```mysql
 -- 1. 첫 번째 쿼리 
 SELECT birth_date FROM EMPLOYEE WHERE id = 14; -- 결과는 1992-08-04가 나온다 
@@ -928,6 +930,14 @@ WHERE (dept_id, sex) = (
 | 14 | SAM      | DEV_INFRA |
 +----+----------+-----------+
 ```
+
+<br>
+
+서브쿼리 사용시 주의점.
+
+* 서브쿼리는 가능하면 최대한 단순하고 이해하기 쉽게 짜자
+* `SELECT` 절이 아닌 `WHERE`나 `HAVING` 절에 사용하는 것이 성능면에서 좋다
+* 가능하다면 서브쿼리 보다는 `JOIN`을 사용하자
 
 <br>
 

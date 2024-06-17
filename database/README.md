@@ -305,10 +305,29 @@
     * [값 타입(Value Object, Value Type)이란?]((006)JPA#101-%EA%B0%92-%ED%83%80%EC%9E%85value-object-value-type%EC%9D%B4%EB%9E%80)
     * [임베디드 타입 사용]((006)JPA#102-%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-%ED%83%80%EC%9E%85-%EC%82%AC%EC%9A%A9)
 11. [JPQL]((006)JPA#11-jpql)
-    * JPQL 소개
+    * [JPQL 소개]((006)JPA#111-jpql-%EC%86%8C%EA%B0%9C)
     * QueryDSL 소개
     * Native SQL 소개
-    * JPQL 사용법(추가 예정)
+12. [JPQL 기본 사용법]((006)JPA#12-jpql-%EA%B8%B0%EB%B3%B8-%EC%82%AC%EC%9A%A9%EB%B2%95)
+    * [기본 `select`문]((006)JPA#121-%EA%B8%B0%EB%B3%B8-select-%EB%AC%B8)
+    * [`TypedQuery`, `Query`]((006)JPA#122-typedquery-query)
+    * [결과 조회]((006)JPA#123-%EA%B2%B0%EA%B3%BC-%EC%A1%B0%ED%9A%8C)
+    * [파라미터 바인딩(`setParameter()`)]((006)JPA#124-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EB%B0%94%EC%9D%B8%EB%94%A9setparameter)
+    * [프로젝션(Projection)]((006)JPA#125-%ED%94%84%EB%A1%9C%EC%A0%9D%EC%85%98projection)
+    * [페이징(Pagination)]((006)JPA#126-%ED%8E%98%EC%9D%B4%EC%A7%95pagination)
+    * [조인(`JOIN`)]((006)JPA#127-%EC%A1%B0%EC%9D%B8join)
+    * [서브쿼리(Subquery)]((006)JPA#128-%EC%84%9C%EB%B8%8C%EC%BF%BC%EB%A6%ACsubquery)
+    * [조건식(Case)]((006)JPA#129-%EC%A1%B0%EA%B1%B4%EC%8B%9Dcase)
+    * [JPQL 함수]((006)JPA#1210-jpql-%ED%95%A8%EC%88%98)
+13. [JPQL 더 알아가기]((006)JPA#13-jpql-%EB%8D%94-%EC%95%8C%EC%95%84%EA%B0%80%EA%B8%B0)
+    * [경로 표현식(Path Expression)]((006)JPA#131-%EA%B2%BD%EB%A1%9C-%ED%91%9C%ED%98%84%EC%8B%9Dpath-expression)
+    * [:star: 페치 조인(`join fetch`)]((006)JPA#132-star-%ED%8E%98%EC%B9%98-%EC%A1%B0%EC%9D%B8join-fetch)
+      * [페치 조인 소개]((006)JPA#1321-%ED%8E%98%EC%B9%98-%EC%A1%B0%EC%9D%B8-%EC%86%8C%EA%B0%9C)
+      * [N+1 문제]((006)JPA#1322-n1-%EB%AC%B8%EC%A0%9C)
+      * [컬렉션 페치 조인]((006)JPA#1323-%EC%BB%AC%EB%A0%89%EC%85%98-%ED%8E%98%EC%B9%98-%EC%A1%B0%EC%9D%B8)
+      * [페치 조인의 한계]((006)JPA#1324-%ED%8E%98%EC%B9%98-%EC%A1%B0%EC%9D%B8%EC%9D%98-%ED%95%9C%EA%B3%84)
+    * [`@NamedQuery`]((006)JPA#133-namedquery)
+    * [벌크 연산(Bulk Operation)]((006)JPA#134-%EB%B2%8C%ED%81%AC-%EC%97%B0%EC%82%B0bulk-operation)
 
 ---
 
